@@ -1,0 +1,8 @@
+﻿<Window x:Name="MainWindow1" x:Class="UMLToMVCConverter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="UML To MVC Converter" Height="350" Width="525">
+    <Grid>
+        
+    </Grid>
+</Window>
