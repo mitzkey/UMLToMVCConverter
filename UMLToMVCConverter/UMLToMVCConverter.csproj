@@ -53,8 +53,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Briefcase.cs" />
-    <Compile Include="Sample.cs" />
     <Compile Include="UMLVisibilityMapper.cs" />
     <Compile Include="UMLTypeMapper.cs" />
     <Page Include="MainWindow.xaml">

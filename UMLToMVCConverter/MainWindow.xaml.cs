@@ -27,7 +27,7 @@ namespace UMLToMVCConverter
         {
             InitializeComponent();
             //TODO: tymczasowo żeby nie klikać za każdym razem okna
-            ClassGenerator.GenerateClassesFromXmi(@"C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\MD Projects\Test01\Test01_xmi.xml");
+            //ClassGenerator.GenerateClassesFromXmi(@"C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\MD Projects\Test01\Test01_xmi.xml");
         }
 
         private void btnOpenXMI_Click(object sender, RoutedEventArgs e)
@@ -44,7 +44,7 @@ namespace UMLToMVCConverter
         {
             if (!String.IsNullOrEmpty(xmiPath))
             {
-                ClassGenerator.GenerateClassesFromXmi(xmiPath);
+                MessageBox.Show(ClassGenerator.GenerateClassesFromXmi(xmiPath));
             }
             else
             {

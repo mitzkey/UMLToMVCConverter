@@ -16,19 +16,6 @@ namespace UMLToMVCConverter
     {
         public static string GenerateClassesFromXmi(string xmiPath)
         {
-            //briefcase example - nie działa
-            Briefcase bc = new Briefcase("Briefcase");
-            bc.CreateCodeDomBriefcase();
-
-            //msdn example
-            Sample sample = new Sample();
-            sample.AddFields();
-            sample.AddProperties();
-            sample.AddMethod();
-            sample.AddConstructor();
-            sample.AddEntryPoint();
-            sample.GenerateCSharpCode("Sample");
-
 
             MyAttributeEqualityComparer attributeComparer = new MyAttributeEqualityComparer();
 
@@ -47,31 +34,23 @@ namespace UMLToMVCConverter
                     .ToList();
                 foreach (XElement _class in classes)
                 {
+                    CodeCompileUnit targetUnit = new CodeCompileUnit();
+
                     //tworzymy klase
-                    //ustawiamy zmienne potrzebne do generowania kodu
-                    //TODO: na razie każda klasa w osobnym pliku, docelowo możemy mieć klasę zagnieżdżoną np.
-                    string fileName = _class.Attribute("name").Value.ToString() + ".cs";
-                    Stream s = File.Open(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + fileName, FileMode.Create);
-                    StreamWriter sw = new StreamWriter(s);
-
-                    CSharpCodeProvider cscProvider = new CSharpCodeProvider();
-                    ICodeGenerator cscg = cscProvider.CreateGenerator(sw);
-                    CodeGeneratorOptions cop = new CodeGeneratorOptions();
-
-                    //TODO: tworzymy wpisy 'using' - na razie nie wiem jak to może wyglądać od strony UML
-                    CodeSnippetCompileUnit csu1 = new CodeSnippetCompileUnit("using System");
-                    cscg.GenerateCodeFromCompileUnit(csu1, sw, cop);
-                    sw.WriteLine();
 
                     //TODO: namespace, też nie wiem jak w kontekście UML
                     CodeNamespace cns = new CodeNamespace("Test01");
 
+                    //TODO: tworzymy wpisy 'using' - na razie nie wiem jak to może wyglądać od strony UML
+                    cns.Imports.Add(new CodeNamespaceImport("System"));
+                   
                     //deklaracja klasy
                     CodeTypeDeclaration ctd = new CodeTypeDeclaration();
-                    cns.Types.Add(ctd);
                     ctd.IsClass = true;
                     ctd.Name = _class.Attribute("name").Value;
                     ctd.TypeAttributes = TypeAttributes.Public; //TODO: czy w UML mamy widoczność klasy?                    
+                    cns.Types.Add(ctd);
+                    targetUnit.Namespaces.Add(cns);
 
                     //pola
                     List<XElement> fields = _class.Descendants("ownedAttribute")
@@ -82,12 +61,14 @@ namespace UMLToMVCConverter
                     {
                         //określenie typu pola
                         //TODO: i tu mamy problem z odczytaniem typu - jak odczytywać typy z xmi? poniższy odczyt jest dość 'dziki'
+                        //jest jakiś chaos jeśli chodzi o typy danych w standardzie XMI=> http://www.empowertec.de/blog/2008/05/13/the-mess-called-xmi-xml-metadata-interchange/
                         XElement xType = field.Descendants("type").FirstOrDefault();
                         XElement xExtension = xType.Descendants(xmi + "Extension").FirstOrDefault();
                         XElement xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
                         string UMLtype = xRefExtension.Attribute("referentPath").Value.Split(new char[]{':',':'}).Last();
                         Type cSharpType = UMLTypeMapper.UMLToCsharp(UMLtype);
-                        sw.WriteLine();  
+                        
+                        //deklaracja pola
                         CodeMemberField cmf = new CodeMemberField(cSharpType, field.Attribute("name").Value);
                         
                         //widoczność
@@ -97,13 +78,21 @@ namespace UMLToMVCConverter
                         ctd.Members.Add(cmf);
                     }
 
-                    cscg.GenerateCodeFromNamespace(cns, sw, cop);
-                    sw.Close();
-                    s.Close();
+                    //ustawiamy zmienne potrzebne do generowania kodu
+                    //TODO: na razie każda klasa w osobnym pliku, docelowo możemy mieć klasę zagnieżdżoną np.
+                    CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+                    CodeGeneratorOptions options = new CodeGeneratorOptions();
+                    options.BracingStyle = "C";
+                    string fileName = _class.Attribute("name").Value.ToString() + ".cs";
+                    using (StreamWriter sourceWriter = new StreamWriter(fileName))
+                    {
+                        provider.GenerateCodeFromCompileUnit(targetUnit,
+                            sourceWriter, options);
+                    }
                 }
             }
 
-            return "OK";
+            return "Plik przetworzono pomyślnie";
         }
     }
 }
