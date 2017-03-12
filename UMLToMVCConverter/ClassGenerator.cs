@@ -15,7 +15,16 @@ namespace UMLToMVCConverter
     class ClassGenerator
     {
         public static string GenerateClassesFromXmi(string xmiPath)
-        {
+        {         
+            //ustawiamy zmienne potrzebne do generowania kodu
+            //TODO: na razie każda klasa w osobnym pliku, docelowo możemy mieć klasę zagnieżdżoną np.
+            CodeCompileUnit targetUnit = new CodeCompileUnit();
+            CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+            CodeGeneratorOptions options = new CodeGeneratorOptions();
+            options.BracingStyle = "C";
+
+            //TODO: póki co nie wiadomo czy i jak używać przestrzeni nazw - robię listę typów
+            List<CodeTypeDeclaration> types = new List<CodeTypeDeclaration>();
 
             MyAttributeEqualityComparer attributeComparer = new MyAttributeEqualityComparer();
 
@@ -33,9 +42,7 @@ namespace UMLToMVCConverter
                         Contains(new XAttribute(xmi + "type", "uml:Class"), attributeComparer))
                     .ToList();
                 foreach (XElement _class in classes)
-                {
-                    CodeCompileUnit targetUnit = new CodeCompileUnit();
-
+                {                   
                     //tworzymy klase
 
                     //TODO: namespace, też nie wiem jak w kontekście UML
@@ -51,6 +58,7 @@ namespace UMLToMVCConverter
                     ctd.TypeAttributes = TypeAttributes.Public; //TODO: czy w UML mamy widoczność klasy?                    
                     cns.Types.Add(ctd);
                     targetUnit.Namespaces.Add(cns);
+                    types.Add(ctd);
 
                     //pola
                     List<XElement> fields = _class.Descendants("ownedAttribute")
@@ -76,19 +84,50 @@ namespace UMLToMVCConverter
                         MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
                         cmf.Attributes = cSharpVisibility;
                         ctd.Members.Add(cmf);
-                    }
+                    }                    
+                }
+                
+                //dziedziczenie
 
-                    //ustawiamy zmienne potrzebne do generowania kodu
-                    //TODO: na razie każda klasa w osobnym pliku, docelowo możemy mieć klasę zagnieżdżoną np.
-                    CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
-                    CodeGeneratorOptions options = new CodeGeneratorOptions();
-                    options.BracingStyle = "C";
+                //dla każdej klasy sprawdzam czy po czyms dziedziczy
+                foreach (XElement _class in classes)
+                {
+                    //klasa bazowa
+                    //TODO: czy w UML może być więcej niż 1 element <generalization>? czy mamy dopuszczone dziedziczenie wielokrotne?
+                    XElement xCurrClass = _class.Descendants("generalization")
+                        .Where(i => i.Attributes()
+                            .Contains(new XAttribute(xmi + "type", "uml:Generalization"), attributeComparer))
+                        .FirstOrDefault();
+                    if (xCurrClass != null)
+                    {
+                        string base_class_id = xCurrClass.Attribute("general").Value;
+                        string base_class_name = classes.Where(i => i.Attribute(xmi + "id").Value.Equals(base_class_id)).First().Attribute("name").Value;
+                        string curr_class_name = _class.Attribute("name").Value;
+                        CodeTypeDeclaration currClass = types.Where(i => i.Name == curr_class_name).FirstOrDefault();
+                        CodeTypeDeclaration baseClass = types.Where(i => i.Name == base_class_name).FirstOrDefault();
+                        CodeTypeReference ctr = new CodeTypeReference(baseClass.Name);
+                        currClass.BaseTypes.Add(ctr);
+                    }
+                }
+
+                //generuję kod każdej klasy
+                //TODO: generowanie osobnych plików dla klas
+/*                foreach (XElement _class in classes)
+                {
                     string fileName = _class.Attribute("name").Value.ToString() + ".cs";
                     using (StreamWriter sourceWriter = new StreamWriter(fileName))
                     {
                         provider.GenerateCodeFromCompileUnit(targetUnit,
                             sourceWriter, options);
                     }
+                }*/
+
+                //generuję kod przestrzeni nazw w jednym pliku
+                string fileName = "Test.cs";
+                using (StreamWriter sourceWriter = new StreamWriter(fileName))
+                {
+                    provider.GenerateCodeFromCompileUnit(targetUnit,
+                        sourceWriter, options);
                 }
             }
 
