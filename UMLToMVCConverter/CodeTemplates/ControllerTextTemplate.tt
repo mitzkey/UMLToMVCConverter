@@ -1,0 +1,38 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using <#= contextName #>.DAL;
+using <#= contextName #>.Models;
+
+namespace <#= contextName #>.Controllers
+{
+    public class <#= className #>Controller : Controller
+    {
+        private <#= contextName #>Context db = new <#= contextName #>Context();
+
+        // GET: <#= className #>
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}

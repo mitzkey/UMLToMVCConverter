@@ -126,6 +126,9 @@ namespace UMLToMVCConverter
 
                 //generowanie pliku kontekstu (DbContext)
                 GenerateDbContextClass(types, "Test");
+
+                //generowanie plików konrolerów
+                GenerateControllers(types, "Test");
             }
 
             return "Plik przetworzono pomyślnie";
@@ -138,6 +141,18 @@ namespace UMLToMVCConverter
             string output = tmpl.TransformText();
             Directory.CreateDirectory("DAL");
             File.WriteAllText(@"DAL\"+contextName + "Context.cs", output);
+        }
+
+        public static void GenerateControllers(List<CodeTypeDeclaration> classes, string contextName)
+        {
+            foreach (CodeTypeDeclaration ctd in classes)
+            {
+                ControllerTextTemplate tmpl = new ControllerTextTemplate(ctd, contextName);
+                string output = tmpl.TransformText();
+                Directory.CreateDirectory("Controllers");
+                File.WriteAllText(@"Controllers\" + ctd.Name + "Controller.cs", output);
+
+            }            
         }
     }
 }

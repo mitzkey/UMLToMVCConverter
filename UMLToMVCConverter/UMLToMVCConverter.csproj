@@ -61,7 +61,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CodeTemplates\DbContextTextTemplate.Data.cs" />
+    <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControllerTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTemplates\ControllerTextTemplate.Data.cs" />
+    <Compile Include="CodeTemplates\DbContextTextTemplate.Data.cs">
+      <DependentUpon>DbContextTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="CodeTemplates\DbContextTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +110,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="CodeTemplates\ControllerTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ControllerTextTemplate.cs</LastGenOutput>
+    </None>
     <None Include="CodeTemplates\DbContextTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>DbContextTextTemplate.cs</LastGenOutput>
