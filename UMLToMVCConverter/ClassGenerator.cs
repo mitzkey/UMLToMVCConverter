@@ -9,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
+using UMLToMVCConverter.CodeTemplates;
 
 namespace UMLToMVCConverter
 {
@@ -23,7 +24,7 @@ namespace UMLToMVCConverter
             CodeGeneratorOptions options = new CodeGeneratorOptions();
             options.BracingStyle = "C";
 
-            //TODO: póki co nie wiadomo czy i jak używać przestrzeni nazw - robię listę typów
+            //TODO: póki co nie wiadomo czy i jak używać przestrzeni nazw - robię listę typów => pakiety z UML
             List<CodeTypeDeclaration> types = new List<CodeTypeDeclaration>();
 
             MyAttributeEqualityComparer attributeComparer = new MyAttributeEqualityComparer();
@@ -60,31 +61,36 @@ namespace UMLToMVCConverter
                     targetUnit.Namespaces.Add(cns);
                     types.Add(ctd);
 
-                    //pola
+                    #region pola
+
+                    //pole "ID" do utworzenia klucza głównego relacji przez EF
+                    CodeMemberField id_field = new CodeMemberField(typeof(int), ctd.Name + "ID");
+                    ctd.Members.Add(id_field);
+
                     List<XElement> fields = _class.Descendants("ownedAttribute")
-                        .Where(i => i.Attributes()
-                            .Contains(new XAttribute(xmi + "type", "uml:Property"), attributeComparer))
-                        .ToList();
-                    foreach (XElement field in fields)
-                    {
-                        //określenie typu pola
-                        //TODO: i tu mamy problem z odczytaniem typu - jak odczytywać typy z xmi? poniższy odczyt jest dość 'dziki'
-                        //jest jakiś chaos jeśli chodzi o typy danych w standardzie XMI=> http://www.empowertec.de/blog/2008/05/13/the-mess-called-xmi-xml-metadata-interchange/
-                        XElement xType = field.Descendants("type").FirstOrDefault();
-                        XElement xExtension = xType.Descendants(xmi + "Extension").FirstOrDefault();
-                        XElement xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
-                        string UMLtype = xRefExtension.Attribute("referentPath").Value.Split(new char[]{':',':'}).Last();
-                        Type cSharpType = UMLTypeMapper.UMLToCsharp(UMLtype);
+                            .Where(i => i.Attributes()
+                                .Contains(new XAttribute(xmi + "type", "uml:Property"), attributeComparer))
+                            .ToList();
+                        foreach (XElement field in fields)
+                        {
+                            //określenie typu pola
+                            //TODO: i tu mamy problem z odczytaniem typu - jak odczytywać typy z xmi? poniższy odczyt jest dość 'dziki' => odczytujemy tylko 5 podstawowych
+                            XElement xType = field.Descendants("type").FirstOrDefault();
+                            XElement xExtension = xType.Descendants(xmi + "Extension").FirstOrDefault();
+                            XElement xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
+                            string UMLtype = xRefExtension.Attribute("referentPath").Value.Split(new char[]{':',':'}).Last();
+                            Type cSharpType = UMLTypeMapper.UMLToCsharp(UMLtype);
                         
-                        //deklaracja pola
-                        CodeMemberField cmf = new CodeMemberField(cSharpType, field.Attribute("name").Value);
+                            //deklaracja pola
+                            CodeMemberField cmf = new CodeMemberField(cSharpType, field.Attribute("name").Value);
                         
-                        //widoczność
-                        string UMLvisibility = field.Attribute("visibility").Value;
-                        MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
-                        cmf.Attributes = cSharpVisibility;
-                        ctd.Members.Add(cmf);
-                    }                    
+                            //widoczność
+                            string UMLvisibility = field.Attribute("visibility").Value;
+                            MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
+                            cmf.Attributes = cSharpVisibility;
+                            ctd.Members.Add(cmf);
+                        }
+                    #endregion
                 }
                 
                 //dziedziczenie
@@ -93,7 +99,7 @@ namespace UMLToMVCConverter
                 foreach (XElement _class in classes)
                 {
                     //klasa bazowa
-                    //TODO: czy w UML może być więcej niż 1 element <generalization>? czy mamy dopuszczone dziedziczenie wielokrotne?
+                    //TODO: trzeba coś ustalić ws. dziedziczenia wielokrotnego => zadanie na tablicy
                     XElement xCurrClass = _class.Descendants("generalization")
                         .Where(i => i.Attributes()
                             .Contains(new XAttribute(xmi + "type", "uml:Generalization"), attributeComparer))
@@ -110,18 +116,6 @@ namespace UMLToMVCConverter
                     }
                 }
 
-                //generuję kod każdej klasy
-                //TODO: generowanie osobnych plików dla klas
-/*                foreach (XElement _class in classes)
-                {
-                    string fileName = _class.Attribute("name").Value.ToString() + ".cs";
-                    using (StreamWriter sourceWriter = new StreamWriter(fileName))
-                    {
-                        provider.GenerateCodeFromCompileUnit(targetUnit,
-                            sourceWriter, options);
-                    }
-                }*/
-
                 //generuję kod przestrzeni nazw w jednym pliku
                 string fileName = "Test.cs";
                 using (StreamWriter sourceWriter = new StreamWriter(fileName))
@@ -129,9 +123,21 @@ namespace UMLToMVCConverter
                     provider.GenerateCodeFromCompileUnit(targetUnit,
                         sourceWriter, options);
                 }
+
+                //generowanie pliku kontekstu (DbContext)
+                GenerateDbContextClass(types, "Test");
             }
 
             return "Plik przetworzono pomyślnie";
+        }
+
+
+        public static void GenerateDbContextClass(List<CodeTypeDeclaration> classes, string contextName)
+        {
+            DbContextTextTemplate tmpl = new DbContextTextTemplate(classes, contextName);
+            string output = tmpl.TransformText();
+            Directory.CreateDirectory("DAL");
+            File.WriteAllText(@"DAL\"+contextName + "Context.cs", output);
         }
     }
 }
