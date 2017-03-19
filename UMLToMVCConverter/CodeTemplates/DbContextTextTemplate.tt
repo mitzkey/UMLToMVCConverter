@@ -4,6 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.CodeDom" #>
+<#@ output extension=".cs" #>
 using System;
 using System.Collections.Generic;
 using System.Linq;

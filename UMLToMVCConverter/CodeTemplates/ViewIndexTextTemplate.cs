@@ -18,9 +18,9 @@ namespace UMLToMVCConverter.CodeTemplates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ControllerTextTemplate.tt"
+    #line 1 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public partial class ControllerTextTemplate : ControllerTextTemplateBase
+    public partial class ViewIndexTextTemplate : ViewIndexTextTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,74 +28,114 @@ namespace UMLToMVCConverter.CodeTemplates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Data;\r\nusing Syste" +
-                    "m.Data.Entity;\r\nusing System.Linq;\r\nusing System.Net;\r\nusing System.Web;\r\nusing " +
-                    "System.Web.Mvc;\r\nusing ");
+            this.Write("\r\n@model IEnumerable<");
             
-            #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ControllerTextTemplate.tt"
+            #line 8 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
             
             #line default
             #line hidden
-            this.Write(".DAL;\r\nusing ");
+            this.Write(".Models.");
             
-            #line 16 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ControllerTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
-            
-            #line default
-            #line hidden
-            this.Write(".Models;\r\n\r\nnamespace ");
-            
-            #line 18 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ControllerTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
-            
-            #line default
-            #line hidden
-            this.Write(".Controllers\r\n{\r\n    public class ");
-            
-            #line 20 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ControllerTextTemplate.tt"
+            #line 8 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(className));
             
             #line default
             #line hidden
-            this.Write("Controller : Controller\r\n    {\r\n        private ");
-            
-            #line 22 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ControllerTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
-            
-            #line default
-            #line hidden
-            this.Write("Context db = new ");
-            
-            #line 22 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ControllerTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
-            
-            #line default
-            #line hidden
-            this.Write("Context();\r\n\r\n        // GET: ");
-            
-            #line 24 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ControllerTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(className));
-            
-            #line default
-            #line hidden
-            this.Write(@"
-        public ActionResult Index()
-        {
-            return View();
-        }
+            this.Write(@">
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-    }
+@{
+    Layout = null;
 }
-");
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name=""viewport"" content=""width=device-width"" />
+    <title>View</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink(""Create New"", ""Create"")
+    </p>
+    <table class=""table"">
+        <tr>
+            ");
+            
+            #line 27 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
+ foreach (string fieldName in fieldsNames)
+                {
+            
+            
+            #line default
+            #line hidden
+            this.Write("            <th>\r\n                @Html.DisplayNameFor(model => model.");
+            
+            #line 31 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n            </th>\r\n            ");
+            
+            #line 33 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
+
+                }
+            
+            
+            #line default
+            #line hidden
+            this.Write("            <th></th>\r\n        </tr>\r\n    \r\n    @foreach (var item in Model) {\r\n " +
+                    "       <tr>\r\n            ");
+            
+            #line 41 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
+ foreach (string fieldName in fieldsNames)
+                {
+            
+            
+            #line default
+            #line hidden
+            this.Write("            <td>\r\n                @Html.DisplayFor(modelItem => item.");
+            
+            #line 45 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n            </td>\r\n            ");
+            
+            #line 47 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
+
+                }
+            
+            
+            #line default
+            #line hidden
+            this.Write("            <td>\r\n                @Html.ActionLink(\"Edit\", \"Edit\", new { id=item." +
+                    "");
+            
+            #line 51 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(className));
+            
+            #line default
+            #line hidden
+            this.Write("ID }) |\r\n                @Html.ActionLink(\"Details\", \"Details\", new { id=item.");
+            
+            #line 52 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(className));
+            
+            #line default
+            #line hidden
+            this.Write("ID }) |\r\n                @Html.ActionLink(\"Delete\", \"Delete\", new { id=item.");
+            
+            #line 53 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ViewIndexTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(className));
+            
+            #line default
+            #line hidden
+            this.Write("ID })\r\n            </td>\r\n        </tr>\r\n    }\r\n    \r\n    </table>\r\n</body>\r\n</ht" +
+                    "ml>\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -107,7 +147,7 @@ namespace UMLToMVCConverter.CodeTemplates
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public class ControllerTextTemplateBase
+    public class ViewIndexTextTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

@@ -16,7 +16,9 @@ namespace UMLToMVCConverter
     class ClassGenerator
     {
         public static string GenerateClassesFromXmi(string xmiPath)
-        {         
+        {
+            string namespaceName = "Test";
+
             //ustawiamy zmienne potrzebne do generowania kodu
             //TODO: na razie każda klasa w osobnym pliku, docelowo możemy mieć klasę zagnieżdżoną np.
             CodeCompileUnit targetUnit = new CodeCompileUnit();
@@ -47,7 +49,7 @@ namespace UMLToMVCConverter
                     //tworzymy klase
 
                     //TODO: namespace, też nie wiem jak w kontekście UML
-                    CodeNamespace cns = new CodeNamespace("Test01");
+                    CodeNamespace cns = new CodeNamespace(namespaceName);
 
                     //TODO: tworzymy wpisy 'using' - na razie nie wiem jak to może wyglądać od strony UML
                     cns.Imports.Add(new CodeNamespaceImport("System"));
@@ -125,10 +127,13 @@ namespace UMLToMVCConverter
                 }
 
                 //generowanie pliku kontekstu (DbContext)
-                GenerateDbContextClass(types, "Test");
+                GenerateDbContextClass(types, namespaceName);
 
                 //generowanie plików konrolerów
-                GenerateControllers(types, "Test");
+                GenerateControllers(types, namespaceName);
+
+                //generowanie widoków
+                GenerateViews(types, namespaceName);
             }
 
             return "Plik przetworzono pomyślnie";
@@ -153,6 +158,19 @@ namespace UMLToMVCConverter
                 File.WriteAllText(@"Controllers\" + ctd.Name + "Controller.cs", output);
 
             }            
+        }
+
+        public static void GenerateViews(List<CodeTypeDeclaration> classes, string contextName)
+        {
+            //widoki - listy
+            foreach (CodeTypeDeclaration ctd in classes)
+            {
+                ViewIndexTextTemplate tmpl = new ViewIndexTextTemplate(ctd, contextName);
+                string output = tmpl.TransformText();
+                Directory.CreateDirectory(@"Views\"+ctd.Name);
+                File.WriteAllText(@"Views\" + ctd.Name + @"\Index.cshtml", output);
+
+            }
         }
     }
 }

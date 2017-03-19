@@ -33,21 +33,21 @@ namespace UMLToMVCConverter.CodeTemplates
                     "m.Web;\r\nusing System.Data.Entity;\r\nusing System.Data.Entity.ModelConfiguration.C" +
                     "onventions;\r\n\r\nnamespace ");
             
-            #line 14 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
             
             #line default
             #line hidden
             this.Write(".DAL\r\n{\r\n    public class ");
             
-            #line 16 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 17 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
             
             #line default
             #line hidden
             this.Write("Context : DbContext\r\n    {\r\n        ");
             
-            #line 18 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 19 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
  foreach(Tuple<string, string> nameAndPlural in classesNamesAndPlurals)
             {
         
@@ -56,21 +56,21 @@ namespace UMLToMVCConverter.CodeTemplates
             #line hidden
             this.Write("        public DbSet<");
             
-            #line 21 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 22 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameAndPlural.Item1));
             
             #line default
             #line hidden
             this.Write("> ");
             
-            #line 21 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 22 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameAndPlural.Item2));
             
             #line default
             #line hidden
             this.Write(" { get; set; }\r\n        ");
             
-            #line 22 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 23 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
  
             } 
         
