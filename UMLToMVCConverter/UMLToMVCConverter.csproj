@@ -77,12 +77,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbContextTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="CodeTemplates\ModelClassTextTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelClassTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTemplates\ModelClassTextTemplate.Data.cs">
+		<DependentUpon>ModelClassTextTemplate.tt</DependentUpon>
+	</Compile> 
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewIndexTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\ViewIndexTextTemplate.Data.cs" />
+    <Compile Include="CodeTemplates\ViewIndexTextTemplate.Data.cs">
+		<DependentUpon>ViewIndexTextTemplate.tt</DependentUpon>
+	</Compile> 
     <Compile Include="UMLVisibilityMapper.cs" />
     <Compile Include="UMLTypeMapper.cs" />
     <Page Include="MainWindow.xaml">
@@ -125,6 +135,10 @@
     <None Include="CodeTemplates\DbContextTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>DbContextTextTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="CodeTemplates\ModelClassTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ModelClassTextTemplate.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\ViewIndexTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

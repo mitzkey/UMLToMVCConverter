@@ -118,14 +118,6 @@ namespace UMLToMVCConverter
                     }
                 }
 
-                //generuję kod przestrzeni nazw w jednym pliku
-                string fileName = "Test.cs";
-                using (StreamWriter sourceWriter = new StreamWriter(fileName))
-                {
-                    provider.GenerateCodeFromCompileUnit(targetUnit,
-                        sourceWriter, options);
-                }
-
                 //generowanie pliku kontekstu (DbContext)
                 GenerateDbContextClass(types, namespaceName);
 
@@ -134,6 +126,9 @@ namespace UMLToMVCConverter
 
                 //generowanie widoków
                 GenerateViews(types, namespaceName);
+
+                //generowanie klas modelów
+                GenerateModels(types, namespaceName);
             }
 
             return "Plik przetworzono pomyślnie";
@@ -170,6 +165,17 @@ namespace UMLToMVCConverter
                 Directory.CreateDirectory(@"Views\"+ctd.Name);
                 File.WriteAllText(@"Views\" + ctd.Name + @"\Index.cshtml", output);
 
+            }
+        }
+
+        public static void GenerateModels(List<CodeTypeDeclaration> classes, string contextName)
+        {
+            foreach (CodeTypeDeclaration ctd in classes)
+            {
+                ModelClassTextTemplate tmpl = new ModelClassTextTemplate(ctd, contextName);
+                string output = tmpl.TransformText();
+                Directory.CreateDirectory(@"Models");
+                File.WriteAllText(@"Models\" + ctd.Name + ".cs", output);
             }
         }
     }
