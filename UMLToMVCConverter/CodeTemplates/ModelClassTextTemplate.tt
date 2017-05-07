@@ -12,7 +12,7 @@ using System.Web;
 
 namespace <#= contextName #>.Models
 {
-    public class <#= _class.Name #> <#    if (baseClassName != null) { #> : <#= baseClassName #> <#}#>
+    public <#    if (isAbstract) { #>abstract<#    } #> class <#= _class.Name #> <#    if (baseClassName != null) { #> : <#= baseClassName #> <#}#>
     {
 
         <#    foreach (CodeMemberField cmf in _class.Members)

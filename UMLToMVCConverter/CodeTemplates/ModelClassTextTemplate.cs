@@ -37,7 +37,21 @@ namespace UMLToMVCConverter.CodeTemplates
             
             #line default
             #line hidden
-            this.Write(".Models\r\n{\r\n    public class ");
+            this.Write(".Models\r\n{\r\n    public ");
+            
+            #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+    if (isAbstract) { 
+            
+            #line default
+            #line hidden
+            this.Write("abstract");
+            
+            #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+    } 
+            
+            #line default
+            #line hidden
+            this.Write(" class ");
             
             #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_class.Name));

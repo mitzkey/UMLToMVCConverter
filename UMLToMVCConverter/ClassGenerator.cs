@@ -62,10 +62,17 @@ namespace UMLToMVCConverter
                     cns.Types.Add(ctd);
                     targetUnit.Namespaces.Add(cns);
                     types.Add(ctd);
+                    
+                    //czy jest abstrakcyjna
+
+                    if (_class.Attribute("isAbstract") != null && _class.Attribute("isAbstract").Value == "true") {
+                        ctd.TypeAttributes = ctd.TypeAttributes | TypeAttributes.Abstract;
+                    }                    
 
                     #region pola
 
                     //pole "ID" do utworzenia klucza głównego relacji przez EF
+                    //TODO: to raczej powinno być w szablonie generowania kodu
                     CodeMemberField id_field = new CodeMemberField(typeof(int), ctd.Name + "ID");
                     ctd.Members.Add(id_field);
 
@@ -97,7 +104,7 @@ namespace UMLToMVCConverter
                 
                 //dziedziczenie
 
-                //dla każdej klasy sprawdzam czy po czyms dziedziczy
+                //po utworzeniu obiektów w liście typów, dla każdej klasy sprawdzam czy po czyms dziedziczy
                 foreach (XElement _class in classes)
                 {
                     //klasa bazowa
@@ -118,20 +125,28 @@ namespace UMLToMVCConverter
                     }
                 }
 
-                //generowanie pliku kontekstu (DbContext)
-                GenerateDbContextClass(types, namespaceName);
-
-                //generowanie plików konrolerów
-                GenerateControllers(types, namespaceName);
-
-                //generowanie widoków
-                GenerateViews(types, namespaceName);
-
-                //generowanie klas modelów
-                GenerateModels(types, namespaceName);
+                
             }
 
+            //generowanie plików
+            GenerateFiles(types, namespaceName);
+
             return "Plik przetworzono pomyślnie";
+        }
+
+        public static void GenerateFiles(List<CodeTypeDeclaration> types, string namespaceName)
+        {
+            //dla każdej klasy generowanie klasy modeli
+            GenerateModels(types, namespaceName);
+
+            //dla każdej klasy nieabstrakcyjnej generowanie plików kontrolerów, widoków, wpisu w pliku kontekstu danych
+            List<CodeTypeDeclaration> nonAbstractTypes = types.Where(i => !i.TypeAttributes.HasFlag(TypeAttributes.Abstract)).ToList();
+            //generowanie pliku kontekstu (DbContext)
+            GenerateDbContextClass(nonAbstractTypes, namespaceName);
+            //generowanie plików konrolerów
+            GenerateControllers(nonAbstractTypes, namespaceName);
+            //generowanie widoków
+            GenerateViews(nonAbstractTypes, namespaceName);
         }
 
 
