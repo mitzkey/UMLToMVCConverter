@@ -15,91 +15,40 @@ namespace UMLToMVCConverter
 {
     class ClassGenerator
     {
-        public static string GenerateClassesFromXmi(string xmiPath)
+        XDocument xdoc;
+        XNamespace xmi_namespace;
+        XNamespace uml_namespace;
+        MyAttributeEqualityComparer attributeComparer;
+        string namespaceName;
+        List<CodeTypeDeclaration> types;
+
+        public ClassGenerator(string xmiPath)
         {
-            string namespaceName = "Test";
-
-            //ustawiamy zmienne potrzebne do generowania kodu
-            //TODO: na razie każda klasa w osobnym pliku, docelowo możemy mieć klasę zagnieżdżoną np.
-            CodeCompileUnit targetUnit = new CodeCompileUnit();
-            CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
-            CodeGeneratorOptions options = new CodeGeneratorOptions();
-            options.BracingStyle = "C";
-
+            xdoc = XDocument.Load(xmiPath);
+            xmi_namespace = xdoc.Root.GetNamespaceOfPrefix("xmi");
+            uml_namespace = xdoc.Root.GetNamespaceOfPrefix("uml");
+            attributeComparer = new MyAttributeEqualityComparer();
+            namespaceName = "Test";
             //TODO: póki co nie wiadomo czy i jak używać przestrzeni nazw - robię listę typów => pakiety z UML
-            List<CodeTypeDeclaration> types = new List<CodeTypeDeclaration>();
-
-            MyAttributeEqualityComparer attributeComparer = new MyAttributeEqualityComparer();
-
-            XDocument xdoc = XDocument.Load(xmiPath);
-            XNamespace xmi = xdoc.Root.GetNamespaceOfPrefix("xmi");
-            XNamespace uml = xdoc.Root.GetNamespaceOfPrefix("uml");
-
+            types = new List<CodeTypeDeclaration>();
+        }
+        public string GenerateClasses()
+        {                                             
             //dla każdego modelu <uml:Model>
-            List<XElement> umlModels = xdoc.Descendants(uml + "Model").ToList();
+            List<XElement> umlModels = xdoc.Descendants(uml_namespace + "Model").ToList();
             foreach (XElement umlModel in umlModels)
             {
                 //dla każdej klasy <packagedElement xmi:type='uml:Class'>:
                 List<XElement> classes = umlModel.Descendants("packagedElement")
                     .Where(i => i.Attributes().
-                        Contains(new XAttribute(xmi + "type", "uml:Class"), attributeComparer))
+                        Contains(new XAttribute(xmi_namespace + "type", "uml:Class"), attributeComparer))
                     .ToList();
+
                 foreach (XElement _class in classes)
-                {                   
-                    //tworzymy klase
-
-                    //TODO: namespace, też nie wiem jak w kontekście UML
-                    CodeNamespace cns = new CodeNamespace(namespaceName);
-
-                    //TODO: tworzymy wpisy 'using' - na razie nie wiem jak to może wyglądać od strony UML
-                    cns.Imports.Add(new CodeNamespaceImport("System"));
-                   
+                {
                     //deklaracja klasy
-                    CodeTypeDeclaration ctd = new CodeTypeDeclaration();
-                    ctd.IsClass = true;
-                    ctd.Name = _class.Attribute("name").Value;
-                    ctd.TypeAttributes = TypeAttributes.Public; //TODO: czy w UML mamy widoczność klasy?                    
-                    cns.Types.Add(ctd);
-                    targetUnit.Namespaces.Add(cns);
-                    types.Add(ctd);
-                    
-                    //czy jest abstrakcyjna
-
-                    if (_class.Attribute("isAbstract") != null && _class.Attribute("isAbstract").Value == "true") {
-                        ctd.TypeAttributes = ctd.TypeAttributes | TypeAttributes.Abstract;
-                    }                    
-
-                    #region pola
-
-                    //pole "ID" do utworzenia klucza głównego relacji przez EF
-                    //TODO: to raczej powinno być w szablonie generowania kodu
-                    CodeMemberField id_field = new CodeMemberField(typeof(int), ctd.Name + "ID");
-                    ctd.Members.Add(id_field);
-
-                    List<XElement> fields = _class.Descendants("ownedAttribute")
-                            .Where(i => i.Attributes()
-                                .Contains(new XAttribute(xmi + "type", "uml:Property"), attributeComparer))
-                            .ToList();
-                        foreach (XElement field in fields)
-                        {
-                            //określenie typu pola
-                            //TODO: i tu mamy problem z odczytaniem typu - jak odczytywać typy z xmi? poniższy odczyt jest dość 'dziki' => odczytujemy tylko 5 podstawowych
-                            XElement xType = field.Descendants("type").FirstOrDefault();
-                            XElement xExtension = xType.Descendants(xmi + "Extension").FirstOrDefault();
-                            XElement xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
-                            string UMLtype = xRefExtension.Attribute("referentPath").Value.Split(new char[]{':',':'}).Last();
-                            Type cSharpType = UMLTypeMapper.UMLToCsharp(UMLtype);
-                        
-                            //deklaracja pola
-                            CodeMemberField cmf = new CodeMemberField(cSharpType, field.Attribute("name").Value);
-                        
-                            //widoczność
-                            string UMLvisibility = field.Attribute("visibility").Value;
-                            MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
-                            cmf.Attributes = cSharpVisibility;
-                            ctd.Members.Add(cmf);
-                        }
-                    #endregion
+                    CodeTypeDeclaration ctd = GenerateClassFromXElement(_class);
+                    types.Add(ctd);                                                                               
                 }
                 
                 //dziedziczenie
@@ -111,12 +60,12 @@ namespace UMLToMVCConverter
                     //TODO: trzeba coś ustalić ws. dziedziczenia wielokrotnego => zadanie na tablicy
                     XElement xCurrClass = _class.Descendants("generalization")
                         .Where(i => i.Attributes()
-                            .Contains(new XAttribute(xmi + "type", "uml:Generalization"), attributeComparer))
+                            .Contains(new XAttribute(xmi_namespace + "type", "uml:Generalization"), attributeComparer))
                         .FirstOrDefault();
                     if (xCurrClass != null)
                     {
                         string base_class_id = xCurrClass.Attribute("general").Value;
-                        string base_class_name = classes.Where(i => i.Attribute(xmi + "id").Value.Equals(base_class_id)).First().Attribute("name").Value;
+                        string base_class_name = classes.Where(i => i.Attribute(xmi_namespace + "id").Value.Equals(base_class_id)).First().Attribute("name").Value;
                         string curr_class_name = _class.Attribute("name").Value;
                         CodeTypeDeclaration currClass = types.Where(i => i.Name == curr_class_name).FirstOrDefault();
                         CodeTypeDeclaration baseClass = types.Where(i => i.Name == base_class_name).FirstOrDefault();
@@ -134,7 +83,60 @@ namespace UMLToMVCConverter
             return "Plik przetworzono pomyślnie";
         }
 
-        public static void GenerateFiles(List<CodeTypeDeclaration> types, string namespaceName)
+        private CodeTypeDeclaration GenerateClassFromXElement(XElement _class)
+        {
+            //deklaracja klasy
+            CodeTypeDeclaration ctd = new CodeTypeDeclaration();
+            ctd.IsClass = true;
+            ctd.Name = _class.Attribute("name").Value;
+            ctd.TypeAttributes = TypeAttributes.Public; //TODO: czy w UML mamy widoczność klasy?                    
+            
+
+            //czy jest abstrakcyjna
+            if (_class.Attribute("isAbstract") != null && _class.Attribute("isAbstract").Value == "true")
+            {
+                ctd.TypeAttributes = ctd.TypeAttributes | TypeAttributes.Abstract;
+            }
+
+            //czy są klasy zagnieżdżone
+            List<XElement> nestedClasses = _class.Descendants("nestedClassifier").ToList();
+            foreach (XElement nestedClass in nestedClasses)
+            {
+                CodeTypeDeclaration ctd_nested = GenerateClassFromXElement(nestedClass);
+                ctd.Members.Add(ctd_nested);
+            }
+
+            #region pola            
+
+            List<XElement> fields = _class.Descendants("ownedAttribute")
+                    .Where(i => i.Attributes()
+                        .Contains(new XAttribute(xmi_namespace + "type", "uml:Property"), attributeComparer))
+                    .ToList();
+            foreach (XElement field in fields)
+            {
+                //określenie typu pola
+                //TODO: i tu mamy problem z odczytaniem typu - jak odczytywać typy z xmi? poniższy odczyt jest dość 'dziki' => odczytujemy tylko 5 podstawowych
+                XElement xType = field.Descendants("type").FirstOrDefault();
+                XElement xExtension = xType.Descendants(xmi_namespace + "Extension").FirstOrDefault();
+                XElement xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
+                string UMLtype = xRefExtension.Attribute("referentPath").Value.Split(new char[] { ':', ':' }).Last();
+                Type cSharpType = UMLTypeMapper.UMLToCsharp(UMLtype);
+
+                //deklaracja pola
+                CodeMemberField cmf = new CodeMemberField(cSharpType, field.Attribute("name").Value);
+
+                //widoczność
+                string UMLvisibility = field.Attribute("visibility").Value;
+                MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
+                cmf.Attributes = cSharpVisibility;
+                ctd.Members.Add(cmf);
+            }
+            #endregion
+
+            return ctd;
+        }
+
+        private void GenerateFiles(List<CodeTypeDeclaration> types, string namespaceName)
         {
             //dla każdej klasy generowanie klasy modeli
             GenerateModels(types, namespaceName);
@@ -150,7 +152,7 @@ namespace UMLToMVCConverter
         }
 
 
-        public static void GenerateDbContextClass(List<CodeTypeDeclaration> classes, string contextName)
+        private void GenerateDbContextClass(List<CodeTypeDeclaration> classes, string contextName)
         {
             DbContextTextTemplate tmpl = new DbContextTextTemplate(classes, contextName);
             string output = tmpl.TransformText();
@@ -158,7 +160,7 @@ namespace UMLToMVCConverter
             File.WriteAllText(@"DAL\"+contextName + "Context.cs", output);
         }
 
-        public static void GenerateControllers(List<CodeTypeDeclaration> classes, string contextName)
+        private void GenerateControllers(List<CodeTypeDeclaration> classes, string contextName)
         {
             foreach (CodeTypeDeclaration ctd in classes)
             {
@@ -170,7 +172,7 @@ namespace UMLToMVCConverter
             }            
         }
 
-        public static void GenerateViews(List<CodeTypeDeclaration> classes, string contextName)
+        private void GenerateViews(List<CodeTypeDeclaration> classes, string contextName)
         {
             //widoki - listy
             foreach (CodeTypeDeclaration ctd in classes)
@@ -183,7 +185,7 @@ namespace UMLToMVCConverter
             }
         }
 
-        public static void GenerateModels(List<CodeTypeDeclaration> classes, string contextName)
+        private void GenerateModels(List<CodeTypeDeclaration> classes, string contextName)
         {
             foreach (CodeTypeDeclaration ctd in classes)
             {

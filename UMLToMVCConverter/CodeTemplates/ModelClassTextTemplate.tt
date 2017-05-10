@@ -12,14 +12,9 @@ using System.Web;
 
 namespace <#= contextName #>.Models
 {
-    public <#    if (isAbstract) { #>abstract<#    } #> class <#= _class.Name #> <#    if (baseClassName != null) { #> : <#= baseClassName #> <#}#>
-    {
-
-        <#    foreach (CodeMemberField cmf in _class.Members)
-    {
-                #> public <#= cmf.Type.BaseType + " " + cmf.Name #> { get; set; }
- <#
-    }
-        #>
-    }
+    <#
+        PureClassTextTemplate tmpl = new PureClassTextTemplate(_class, contextName);
+        string code = tmpl.TransformText();
+    #>
+    <#= code #>
 }

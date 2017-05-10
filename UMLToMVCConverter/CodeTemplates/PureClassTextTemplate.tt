@@ -1,0 +1,19 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="System.CodeDom"#>
+<#@ assembly name="System.Core" #>
+
+public <#    if (isAbstract) { #>abstract<#    } #> class <#= _class.Name #> <#    if (baseClassName != null) { #> : <#= baseClassName #> <#}#>
+    {
+        public int <#= _class.Name #>ID {get; set;}
+
+         <#    foreach (var cmf in _class.Members)
+    {
+        if (cmf is CodeTypeDeclaration) {
+            CodeTypeDeclaration ctd = (CodeTypeDeclaration) cmf;
+            PureClassTextTemplate tmpl = new PureClassTextTemplate(ctd, contextName);
+            string inner_class = tmpl.TransformText();
+                #> <#=                inner_class #> <#        } else { CodeMemberField cmff = (CodeMemberField) cmf;#>public <#= cmff.Type.BaseType + " " + cmff.Name #> { get; set; }<#}#>
+ <#
+    }
+        #>
+    }
