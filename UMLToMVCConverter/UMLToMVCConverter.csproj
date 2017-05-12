@@ -85,12 +85,12 @@
     <Compile Include="CodeTemplates\ModelClassTextTemplate.Data.cs">
       <DependentUpon>ModelClassTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\PureClassTextTemplate.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Include="CodeTemplates\PureClassTextTemplate.Data.cs">
       <DependentUpon>PureClassTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\PureClassTextTemplate.Data.cs">
+    <Compile Include="CodeTemplates\PureClassTextTemplate1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>PureClassTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
@@ -101,6 +101,8 @@
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.Data.cs">
       <DependentUpon>ViewIndexTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="EnumHelper.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="UMLVisibilityMapper.cs" />
     <Compile Include="UMLTypeMapper.cs" />
     <Page Include="MainWindow.xaml">
@@ -150,7 +152,7 @@
     </None>
     <None Include="CodeTemplates\PureClassTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>PureClassTextTemplate.cs</LastGenOutput>
+      <LastGenOutput>PureClassTextTemplate1.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\ViewIndexTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

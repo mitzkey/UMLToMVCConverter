@@ -20,6 +20,10 @@ namespace UMLToMVCConverter
                     return typeof(int);
                 case "double":
                     return typeof(double);
+                case "void":
+                    return null;
+                case "int":
+                    return typeof(int);
                 default:
                     throw new Exception("Mapowanie typu UML: " + UMLType + " nie zaimplementowane.");
             }

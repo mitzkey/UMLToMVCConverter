@@ -106,34 +106,85 @@ namespace UMLToMVCConverter
                 ctd.Members.Add(ctd_nested);
             }
 
-            #region pola            
+            #region pola, metody          
 
-            List<XElement> fields = _class.Descendants("ownedAttribute")
+            //pola
+            List<XElement> attributes = _class.Descendants("ownedAttribute")
                     .Where(i => i.Attributes()
                         .Contains(new XAttribute(xmi_namespace + "type", "uml:Property"), attributeComparer))
                     .ToList();
-            foreach (XElement field in fields)
+            foreach (XElement attribute in attributes)
             {
-                //określenie typu pola
-                //TODO: i tu mamy problem z odczytaniem typu - jak odczytywać typy z xmi? poniższy odczyt jest dość 'dziki' => odczytujemy tylko 5 podstawowych
-                XElement xType = field.Descendants("type").FirstOrDefault();
-                XElement xExtension = xType.Descendants(xmi_namespace + "Extension").FirstOrDefault();
-                XElement xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
-                string UMLtype = xRefExtension.Attribute("referentPath").Value.Split(new char[] { ':', ':' }).Last();
-                Type cSharpType = UMLTypeMapper.UMLToCsharp(UMLtype);
+                //określenie typu pola                
+                Type cSharpType = GetXElementCsharpType(attribute);
 
                 //deklaracja pola
-                CodeMemberField cmf = new CodeMemberField(cSharpType, field.Attribute("name").Value);
+                CodeMemberField cmf = new CodeMemberField(cSharpType, attribute.Attribute("name").Value);
 
                 //widoczność
-                string UMLvisibility = field.Attribute("visibility").Value;
+                string UMLvisibility = attribute.Attribute("visibility").Value;
                 MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
                 cmf.Attributes = cSharpVisibility;
                 ctd.Members.Add(cmf);
             }
+
+            //metody
+            List<XElement> operations = _class.Descendants("ownedOperation")
+                    .Where(i => i.Attributes()
+                        .Contains(new XAttribute(xmi_namespace + "type", "uml:Operation"), attributeComparer))
+                    .ToList();
+            foreach (XElement operation in operations)
+            {
+                CodeMemberMethod cmm = new CodeMemberMethod();
+
+                cmm.Name = operation.Attribute("name").Value;
+
+                //typ zwracany
+                XElement returnParameter = operation.Descendants("ownedParameter").Where(i => i.Attribute("direction").Value.Equals("return")).FirstOrDefault();
+                if (returnParameter == null)
+                {
+
+                }
+                Type returnType = GetXElementCsharpType(returnParameter);
+                if (returnType != null)
+                {
+                    CodeTypeReference ctr = new CodeTypeReference(GetXElementCsharpType(returnParameter));
+                    cmm.ReturnType = ctr;
+                }
+                            
+
+                //parametry wejściowe
+                List<XElement> parameters = operation.Descendants("ownedParameter").Where(i => i.Attribute("direction") == null || !i.Attribute("direction").Value.Equals("return")).ToList();
+                foreach(XElement xParameter in parameters) {
+                    Type parType = GetXElementCsharpType(xParameter);
+                    string parName = xParameter.Attribute("name").Value;
+                    CodeParameterDeclarationExpression parameter = new CodeParameterDeclarationExpression(parType, parName);
+                    cmm.Parameters.Add(parameter);
+                }
+
+                //widoczność
+                string UMLvisibility = operation.Attribute("visibility").Value;
+                MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
+                cmm.Attributes = cSharpVisibility;
+                ctd.Members.Add(cmm);
+            }
+
             #endregion
 
             return ctd;
+        }
+
+        private Type GetXElementCsharpType(XElement xElement)
+        {
+            XElement xType = xElement.Descendants("type").FirstOrDefault();
+            if (xType == null)
+            {
+                return null;
+            }
+            XElement xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
+            string UMLtype = xRefExtension.Attribute("referentPath").Value.Split(new char[] { ':', ':' }).Last();
+            Type cSharpType = UMLTypeMapper.UMLToCsharp(UMLtype);
+            return cSharpType;
         }
 
         private void GenerateFiles(List<CodeTypeDeclaration> types, string namespaceName)

@@ -17,7 +17,7 @@ namespace UMLToMVCConverter.CodeTemplates
             this.contextName = contextName;
             className = ctd.Name;
             fieldsNames = new List<string>();
-            foreach (CodeMemberField field in ctd.Members)
+            foreach (CodeMemberField field in ctd.Members.OfType<CodeMemberField>())
             {
                 //własciwości oprócz pola "...ID"
                 string name = field.Name;

@@ -10,6 +10,8 @@
 namespace UMLToMVCConverter.CodeTemplates
 {
     using System.CodeDom;
+    using System.Collections.Generic;
+    using UMLToMVCConverter;
     using System;
     
     /// <summary>
@@ -28,100 +30,159 @@ namespace UMLToMVCConverter.CodeTemplates
         {
             this.Write("\r\npublic ");
             
-            #line 5 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 7 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
     if (isAbstract) { 
             
             #line default
             #line hidden
             this.Write("abstract");
             
-            #line 5 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 7 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
     } 
             
             #line default
             #line hidden
             this.Write(" class ");
             
-            #line 5 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 7 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_class.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 5 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 7 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
     if (baseClassName != null) { 
             
             #line default
             #line hidden
             this.Write(" : ");
             
-            #line 5 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 7 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(baseClassName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 5 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 7 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("    {\r\n        public int ");
             
-            #line 7 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 9 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_class.Name));
             
             #line default
             #line hidden
             this.Write("ID {get; set;}\r\n\r\n         ");
             
-            #line 9 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
-    foreach (var cmf in _class.Members)
+            #line 11 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+    foreach (var cm in _class.Members)
     {
-        if (cmf is CodeTypeDeclaration) {
-            CodeTypeDeclaration ctd = (CodeTypeDeclaration) cmf;
+        if (cm is CodeTypeDeclaration) {
+            CodeTypeDeclaration ctd = (CodeTypeDeclaration) cm;
             PureClassTextTemplate tmpl = new PureClassTextTemplate(ctd, contextName);
             string inner_class = tmpl.TransformText();
-                
             
             #line default
             #line hidden
-            this.Write(" ");
+            this.Write("            ");
             
-            #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 17 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(inner_class));
             
             #line default
             #line hidden
-            this.Write(" ");
+            this.Write("\r\n        ");
             
-            #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
-        } else { CodeMemberField cmff = (CodeMemberField) cmf;
-            
-            #line default
-            #line hidden
-            this.Write("public ");
-            
-            #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(cmff.Type.BaseType + " " + cmff.Name));
-            
-            #line default
-            #line hidden
-            this.Write(" { get; set; }");
-            
-            #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 18 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
 }
+        else if (cm is CodeMemberProperty) { 
+            CodeMemberField cmp = (CodeMemberField) cm;
             
             #line default
             #line hidden
-            this.Write(" ");
+            this.Write("            public ");
             
-            #line 16 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            #line 21 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(cmp.Type.BaseType + " " + cmp.Name));
+            
+            #line default
+            #line hidden
+            this.Write(" { get; set; }\r\n        ");
+            
+            #line 22 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
 
-    }
+        }
         
+        else if (cm is CodeMemberMethod) { 
+            CodeMemberMethod cmm = (CodeMemberMethod) cm;
+            IEnumerable<Enum> attributes = EnumHelper.GetFlags(cmm.Attributes);
+            string strAttributes = "";
+            foreach (Enum e in attributes) {
+                strAttributes += e.ToString().ToLower() + " ";  
+            }
+
+            string returnType = "void";
+            if (cmm.ReturnType.BaseType != "System.Void") {
+                returnType = cmm.ReturnType.BaseType;
+            }
+            
+            
+            #line default
+            #line hidden
+            this.Write("            ");
+            
+            #line 38 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(strAttributes + returnType + " " + cmm.Name + "("));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n            ");
+            
+            #line 39 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+
+                bool addComma = false;
+                foreach (CodeParameterDeclarationExpression cp in cmm.Parameters) {                                                            
+                    if (addComma) {
+                        
+            
+            #line default
+            #line hidden
+            this.Write(",");
+            
+            #line 43 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+
+                    }
+                    addComma = true;
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 46 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(cp.Type.BaseType + " " + cp.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 46 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+
+                }
+                
+            
+            #line default
+            #line hidden
+            this.Write(") {\r\nthrow new NotImplementedException();\r\n}\r\n        ");
+            
+            #line 51 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\PureClassTextTemplate.tt"
+
+        }
+    }
+    
             
             #line default
             #line hidden

@@ -1,19 +1,55 @@
 ﻿<#@ template language="C#" #>
 <#@ import namespace="System.CodeDom"#>
+<#@ import namespace="System.Collections.Generic"#>
+<#@ import namespace="UMLToMVCConverter"#>
 <#@ assembly name="System.Core" #>
 
 public <#    if (isAbstract) { #>abstract<#    } #> class <#= _class.Name #> <#    if (baseClassName != null) { #> : <#= baseClassName #> <#}#>
     {
         public int <#= _class.Name #>ID {get; set;}
 
-         <#    foreach (var cmf in _class.Members)
+         <#    foreach (var cm in _class.Members)
     {
-        if (cmf is CodeTypeDeclaration) {
-            CodeTypeDeclaration ctd = (CodeTypeDeclaration) cmf;
+        if (cm is CodeTypeDeclaration) {
+            CodeTypeDeclaration ctd = (CodeTypeDeclaration) cm;
             PureClassTextTemplate tmpl = new PureClassTextTemplate(ctd, contextName);
-            string inner_class = tmpl.TransformText();
-                #> <#=                inner_class #> <#        } else { CodeMemberField cmff = (CodeMemberField) cmf;#>public <#= cmff.Type.BaseType + " " + cmff.Name #> { get; set; }<#}#>
- <#
+            string inner_class = tmpl.TransformText();#>
+            <#=inner_class#>
+        <#}
+        else if (cm is CodeMemberProperty) { 
+            CodeMemberField cmp = (CodeMemberField) cm;#>
+            public <#= cmp.Type.BaseType + " " + cmp.Name #> { get; set; }
+        <#
+        }
+        
+        else if (cm is CodeMemberMethod) { 
+            CodeMemberMethod cmm = (CodeMemberMethod) cm;
+            IEnumerable<Enum> attributes = EnumHelper.GetFlags(cmm.Attributes);
+            string strAttributes = "";
+            foreach (Enum e in attributes) {
+                strAttributes += e.ToString().ToLower() + " ";  
+            }
+
+            string returnType = "void";
+            if (cmm.ReturnType.BaseType != "System.Void") {
+                returnType = cmm.ReturnType.BaseType;
+            }
+            #>
+            <#= strAttributes + returnType + " " + cmm.Name + "("#>
+            <#
+                bool addComma = false;
+                foreach (CodeParameterDeclarationExpression cp in cmm.Parameters) {                                                            
+                    if (addComma) {
+                        #>,<#
+                    }
+                    addComma = true;
+                    #><#= cp.Type.BaseType + " " + cp.Name#><#
+                }
+                #>) {
+throw new NotImplementedException();
+}
+        <#
+        }
     }
-        #>
+    #>
     }
