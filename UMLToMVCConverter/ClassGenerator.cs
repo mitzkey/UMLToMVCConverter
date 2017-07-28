@@ -32,41 +32,42 @@ namespace UMLToMVCConverter
             //TODO: póki co nie wiadomo czy i jak używać przestrzeni nazw - robię listę typów => pakiety z UML
             types = new List<CodeTypeDeclaration>();
         }
-        public string GenerateClasses()
+        public string GenerateTypes()
         {                                             
             //dla każdego modelu <uml:Model>
             List<XElement> umlModels = xdoc.Descendants(uml_namespace + "Model").ToList();
             foreach (XElement umlModel in umlModels)
             {
                 //dla każdej klasy <packagedElement xmi:type='uml:Class'>:
-                List<XElement> classes = umlModel.Descendants("packagedElement")
+                List<XElement> xTypes = umlModel.Descendants("packagedElement")
                     .Where(i => i.Attributes().
-                        Contains(new XAttribute(xmi_namespace + "type", "uml:Class"), attributeComparer))
+                        Contains(new XAttribute(xmi_namespace + "type", "uml:Class"), attributeComparer)
+                        || i.Attributes().Contains(new XAttribute(xmi_namespace + "type", "uml:DataType"), attributeComparer))
                     .ToList();
 
-                foreach (XElement _class in classes)
+                foreach (XElement _type in xTypes)
                 {
                     //deklaracja klasy
-                    CodeTypeDeclaration ctd = GenerateClassFromXElement(_class);
+                    CodeTypeDeclaration ctd = GenerateTypeFromXElement(_type);
                     types.Add(ctd);                                                                               
                 }
                 
                 //dziedziczenie
 
                 //po utworzeniu obiektów w liście typów, dla każdej klasy sprawdzam czy po czyms dziedziczy
-                foreach (XElement _class in classes)
+                foreach (XElement _type in xTypes)
                 {
                     //klasa bazowa
                     //TODO: trzeba coś ustalić ws. dziedziczenia wielokrotnego => zadanie na tablicy
-                    XElement xCurrClass = _class.Descendants("generalization")
+                    XElement xCurrClass = _type.Descendants("generalization")
                         .Where(i => i.Attributes()
                             .Contains(new XAttribute(xmi_namespace + "type", "uml:Generalization"), attributeComparer))
                         .FirstOrDefault();
                     if (xCurrClass != null)
                     {
                         string base_class_id = xCurrClass.Attribute("general").Value;
-                        string base_class_name = classes.Where(i => i.Attribute(xmi_namespace + "id").Value.Equals(base_class_id)).First().Attribute("name").Value;
-                        string curr_class_name = _class.Attribute("name").Value;
+                        string base_class_name = xTypes.Where(i => i.Attribute(xmi_namespace + "id").Value.Equals(base_class_id)).First().Attribute("name").Value;
+                        string curr_class_name = _type.Attribute("name").Value;
                         CodeTypeDeclaration currClass = types.Where(i => i.Name == curr_class_name).FirstOrDefault();
                         CodeTypeDeclaration baseClass = types.Where(i => i.Name == base_class_name).FirstOrDefault();
                         CodeTypeReference ctr = new CodeTypeReference(baseClass.Name);
@@ -83,33 +84,47 @@ namespace UMLToMVCConverter
             return "Plik przetworzono pomyślnie";
         }
 
-        private CodeTypeDeclaration GenerateClassFromXElement(XElement _class)
+        private CodeTypeDeclaration GenerateTypeFromXElement(XElement _type)
         {
-            //deklaracja klasy
+            //deklaracja typu
             CodeTypeDeclaration ctd = new CodeTypeDeclaration();
-            ctd.IsClass = true;
-            ctd.Name = _class.Attribute("name").Value;
-            ctd.TypeAttributes = TypeAttributes.Public; //TODO: czy w UML mamy widoczność klasy?                    
+
+            //jaki to typ
+            string type = _type.Attribute(xmi_namespace + "type").Value; 
+            switch (type) {
+                case "uml:Class":
+                    ctd.IsClass = true;
+                    break;
+                case "uml:DataType":
+                    ctd.IsStruct = true;
+                    break;
+                default:
+                    throw new Exception("Nieobsługiwany typ: " + type);
+            }
+                
+
+            ctd.Name = _type.Attribute("name").Value;
+            ctd.TypeAttributes = TypeAttributes.Public; //TODO: czy w UML mamy widoczność typu?                    
             
 
             //czy jest abstrakcyjna
-            if (_class.Attribute("isAbstract") != null && _class.Attribute("isAbstract").Value == "true")
+            if (_type.Attribute("isAbstract") != null && _type.Attribute("isAbstract").Value == "true")
             {
                 ctd.TypeAttributes = ctd.TypeAttributes | TypeAttributes.Abstract;
             }
 
             //czy są klasy zagnieżdżone
-            List<XElement> nestedClasses = _class.Descendants("nestedClassifier").ToList();
+            List<XElement> nestedClasses = _type.Descendants("nestedClassifier").ToList();
             foreach (XElement nestedClass in nestedClasses)
             {
-                CodeTypeDeclaration ctd_nested = GenerateClassFromXElement(nestedClass);
+                CodeTypeDeclaration ctd_nested = GenerateTypeFromXElement(nestedClass);
                 ctd.Members.Add(ctd_nested);
             }
 
             #region pola, metody          
 
             //pola
-            List<XElement> attributes = _class.Descendants("ownedAttribute")
+            List<XElement> attributes = _type.Descendants("ownedAttribute")
                     .Where(i => i.Attributes()
                         .Contains(new XAttribute(xmi_namespace + "type", "uml:Property"), attributeComparer))
                     .ToList();
@@ -119,17 +134,20 @@ namespace UMLToMVCConverter
                 Type cSharpType = GetXElementCsharpType(attribute);
 
                 //deklaracja pola
-                CodeMemberField cmf = new CodeMemberField(cSharpType, attribute.Attribute("name").Value);
+                CodeMemberProperty cmp = new CodeMemberProperty();
+                CodeTypeReference typeRef = new CodeTypeReference(cSharpType);
+                cmp.Type = typeRef;
+                cmp.Name = attribute.Attribute("name").Value;
 
                 //widoczność
                 string UMLvisibility = attribute.Attribute("visibility").Value;
                 MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
-                cmf.Attributes = cSharpVisibility;
-                ctd.Members.Add(cmf);
+                cmp.Attributes = cSharpVisibility;
+                ctd.Members.Add(cmp);
             }
 
             //metody
-            List<XElement> operations = _class.Descendants("ownedOperation")
+            List<XElement> operations = _type.Descendants("ownedOperation")
                     .Where(i => i.Attributes()
                         .Contains(new XAttribute(xmi_namespace + "type", "uml:Operation"), attributeComparer))
                     .ToList();
@@ -192,14 +210,20 @@ namespace UMLToMVCConverter
             //dla każdej klasy generowanie klasy modeli
             GenerateModels(types, namespaceName);
 
-            //dla każdej klasy nieabstrakcyjnej generowanie plików kontrolerów, widoków, wpisu w pliku kontekstu danych
-            List<CodeTypeDeclaration> nonAbstractTypes = types.Where(i => !i.TypeAttributes.HasFlag(TypeAttributes.Abstract)).ToList();
+            /*tylko niektóre typy będą niezależnymi obiektami, nie będą nimi:
+             * - klasy abstrakcyjne
+             * - typy wartościowe
+            */
+            List<CodeTypeDeclaration> standaloneEntityTypes = types.
+                Where(i => !i.TypeAttributes.HasFlag(TypeAttributes.Abstract)
+                    && !i.IsStruct)
+                .ToList();
             //generowanie pliku kontekstu (DbContext)
-            GenerateDbContextClass(nonAbstractTypes, namespaceName);
+            GenerateDbContextClass(standaloneEntityTypes, namespaceName);
             //generowanie plików konrolerów
-            GenerateControllers(nonAbstractTypes, namespaceName);
+            GenerateControllers(standaloneEntityTypes, namespaceName);
             //generowanie widoków
-            GenerateViews(nonAbstractTypes, namespaceName);
+            GenerateViews(standaloneEntityTypes, namespaceName);
         }
 
 

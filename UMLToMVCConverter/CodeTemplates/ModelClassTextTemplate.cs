@@ -41,7 +41,7 @@ namespace UMLToMVCConverter.CodeTemplates
             
             #line 15 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
 
-        PureClassTextTemplate tmpl = new PureClassTextTemplate(_class, contextName);
+        BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(_class, contextName);
         string code = tmpl.TransformText();
     
             

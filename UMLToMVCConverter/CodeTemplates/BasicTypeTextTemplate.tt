@@ -4,20 +4,25 @@
 <#@ import namespace="UMLToMVCConverter"#>
 <#@ assembly name="System.Core" #>
 
+<#    if (_class.IsStruct) {#>
+[ComplexType]
+<#    }#>
 public <#    if (isAbstract) { #>abstract<#    } #> class <#= _class.Name #> <#    if (baseClassName != null) { #> : <#= baseClassName #> <#}#>
     {
-        public int <#= _class.Name #>ID {get; set;}
+        <#    if (_class.IsClass) { #>
+            public int <#= _class.Name #>ID {get; set;}
+        <#    }#>
 
          <#    foreach (var cm in _class.Members)
     {
         if (cm is CodeTypeDeclaration) {
             CodeTypeDeclaration ctd = (CodeTypeDeclaration) cm;
-            PureClassTextTemplate tmpl = new PureClassTextTemplate(ctd, contextName);
+            BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(ctd, contextName);
             string inner_class = tmpl.TransformText();#>
             <#=inner_class#>
         <#}
         else if (cm is CodeMemberProperty) { 
-            CodeMemberField cmp = (CodeMemberField) cm;#>
+            CodeMemberProperty cmp = (CodeMemberProperty) cm;#>
             public <#= cmp.Type.BaseType + " " + cmp.Name #> { get; set; }
         <#
         }

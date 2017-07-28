@@ -13,7 +13,7 @@ using System.Web;
 namespace <#= contextName #>.Models
 {
     <#
-        PureClassTextTemplate tmpl = new PureClassTextTemplate(_class, contextName);
+        BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(_class, contextName);
         string code = tmpl.TransformText();
     #>
     <#= code #>

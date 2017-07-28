@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace UMLToMVCConverter.CodeTemplates
 {
-    public partial class PureClassTextTemplate
+    public partial class BasicTypeTextTemplate
     {
         CodeTypeDeclaration _class;
         string contextName;
         string baseClassName;
         bool isAbstract;
 
-        public PureClassTextTemplate(CodeTypeDeclaration _class, string contextName)
+        public BasicTypeTextTemplate(CodeTypeDeclaration _class, string contextName)
         {
             this._class = _class;
             isAbstract = _class.TypeAttributes.HasFlag(TypeAttributes.Abstract);

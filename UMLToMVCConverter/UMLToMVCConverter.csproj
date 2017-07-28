@@ -86,12 +86,12 @@
       <DependentUpon>ModelClassTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeTemplates\PureClassTextTemplate.Data.cs">
-      <DependentUpon>PureClassTextTemplate.tt</DependentUpon>
+      <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\PureClassTextTemplate1.cs">
+    <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PureClassTextTemplate.tt</DependentUpon>
+      <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -150,9 +150,9 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ModelClassTextTemplate.cs</LastGenOutput>
     </None>
-    <None Include="CodeTemplates\PureClassTextTemplate.tt">
+    <None Include="CodeTemplates\BasicTypeTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>PureClassTextTemplate1.cs</LastGenOutput>
+      <LastGenOutput>BasicTypeTextTemplate.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\ViewIndexTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
