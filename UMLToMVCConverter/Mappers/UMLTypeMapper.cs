@@ -27,6 +27,8 @@ namespace UMLToMVCConverter.Mappers
                     return null;
                 case "int":
                     return GetDetailedType(typeof(int), mplLowerVal, mplUpperVal);
+                case "boolean":
+                    return GetDetailedType(typeof(bool), mplLowerVal, mplUpperVal);
                 default:
                     throw new Exception("Mapowanie typu UML: " + UMLType + " niezaimplementowane.");
             }

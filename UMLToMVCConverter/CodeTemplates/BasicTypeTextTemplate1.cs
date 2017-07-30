@@ -140,11 +140,39 @@ namespace UMLToMVCConverter.CodeTemplates
             this.Write("            public ");
             
             #line 30 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {
+            
+            #line default
+            #line hidden
+            this.Write(" static ");
+            
+            #line 30 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 30 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(type.ExtTypeName + " " + cmp.Name));
             
             #line default
             #line hidden
-            this.Write(" { get; set; }\r\n        ");
+            this.Write(" { get; ");
+            
+            #line 30 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+ if (!cmp.HasSet) {
+            
+            #line default
+            #line hidden
+            this.Write("private ");
+            
+            #line 30 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("set; }\r\n        ");
             
             #line 31 "C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 

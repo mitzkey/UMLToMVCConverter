@@ -142,7 +142,7 @@ namespace UMLToMVCConverter
                 ExtendedType cSharpType = GetXElementCsharpType(attribute, lowerValue, upperValue);
 
                 //deklaracja pola
-                CodeMemberProperty cmp = new CodeMemberProperty();
+                CodeMemberProperty cmp = new CodeMemberProperty();                
                 CodeTypeReference typeRef = new ExtendedCodeTypeReference(cSharpType);
                 cmp.Type = typeRef;
                 cmp.Name = attribute.Attribute("name").Value;
@@ -150,7 +150,25 @@ namespace UMLToMVCConverter
                 //widoczność
                 string UMLvisibility = attribute.Attribute("visibility").Value;
                 MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
-                cmp.Attributes = cSharpVisibility;               
+                cmp.Attributes = cSharpVisibility;    
+           
+                //czy statyczny?
+                XAttribute xIsStatic = attribute.Attribute("isStatic");
+                if (xIsStatic != null && xIsStatic.Value == "true")
+                {
+                    cmp.Attributes = cmp.Attributes | MemberAttributes.Static;                    
+                }
+
+                //czy tylko do odczytu
+                XAttribute xIsReadonly = attribute.Attribute("isReadOnly");
+                if (xIsReadonly != null && xIsReadonly.Value == "true") 
+                {
+                    cmp.HasSet = false;
+                }
+                else
+                {
+                    cmp.HasSet = true;
+                }
 
                 ctd.Members.Add(cmp);
             }

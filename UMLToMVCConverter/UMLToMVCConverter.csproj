@@ -61,6 +61,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CodeTemplates\BasicTypeTextTemplate1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,11 +91,6 @@
       <DependentUpon>ModelClassTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeTemplates\PureClassTextTemplate.Data.cs">
-      <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
@@ -155,7 +155,7 @@
     </None>
     <None Include="CodeTemplates\BasicTypeTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>BasicTypeTextTemplate.cs</LastGenOutput>
+      <LastGenOutput>BasicTypeTextTemplate1.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\ViewIndexTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

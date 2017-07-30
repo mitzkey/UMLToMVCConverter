@@ -13,10 +13,10 @@ public  class Baby  : Person     {
 public  class Nested     {
                     public int NestedID {get; set;}
         
-                     public String name { get; set; }
+                     public  String name { get; set; }
             }
-                    public ICollection<System.String> knownWords { get; set; }
-                    public String name { get; set; }
+                    public  ICollection<System.String> knownWords { get; set; }
+                    public  String name { get; set; }
                     public void MakeWorker(
             ) {
 throw new NotImplementedException();

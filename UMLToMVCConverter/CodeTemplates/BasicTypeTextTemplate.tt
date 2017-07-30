@@ -27,7 +27,7 @@ public <#    if (isAbstract) { #>abstract<#    } #> class <#= _class.Name #> <# 
             string generics = "";
             ExtendedCodeTypeReference type = (ExtendedCodeTypeReference)cmp.Type;
 #>
-            public <#= type.ExtTypeName + " " + cmp.Name #> { get; set; }
+            public <#if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {#> static <#}#> <#= type.ExtTypeName + " " + cmp.Name #> { get; <# if (!cmp.HasSet) {#>private <#}#>set; }
         <#
         }
         

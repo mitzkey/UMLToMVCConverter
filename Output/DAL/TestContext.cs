@@ -11,5 +11,6 @@ namespace Test.DAL
     {
                 public DbSet<Worker> WorkerSet { get; set; }
                 public DbSet<Baby> BabySet { get; set; }
+                public DbSet<CompanyInfo> CompanyInfoSet { get; set; }
             }
 }

@@ -9,7 +9,7 @@ namespace Test.Models
 [ComplexType]
 public  class Point     {
         
-                     public Nullable<System.Int32> x { get; set; }
-                    public Nullable<System.Int32> y { get; set; }
+                     public  Nullable<System.Int32> x { get; set; }
+                    public  Nullable<System.Int32> y { get; set; }
             }
 }
