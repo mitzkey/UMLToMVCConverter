@@ -102,9 +102,12 @@
       <DependentUpon>ViewIndexTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="ExtendedTypes\ExtendedCodeParameterDeclarationExpression.cs" />
+    <Compile Include="ExtendedTypes\ExtendedCodeTypeReference.cs" />
+    <Compile Include="ExtendedTypes\ExtendedType.cs" />
     <Compile Include="Person.cs" />
-    <Compile Include="UMLVisibilityMapper.cs" />
-    <Compile Include="UMLTypeMapper.cs" />
+    <Compile Include="Mappers\UMLVisibilityMapper.cs" />
+    <Compile Include="Mappers\UMLTypeMapper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

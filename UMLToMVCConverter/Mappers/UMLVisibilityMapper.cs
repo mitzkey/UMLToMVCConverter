@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 
-namespace UMLToMVCConverter
+namespace UMLToMVCConverter.Mappers
 {
     class UMLVisibilityMapper
     {

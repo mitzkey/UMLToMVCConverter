@@ -10,6 +10,8 @@ using System.Reflection;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using UMLToMVCConverter.CodeTemplates;
+using UMLToMVCConverter.ExtendedTypes;
+using UMLToMVCConverter.Mappers;
 
 namespace UMLToMVCConverter
 {
@@ -130,19 +132,26 @@ namespace UMLToMVCConverter
                     .ToList();
             foreach (XElement attribute in attributes)
             {
+                //liczności
+                XElement lv = attribute.Descendants("lowerValue").SingleOrDefault();
+                string lowerValue = lv == null ? "" : lv.Attribute("value") == null ? "" : lv.Attribute("value").Value;
+                XElement uv = attribute.Descendants("upperValue").SingleOrDefault();
+                string upperValue = uv == null ? "" : uv.Attribute("value") == null ? "" : uv.Attribute("value").Value;
+
                 //określenie typu pola                
-                Type cSharpType = GetXElementCsharpType(attribute);
+                ExtendedType cSharpType = GetXElementCsharpType(attribute, lowerValue, upperValue);
 
                 //deklaracja pola
                 CodeMemberProperty cmp = new CodeMemberProperty();
-                CodeTypeReference typeRef = new CodeTypeReference(cSharpType);
+                CodeTypeReference typeRef = new ExtendedCodeTypeReference(cSharpType);
                 cmp.Type = typeRef;
                 cmp.Name = attribute.Attribute("name").Value;
 
                 //widoczność
                 string UMLvisibility = attribute.Attribute("visibility").Value;
                 MemberAttributes cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(UMLvisibility);
-                cmp.Attributes = cSharpVisibility;
+                cmp.Attributes = cSharpVisibility;               
+
                 ctd.Members.Add(cmp);
             }
 
@@ -163,10 +172,10 @@ namespace UMLToMVCConverter
                 {
 
                 }
-                Type returnType = GetXElementCsharpType(returnParameter);
+                ExtendedType returnType = GetXElementCsharpType(returnParameter, "", "");
                 if (returnType != null)
                 {
-                    CodeTypeReference ctr = new CodeTypeReference(GetXElementCsharpType(returnParameter));
+                    CodeTypeReference ctr = new ExtendedCodeTypeReference(GetXElementCsharpType(returnParameter, "", ""));
                     cmm.ReturnType = ctr;
                 }
                             
@@ -174,9 +183,9 @@ namespace UMLToMVCConverter
                 //parametry wejściowe
                 List<XElement> parameters = operation.Descendants("ownedParameter").Where(i => i.Attribute("direction") == null || !i.Attribute("direction").Value.Equals("return")).ToList();
                 foreach(XElement xParameter in parameters) {
-                    Type parType = GetXElementCsharpType(xParameter);
+                    ExtendedType parType = GetXElementCsharpType(xParameter, "", "");
                     string parName = xParameter.Attribute("name").Value;
-                    CodeParameterDeclarationExpression parameter = new CodeParameterDeclarationExpression(parType, parName);
+                    CodeParameterDeclarationExpression parameter = new ExtendedCodeParameterDeclarationExpression(parType, parName);
                     cmm.Parameters.Add(parameter);
                 }
 
@@ -192,7 +201,7 @@ namespace UMLToMVCConverter
             return ctd;
         }
 
-        private Type GetXElementCsharpType(XElement xElement)
+        private ExtendedType GetXElementCsharpType(XElement xElement, string mplLowerVal, string mplUpperVal)
         {
             XElement xType = xElement.Descendants("type").FirstOrDefault();
             if (xType == null)
@@ -201,7 +210,7 @@ namespace UMLToMVCConverter
             }
             XElement xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
             string UMLtype = xRefExtension.Attribute("referentPath").Value.Split(new char[] { ':', ':' }).Last();
-            Type cSharpType = UMLTypeMapper.UMLToCsharp(UMLtype);
+            ExtendedType cSharpType = UMLTypeMapper.UMLToCsharp(UMLtype, mplLowerVal, mplUpperVal);
             return cSharpType;
         }
 

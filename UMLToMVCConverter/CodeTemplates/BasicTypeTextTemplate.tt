@@ -2,6 +2,7 @@
 <#@ import namespace="System.CodeDom"#>
 <#@ import namespace="System.Collections.Generic"#>
 <#@ import namespace="UMLToMVCConverter"#>
+<#@ import namespace="UMLToMVCConverter.ExtendedTypes"#>
 <#@ assembly name="System.Core" #>
 
 <#    if (_class.IsStruct) {#>
@@ -22,8 +23,11 @@ public <#    if (isAbstract) { #>abstract<#    } #> class <#= _class.Name #> <# 
             <#=inner_class#>
         <#}
         else if (cm is CodeMemberProperty) { 
-            CodeMemberProperty cmp = (CodeMemberProperty) cm;#>
-            public <#= cmp.Type.BaseType + " " + cmp.Name #> { get; set; }
+            CodeMemberProperty cmp = (CodeMemberProperty) cm;
+            string generics = "";
+            ExtendedCodeTypeReference type = (ExtendedCodeTypeReference)cmp.Type;
+#>
+            public <#= type.ExtTypeName + " " + cmp.Name #> { get; set; }
         <#
         }
         
@@ -35,20 +39,20 @@ public <#    if (isAbstract) { #>abstract<#    } #> class <#= _class.Name #> <# 
                 strAttributes += e.ToString().ToLower() + " ";  
             }
 
-            string returnType = "void";
+            string returnTypeName = "void";
             if (cmm.ReturnType.BaseType != "System.Void") {
-                returnType = cmm.ReturnType.BaseType;
+                returnTypeName = ((ExtendedCodeTypeReference)cmm.ReturnType).ExtTypeName;
             }
             #>
-            <#= strAttributes + returnType + " " + cmm.Name + "("#>
+            <#= strAttributes + returnTypeName + " " + cmm.Name + "("#>
             <#
                 bool addComma = false;
-                foreach (CodeParameterDeclarationExpression cp in cmm.Parameters) {                                                            
+                foreach (ExtendedCodeParameterDeclarationExpression cp in cmm.Parameters) {                                                            
                     if (addComma) {
                         #>,<#
                     }
                     addComma = true;
-                    #><#= cp.Type.BaseType + " " + cp.Name#><#
+                    #><#= cp.ExtTypeName + " " + cp.Name#><#
                 }
                 #>) {
 throw new NotImplementedException();
