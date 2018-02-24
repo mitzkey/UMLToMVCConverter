@@ -40,6 +40,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=11.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.11.1.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -105,6 +108,8 @@
     <Compile Include="ExtendedTypes\ExtendedCodeParameterDeclarationExpression.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeTypeReference.cs" />
     <Compile Include="ExtendedTypes\ExtendedType.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Insist.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
     <Compile Include="Mappers\UMLTypeMapper.cs" />
