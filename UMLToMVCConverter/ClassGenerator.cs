@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.CodeDom;
 using System.IO;
 using System.Reflection;
-using System.CodeDom.Compiler;
-using Microsoft.CSharp;
 using UMLToMVCConverter.CodeTemplates;
 using UMLToMVCConverter.ExtendedTypes;
 using UMLToMVCConverter.Mappers;
