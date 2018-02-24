@@ -110,7 +110,6 @@
     <Compile Include="ExtendedTypes\ExtendedType.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Insist.cs" />
-    <Compile Include="Person.cs" />
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
     <Compile Include="Mappers\UMLTypeMapper.cs" />
     <Page Include="MainWindow.xaml">

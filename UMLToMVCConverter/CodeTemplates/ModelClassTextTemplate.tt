@@ -12,9 +12,8 @@ using System.Web;
 
 namespace <#= contextName #>.Models
 {
-    <#
-        BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(_class, contextName);
-        string code = tmpl.TransformText();
-    #>
-    <#= code #>
+<#
+BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(_class, contextName);
+string code = tmpl.TransformText();
+#><#= code #>
 }

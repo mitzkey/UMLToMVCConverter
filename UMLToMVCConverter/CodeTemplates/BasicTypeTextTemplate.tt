@@ -1,64 +1,80 @@
-﻿<#@ template language="C#" #>
+﻿<#@ template language="C#"#>
 <#@ import namespace="System.CodeDom"#>
 <#@ import namespace="System.Collections.Generic"#>
 <#@ import namespace="UMLToMVCConverter"#>
 <#@ import namespace="UMLToMVCConverter.ExtendedTypes"#>
-<#@ assembly name="System.Core" #>
-
-<#    if (_class.IsStruct) {#>
-[ComplexType]
-<#    }#>
-public <#    if (isAbstract) { #>abstract<#    } #> class <#= _class.Name #> <#    if (baseClassName != null) { #> : <#= baseClassName #> <#}#>
-    {
-        <#    if (_class.IsClass) { #>
-            public int <#= _class.Name #>ID {get; set;}
-        <#    }#>
-
-         <#    foreach (var cm in _class.Members)
-    {
-        if (cm is CodeTypeDeclaration) {
-            CodeTypeDeclaration ctd = (CodeTypeDeclaration) cm;
-            BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(ctd, contextName);
-            string inner_class = tmpl.TransformText();#>
-            <#=inner_class#>
-        <#}
-        else if (cm is CodeMemberProperty) { 
-            CodeMemberProperty cmp = (CodeMemberProperty) cm;
-            string generics = "";
-            ExtendedCodeTypeReference type = (ExtendedCodeTypeReference)cmp.Type;
-#>
-            public <#if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {#> static <#}#> <#= type.ExtTypeName + " " + cmp.Name #> { get; <# if (!cmp.HasSet) {#>private <#}#>set; }
-        <#
-        }
-        
-        else if (cm is CodeMemberMethod) { 
-            CodeMemberMethod cmm = (CodeMemberMethod) cm;
-            IEnumerable<Enum> attributes = EnumHelper.GetFlags(cmm.Attributes);
-            string strAttributes = "";
-            foreach (Enum e in attributes) {
-                strAttributes += e.ToString().ToLower() + " ";  
-            }
-
-            string returnTypeName = "void";
-            if (cmm.ReturnType.BaseType != "System.Void") {
-                returnTypeName = ((ExtendedCodeTypeReference)cmm.ReturnType).ExtTypeName;
-            }
-            #>
-            <#= strAttributes + returnTypeName + " " + cmm.Name + "("#>
-            <#
-                bool addComma = false;
-                foreach (ExtendedCodeParameterDeclarationExpression cp in cmm.Parameters) {                                                            
-                    if (addComma) {
-                        #>,<#
-                    }
-                    addComma = true;
-                    #><#= cp.ExtTypeName + " " + cp.Name#><#
-                }
-                #>) {
-throw new NotImplementedException();
+<#@ assembly name="System.Core"#>
+<#
+if(_class.IsStruct) {
+	#>	[ComplexType]<#
 }
-        <#
-        }
-    }
-    #>
-    }
+
+#>	public<#
+
+if(isAbstract) {
+	#> abstract<#
+}
+
+#> class <#=_class.Name#> <#
+
+if(baseClassName != null) {
+	#>: <#= baseClassName#> <#
+}
+
+#>{<#
+
+if(_class.IsClass) {
+	#>
+
+
+		public int <#=_class.Name #>ID {get; set;}<#
+}
+
+foreach (var cm in _class.Members) {
+
+	if (cm is CodeTypeDeclaration) {
+		CodeTypeDeclaration ctd = (CodeTypeDeclaration) cm;
+		BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(ctd, contextName);
+		string inner_class = tmpl.TransformText();
+		#><#=inner_class.AddNewLines(2).NewSection().NewSection()#><#
+	}
+	else if (cm is CodeMemberProperty) {
+		CodeMemberProperty cmp = (CodeMemberProperty) cm;
+		string generics = "";
+		ExtendedCodeTypeReference type = (ExtendedCodeTypeReference)cmp.Type;
+		#>
+
+
+		public <#if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {#> static <#}#> <#= type.ExtTypeName + " " + cmp.Name #> { get; <# if (!cmp.HasSet) {#>private <#}#>set; }<#
+	}
+	else if (cm is CodeMemberMethod) {
+		CodeMemberMethod cmm = (CodeMemberMethod) cm;
+		IEnumerable<Enum> attributes = EnumHelper.GetFlags(cmm.Attributes);
+		string strAttributes = "";
+		foreach (Enum e in attributes) {
+			strAttributes += e.ToString().ToLower() + " ";  
+		}
+		string returnTypeName = "void";
+		if (cmm.ReturnType.BaseType != "System.Void") {
+			returnTypeName = ((ExtendedCodeTypeReference)cmm.ReturnType).ExtTypeName;
+		}
+		#>
+
+
+		<#= strAttributes + returnTypeName + " " + cmm.Name + "("#><#
+		bool addComma = false;
+		foreach (ExtendedCodeParameterDeclarationExpression cp in cmm.Parameters) {
+			if (addComma) {
+			#>,<#
+			}
+			addComma = true;
+			#><#= cp.ExtTypeName + " " + cp.Name#><#
+		}
+		#>) {
+			throw new NotImplementedException();
+		}<#
+	}
+}
+#>
+
+	}

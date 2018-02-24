@@ -1,5 +1,6 @@
 ﻿namespace UMLToMVCConverter
 {
+    using System.Text;
     using System.Xml.Linq;
 
     public static class MyExtensions
@@ -24,6 +25,42 @@
             Insist.IsNotNullOrWhiteSpace(attributeValue, nameof(attributeValue));
 
             return attributeValue;
+        }
+
+        public static string NewSection(this string text)
+        {
+            Insist.IsNotNull(text, nameof(text));
+            return text.Replace("\n", "\n\t");
+        }
+
+        public static string AddNewLines(this string text, int amount)
+        {
+            var stringbuilder = new StringBuilder(string.Empty);
+
+            for (int i = 0; i < amount; i++)
+            {
+                stringbuilder.AppendLine(string.Empty);
+            }
+
+            stringbuilder.Append(text);
+
+            return stringbuilder.ToString();
+
+        }
+
+        public static string AddTabs(this string text, int amount)
+        {
+            var stringbuilder = new StringBuilder(string.Empty);
+
+            for (int i = 0; i < amount; i++)
+            {
+                stringbuilder.Append("\t");
+            }
+
+            stringbuilder.Append(text);
+
+            return stringbuilder.ToString();
+
         }
     }
 }
