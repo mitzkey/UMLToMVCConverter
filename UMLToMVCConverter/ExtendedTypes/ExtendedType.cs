@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace UMLToMVCConverter.ExtendedTypes
 {
-    class ExtendedType
+    public class ExtendedType
     {
+        private readonly bool isNamedType;
+
+        private readonly string namedTypeName;
+
+        public static ExtendedType Void => new ExtendedType(typeof(void));
+
         public Type Type { get; private set; }
+
         public ExtendedType(Type t, bool isGeneric = false, List<Type> generics = null)
         {
             Type = t;
@@ -22,11 +27,23 @@ namespace UMLToMVCConverter.ExtendedTypes
                 this.Generics = new List<Type>();
             }
         }
+
+        public ExtendedType(string typeName)
+        {
+            this.isNamedType = true;
+            this.namedTypeName = typeName;
+        }
+
         public List<Type> Generics { get; set; }
         public bool IsGeneric { get; set; }
         public string Name { 
             get
             {
+                if (this.isNamedType)
+                {
+                    return this.namedTypeName;
+                }
+
                 if (IsGeneric)
                 {
                     StringBuilder sb = new StringBuilder();
@@ -42,10 +59,8 @@ namespace UMLToMVCConverter.ExtendedTypes
 
                     return sb.ToString();
                 }
-                else
-                {
-                    return Type.Name;
-                }
+
+                return this.Type.Name;
             }
         }
     }

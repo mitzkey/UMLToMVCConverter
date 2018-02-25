@@ -1,47 +1,47 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UMLToMVCConverter.ExtendedTypes
 {
-    class ExtendedCodeTypeReference : CodeTypeReference
+    public class ExtendedCodeTypeReference : CodeTypeReference
     {
         public ExtendedType ExtType { get; set; }
-        public string ExtTypeName
-        {
-            get
-            {
-                return ExtType.Name;
-            }
-        }
-        public bool IsGeneric
-        {
-            get
-            {
-                return ExtType.IsGeneric;
-            }
-        }
-        public List<Type> Generics
-        {
-            get
-            {
-                return ExtType.Generics;
-            }
-        }
 
-        public ExtendedCodeTypeReference(Type type, bool isGeneric = false, List<Type> generics = null)
+        public string ExtTypeName => this.ExtType.Name;
+
+        public bool IsGeneric => this.ExtType.IsGeneric;
+
+        public List<Type> Generics => this.ExtType.Generics;
+
+        private ExtendedCodeTypeReference(Type type, bool isGeneric = false, List<Type> generics = null)
             : base(type)
         {
-            ExtType = new ExtendedType(type, isGeneric, generics);
+            this.ExtType = new ExtendedType(type, isGeneric, generics);
         }
 
-        public ExtendedCodeTypeReference(ExtendedType type)
+        private ExtendedCodeTypeReference(ExtendedType type)
             : base(type.Type)
         {
-            ExtType = type;
+            this.ExtType = type;
+        }
+
+        private ExtendedCodeTypeReference(string typeName)
+            : base(typeName)
+        {
+            this.ExtType = new ExtendedType(typeName);
+        }
+
+        public static ExtendedCodeTypeReference CreateForType(ExtendedType type)
+        {
+            if (type.Type == null)
+            {
+                return new ExtendedCodeTypeReference(type.Name);
+            }
+            else
+            {
+                return new ExtendedCodeTypeReference(type);
+            }
         }
     }
 }

@@ -105,13 +105,14 @@
       <DependentUpon>ViewIndexTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="ExtendedTypes\ExtendedCodeMemberMethod.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeParameterDeclarationExpression.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeTypeReference.cs" />
     <Compile Include="ExtendedTypes\ExtendedType.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Insist.cs" />
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
-    <Compile Include="Mappers\UMLTypeMapper.cs" />
+    <Compile Include="Mappers\UmlBasicTypesMapper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,7 +121,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MyAttributeEqualityComparer.cs" />
+    <Compile Include="AttributeEqualityComparer.cs" />
     <Compile Include="ClassGenerator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -128,6 +129,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Output\Controllers\BabyController.cs" />
+    <None Include="Output\Controllers\CompanyInfoController.cs" />
+    <None Include="Output\Controllers\WorkerController.cs" />
+    <None Include="Output\DAL\TestContext.cs" />
+    <None Include="Output\Models\Baby.cs" />
+    <None Include="Output\Models\CompanyInfo.cs" />
+    <None Include="Output\Models\Person.cs" />
+    <None Include="Output\Models\Point.cs" />
+    <None Include="Output\Models\Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -165,6 +175,9 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ViewIndexTextTemplate.cs</LastGenOutput>
     </None>
+    <None Include="Output\Views\Baby\Index.cshtml" />
+    <None Include="Output\Views\CompanyInfo\Index.cshtml" />
+    <None Include="Output\Views\Worker\Index.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -178,6 +191,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

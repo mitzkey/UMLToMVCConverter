@@ -27,6 +27,24 @@
             return attributeValue;
         }
 
+        public static string OptionalAttributeValue(this XElement xElement, string attributeName)
+        {
+            var xAttribute = xElement.Attribute(attributeName);
+
+            var attributeValue = xAttribute?.Value;
+
+            return attributeValue;
+        }
+
+        public static string OptionalAttributeValue(this XElement xElement, XName attributeName)
+        {
+            var xAttribute = xElement.Attribute(attributeName);
+
+            var attributeValue = xAttribute?.Value;
+
+            return attributeValue;
+        }
+
         public static string NewSection(this string text)
         {
             Insist.IsNotNull(text, nameof(text));

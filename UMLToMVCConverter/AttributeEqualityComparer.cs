@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace UMLToMVCConverter
 {
-    class MyAttributeEqualityComparer : IEqualityComparer<XAttribute>
+    public class AttributeEqualityComparer : IEqualityComparer<XAttribute>
     {
-
         public bool Equals(XAttribute x, XAttribute y)
         {
             return (x.Value == y.Value);
@@ -17,7 +12,7 @@ namespace UMLToMVCConverter
 
         public int GetHashCode(XAttribute obj)
         {
-            return obj.GetHashCode();
+            return obj.Value.GetHashCode();
         }
     }
 }

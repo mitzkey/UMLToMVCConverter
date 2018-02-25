@@ -1,27 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using System.CodeDom;
-using System.IO;
-using System.Reflection;
-using UMLToMVCConverter.CodeTemplates;
-using UMLToMVCConverter.ExtendedTypes;
-using UMLToMVCConverter.Mappers;
-
-namespace UMLToMVCConverter
+﻿namespace UMLToMVCConverter
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Linq;
+    using System.CodeDom;
+    using System.IO;
+    using System.Reflection;
+    using UMLToMVCConverter.CodeTemplates;
+    using UMLToMVCConverter.ExtendedTypes;
+    using UMLToMVCConverter.Mappers;
+
     internal class ClassGenerator
     {
         private readonly XDocument xdoc;
         private readonly XNamespace xmiNamespace;
         private readonly XNamespace umlNamespace;
-        private readonly MyAttributeEqualityComparer attributeComparer;
+        private readonly AttributeEqualityComparer attributeComparer;
         private readonly string namespaceName;
         private readonly List<CodeTypeDeclaration> types;
+        private readonly string outputPath;
+        private readonly List<CodeTypeDeclaration> typeDeclarations;
 
-        public ClassGenerator(string xmiPath)
+        public ClassGenerator(string xmiPath, string outputPath)
         {
+            Insist.IsNotNullOrWhiteSpace(outputPath, nameof(outputPath));
+            this.outputPath = outputPath;
+
             this.xdoc = XDocument.Load(xmiPath);
             Insist.IsNotNull(this.xdoc.Root, nameof(this.xdoc.Root));
 
@@ -31,11 +36,12 @@ namespace UMLToMVCConverter
             this.umlNamespace = this.xdoc.Root.GetNamespaceOfPrefix("uml");
             Insist.IsNotNull(this.umlNamespace, nameof(this.umlNamespace));
 
-            this.attributeComparer = new MyAttributeEqualityComparer();
+            this.attributeComparer = new AttributeEqualityComparer();
 
             this.namespaceName = "Test";
             //TODO: póki co nie wiadomo czy i jak używać przestrzeni nazw - robię listę typów => pakiety z UML
             this.types = new List<CodeTypeDeclaration>();
+            this.typeDeclarations = new List<CodeTypeDeclaration>();
         }
         public string GenerateTypes()
         {                                             
@@ -44,16 +50,23 @@ namespace UMLToMVCConverter
             foreach (var umlModel in umlModels)
             {
                 //dla każdej klasy <packagedElement xmi:type='uml:Class'>:
-                var xTypes = umlModel.Descendants("packagedElement")
+                var xTypes = umlModel.Descendants()
                     .Where(i => i.Attributes().
                         Contains(new XAttribute(this.xmiNamespace + "type", "uml:Class"), this.attributeComparer)
                         || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:DataType"), this.attributeComparer))
                     .ToList();
 
+                //deklaracja typów
+                foreach (var type in xTypes)
+                {
+                    var typeDeclaration = this.DeclareTypeFromXElement(type);
+                    this.typeDeclarations.Add(typeDeclaration);
+                }
+
                 foreach (var type in xTypes)
                 {
                     //deklaracja klasy
-                    var ctd = this.GenerateTypeFromXElement(type);
+                    var ctd = this.PopulateTypeFromXElement(type);
                     this.types.Add(ctd);                                                                               
                 }
                 
@@ -100,41 +113,46 @@ namespace UMLToMVCConverter
             return "Plik przetworzono pomyślnie";
         }
 
-        private CodeTypeDeclaration GenerateTypeFromXElement(XElement type)
+        private CodeTypeDeclaration DeclareTypeFromXElement(XElement xType)
         {
             //deklaracja typu
-            var ctd = new CodeTypeDeclaration();
+            return new CodeTypeDeclaration {Name = xType.ObligatoryAttributeValue("name")};
+        }
+
+        private CodeTypeDeclaration PopulateTypeFromXElement(XElement type)
+        {
+            var codeTypeDeclarationName = type.ObligatoryAttributeValue("name");
+            var codeTypeDeclaration = this.typeDeclarations.Single(t => t.Name.Equals(codeTypeDeclarationName));
 
             //jaki to typ
             var sType = type.ObligatoryAttributeValue(this.xmiNamespace + "type");
-
-            switch (sType) {
+            switch (sType)
+            {
                 case "uml:Class":
-                    ctd.IsClass = true;
+                    codeTypeDeclaration.IsClass = true;
                     break;
                 case "uml:DataType":
-                    ctd.IsStruct = true;
+                    codeTypeDeclaration.IsStruct = true;
                     break;
                 default:
                     throw new Exception("Nieobsługiwany typ: " + sType);
             }
-            
-            ctd.Name = type.ObligatoryAttributeValue("name");
-            ctd.TypeAttributes = TypeAttributes.Public; //TODO: czy w UML mamy widoczność typu?                    
+
+            codeTypeDeclaration.TypeAttributes = TypeAttributes.Public; //TODO: czy w UML mamy widoczność typu?                    
             
 
             //czy jest abstrakcyjna
             if (type.Attribute("isAbstract")?.Value == "true")
             {
-                ctd.TypeAttributes = ctd.TypeAttributes | TypeAttributes.Abstract;
+                codeTypeDeclaration.TypeAttributes = codeTypeDeclaration.TypeAttributes | TypeAttributes.Abstract;
             }
 
             //czy są klasy zagnieżdżone
             var nestedClasses = type.Descendants("nestedClassifier").ToList();
             foreach (var nestedClass in nestedClasses)
             {
-                var ctdNested = this.GenerateTypeFromXElement(nestedClass);
-                ctd.Members.Add(ctdNested);
+                var ctdNested = this.PopulateTypeFromXElement(nestedClass);
+                codeTypeDeclaration.Members.Add(ctdNested);
             }
 
             #region pola, metody          
@@ -155,37 +173,37 @@ namespace UMLToMVCConverter
 
                 //określenie typu pola                
                 var cSharpType = this.GetXElementCsharpType(attribute, lowerValue, upperValue);
+                CodeTypeReference typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
                 //deklaracja pola
-                var cmp = new CodeMemberProperty();                
-                CodeTypeReference typeRef = new ExtendedCodeTypeReference(cSharpType);
-                cmp.Type = typeRef;
-                cmp.Name = attribute.ObligatoryAttributeValue("name");
+                var codeMemberProperty = new CodeMemberProperty();
+                codeMemberProperty.Type = typeRef;
+                codeMemberProperty.Name = attribute.ObligatoryAttributeValue("name");
 
                 //widoczność
                 var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
                 var cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(umlVisibility);
-                cmp.Attributes = cSharpVisibility;    
+                codeMemberProperty.Attributes = cSharpVisibility;    
            
                 //czy statyczny?
-                var xIsStatic = attribute.Attribute("isStatic");
-                if (xIsStatic != null && xIsStatic.Value == "true")
+                var isStatic = Convert.ToBoolean(attribute.OptionalAttributeValue("isStatic"));
+                if (isStatic)
                 {
-                    cmp.Attributes = cmp.Attributes | MemberAttributes.Static;                    
+                    codeMemberProperty.Attributes = codeMemberProperty.Attributes | MemberAttributes.Static;
                 }
 
                 //czy tylko do odczytu
                 var xIsReadonly = attribute.Attribute("isReadOnly");
                 if (xIsReadonly != null && xIsReadonly.Value == "true") 
                 {
-                    cmp.HasSet = false;
+                    codeMemberProperty.HasSet = false;
                 }
                 else
                 {
-                    cmp.HasSet = true;
+                    codeMemberProperty.HasSet = true;
                 }
 
-                ctd.Members.Add(cmp);
+                codeTypeDeclaration.Members.Add(codeMemberProperty);
             }
 
             //metody
@@ -195,21 +213,13 @@ namespace UMLToMVCConverter
                     .ToList();
             foreach (var operation in operations)
             {
-                var cmm = new CodeMemberMethod {Name = operation.ObligatoryAttributeValue("name")};
-
+                var codeMemberMethod = new CodeMemberMethod {Name = operation.ObligatoryAttributeValue("name")};
 
                 //typ zwracany
                 var returnParameter = operation.Descendants("ownedParameter").FirstOrDefault(i => i.ObligatoryAttributeValue("direction").Equals("return"));
-                if (returnParameter == null)
-                {
-
-                }
                 var returnType = this.GetXElementCsharpType(returnParameter, "", "");
-                if (returnType != null)
-                {
-                    CodeTypeReference ctr = new ExtendedCodeTypeReference(this.GetXElementCsharpType(returnParameter, "", ""));
-                    cmm.ReturnType = ctr;
-                }
+                CodeTypeReference ctr = ExtendedCodeTypeReference.CreateForType(returnType);
+                codeMemberMethod.ReturnType = ctr;
                             
 
                 //parametry wejściowe
@@ -218,32 +228,54 @@ namespace UMLToMVCConverter
                     var parType = this.GetXElementCsharpType(xParameter, "", "");
                     var parName = xParameter.ObligatoryAttributeValue("name");
                     CodeParameterDeclarationExpression parameter = new ExtendedCodeParameterDeclarationExpression(parType, parName);
-                    cmm.Parameters.Add(parameter);
+                    codeMemberMethod.Parameters.Add(parameter);
                 }
 
                 //widoczność
                 var umlVisibility = operation.ObligatoryAttributeValue("visibility");
                 var cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(umlVisibility);
-                cmm.Attributes = cSharpVisibility;
-                ctd.Members.Add(cmm);
+                codeMemberMethod.Attributes = codeMemberMethod.Attributes | cSharpVisibility;
+
+                var isStatic = Convert.ToBoolean(operation.OptionalAttributeValue("isStatic"));
+                if (isStatic)
+                {
+                    codeMemberMethod.Attributes = codeMemberMethod.Attributes | MemberAttributes.Static;
+                }
+
+                codeTypeDeclaration.Members.Add(codeMemberMethod);
             }
 
             #endregion
 
-            return ctd;
+            return codeTypeDeclaration;
         }
 
         private ExtendedType GetXElementCsharpType(XElement xElement, string mplLowerVal, string mplUpperVal)
         {
-            var xType = xElement.Descendants("type").FirstOrDefault();
-            if (xType == null)
+            Insist.IsNotNull(xElement, nameof(xElement));
+
+            var innerType = xElement.OptionalAttributeValue("type");
+            if (innerType == null)
             {
-                return null;
+                var xType = xElement.Descendants("type").FirstOrDefault();
+                Insist.IsNotNull(xType, nameof(xType));
+                var xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
+                var umlType = xRefExtension.ObligatoryAttributeValue("referentPath").Split(':', ':').Last();
+                var cSharpType = UmlBasicTypesMapper.UmlToCsharp(umlType, mplLowerVal, mplUpperVal);
+                return cSharpType;
             }
-            var xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
-            var umlType = xRefExtension.ObligatoryAttributeValue("referentPath").Split(':', ':').Last();
-            var cSharpType = UMLTypeMapper.UMLToCsharp(umlType, mplLowerVal, mplUpperVal);
-            return cSharpType;
+            else
+            {
+                var xReturnTypeElement = this.GetElementById(innerType);
+                var typeName = xReturnTypeElement.ObligatoryAttributeValue("name");
+                return new ExtendedType(typeName);
+            }
+        }
+
+        private XElement GetElementById(string innerType)
+        {
+            return this.xdoc.Descendants()
+                .SingleOrDefault(e => innerType.Equals(e.OptionalAttributeValue(this.xmiNamespace + "id")));
         }
 
         private void GenerateFiles(List<CodeTypeDeclaration> typesToGenerate, string namespaceNameToGenerate)
@@ -272,8 +304,10 @@ namespace UMLToMVCConverter
         {
             var tmpl = new DbContextTextTemplate(classes, contextName);
             var output = tmpl.TransformText();
-            Directory.CreateDirectory("DAL");
-            File.WriteAllText(@"DAL\"+contextName + "Context.cs", output);
+            Directory.CreateDirectory(Path.Combine(this.outputPath, "DAL"));
+            var filesSubPath = @"DAL\" + contextName + "Context.cs";
+            var filesOutputPath = Path.Combine(this.outputPath, filesSubPath);
+            File.WriteAllText(filesOutputPath, output);
         }
 
         private void GenerateControllers(List<CodeTypeDeclaration> classes, string contextName)
@@ -282,8 +316,10 @@ namespace UMLToMVCConverter
             {
                 var tmpl = new ControllerTextTemplate(ctd, contextName);
                 var output = tmpl.TransformText();
-                Directory.CreateDirectory("Controllers");
-                File.WriteAllText(@"Controllers\" + ctd.Name + "Controller.cs", output);
+                Directory.CreateDirectory(Path.Combine(this.outputPath, "Controllers"));
+                var filesSubPath = @"Controllers\" + ctd.Name + "Controller.cs";
+                var filesOutputPath = Path.Combine(this.outputPath, filesSubPath);
+                File.WriteAllText(filesOutputPath, output);
 
             }            
         }
@@ -295,8 +331,10 @@ namespace UMLToMVCConverter
             {
                 var tmpl = new ViewIndexTextTemplate(ctd, contextName);
                 var output = tmpl.TransformText();
-                Directory.CreateDirectory(@"Views\"+ctd.Name);
-                File.WriteAllText(@"Views\" + ctd.Name + @"\Index.cshtml", output);
+                Directory.CreateDirectory(Path.Combine(this.outputPath, @"Views\" +ctd.Name));
+                var filesSubPath = @"Views\" + ctd.Name + @"\Index.cshtml";
+                var filesOutputPath = Path.Combine(this.outputPath, filesSubPath);
+                File.WriteAllText(filesOutputPath, output);
 
             }
         }
@@ -307,8 +345,10 @@ namespace UMLToMVCConverter
             {
                 var tmpl = new ModelClassTextTemplate(ctd, contextName);
                 var output = tmpl.TransformText();
-                Directory.CreateDirectory(@"Models");
-                File.WriteAllText(@"Models\" + ctd.Name + ".cs", output);
+                Directory.CreateDirectory(Path.Combine(this.outputPath, "Models"));
+                var filesSubPath = @"Models\" + ctd.Name + ".cs";
+                var filesOutputPath = Path.Combine(this.outputPath, filesSubPath);
+                File.WriteAllText(filesOutputPath, output);
             }
         }
     }

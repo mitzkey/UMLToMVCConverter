@@ -46,25 +46,24 @@ foreach (var cm in _class.Members) {
 		#>
 
 
-		public <#if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {#> static <#}#> <#= type.ExtTypeName + " " + cmp.Name #> { get; <# if (!cmp.HasSet) {#>private <#}#>set; }<#
+		public <#if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {#>static <#}#> <#= type.ExtTypeName + " " + cmp.Name #> { get; <# if (!cmp.HasSet) {#>private <#}#>set; }<#
 	}
 	else if (cm is CodeMemberMethod) {
-		CodeMemberMethod cmm = (CodeMemberMethod) cm;
-		IEnumerable<Enum> attributes = EnumHelper.GetFlags(cmm.Attributes);
-		string strAttributes = "";
-		foreach (Enum e in attributes) {
-			strAttributes += e.ToString().ToLower() + " ";  
-		}
+		var codeMemberMethod = (CodeMemberMethod) cm;
 		string returnTypeName = "void";
-		if (cmm.ReturnType.BaseType != "System.Void") {
-			returnTypeName = ((ExtendedCodeTypeReference)cmm.ReturnType).ExtTypeName;
+		if (codeMemberMethod.ReturnType.BaseType != "System.Void") {
+			returnTypeName = ((ExtendedCodeTypeReference)codeMemberMethod.ReturnType).ExtTypeName;
 		}
 		#>
 
 
-		<#= strAttributes + returnTypeName + " " + cmm.Name + "("#><#
+		public<#
+		if (codeMemberMethod.Attributes.HasFlag(MemberAttributes.Static)) {
+			#> static<#
+		}
+		#> <#=returnTypeName#> <#=codeMemberMethod.Name#>(<#
 		bool addComma = false;
-		foreach (ExtendedCodeParameterDeclarationExpression cp in cmm.Parameters) {
+		foreach (ExtendedCodeParameterDeclarationExpression cp in codeMemberMethod.Parameters) {
 			if (addComma) {
 			#>,<#
 			}

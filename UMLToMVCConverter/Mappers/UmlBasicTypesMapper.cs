@@ -1,44 +1,39 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UMLToMVCConverter.ExtendedTypes;
 
 namespace UMLToMVCConverter.Mappers
 {
-    class UMLTypeMapper
+    public class UmlBasicTypesMapper
     {
-        public static ExtendedType UMLToCsharp(string UMLType, string mplLowerVal, string mplUpperVal)
+        public static ExtendedType UmlToCsharp(string umlType, string multiplicityLowerBound, string multiplicityUpperBound)
         {
-            switch (UMLType.ToLower())
+            switch (umlType.ToLower())
             {
                 case "date": 
-                    return GetDetailedType(typeof(DateTime), mplLowerVal, mplUpperVal);
+                    return GetDetailedType(typeof(DateTime), multiplicityLowerBound, multiplicityUpperBound);
                 case "string":
-                    return GetDetailedType(typeof(string), mplLowerVal, mplUpperVal);
+                    return GetDetailedType(typeof(string), multiplicityLowerBound, multiplicityUpperBound);
                 case "integer":
-                    return GetDetailedType(typeof(int), mplLowerVal, mplUpperVal);
+                    return GetDetailedType(typeof(int), multiplicityLowerBound, multiplicityUpperBound);
                 case "double":
-                    return GetDetailedType(typeof(double), mplLowerVal, mplUpperVal);
+                    return GetDetailedType(typeof(double), multiplicityLowerBound, multiplicityUpperBound);
                 case "void":
-                    return null;
+                    return ExtendedType.Void;
                 case "int":
-                    return GetDetailedType(typeof(int), mplLowerVal, mplUpperVal);
+                    return GetDetailedType(typeof(int), multiplicityLowerBound, multiplicityUpperBound);
                 case "boolean":
-                    return GetDetailedType(typeof(bool), mplLowerVal, mplUpperVal);
+                    return GetDetailedType(typeof(bool), multiplicityLowerBound, multiplicityUpperBound);
                 default:
-                    throw new Exception("Mapowanie typu UML: " + UMLType + " niezaimplementowane.");
+                    throw new Exception("Mapowanie typu UML: " + umlType + " niezaimplementowane.");
             }
 
         }
 
-        private static ExtendedType GetDetailedType(Type type, string mplLowerVal, string mplUpperVal)
+        private static ExtendedType GetDetailedType(Type type, string multiplicityLowerBound, string multiplicityUpperBound)
         {
             ExtendedType returnType;
-            if (mplLowerVal == "")
+            if (multiplicityLowerBound == "")
             {
                 returnType = GetNullableType(type);
             }
@@ -47,7 +42,7 @@ namespace UMLToMVCConverter.Mappers
                 returnType = new ExtendedType(type);
             }
 
-            if (mplUpperVal != "")
+            if (multiplicityUpperBound != "")
             {
                 returnType = new ExtendedType(typeof(ICollection<>), true, new List<Type> {type});
             }

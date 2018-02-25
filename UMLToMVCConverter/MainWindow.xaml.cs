@@ -31,7 +31,7 @@ namespace UMLToMVCConverter
         {
             if (!String.IsNullOrEmpty(xmiPath))
             {
-                ClassGenerator cg = new ClassGenerator(xmiPath);
+                ClassGenerator cg = new ClassGenerator(xmiPath, @"..\..\Output");
                 MessageBox.Show(cg.GenerateTypes());
             }
             else
