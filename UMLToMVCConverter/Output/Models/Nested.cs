@@ -9,8 +9,8 @@ namespace Test.Models
 
 		public int NestedID {get; set;}
 
-		public  String name { get; set; }
+		public String name { get; set; }
 
-		public  String name { get; set; }
+		public String name { get; set; }
 	}
 }

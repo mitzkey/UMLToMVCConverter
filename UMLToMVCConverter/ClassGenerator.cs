@@ -176,13 +176,15 @@
                 CodeTypeReference typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
                 //deklaracja pola
-                var codeMemberProperty = new CodeMemberProperty();
-                codeMemberProperty.Type = typeRef;
-                codeMemberProperty.Name = attribute.ObligatoryAttributeValue("name");
+                var codeMemberProperty = new ExtendedCodeMemberProperty()
+                {
+                    Type = typeRef,
+                    Name = attribute.ObligatoryAttributeValue("name")
+                };
 
                 //widoczność
                 var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
-                var cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(umlVisibility);
+                var cSharpVisibility = UmlVisibilityMapper.UmlToCsharp(umlVisibility);
                 codeMemberProperty.Attributes = cSharpVisibility;    
            
                 //czy statyczny?
@@ -193,14 +195,20 @@
                 }
 
                 //czy tylko do odczytu
-                var xIsReadonly = attribute.Attribute("isReadOnly");
-                if (xIsReadonly != null && xIsReadonly.Value == "true") 
+                var xIsReadonly = Convert.ToBoolean(attribute.OptionalAttributeValue("isReadOnly"));
+                codeMemberProperty.HasSet = !xIsReadonly;
+
+                //default value
+                var xDefaultValue = attribute.Element("defaultValue");
+                if (xDefaultValue != null)
                 {
-                    codeMemberProperty.HasSet = false;
-                }
-                else
-                {
-                    codeMemberProperty.HasSet = true;
+                    var extendedType = (ExtendedCodeTypeReference)codeMemberProperty.Type;
+                    if (extendedType.IsGeneric || extendedType.IsNametType)
+                    {
+                        throw new NotSupportedException("No default value for generic or declared named types supported");
+                    }
+
+                    codeMemberProperty.DefaultValueString = xDefaultValue.ObligatoryAttributeValue("value");
                 }
 
                 codeTypeDeclaration.Members.Add(codeMemberProperty);
@@ -233,7 +241,7 @@
 
                 //widoczność
                 var umlVisibility = operation.ObligatoryAttributeValue("visibility");
-                var cSharpVisibility = UMLVisibilityMapper.UMLToCsharp(umlVisibility);
+                var cSharpVisibility = UmlVisibilityMapper.UmlToCsharp(umlVisibility);
                 codeMemberMethod.Attributes = codeMemberMethod.Attributes | cSharpVisibility;
 
                 var isStatic = Convert.ToBoolean(operation.OptionalAttributeValue("isStatic"));

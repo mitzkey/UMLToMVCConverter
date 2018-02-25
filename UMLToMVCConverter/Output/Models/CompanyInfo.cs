@@ -9,7 +9,7 @@ namespace Test.Models
 
 		public int CompanyInfoID {get; set;}
 
-		public static  String CompanyName { get; private set; }
+		public static String CompanyName { get; private set; } = "ACME";
 
 		public static Nullable<System.Boolean> ExampleStaticMethod(String inputString) {
 			throw new NotImplementedException();

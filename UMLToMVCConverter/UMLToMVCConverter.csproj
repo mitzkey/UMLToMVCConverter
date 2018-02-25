@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="EnumHelper.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeMemberMethod.cs" />
+    <Compile Include="ExtendedTypes\ExtendedCodeMemberProperty.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeParameterDeclarationExpression.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeTypeReference.cs" />
     <Compile Include="ExtendedTypes\ExtendedType.cs" />

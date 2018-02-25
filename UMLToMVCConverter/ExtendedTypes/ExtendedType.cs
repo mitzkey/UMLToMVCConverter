@@ -6,13 +6,13 @@ namespace UMLToMVCConverter.ExtendedTypes
 {
     public class ExtendedType
     {
-        private readonly bool isNamedType;
-
         private readonly string namedTypeName;
 
         public static ExtendedType Void => new ExtendedType(typeof(void));
 
-        public Type Type { get; private set; }
+        public Type Type { get; }
+
+        public bool IsNamedType { get; private set; }
 
         public ExtendedType(Type t, bool isGeneric = false, List<Type> generics = null)
         {
@@ -30,7 +30,7 @@ namespace UMLToMVCConverter.ExtendedTypes
 
         public ExtendedType(string typeName)
         {
-            this.isNamedType = true;
+            this.IsNamedType = true;
             this.namedTypeName = typeName;
         }
 
@@ -39,7 +39,7 @@ namespace UMLToMVCConverter.ExtendedTypes
         public string Name { 
             get
             {
-                if (this.isNamedType)
+                if (this.IsNamedType)
                 {
                     return this.namedTypeName;
                 }

@@ -40,13 +40,24 @@ foreach (var cm in _class.Members) {
 		#><#=inner_class.AddNewLines(2).NewSection().NewSection()#><#
 	}
 	else if (cm is CodeMemberProperty) {
-		CodeMemberProperty cmp = (CodeMemberProperty) cm;
+		var cmp = (ExtendedCodeMemberProperty) cm;
 		string generics = "";
 		ExtendedCodeTypeReference type = (ExtendedCodeTypeReference)cmp.Type;
 		#>
 
 
-		public <#if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {#>static <#}#> <#= type.ExtTypeName + " " + cmp.Name #> { get; <# if (!cmp.HasSet) {#>private <#}#>set; }<#
+		public <#
+		if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {
+			#>static <#
+		}
+		#><#= type.ExtTypeName + " " + cmp.Name #> { get; <#
+		if (!cmp.HasSet) {
+			#>private <#
+		}
+		#>set; }<#
+		if (cmp.HasDefaultValue) {
+			#> = <#=cmp.DefaultValueString#>;<#
+		}
 	}
 	else if (cm is CodeMemberMethod) {
 		var codeMemberMethod = (CodeMemberMethod) cm;

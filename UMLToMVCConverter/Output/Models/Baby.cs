@@ -13,14 +13,14 @@ namespace Test.Models
 		
 				public int NestedID {get; set;}
 		
-				public  String name { get; set; }
+				public String name { get; set; }
 		
-				public  String name { get; set; }
+				public String name { get; set; }
 			}
 
-		public  ICollection<System.String> knownWords { get; set; }
+		public ICollection<System.String> knownWords { get; set; }
 
-		public  String name { get; set; }
+		public String name { get; set; }
 
 		public static Worker MakeWorker() {
 			throw new NotImplementedException();
