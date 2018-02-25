@@ -6,7 +6,8 @@
 <#@ assembly name="System.Core"#>
 <#
 if(_class.IsStruct) {
-	#>	[ComplexType]<#
+	#>	[ComplexType]
+<#
 }
 
 #>	public<#
