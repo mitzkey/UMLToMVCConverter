@@ -111,14 +111,7 @@ if(_class.IsClass) {
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n\t\tpublic int ");
-            
-            #line 31 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(_class.Name));
-            
-            #line default
-            #line hidden
-            this.Write("ID {get; set;}");
+            this.Write("\r\n\r\n\t\tpublic int ID {get; set;}");
             
             #line 31 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 

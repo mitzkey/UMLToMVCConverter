@@ -7,7 +7,7 @@ namespace Test.Models
 {
 	public class CompanyInfo {
 
-		public int CompanyInfoID {get; set;}
+		public int ID {get; set;}
 
 		public static String CompanyName { get; private set; } = "ACME";
 

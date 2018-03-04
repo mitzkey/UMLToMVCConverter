@@ -7,7 +7,7 @@ namespace Test.Models
 {
 	public class Worker : Person {
 
-		public int WorkerID {get; set;}
+		public int ID {get; set;}
 
 		public String company { get; set; }
 

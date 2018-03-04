@@ -7,7 +7,7 @@ namespace Test.Models
 {
 	public class Nested {
 
-		public int NestedID {get; set;}
+		public int ID {get; set;}
 
 		public String name { get; set; }
 

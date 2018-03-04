@@ -7,7 +7,7 @@ namespace Test.Models
 {
 	public abstract class Person {
 
-		public int PersonID {get; set;}
+		public int ID {get; set;}
 
 		public Nullable<System.DateTime> dateOfBirth { get; set; }
 

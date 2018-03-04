@@ -28,7 +28,7 @@ if(_class.IsClass) {
 	#>
 
 
-		public int <#=_class.Name #>ID {get; set;}<#
+		public int ID {get; set;}<#
 }
 
 foreach (var cm in _class.Members) {
