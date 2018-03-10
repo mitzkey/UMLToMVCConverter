@@ -6,8 +6,6 @@ using System.Web;
 namespace Test.Models
 {
 	public class Baby : Person {
-
-		public int ID {get; set;}
 		
 			public class Nested {
 		

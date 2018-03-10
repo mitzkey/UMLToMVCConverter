@@ -24,7 +24,7 @@ if(baseClassName != null) {
 
 #>{<#
 
-if(_class.IsClass) {
+if(_class.IsClass && string.IsNullOrWhiteSpace(baseClassName)) {
 	#>
 
 

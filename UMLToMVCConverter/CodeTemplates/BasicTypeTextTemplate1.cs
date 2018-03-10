@@ -106,7 +106,7 @@ if(baseClassName != null) {
             #line 25 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 
-if(_class.IsClass) {
+if(_class.IsClass && string.IsNullOrWhiteSpace(baseClassName)) {
 	
             
             #line default

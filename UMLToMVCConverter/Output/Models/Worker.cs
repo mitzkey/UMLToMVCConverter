@@ -7,8 +7,6 @@ namespace Test.Models
 {
 	public class Worker : Person {
 
-		public int ID {get; set;}
-
 		public String company { get; set; }
 
 		public Nullable<System.Double> wage { get; set; }
