@@ -167,9 +167,9 @@
                 Insist.IsNotNull(attribute, nameof(attribute));
                 //liczności
                 var lv = attribute.Descendants("lowerValue").SingleOrDefault();
-                var lowerValue = lv?.Attribute("value")?.Value ?? string.Empty;
+                var lowerValue = lv?.Attribute("value")?.Value;
                 var uv = attribute.Descendants("upperValue").SingleOrDefault();
-                var upperValue = uv?.Attribute("value")?.Value ?? string.Empty;
+                var upperValue = uv?.Attribute("value")?.Value;
 
                 //określenie typu pola                
                 var cSharpType = this.GetXElementCsharpType(attribute, lowerValue, upperValue);

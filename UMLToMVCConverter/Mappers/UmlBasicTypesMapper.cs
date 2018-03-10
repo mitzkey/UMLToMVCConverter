@@ -32,21 +32,19 @@ namespace UMLToMVCConverter.Mappers
 
         private static ExtendedType GetDetailedType(Type type, string multiplicityLowerBound, string multiplicityUpperBound)
         {
-            ExtendedType returnType;
-            if (multiplicityLowerBound == "")
+            if (!string.IsNullOrWhiteSpace(multiplicityUpperBound) 
+                && (multiplicityUpperBound == "*"
+                    || Convert.ToInt32(multiplicityUpperBound) > 1))
             {
-                returnType = GetNullableType(type);
-            }
-            else
-            {
-                returnType = new ExtendedType(type);
+                return new ExtendedType(typeof(ICollection<>), true, new List<Type> { type }, true);
             }
 
-            if (multiplicityUpperBound != "")
+            if (string.IsNullOrWhiteSpace(multiplicityLowerBound) || Convert.ToInt32(multiplicityLowerBound) == 0)
             {
-                returnType = new ExtendedType(typeof(ICollection<>), true, new List<Type> {type}, true);
+                return GetNullableType(type);
             }
-            return returnType;
+
+            return new ExtendedType(type);
         }
 
         private static ExtendedType GetNullableType(Type type)
