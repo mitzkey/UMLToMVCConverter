@@ -50,6 +50,9 @@ foreach (var cm in _class.Members) {
 		if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {
 			#>static <#
 		}
+        if (type.ExtType.IsCollection) {
+			#>virtual <#
+		}
 		#><#= type.ExtTypeName + " " + cmp.Name #> { get; <#
 		if (!cmp.HasSet) {
 			#>private <#

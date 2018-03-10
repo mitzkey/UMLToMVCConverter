@@ -12,12 +12,15 @@ namespace UMLToMVCConverter.ExtendedTypes
 
         public Type Type { get; }
 
-        public bool IsNamedType { get; private set; }
+        public bool IsNamedType { get; }
 
-        public ExtendedType(Type t, bool isGeneric = false, List<Type> generics = null)
+        public bool IsCollection { get; }
+
+        public ExtendedType(Type t, bool isGeneric = false, List<Type> generics = null, bool isCollection = false)
         {
             Type = t;
             this.IsGeneric = isGeneric;
+            this.IsCollection = isCollection;
             if (generics != null)
             {
                 this.Generics = generics;

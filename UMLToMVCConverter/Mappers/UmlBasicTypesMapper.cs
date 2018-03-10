@@ -44,7 +44,7 @@ namespace UMLToMVCConverter.Mappers
 
             if (multiplicityUpperBound != "")
             {
-                returnType = new ExtendedType(typeof(ICollection<>), true, new List<Type> {type});
+                returnType = new ExtendedType(typeof(ICollection<>), true, new List<Type> {type}, true);
             }
             return returnType;
         }
