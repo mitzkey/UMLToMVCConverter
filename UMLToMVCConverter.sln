@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMLToMVCConverter", "UMLToMVCConverter\UMLToMVCConverter.csproj", "{0AB93E32-BD05-4586-A424-40DB1CAA912F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPagesMovie", "RazorPagesMovie\RazorPagesMovie.csproj", "{4C9E79E7-5D8E-4DBD-85D9-3B2C78BF64FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{0AB93E32-BD05-4586-A424-40DB1CAA912F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AB93E32-BD05-4586-A424-40DB1CAA912F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AB93E32-BD05-4586-A424-40DB1CAA912F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9E79E7-5D8E-4DBD-85D9-3B2C78BF64FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9E79E7-5D8E-4DBD-85D9-3B2C78BF64FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9E79E7-5D8E-4DBD-85D9-3B2C78BF64FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9E79E7-5D8E-4DBD-85D9-3B2C78BF64FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B53F152-F843-4414-9862-B818AEB6DA70}
 	EndGlobalSection
 EndGlobal
