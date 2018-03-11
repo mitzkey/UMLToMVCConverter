@@ -13,30 +13,31 @@
 
     internal class ClassGenerator
     {
-        private readonly XDocument xdoc;
-        private readonly XNamespace xmiNamespace;
-        private readonly XNamespace umlNamespace;
-        private readonly AttributeEqualityComparer attributeComparer;
         private readonly string namespaceName;
         private readonly List<CodeTypeDeclaration> types;
         private readonly string outputPath;
         private readonly List<CodeTypeDeclaration> typeDeclarations;
+        private readonly XmiWrapper xmiWrapper;
+        private readonly UmlTypesHelper umlTypesHelper;
 
         public ClassGenerator(string xmiPath, string outputPath)
         {
             Insist.IsNotNullOrWhiteSpace(outputPath, nameof(outputPath));
             this.outputPath = outputPath;
 
-            this.xdoc = XDocument.Load(xmiPath);
-            Insist.IsNotNull(this.xdoc.Root, nameof(this.xdoc.Root));
+            var xdoc = XDocument.Load(xmiPath);
+            Insist.IsNotNull(xdoc.Root, nameof(xdoc.Root));
 
-            this.xmiNamespace = this.xdoc.Root.GetNamespaceOfPrefix("xmi");
-            Insist.IsNotNull(this.xmiNamespace, nameof(this.xmiNamespace));
+            var xmiNamespace = xdoc.Root.GetNamespaceOfPrefix("xmi");
+            Insist.IsNotNull(xmiNamespace, nameof(xmiNamespace));
 
-            this.umlNamespace = this.xdoc.Root.GetNamespaceOfPrefix("uml");
-            Insist.IsNotNull(this.umlNamespace, nameof(this.umlNamespace));
+            var umlNamespace = xdoc.Root.GetNamespaceOfPrefix("uml");
+            Insist.IsNotNull(umlNamespace, nameof(umlNamespace));
 
-            this.attributeComparer = new AttributeEqualityComparer();
+            var attributeComparer = new AttributeEqualityComparer();
+
+            this.xmiWrapper = new XmiWrapper(xdoc, xmiNamespace, umlNamespace, attributeComparer);
+            this.umlTypesHelper = new UmlTypesHelper(this.xmiWrapper, this.types);
 
             this.namespaceName = "Test";
             //TODO: póki co nie wiadomo czy i jak używać przestrzeni nazw - robię listę typów => pakiety z UML
@@ -44,29 +45,19 @@
             this.typeDeclarations = new List<CodeTypeDeclaration>();
         }
         public string GenerateTypes()
-        {                                             
-            //dla każdego modelu <uml:Model>
-            var umlModels = this.xdoc.Descendants(this.umlNamespace + "Model").ToList();
+        {
+            var umlModels = this.xmiWrapper.GetXUmlModels();
             foreach (var umlModel in umlModels)
             {
-                //dla każdej klasy <packagedElement xmi:type='uml:Class'>:
-                var xTypes = umlModel.Descendants()
-                    .Where(i => i.Attributes().
-                        Contains(new XAttribute(this.xmiNamespace + "type", "uml:Class"), this.attributeComparer)
-                        || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:DataType"), this.attributeComparer))
-                    .ToList();
-
-                //deklaracja typów
+                var xTypes = this.xmiWrapper.GetXTypes(umlModel).ToList();
                 foreach (var type in xTypes)
                 {
-                    var typeDeclaration = this.DeclareTypeFromXElement(type);
-                    this.typeDeclarations.Add(typeDeclaration);
+                    this.DeclareTypeFromXElement(type);
                 }
 
                 foreach (var type in xTypes)
                 {
-                    //deklaracja klasy
-                    var ctd = this.PopulateTypeFromXElement(type);
+                    var ctd = this.BuildTypeFromXElement(type);
                     this.types.Add(ctd);                                                                               
                 }
                 
@@ -76,23 +67,17 @@
                 foreach (var type in xTypes)
                 {
                     //klasa bazowa
-                    //TODO: trzeba coś ustalić ws. dziedziczenia wielokrotnego => zadanie na tablicy
-                    var xCurrClass = type
-                        .Descendants("generalization")
-                        .FirstOrDefault(i => i.Attributes()
-                            .Contains(new XAttribute(this.xmiNamespace + "type", "uml:Generalization"), this.attributeComparer));
-                    if (xCurrClass != null)
+                    var xCurrClassGeneralization = this.xmiWrapper.GetXClassGeneralization(type);
+                    if (xCurrClassGeneralization != null)
                     {
-                        var baseClassId = xCurrClass.ObligatoryAttributeValue("general");
+                        var baseClassId = xCurrClassGeneralization.ObligatoryAttributeValue("general");
 
-                        Insist.IsNotNull(this.xmiNamespace, nameof(this.xmiNamespace));
-                        var baseClassName = xTypes
-                            .First(i => i.Attribute(this.xmiNamespace + "id")
-                            .Value
-                            .Equals(baseClassId))
-                            .ObligatoryAttributeValue("name");
+                        var baseClassXElement = this.xmiWrapper.GetXElementById(baseClassId);
+
+                        var baseClassName = baseClassXElement.ObligatoryAttributeValue("name");
 
                         var baseClass = this.types.FirstOrDefault(i => i.Name == baseClassName);
+
                         Insist.IsNotNull(baseClass, nameof(baseClass));
                         var ctr = new CodeTypeReference(baseClass.Name);
                         
@@ -110,72 +95,59 @@
             //generowanie plików
             this.GenerateFiles(this.types, this.namespaceName);
 
-            return "Plik przetworzono pomyślnie";
+            return "File successfully processed";
         }
 
-        private CodeTypeDeclaration DeclareTypeFromXElement(XElement xType)
+        private void DeclareTypeFromXElement(XElement xType)
         {
             //deklaracja typu
-            return new CodeTypeDeclaration {Name = xType.ObligatoryAttributeValue("name")};
+            var typeDeclaration = new CodeTypeDeclaration {Name = xType.ObligatoryAttributeValue("name")};
+            this.typeDeclarations.Add(typeDeclaration);
         }
 
-        private CodeTypeDeclaration PopulateTypeFromXElement(XElement type)
+        private CodeTypeDeclaration BuildTypeFromXElement(XElement type)
         {
             var codeTypeDeclarationName = type.ObligatoryAttributeValue("name");
             var codeTypeDeclaration = this.typeDeclarations.Single(t => t.Name.Equals(codeTypeDeclarationName));
 
-            //jaki to typ
-            var sType = type.ObligatoryAttributeValue(this.xmiNamespace + "type");
-            switch (sType)
+            codeTypeDeclaration.IsClass = this.umlTypesHelper.IsClass(type);
+            if (!codeTypeDeclaration.IsClass)
             {
-                case "uml:Class":
-                    codeTypeDeclaration.IsClass = true;
-                    break;
-                case "uml:DataType":
-                    codeTypeDeclaration.IsStruct = true;
-                    break;
-                default:
-                    throw new Exception("Nieobsługiwany typ: " + sType);
+                codeTypeDeclaration.IsStruct = this.umlTypesHelper.IsStruct(type);
+                if (codeTypeDeclaration.IsStruct)
+                {
+                    throw new Exception("Undandled type node:\n" + type);
+                }
             }
 
-            codeTypeDeclaration.TypeAttributes = TypeAttributes.Public; //TODO: czy w UML mamy widoczność typu?                    
+            //TODO: UML type visibility other than public
+            codeTypeDeclaration.TypeAttributes = TypeAttributes.Public;                    
             
-
-            //czy jest abstrakcyjna
-            if (type.Attribute("isAbstract")?.Value == "true")
+            if (this.umlTypesHelper.IsAbstract(type))
             {
                 codeTypeDeclaration.TypeAttributes = codeTypeDeclaration.TypeAttributes | TypeAttributes.Abstract;
             }
 
-            //czy są klasy zagnieżdżone
             var nestedClasses = type.Descendants("nestedClassifier").ToList();
             foreach (var nestedClass in nestedClasses)
             {
-                var ctdNested = this.PopulateTypeFromXElement(nestedClass);
+                var ctdNested = this.BuildTypeFromXElement(nestedClass);
                 codeTypeDeclaration.Members.Add(ctdNested);
             }
 
-            #region pola, metody          
+            #region attributes & methods          
 
-            //pola
-            var attributes = type.Descendants("ownedAttribute")
-                    .Where(i => i.Attributes()
-                        .Contains(new XAttribute(this.xmiNamespace + "type", "uml:Property"), this.attributeComparer))
-                    .ToList();
+            //attributes
+            var attributes = this.xmiWrapper.GetXAttributes(type);
             foreach (var attribute in attributes)
             {
                 Insist.IsNotNull(attribute, nameof(attribute));
-                //liczności
-                var lv = attribute.Descendants("lowerValue").SingleOrDefault();
-                var lowerValue = lv?.Attribute("value")?.Value;
-                var uv = attribute.Descendants("upperValue").SingleOrDefault();
-                var upperValue = uv?.Attribute("value")?.Value;
 
-                //określenie typu pola                
-                var cSharpType = this.GetXElementCsharpType(attribute, lowerValue, upperValue);
+                //attribute type                
+                var cSharpType = this.umlTypesHelper.GetXElementCsharpType(attribute);
                 CodeTypeReference typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
-                //deklaracja pola
+                //attribute declaration
                 var codeMemberProperty = new ExtendedCodeMemberProperty()
                 {
                     Type = typeRef,
@@ -215,25 +187,22 @@
             }
 
             //metody
-            var operations = type.Descendants("ownedOperation")
-                    .Where(i => i.Attributes()
-                        .Contains(new XAttribute(this.xmiNamespace + "type", "uml:Operation"), this.attributeComparer))
-                    .ToList();
+            var operations = this.xmiWrapper.GetXOperations(type);
             foreach (var operation in operations)
             {
                 var codeMemberMethod = new CodeMemberMethod {Name = operation.ObligatoryAttributeValue("name")};
 
                 //typ zwracany
-                var returnParameter = operation.Descendants("ownedParameter").FirstOrDefault(i => i.ObligatoryAttributeValue("direction").Equals("return"));
-                var returnType = this.GetXElementCsharpType(returnParameter, "", "");
+                var returnParameter = this.xmiWrapper.GetXReturnParameter(operation);
+                var returnType = this.umlTypesHelper.GetXElementCsharpType(returnParameter);
                 CodeTypeReference ctr = ExtendedCodeTypeReference.CreateForType(returnType);
                 codeMemberMethod.ReturnType = ctr;
                             
 
                 //parametry wejściowe
-                var parameters = operation.Descendants("ownedParameter").Where(i => i.Attribute("direction") == null || !i.ObligatoryAttributeValue("direction").Equals("return")).ToList();
+                var parameters = this.xmiWrapper.GetXParameters(operation);
                 foreach(var xParameter in parameters) {
-                    var parType = this.GetXElementCsharpType(xParameter, "", "");
+                    var parType = this.umlTypesHelper.GetXElementCsharpType(xParameter);
                     var parName = xParameter.ObligatoryAttributeValue("name");
                     CodeParameterDeclarationExpression parameter = new ExtendedCodeParameterDeclarationExpression(parType, parName);
                     codeMemberMethod.Parameters.Add(parameter);
@@ -258,26 +227,9 @@
             return codeTypeDeclaration;
         }
 
-        private ExtendedType GetXElementCsharpType(XElement xElement, string mplLowerVal, string mplUpperVal)
+        private ExtendedType GetXElementCsharpType(XElement xElement)
         {
-            Insist.IsNotNull(xElement, nameof(xElement));
-
-            var innerType = xElement.OptionalAttributeValue("type");
-            if (innerType == null)
-            {
-                var xType = xElement.Descendants("type").FirstOrDefault();
-                Insist.IsNotNull(xType, nameof(xType));
-                var xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
-                var umlType = xRefExtension.ObligatoryAttributeValue("referentPath").Split(':', ':').Last();
-                var cSharpType = UmlBasicTypesMapper.UmlToCsharp(umlType, mplLowerVal, mplUpperVal);
-                return cSharpType;
-            }
-            else
-            {
-                var xReturnTypeElement = this.GetElementById(innerType);
-                var typeName = xReturnTypeElement.ObligatoryAttributeValue("name");
-                return new ExtendedType(typeName);
-            }
+            
         }
 
         private XElement GetElementById(string innerType)

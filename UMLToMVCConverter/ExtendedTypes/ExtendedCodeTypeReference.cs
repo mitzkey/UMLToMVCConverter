@@ -16,10 +16,10 @@ namespace UMLToMVCConverter.ExtendedTypes
 
         public bool IsNametType => this.ExtType.IsNamedType;
 
-        private ExtendedCodeTypeReference(Type type, bool isGeneric = false, List<Type> generics = null)
+        private ExtendedCodeTypeReference(Type type, bool isBasic, bool isGeneric = false, List<Type> generics = null)
             : base(type)
         {
-            this.ExtType = new ExtendedType(type, isGeneric, generics);
+            this.ExtType = new ExtendedType(type, isBasic, isGeneric, generics);
         }
 
         private ExtendedCodeTypeReference(ExtendedType type)
@@ -28,17 +28,17 @@ namespace UMLToMVCConverter.ExtendedTypes
             this.ExtType = type;
         }
 
-        private ExtendedCodeTypeReference(string typeName)
+        private ExtendedCodeTypeReference(string typeName, bool isBasic)
             : base(typeName)
         {
-            this.ExtType = new ExtendedType(typeName);
+            this.ExtType = new ExtendedType(typeName, isBasic);
         }
 
         public static ExtendedCodeTypeReference CreateForType(ExtendedType type)
         {
             if (type.Type == null)
             {
-                return new ExtendedCodeTypeReference(type.Name);
+                return new ExtendedCodeTypeReference(type.Name, type.IsBasic);
             }
             else
             {
