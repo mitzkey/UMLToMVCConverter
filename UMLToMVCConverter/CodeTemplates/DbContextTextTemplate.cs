@@ -67,23 +67,23 @@ foreach(Tuple<string, string> nameAndPlural in classesNamesAndPlurals) {
             
             #line default
             #line hidden
-            this.Write("\r\n\t\tpublic DbSet<");
+            this.Write("\r\n\r\n\t\tpublic DbSet<");
             
-            #line 22 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 23 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameAndPlural.Item1));
             
             #line default
             #line hidden
             this.Write("> ");
             
-            #line 22 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 23 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameAndPlural.Item2));
             
             #line default
             #line hidden
             this.Write(" { get; set; }");
             
-            #line 22 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 23 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
  
 } 
 

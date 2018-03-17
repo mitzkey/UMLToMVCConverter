@@ -19,6 +19,7 @@ namespace <#= contextName #>.Models
 foreach(Tuple<string, string> nameAndPlural in classesNamesAndPlurals) {
 	#>
 
+
 		public DbSet<<#= nameAndPlural.Item1 #>> <#= nameAndPlural.Item2 #> { get; set; }<# 
 } 
 #>

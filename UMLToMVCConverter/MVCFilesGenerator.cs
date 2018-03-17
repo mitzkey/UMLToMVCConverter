@@ -253,10 +253,10 @@
         {
             var tmpl = new DbContextTextTemplate(classes, contextName);
             var output = tmpl.TransformText();
-            Directory.CreateDirectory(Path.Combine(this.outputPath, "DAL"));
-            var filesSubPath = @"DAL\" + contextName + "Context.cs";
-            var filesOutputPath = Path.Combine(this.outputPath, filesSubPath);
-            File.WriteAllText(filesOutputPath, output);
+            Directory.CreateDirectory(Path.Combine(this.outputPath, "Models"));
+            var fileSubPath = @"Models\" + contextName + "Context.cs";
+            var fileOutputPath = Path.Combine(this.outputPath, fileSubPath);
+            File.WriteAllText(fileOutputPath, output);
         }
 
         private void GenerateControllers(IEnumerable<CodeTypeDeclaration> classes, string contextName)
