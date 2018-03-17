@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace RazorPagesMovie
 {
     using Microsoft.EntityFrameworkCore;
-    using RazorPagesMovie.Models;
+    using Test.Models;
 
     public class Startup
     {
@@ -24,7 +24,7 @@ namespace RazorPagesMovie
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MovieContext>(
+            services.AddDbContext<TestContext>(
                 options =>
                     options.UseSqlServer(this.Configuration.GetConnectionString("MovieContext")));
             services.AddMvc();
