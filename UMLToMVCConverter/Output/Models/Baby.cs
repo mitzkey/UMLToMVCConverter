@@ -11,12 +11,12 @@ namespace Test.Models
 		
 				public int ID {get; set;}
 		
-				public String name { get; set; }
+				public String Name { get; set; }
 			}
 
-		public virtual ICollection<KnownWords> knownWords { get; set; }
+		public virtual ICollection<KnownWords> KnownWords { get; set; }
 
-		public String name { get; set; }
+		public String Name { get; set; }
 
 		public static Worker MakeWorker() {
 			throw new NotImplementedException();

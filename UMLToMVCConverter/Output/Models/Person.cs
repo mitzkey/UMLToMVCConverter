@@ -9,9 +9,9 @@ namespace Test.Models
 
 		public int ID {get; set;}
 
-		public Nullable<DateTime> dateOfBirth { get; set; }
+		public Nullable<DateTime> DateOfBirth { get; set; }
 
-		public String name { get; set; }
+		public String Name { get; set; }
 
 		public void DoSomething(Nullable<Int32> x,Nullable<Int32> y) {
 			throw new NotImplementedException();

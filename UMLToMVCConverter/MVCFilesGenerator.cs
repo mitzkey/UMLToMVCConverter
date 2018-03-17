@@ -198,10 +198,10 @@
                 CodeTypeReference typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
                 //declaration
-                var codeMemberProperty = new ExtendedCodeMemberProperty()
+                var codeMemberProperty = new ExtendedCodeMemberProperty
                 {
                     Type = typeRef,
-                    Name = attribute.ObligatoryAttributeValue("name")
+                    Name = attribute.ObligatoryAttributeValue("name").FirstCharToUpper()
                 };
 
                 var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
