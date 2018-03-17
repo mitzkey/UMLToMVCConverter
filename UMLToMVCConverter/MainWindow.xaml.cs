@@ -31,8 +31,8 @@ namespace UMLToMVCConverter
         {
             if (!String.IsNullOrEmpty(xmiPath))
             {
-                ClassGenerator cg = new ClassGenerator(xmiPath, @"..\..\Output");
-                MessageBox.Show(cg.GenerateTypes());
+                MvcFilesGenerator cg = new MvcFilesGenerator(xmiPath, @"..\..\Output");
+                MessageBox.Show(cg.GenerateMvcFiles());
             }
             else
             {

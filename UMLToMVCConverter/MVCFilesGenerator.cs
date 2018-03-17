@@ -11,7 +11,7 @@
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.Mappers;
 
-    internal class ClassGenerator
+    internal class MvcFilesGenerator
     {
         private readonly string namespaceName;
         private readonly List<CodeTypeDeclaration> types;
@@ -20,7 +20,7 @@
         private readonly XmiWrapper xmiWrapper;
         private readonly UmlTypesHelper umlTypesHelper;
 
-        public ClassGenerator(string xmiPath, string outputPath)
+        public MvcFilesGenerator(string xmiPath, string outputPath)
         {
             Insist.IsNotNullOrWhiteSpace(outputPath, nameof(outputPath));
             this.outputPath = outputPath;
@@ -44,7 +44,7 @@
 
             this.namespaceName = "Test";
         }
-        public string GenerateTypes()
+        public string GenerateMvcFiles()
         {
             var umlModels = this.xmiWrapper.GetXUmlModels();
             foreach (var umlModel in umlModels)
@@ -57,50 +57,48 @@
 
                 foreach (var type in xTypes)
                 {
-                    var ctd = this.BuildTypeFromXElement(type);
-                    this.types.Add(ctd);                                                                               
-                }
-                
-                //dziedziczenie
-
-                //po utworzeniu obiektów w liście typów, dla każdej klasy sprawdzam czy po czyms dziedziczy
-                foreach (var type in xTypes)
-                {
-                    //klasa bazowa
-                    var xCurrClassGeneralization = this.xmiWrapper.GetXClassGeneralization(type);
-                    if (xCurrClassGeneralization != null)
-                    {
-                        var baseClassId = xCurrClassGeneralization.ObligatoryAttributeValue("general");
-
-                        var baseClassXElement = this.xmiWrapper.GetXElementById(baseClassId);
-
-                        var baseClassName = baseClassXElement.ObligatoryAttributeValue("name");
-
-                        var baseClass = this.types.FirstOrDefault(i => i.Name == baseClassName);
-
-                        Insist.IsNotNull(baseClass, nameof(baseClass));
-                        var ctr = new CodeTypeReference(baseClass.Name);
-                        
-                        var currClassName = type.ObligatoryAttributeValue("name");
-                        var currClass = this.types.FirstOrDefault(i => i.Name == currClassName);
-
-                        Insist.IsNotNull(currClass, nameof(currClass));
-                        currClass.BaseTypes.Add(ctr);
-                    }
+                    var codeTypeDeclaration = this.BuildTypeFromXElement(type);
+                    this.types.Add(codeTypeDeclaration);                                                                               
                 }
 
-                
+                this.GenerateInheritanceRelations(xTypes);
             }
 
-            //generowanie plików
             this.GenerateFiles(this.types, this.namespaceName);
 
             return "File successfully processed";
         }
 
+        private void GenerateInheritanceRelations(IEnumerable<XElement> xTypes)
+        {
+            foreach (var type in xTypes)
+            {
+                //klasa bazowa
+                var xCurrClassGeneralization = this.xmiWrapper.GetXClassGeneralization(type);
+                if (xCurrClassGeneralization != null)
+                {
+                    var baseClassId = xCurrClassGeneralization.ObligatoryAttributeValue("general");
+
+                    var baseClassXElement = this.xmiWrapper.GetXElementById(baseClassId);
+
+                    var baseClassName = baseClassXElement.ObligatoryAttributeValue("name");
+
+                    var baseClass = this.types.FirstOrDefault(i => i.Name == baseClassName);
+
+                    Insist.IsNotNull(baseClass, nameof(baseClass));
+                    var ctr = new CodeTypeReference(baseClass.Name);
+
+                    var currClassName = type.ObligatoryAttributeValue("name");
+                    var currClass = this.types.FirstOrDefault(i => i.Name == currClassName);
+
+                    Insist.IsNotNull(currClass, nameof(currClass));
+                    currClass.BaseTypes.Add(ctr);
+                }
+            }
+        }
+
         private void DeclareTypeFromXElement(XElement xType)
         {
-            //deklaracja typu
             var typeDeclaration = new CodeTypeDeclaration {Name = xType.ObligatoryAttributeValue("name")};
             this.typeDeclarations.Add(typeDeclaration);
         }
@@ -135,80 +133,39 @@
                 codeTypeDeclaration.Members.Add(ctdNested);
             }
 
-            #region attributes & methods          
+            this.GenerateAttributes(type, codeTypeDeclaration);
 
-            //attributes
-            var attributes = this.xmiWrapper.GetXAttributes(type);
-            foreach (var attribute in attributes)
-            {
-                Insist.IsNotNull(attribute, nameof(attribute));
+            this.GenerateMethods(type, codeTypeDeclaration);
 
-                //attribute type                
-                var cSharpType = this.umlTypesHelper.GetXElementCsharpType(attribute);
-                CodeTypeReference typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
+            return codeTypeDeclaration;
+        }
 
-                //attribute declaration
-                var codeMemberProperty = new ExtendedCodeMemberProperty()
-                {
-                    Type = typeRef,
-                    Name = attribute.ObligatoryAttributeValue("name")
-                };
-
-                //widoczność
-                var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
-                var cSharpVisibility = UmlVisibilityMapper.UmlToCsharp(umlVisibility);
-                codeMemberProperty.Attributes = cSharpVisibility;    
-           
-                //czy statyczny?
-                var isStatic = Convert.ToBoolean(attribute.OptionalAttributeValue("isStatic"));
-                if (isStatic)
-                {
-                    codeMemberProperty.Attributes = codeMemberProperty.Attributes | MemberAttributes.Static;
-                }
-
-                //czy tylko do odczytu
-                var xIsReadonly = Convert.ToBoolean(attribute.OptionalAttributeValue("isReadOnly"));
-                codeMemberProperty.HasSet = !xIsReadonly;
-
-                //default value
-                var xDefaultValue = attribute.Element("defaultValue");
-                if (xDefaultValue != null)
-                {
-                    var extendedType = (ExtendedCodeTypeReference)codeMemberProperty.Type;
-                    if (extendedType.IsGeneric || extendedType.IsNametType)
-                    {
-                        throw new NotSupportedException("No default value for generic or declared named types supported");
-                    }
-
-                    codeMemberProperty.DefaultValueString = xDefaultValue.ObligatoryAttributeValue("value");
-                }
-
-                codeTypeDeclaration.Members.Add(codeMemberProperty);
-            }
-
-            //metody
+        private void GenerateMethods(XElement type, CodeTypeDeclaration codeTypeDeclaration)
+        {
             var operations = this.xmiWrapper.GetXOperations(type);
             foreach (var operation in operations)
             {
                 var codeMemberMethod = new CodeMemberMethod {Name = operation.ObligatoryAttributeValue("name")};
 
-                //typ zwracany
+                //returned type
                 var returnParameter = this.xmiWrapper.GetXReturnParameter(operation);
                 var returnType = this.umlTypesHelper.GetXElementCsharpType(returnParameter);
                 CodeTypeReference ctr = ExtendedCodeTypeReference.CreateForType(returnType);
                 codeMemberMethod.ReturnType = ctr;
-                            
 
-                //parametry wejściowe
+
+                //parameters
                 var parameters = this.xmiWrapper.GetXParameters(operation);
-                foreach(var xParameter in parameters) {
+                foreach (var xParameter in parameters)
+                {
                     var parType = this.umlTypesHelper.GetXElementCsharpType(xParameter);
                     var parName = xParameter.ObligatoryAttributeValue("name");
-                    CodeParameterDeclarationExpression parameter = new ExtendedCodeParameterDeclarationExpression(parType, parName);
+                    CodeParameterDeclarationExpression parameter =
+                        new ExtendedCodeParameterDeclarationExpression(parType, parName);
                     codeMemberMethod.Parameters.Add(parameter);
                 }
 
-                //widoczność
+                //visibility
                 var umlVisibility = operation.ObligatoryAttributeValue("visibility");
                 var cSharpVisibility = UmlVisibilityMapper.UmlToCsharp(umlVisibility);
                 codeMemberMethod.Attributes = codeMemberMethod.Attributes | cSharpVisibility;
@@ -221,33 +178,74 @@
 
                 codeTypeDeclaration.Members.Add(codeMemberMethod);
             }
+        }
 
-            #endregion
+        private void GenerateAttributes(XElement type, CodeTypeDeclaration codeTypeDeclaration)
+        {
+            var attributes = this.xmiWrapper.GetXAttributes(type);
+            foreach (var attribute in attributes)
+            {
+                Insist.IsNotNull(attribute, nameof(attribute));
 
-            return codeTypeDeclaration;
+                //type                
+                var cSharpType = this.umlTypesHelper.GetXElementCsharpType(attribute);
+                CodeTypeReference typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
+
+                //declaration
+                var codeMemberProperty = new ExtendedCodeMemberProperty()
+                {
+                    Type = typeRef,
+                    Name = attribute.ObligatoryAttributeValue("name")
+                };
+
+                //visibility
+                var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
+                var cSharpVisibility = UmlVisibilityMapper.UmlToCsharp(umlVisibility);
+                codeMemberProperty.Attributes = cSharpVisibility;
+
+                //static?
+                var isStatic = Convert.ToBoolean(attribute.OptionalAttributeValue("isStatic"));
+                if (isStatic)
+                {
+                    codeMemberProperty.Attributes = codeMemberProperty.Attributes | MemberAttributes.Static;
+                }
+
+                //readonly?
+                var xIsReadonly = Convert.ToBoolean(attribute.OptionalAttributeValue("isReadOnly"));
+                codeMemberProperty.HasSet = !xIsReadonly;
+
+                //default value
+                var xDefaultValue = attribute.Element("defaultValue");
+                if (xDefaultValue != null)
+                {
+                    var extendedType = (ExtendedCodeTypeReference) codeMemberProperty.Type;
+                    if (extendedType.IsGeneric || extendedType.IsNametType)
+                    {
+                        throw new NotSupportedException("No default value for generic or declared named types supported");
+                    }
+
+                    codeMemberProperty.DefaultValueString = xDefaultValue.ObligatoryAttributeValue("value");
+                }
+
+                codeTypeDeclaration.Members.Add(codeMemberProperty);
+            }
         }
 
         private void GenerateFiles(List<CodeTypeDeclaration> typesToGenerate, string namespaceNameToGenerate)
         {
-            //dla każdej klasy generowanie klasy modeli
             this.GenerateModels(typesToGenerate, namespaceNameToGenerate);
 
-            /*tylko niektóre typy będą niezależnymi obiektami, nie będą nimi:
-             * - klasy abstrakcyjne
-             * - typy wartościowe
-            */
             var standaloneEntityTypes = typesToGenerate.
                 Where(i => !i.TypeAttributes.HasFlag(TypeAttributes.Abstract)
                     && !i.IsStruct)
                 .ToList();
-            //generowanie pliku kontekstu (DbContext)
+
             this.GenerateDbContextClass(standaloneEntityTypes, namespaceNameToGenerate);
-            //generowanie plików konrolerów
+
             this.GenerateControllers(standaloneEntityTypes, namespaceNameToGenerate);
-            //generowanie widoków
+
             this.GenerateViews(standaloneEntityTypes, namespaceNameToGenerate);
         }
-
 
         private void GenerateDbContextClass(List<CodeTypeDeclaration> classes, string contextName)
         {
@@ -275,7 +273,6 @@
 
         private void GenerateViews(List<CodeTypeDeclaration> classes, string contextName)
         {
-            //widoki - listy
             foreach (var ctd in classes)
             {
                 var tmpl = new ViewIndexTextTemplate(ctd, contextName);

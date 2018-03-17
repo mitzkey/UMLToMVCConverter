@@ -6,7 +6,6 @@ namespace UMLToMVCConverter.Mappers
 {
     using System.CodeDom;
     using System.Collections.ObjectModel;
-    using System.Linq;
     using System.Reflection;
     using System.Xml.Linq;
 

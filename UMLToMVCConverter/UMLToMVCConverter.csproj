@@ -124,7 +124,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AttributeEqualityComparer.cs" />
-    <Compile Include="ClassGenerator.cs" />
+    <Compile Include="MVCFilesGenerator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
