@@ -9,10 +9,10 @@ namespace Test.Models
 
 		public String company { get; set; }
 
-		public Nullable<System.Double> wage { get; set; }
+		public Nullable<Double> wage { get; set; }
 
-		public virtual ICollection<System.Int32> favouriteNumber { get; set; }
+		public virtual ICollection<Int32> favouriteNumber { get; set; }
 
-		public virtual ICollection<> Boss { get; set; }
+		public virtual ICollection<Worker> Coworkers { get; set; }
 	}
 }

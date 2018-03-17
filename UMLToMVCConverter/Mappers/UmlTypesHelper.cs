@@ -99,7 +99,7 @@ namespace UMLToMVCConverter.Mappers
 
         private ExtendedType GetPrimitiveNullableType(XElement xElement)
         {
-            var umlType = this.xmiWrapper.GetPrimitiveUmlTypeForProperty(xElement);
+            var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
             var type = MapPrimitiveType(umlType);
             var returnType = Nullable.GetUnderlyingType(type);
             if (returnType != null)
@@ -109,7 +109,8 @@ namespace UMLToMVCConverter.Mappers
 
             if (type.IsValueType)
             {
-                return new ExtendedType(typeof(Nullable), true, true, new List<Type> { type });
+                var generic = new ExtendedType(type, true);
+                return new ExtendedType(typeof(Nullable), true, true, new List<ExtendedType> { generic });
             }
 
             return new ExtendedType(type, true);
@@ -136,7 +137,7 @@ namespace UMLToMVCConverter.Mappers
 
         private ExtendedType GetPrimitiveNonNullableType(XElement xElement)
         {
-            var umlType = this.xmiWrapper.GetPrimitiveUmlTypeForProperty(xElement);
+            var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
             var type = MapPrimitiveType(umlType);
             return new ExtendedType(type, true);
         }
@@ -173,17 +174,17 @@ namespace UMLToMVCConverter.Mappers
             if (this.xmiWrapper.IsOfPrimitiveType(xElement))
             {
                 var newPrimitiveTypeEntity = this.CreateAndGetPrimitiveTypeEntity(xElement);
-                return this.GetCollectionTypeFor(newPrimitiveTypeEntity);
+                return this.GetCollectionTypeFor(newPrimitiveTypeEntity, true);
             }
 
             var complexType = this.GetComplexType(xElement);
 
-            return this.GetCollectionTypeFor(complexType);
+            return this.GetCollectionTypeFor(complexType, false);
         }
 
-        private ExtendedType GetCollectionTypeFor(ExtendedType extType)
+        private ExtendedType GetCollectionTypeFor(ExtendedType extType, bool isPrimitive)
         {
-            return new ExtendedType(typeof(ICollection<>), true, true, new List<Type> { extType.Type }, true);
+            return new ExtendedType(typeof(ICollection<>), isPrimitive, true, new List<ExtendedType> { extType }, true);
         }
     }
 }

@@ -12,9 +12,9 @@ namespace UMLToMVCConverter.ExtendedTypes
 
         public bool IsGeneric => this.ExtType.IsGeneric;
 
-        public List<Type> Generics => this.ExtType.Generics;
+        public List<ExtendedType> Generics => this.ExtType.Generics;
 
-        public ExtendedCodeParameterDeclarationExpression(Type parType, string parName, bool isBasic, bool isGeneric = false, List<Type> generics = null)
+        public ExtendedCodeParameterDeclarationExpression(Type parType, string parName, bool isBasic, bool isGeneric = false, IEnumerable<ExtendedType> generics = null)
             : base(parType, parName)
         {
             this.ExtType = new ExtendedType(parType, isBasic, isGeneric, generics);

@@ -93,7 +93,7 @@
                 .Contains(new XAttribute(xmiNamespace + "type", "uml:Property"), this.attributeEqualityComparer);
         }
 
-        public string GetPrimitiveUmlTypeForProperty(XElement xProperty)
+        public string GetPrimitiveUmlType(XElement xProperty)
         {
             var xType = xProperty.Descendants("type").FirstOrDefault();
 

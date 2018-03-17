@@ -12,11 +12,11 @@ namespace UMLToMVCConverter.ExtendedTypes
 
         public bool IsGeneric => this.ExtType.IsGeneric;
 
-        public List<Type> Generics => this.ExtType.Generics;
+        public List<ExtendedType> Generics => this.ExtType.Generics;
 
         public bool IsNametType => this.ExtType.IsNamedType;
 
-        private ExtendedCodeTypeReference(Type type, bool isBasic, bool isGeneric = false, List<Type> generics = null)
+        private ExtendedCodeTypeReference(Type type, bool isBasic, bool isGeneric = false, IEnumerable<ExtendedType> generics = null)
             : base(type)
         {
             this.ExtType = new ExtendedType(type, isBasic, isGeneric, generics);

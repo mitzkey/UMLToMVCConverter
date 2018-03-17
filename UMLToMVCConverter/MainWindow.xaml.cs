@@ -9,12 +9,16 @@ namespace UMLToMVCConverter
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string TemporaryHardCodedDiagramPath =
+            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\Diagramy\MainDiagram.xml";
+        private const string OutputPath = @"..\..\Output";
         private string xmiPath;
         public MainWindow()
         {
             InitializeComponent();
             //TODO: tymczasowo żeby nie klikać za każdym razem okna
-            //ClassGenerator.GenerateClassesFromXmi(@"C:\Users\Mikołaj\Desktop\Informatyka\Praca Inżynierska\MD Projects\Test01\Test01_xmi.xml");
+            MvcFilesGenerator cg = new MvcFilesGenerator(TemporaryHardCodedDiagramPath, OutputPath);
+            MessageBox.Show(cg.GenerateMvcFiles());
         }
 
         private void BtnOpenXMI_Click(object sender, RoutedEventArgs e)
@@ -36,7 +40,7 @@ namespace UMLToMVCConverter
             }
             else
             {
-                MessageBox.Show("Nie załadowano pliku XMI", "Błąd");
+                MessageBox.Show("Failed to load XMI file", "Error");
             }
         }
     }

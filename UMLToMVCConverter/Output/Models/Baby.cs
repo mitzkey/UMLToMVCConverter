@@ -16,7 +16,7 @@ namespace Test.Models
 				public String name { get; set; }
 			}
 
-		public virtual ICollection<System.String> knownWords { get; set; }
+		public virtual ICollection<String> knownWords { get; set; }
 
 		public String name { get; set; }
 

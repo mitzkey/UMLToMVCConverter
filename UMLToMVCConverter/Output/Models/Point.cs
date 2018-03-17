@@ -9,8 +9,8 @@ namespace Test.Models
 
 		public int ID {get; set;}
 
-		public Nullable<System.Int32> x { get; set; }
+		public Nullable<Int32> x { get; set; }
 
-		public Nullable<System.Int32> y { get; set; }
+		public Nullable<Int32> y { get; set; }
 	}
 }

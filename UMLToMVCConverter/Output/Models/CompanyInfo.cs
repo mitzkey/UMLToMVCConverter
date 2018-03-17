@@ -11,7 +11,7 @@ namespace Test.Models
 
 		public static String CompanyName { get; private set; } = "ACME";
 
-		public static Nullable<System.Boolean> ExampleStaticMethod(String inputString) {
+		public static Nullable<Boolean> ExampleStaticMethod(String inputString) {
 			throw new NotImplementedException();
 		}
 	}
