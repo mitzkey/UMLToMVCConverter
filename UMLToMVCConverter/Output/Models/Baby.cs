@@ -12,8 +12,6 @@ namespace Test.Models
 				public int ID {get; set;}
 		
 				public String name { get; set; }
-		
-				public String name { get; set; }
 			}
 
 		public virtual ICollection<KnownWords> knownWords { get; set; }

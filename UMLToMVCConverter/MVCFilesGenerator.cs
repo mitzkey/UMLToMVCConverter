@@ -46,16 +46,23 @@
         }
         public string GenerateMvcFiles()
         {
+            this.ClearOutputDirectory();
+
             var umlModels = this.xmiWrapper.GetXUmlModels();
             foreach (var umlModel in umlModels)
             {
-                var xTypes = this.xmiWrapper.GetXTypes(umlModel).ToList();
+                var xTypes = this.xmiWrapper.GetXTypes(umlModel)
+                    .ToList();
+
+                var xTypesToBuild = xTypes
+                    .Where(t => !"nestedClassifier".Equals(t.Name.ToString()));
+
                 foreach (var type in xTypes)
                 {
                     this.DeclareTypeFromXElement(type);
                 }
 
-                foreach (var type in xTypes)
+                foreach (var type in xTypesToBuild)
                 {
                     var codeTypeDeclaration = this.BuildTypeFromXElement(type);
                     this.types.Add(codeTypeDeclaration);                                                                               
@@ -67,6 +74,11 @@
             this.GenerateFiles(this.types, this.namespaceName);
 
             return "File successfully processed";
+        }
+
+        private void ClearOutputDirectory()
+        {
+            Directory.Delete(this.outputPath, true);
         }
 
         private void GenerateInheritanceRelations(IEnumerable<XElement> xTypes)
@@ -118,7 +130,6 @@
                 }
             }
 
-            //TODO: UML type visibility other than public
             codeTypeDeclaration.TypeAttributes = TypeAttributes.Public;                    
             
             if (this.umlTypesHelper.IsAbstract(type))
@@ -198,23 +209,19 @@
                     Name = attribute.ObligatoryAttributeValue("name")
                 };
 
-                //visibility
                 var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
                 var cSharpVisibility = UmlVisibilityMapper.UmlToCsharp(umlVisibility);
                 codeMemberProperty.Attributes = cSharpVisibility;
 
-                //static?
                 var isStatic = Convert.ToBoolean(attribute.OptionalAttributeValue("isStatic"));
                 if (isStatic)
                 {
                     codeMemberProperty.Attributes = codeMemberProperty.Attributes | MemberAttributes.Static;
                 }
 
-                //readonly?
                 var xIsReadonly = Convert.ToBoolean(attribute.OptionalAttributeValue("isReadOnly"));
                 codeMemberProperty.HasSet = !xIsReadonly;
 
-                //default value
                 var xDefaultValue = attribute.Element("defaultValue");
                 if (xDefaultValue != null)
                 {

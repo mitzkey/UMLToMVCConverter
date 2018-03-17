@@ -101,6 +101,12 @@ namespace UMLToMVCConverter.Mappers
         {
             var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
             var type = MapPrimitiveType(umlType);
+
+            if (type == typeof(void))
+            {
+                return ExtendedType.Void;
+            }
+
             var returnType = Nullable.GetUnderlyingType(type);
             if (returnType != null)
             {

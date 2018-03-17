@@ -19,6 +19,7 @@ namespace UMLToMVCConverter
             //TODO: tymczasowo żeby nie klikać za każdym razem okna
             MvcFilesGenerator cg = new MvcFilesGenerator(TemporaryHardCodedDiagramPath, OutputPath);
             MessageBox.Show(cg.GenerateMvcFiles());
+            this.Close();
         }
 
         private void BtnOpenXMI_Click(object sender, RoutedEventArgs e)
