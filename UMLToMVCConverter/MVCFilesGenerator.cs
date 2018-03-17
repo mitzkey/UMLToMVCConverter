@@ -257,7 +257,7 @@
             File.WriteAllText(filesOutputPath, output);
         }
 
-        private void GenerateControllers(List<CodeTypeDeclaration> classes, string contextName)
+        private void GenerateControllers(IEnumerable<CodeTypeDeclaration> classes, string contextName)
         {
             foreach (var ctd in classes)
             {
@@ -271,7 +271,7 @@
             }            
         }
 
-        private void GenerateViews(List<CodeTypeDeclaration> classes, string contextName)
+        private void GenerateViews(IEnumerable<CodeTypeDeclaration> classes, string contextName)
         {
             foreach (var ctd in classes)
             {
@@ -285,7 +285,7 @@
             }
         }
 
-        private void GenerateModels(List<CodeTypeDeclaration> classes, string contextName)
+        private void GenerateModels(IEnumerable<CodeTypeDeclaration> classes, string contextName)
         {
             foreach (var ctd in classes)
             {

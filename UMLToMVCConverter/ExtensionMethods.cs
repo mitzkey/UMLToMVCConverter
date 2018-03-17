@@ -1,5 +1,6 @@
 ﻿namespace UMLToMVCConverter
 {
+    using System.Linq;
     using System.Text;
     using System.Xml.Linq;
 
@@ -79,6 +80,12 @@
 
             return stringbuilder.ToString();
 
+        }
+
+        public static string FirstCharToUpper(this string input)
+        {
+            Insist.IsNotNullOrWhiteSpace(input, nameof(input));
+            return input.First().ToString().ToUpper() + input.Substring(1);
         }
     }
 }

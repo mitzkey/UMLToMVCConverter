@@ -18,7 +18,7 @@ namespace UMLToMVCConverter.ExtendedTypes
 
         public bool IsCollection { get; }
 
-        public bool IsBasic { get; }
+        public bool IsBaseType { get; }
         public List<ExtendedType> Generics { get; set; }
         public bool IsGeneric { get; set; }
         public string Name
@@ -46,19 +46,19 @@ namespace UMLToMVCConverter.ExtendedTypes
             }
         }
 
-        public ExtendedType(Type t, bool isBasic, bool isGeneric = false, IEnumerable<ExtendedType> generics = null, bool isCollection = false)
+        public ExtendedType(Type t, bool isBaseType, bool isGeneric = false, IEnumerable<ExtendedType> generics = null, bool isCollection = false)
         {
             this.Type = t;
             this.IsGeneric = isGeneric;
             this.IsCollection = isCollection;
-            this.IsBasic = isBasic;
+            this.IsBaseType = isBaseType;
             this.Generics = generics?.ToList() ?? new List<ExtendedType>();
         }
 
-        public ExtendedType(string typeName, bool isBasic)
+        public ExtendedType(string typeName, bool isBaseType)
         {
             this.IsNamedType = true;
-            this.IsBasic = isBasic;
+            this.IsBaseType = isBaseType;
             this.namedTypeName = typeName;
         }
     }

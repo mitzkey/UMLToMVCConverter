@@ -145,14 +145,15 @@ namespace UMLToMVCConverter.Mappers
         private ExtendedType CreateAndGetPrimitiveTypeEntity(XElement xElement)
         {
             var name = xElement.ObligatoryAttributeValue("name");
+            name = name.FirstCharToUpper();
 
             var codeTypeDeclaration = new CodeTypeDeclaration(name)
             {
-                IsStruct = true,
+                IsStruct = false,
                 TypeAttributes = TypeAttributes.Public
             };
             
-            var cSharpType = this.GetPrimitiveNonNullableType(xElement);
+            var cSharpType = new ExtendedType(name, true);
             var typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
             var valueProperty = new ExtendedCodeMemberProperty

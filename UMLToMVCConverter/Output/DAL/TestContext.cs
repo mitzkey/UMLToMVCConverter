@@ -9,7 +9,9 @@ namespace Test.DAL
 {
     public class TestContext : DbContext
     {
+                public DbSet<FavouriteNumber> FavouriteNumberSet { get; set; }
                 public DbSet<Worker> WorkerSet { get; set; }
+                public DbSet<KnownWords> KnownWordsSet { get; set; }
                 public DbSet<Baby> BabySet { get; set; }
                 public DbSet<Nested> NestedSet { get; set; }
                 public DbSet<Point> PointSet { get; set; }

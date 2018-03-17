@@ -5,9 +5,10 @@ using System.Web;
 
 namespace Test.Models
 {
-	[ComplexType]
-	public class knownWords {
+	public class KnownWords {
 
-		public String Value { get; private set; }
+		public int ID {get; set;}
+
+		public KnownWords Value { get; private set; }
 	}
 }

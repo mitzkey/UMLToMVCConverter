@@ -11,7 +11,7 @@ namespace Test.Models
 
 		public Nullable<Double> wage { get; set; }
 
-		public virtual ICollection<Int32> favouriteNumber { get; set; }
+		public virtual ICollection<FavouriteNumber> favouriteNumber { get; set; }
 
 		public virtual ICollection<Worker> Coworkers { get; set; }
 	}

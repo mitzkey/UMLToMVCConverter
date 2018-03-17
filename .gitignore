@@ -189,3 +189,5 @@ _Pvt_Extensions/
 ModelManifest.xml
 .vs/
 Diagramy/MainDiagram.xml.bak
+UMLToMVCConverter/Output/Controllers/
+UMLToMVCConverter/Output/Views/

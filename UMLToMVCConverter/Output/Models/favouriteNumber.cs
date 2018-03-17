@@ -5,9 +5,10 @@ using System.Web;
 
 namespace Test.Models
 {
-	[ComplexType]
-	public class favouriteNumber {
+	public class FavouriteNumber {
 
-		public Int32 Value { get; private set; }
+		public int ID {get; set;}
+
+		public FavouriteNumber Value { get; private set; }
 	}
 }
