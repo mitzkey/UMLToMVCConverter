@@ -13,6 +13,6 @@ namespace Test.Models
 
 		public virtual ICollection<System.Int32> favouriteNumber { get; set; }
 
-		public Worker Boss { get; set; }
+		public virtual ICollection<> Boss { get; set; }
 	}
 }

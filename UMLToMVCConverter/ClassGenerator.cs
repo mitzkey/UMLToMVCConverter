@@ -34,15 +34,15 @@
             var umlNamespace = xdoc.Root.GetNamespaceOfPrefix("uml");
             Insist.IsNotNull(umlNamespace, nameof(umlNamespace));
 
+            this.types = new List<CodeTypeDeclaration>();
+            this.typeDeclarations = new List<CodeTypeDeclaration>();
+
             var attributeComparer = new AttributeEqualityComparer();
 
             this.xmiWrapper = new XmiWrapper(xdoc, xmiNamespace, umlNamespace, attributeComparer);
             this.umlTypesHelper = new UmlTypesHelper(this.xmiWrapper, this.types);
 
             this.namespaceName = "Test";
-            //TODO: póki co nie wiadomo czy i jak używać przestrzeni nazw - robię listę typów => pakiety z UML
-            this.types = new List<CodeTypeDeclaration>();
-            this.typeDeclarations = new List<CodeTypeDeclaration>();
         }
         public string GenerateTypes()
         {
@@ -225,17 +225,6 @@
             #endregion
 
             return codeTypeDeclaration;
-        }
-
-        private ExtendedType GetXElementCsharpType(XElement xElement)
-        {
-            
-        }
-
-        private XElement GetElementById(string innerType)
-        {
-            return this.xdoc.Descendants()
-                .SingleOrDefault(e => innerType.Equals(e.OptionalAttributeValue(this.xmiNamespace + "id")));
         }
 
         private void GenerateFiles(List<CodeTypeDeclaration> typesToGenerate, string namespaceNameToGenerate)

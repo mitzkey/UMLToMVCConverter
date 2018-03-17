@@ -13,7 +13,7 @@ namespace Test.Models
 
 		public String name { get; set; }
 
-		public void DoSomething(Nullable<System.Int32> x,Nullable<System.Int32> y) {
+		public Nullable<System.Void> DoSomething(Nullable<System.Int32> x,Nullable<System.Int32> y) {
 			throw new NotImplementedException();
 		}
 	}

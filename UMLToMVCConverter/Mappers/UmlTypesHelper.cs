@@ -45,44 +45,6 @@ namespace UMLToMVCConverter.Mappers
             return mappedType;
         }
 
-        private static ExtendedType GetDetailedType(Type type, string multiplicityLowerBound, string multiplicityUpperBound)
-        {
-            if (!string.IsNullOrWhiteSpace(multiplicityUpperBound) 
-                && (multiplicityUpperBound == "*"
-                    || Convert.ToInt32(multiplicityUpperBound) > 1))
-            {
-                return new ExtendedType(typeof(ICollection<>), true, true, new List<Type> { type }, true);
-            }
-
-            if (string.IsNullOrWhiteSpace(multiplicityLowerBound) || Convert.ToInt32(multiplicityLowerBound) == 0)
-            {
-                return GetNullableType(type);
-            }
-
-            return new ExtendedType(type, true);
-        }
-
-        public static ExtendedType UmlToCsharpNullable(XElement xProperty)
-        {
-            var innerType = xProperty.OptionalAttributeValue("type");
-
-            if (innerType == null)
-            {
-                var xType = xProperty.Descendants("type").FirstOrDefault();
-                Insist.IsNotNull(xType, nameof(xType));
-                var xRefExtension = xType.Descendants("referenceExtension").FirstOrDefault();
-                var umlType = xRefExtension.ObligatoryAttributeValue("referentPath").Split(':', ':').Last();
-                var cSharpType = UmlTypesHelper.UmlToCsharp(umlType, mplLowerVal, mplUpperVal);
-                return cSharpType;
-            }
-            else
-            {
-                var xReturnTypeElement = this.GetElementById(innerType);
-                var typeName = xReturnTypeElement.ObligatoryAttributeValue("name");
-                return new ExtendedType(typeName, false);
-            }
-        }
-
         public bool IsClass(XElement type)
         {
             var sType = this.xmiWrapper.ObligatoryAttributeValueWithNamespace(type, "type");
@@ -106,42 +68,39 @@ namespace UMLToMVCConverter.Mappers
         {
             Insist.IsNotNull(xElement, nameof(xElement));
 
-            var isProperty = this.xmiWrapper.IsUmlProperty(xElement);
-
-            if (isProperty)
+            if (!XmiWrapper.CanHaveType(xElement))
             {
-                var xProperty = xElement;
-                var multiplicity = this.xmiWrapper.GetMultiplicity(xProperty);
-
-                switch (multiplicity)
-                {
-                    case Multiplicity.ZeroOrOne:
-                        return this.GetNullableType(xProperty);
-                    case Multiplicity.ExactlyOne:
-                        return this.GetNotNullableType(xProperty);
-                    case Multiplicity.Multiple:
-                        return this.GetMultipleType(xProperty);
-                    default:
-                        throw new Exception("Multiplicity switch failed for property: " + xProperty);
-                }
+                throw new Exception("No type matching strategy for XElement:\n" + xElement);
             }
 
-            //do dopisania typ dla nie-propertisów, czyli np. parametrów albo typów zwracanych metod
+            var multiplicity = this.xmiWrapper.GetMultiplicity(xElement);
+
+            switch (multiplicity)
+            {
+                case Multiplicity.ZeroOrOne:
+                    return this.GetNullableType(xElement);
+                case Multiplicity.ExactlyOne:
+                    return this.GetNotNullableType(xElement);
+                case Multiplicity.Multiple:
+                    return this.GetMultipleType(xElement);
+                default:
+                    throw new Exception("Multiplicity not found for property: " + xElement);
+            }
         }
 
-        private ExtendedType GetNullableType(XElement xProperty)
+        private ExtendedType GetNullableType(XElement xElement)
         {
-            if (this.xmiWrapper.IsPropertyOfPrimitiveType(xProperty))
+            if (this.xmiWrapper.IsOfPrimitiveType(xElement))
             {
-                return this.GetPrimitiveNullableType(xProperty);
+                return this.GetPrimitiveNullableType(xElement);
             }
 
-            return this.GetComplexType(xProperty);
+            return this.GetComplexType(xElement);
         }
 
-        private ExtendedType GetPrimitiveNullableType(XElement xProperty)
+        private ExtendedType GetPrimitiveNullableType(XElement xElement)
         {
-            var umlType = this.xmiWrapper.GetPrimitiveUmlTypeForProperty(xProperty);
+            var umlType = this.xmiWrapper.GetPrimitiveUmlTypeForProperty(xElement);
             var type = MapPrimitiveType(umlType);
             var returnType = Nullable.GetUnderlyingType(type);
             if (returnType != null)
@@ -157,35 +116,35 @@ namespace UMLToMVCConverter.Mappers
             return new ExtendedType(type, true);
         }
 
-        private ExtendedType GetComplexType(XElement xProperty)
+        private ExtendedType GetComplexType(XElement xElement)
         {
-            var innerType = xProperty.OptionalAttributeValue("type");
+            var innerType = xElement.OptionalAttributeValue("type");
             var xInnerTypeElement = this.xmiWrapper.GetXElementById(innerType);
             var typeName = xInnerTypeElement.ObligatoryAttributeValue("name");
             return new ExtendedType(typeName, false);
         }
         
-        private ExtendedType GetNotNullableType(XElement xProperty)
+        private ExtendedType GetNotNullableType(XElement xElement)
         {
-            if (this.xmiWrapper.IsPropertyOfPrimitiveType(xProperty))
+            if (this.xmiWrapper.IsOfPrimitiveType(xElement))
             {
-                return GetPrimitiveNonNullableType(xProperty);
+                return GetPrimitiveNonNullableType(xElement);
                 
             }
 
-            return this.GetComplexType(xProperty);
+            return this.GetComplexType(xElement);
         }
 
-        private ExtendedType GetPrimitiveNonNullableType(XElement xProperty)
+        private ExtendedType GetPrimitiveNonNullableType(XElement xElement)
         {
-            var umlType = this.xmiWrapper.GetPrimitiveUmlTypeForProperty(xProperty);
+            var umlType = this.xmiWrapper.GetPrimitiveUmlTypeForProperty(xElement);
             var type = MapPrimitiveType(umlType);
             return new ExtendedType(type, true);
         }
 
-        private ExtendedType CreateAndGetPrimitiveTypeEntity(XElement xProperty)
+        private ExtendedType CreateAndGetPrimitiveTypeEntity(XElement xElement)
         {
-            var name = xProperty.ObligatoryAttributeValue("name");
+            var name = xElement.ObligatoryAttributeValue("name");
 
             var codeTypeDeclaration = new CodeTypeDeclaration(name)
             {
@@ -193,7 +152,7 @@ namespace UMLToMVCConverter.Mappers
                 TypeAttributes = TypeAttributes.Public
             };
             
-            var cSharpType = this.GetPrimitiveNonNullableType(xProperty);
+            var cSharpType = this.GetPrimitiveNonNullableType(xElement);
             var typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
             var valueProperty = new ExtendedCodeMemberProperty
@@ -210,15 +169,15 @@ namespace UMLToMVCConverter.Mappers
             return typeRef.ExtType;
         }
 
-        private ExtendedType GetMultipleType(XElement xProperty)
+        private ExtendedType GetMultipleType(XElement xElement)
         {
-            if (this.xmiWrapper.IsPropertyOfPrimitiveType(xProperty))
+            if (this.xmiWrapper.IsOfPrimitiveType(xElement))
             {
-                var newPrimitiveTypeEntity = this.CreateAndGetPrimitiveTypeEntity(xProperty);
+                var newPrimitiveTypeEntity = this.CreateAndGetPrimitiveTypeEntity(xElement);
                 return this.GetCollectionTypeFor(newPrimitiveTypeEntity);
             }
 
-            var complexType = this.GetComplexType(xProperty);
+            var complexType = this.GetComplexType(xElement);
 
             return this.GetCollectionTypeFor(complexType);
         }

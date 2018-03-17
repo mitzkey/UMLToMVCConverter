@@ -11,6 +11,11 @@
         private readonly AttributeEqualityComparer attributeEqualityComparer;
         private readonly XNamespace xmiNamespace;
         private readonly XNamespace umlNamespace;
+        private static readonly List<string> XElementsWithTypes = new List<string>
+        {
+            "property",
+            "parameter"
+        };
 
         public XmiWrapper(XDocument xmi, XNamespace xmiNamespace, XNamespace umlNamespace, AttributeEqualityComparer attributeEqualityComparer)
         {
@@ -70,7 +75,7 @@
         public XElement GetXReturnParameter(XElement operation)
         {
             return operation.Descendants("ownedParameter")
-                .SingleOrDefault(i => i.ObligatoryAttributeValue("direction").Equals("return"));
+                .SingleOrDefault(i => "return".Equals(i.OptionalAttributeValue("direction")));
         }
 
         public IEnumerable<XElement> GetXParameters(XElement operation)
@@ -98,10 +103,16 @@
             return umlType;
         }
 
-        public bool IsPropertyOfPrimitiveType(XElement xProperty)
+        public bool IsOfPrimitiveType(XElement xElement)
         {
-            var xType = xProperty.Descendants("type").FirstOrDefault();
+            var xType = xElement.Descendants("type").FirstOrDefault();
             return xType != null;
+        }
+
+        public static bool CanHaveType(XElement xElement)
+        {
+            return xElement.Name.ToString().Equals("ownedAttribute")
+                   || xElement.Name.ToString().Equals("ownedParameter");
         }
 
         public Multiplicity GetMultiplicity(XElement attribute)

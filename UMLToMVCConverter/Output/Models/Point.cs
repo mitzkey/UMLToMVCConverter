@@ -5,8 +5,9 @@ using System.Web;
 
 namespace Test.Models
 {
-	[ComplexType]
 	public class Point {
+
+		public int ID {get; set;}
 
 		public Nullable<System.Int32> x { get; set; }
 
