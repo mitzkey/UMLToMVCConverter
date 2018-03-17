@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using UMLToMVCConverter.ExtendedTypes;
-
-namespace UMLToMVCConverter.Mappers
+﻿namespace UMLToMVCConverter
 {
+    using System;
     using System.CodeDom;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Reflection;
     using System.Xml.Linq;
+    using UMLToMVCConverter.ExtendedTypes;
 
     public class UmlTypesHelper
     {
@@ -134,7 +133,7 @@ namespace UMLToMVCConverter.Mappers
         {
             if (this.xmiWrapper.IsOfPrimitiveType(xElement))
             {
-                return GetPrimitiveNonNullableType(xElement);
+                return this.GetPrimitiveNonNullableType(xElement);
                 
             }
 
@@ -159,13 +158,14 @@ namespace UMLToMVCConverter.Mappers
                 TypeAttributes = TypeAttributes.Public
             };
             
-            var cSharpType = new ExtendedType(name, true);
-            var typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
+            var entityType = new ExtendedType(name, true);
 
+            var valueType = this.GetPrimitiveNonNullableType(xElement);
+            var valueCodeTypeReference = new ExtendedCodeTypeReference(valueType);
             var valueProperty = new ExtendedCodeMemberProperty
             {
                 Name = "Value",
-                Type = typeRef,
+                Type = valueCodeTypeReference,
                 Attributes = MemberAttributes.Public
             };
 
@@ -173,7 +173,7 @@ namespace UMLToMVCConverter.Mappers
 
             this.codeTypeDeclarations.Add(codeTypeDeclaration);
 
-            return typeRef.ExtType;
+            return entityType;
         }
 
         private ExtendedType GetMultipleType(XElement xElement)

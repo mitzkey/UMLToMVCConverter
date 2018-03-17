@@ -9,6 +9,6 @@ namespace Test.Models
 
 		public int ID {get; set;}
 
-		public KnownWords Value { get; private set; }
+		public String Value { get; private set; }
 	}
 }

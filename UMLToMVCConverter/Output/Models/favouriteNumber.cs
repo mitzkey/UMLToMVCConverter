@@ -9,6 +9,6 @@ namespace Test.Models
 
 		public int ID {get; set;}
 
-		public FavouriteNumber Value { get; private set; }
+		public Int32 Value { get; private set; }
 	}
 }

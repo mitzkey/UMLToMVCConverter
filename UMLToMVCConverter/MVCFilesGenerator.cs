@@ -76,11 +76,6 @@
             return "File successfully processed";
         }
 
-        private void ClearOutputDirectory()
-        {
-            Directory.Delete(this.outputPath, true);
-        }
-
         private void GenerateInheritanceRelations(IEnumerable<XElement> xTypes)
         {
             foreach (var type in xTypes)
@@ -302,6 +297,27 @@
                 var filesSubPath = @"Models\" + ctd.Name + ".cs";
                 var filesOutputPath = Path.Combine(this.outputPath, filesSubPath);
                 File.WriteAllText(filesOutputPath, output);
+            }
+        }
+
+        private void ClearOutputDirectory()
+        {
+            ClearFolder(this.outputPath);
+        }
+
+        private void ClearFolder(string path)
+        {
+            var directory = new DirectoryInfo(path);
+
+            foreach (var file in directory.GetFiles())
+            {
+                file.Delete();
+            }
+
+            foreach (var subDirectory in directory.GetDirectories())
+            {
+                ClearFolder(subDirectory.FullName);
+                subDirectory.Delete();
             }
         }
     }

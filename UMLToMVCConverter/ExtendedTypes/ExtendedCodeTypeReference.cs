@@ -22,7 +22,7 @@ namespace UMLToMVCConverter.ExtendedTypes
             this.ExtType = new ExtendedType(type, isBaseType, isGeneric, generics);
         }
 
-        private ExtendedCodeTypeReference(ExtendedType type)
+        public ExtendedCodeTypeReference(ExtendedType type)
             : base(type.Type)
         {
             this.ExtType = type;

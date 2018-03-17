@@ -113,7 +113,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Insist.cs" />
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
-    <Compile Include="Mappers\UmlTypesHelper.cs" />
+    <Compile Include="UmlTypesHelper.cs" />
     <Compile Include="XmiWrapper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -135,11 +135,6 @@
     <None Include="Output\Controllers\CompanyInfoController.cs" />
     <None Include="Output\Controllers\WorkerController.cs" />
     <None Include="Output\DAL\TestContext.cs" />
-    <None Include="Output\Models\Baby.cs" />
-    <None Include="Output\Models\CompanyInfo.cs" />
-    <None Include="Output\Models\Person.cs" />
-    <None Include="Output\Models\Point.cs" />
-    <None Include="Output\Models\Worker.cs" />
     <Compile Include="Multiplicity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -194,7 +189,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Output\Models\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

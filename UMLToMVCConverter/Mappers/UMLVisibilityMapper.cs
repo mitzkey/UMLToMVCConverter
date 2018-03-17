@@ -14,7 +14,7 @@ namespace UMLToMVCConverter.Mappers
                 case "private":
                     return MemberAttributes.Private;
                 default:
-                    throw new NotImplementedException("Mapowanie widoczności UML: " + umlVisibility + " nie zaimplementowane.");
+                    throw new NotImplementedException("UML visibility: " + umlVisibility + " mapping not implemented.");
             }
         }
     }
