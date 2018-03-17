@@ -29,15 +29,15 @@ namespace UMLToMVCConverter.CodeTemplates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\nusing Syste" +
-                    "m.Web;\r\n\r\nnamespace ");
+            this.Write("namespace ");
             
-            #line 13 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+            #line 8 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
             
             #line default
             #line hidden
-            this.Write(".Models\r\n{\r\n");
+            this.Write(".Models\r\n{\r\n\tusing System;\r\n\tusing System.Collections.Generic;\r\n\tusing System.Lin" +
+                    "q;\r\n\tusing System.Web;\r\n\r\n");
             
             #line 15 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
 

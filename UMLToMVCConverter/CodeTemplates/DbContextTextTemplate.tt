@@ -5,23 +5,23 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.CodeDom" #>
 <#@ output extension=".cs" #>
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
-
-namespace <#= contextName #>.DAL
+namespace <#= contextName #>.Models
 {
-    public class <#= contextName #>Context : DbContext
-    {
-        <# foreach(Tuple<string, string> nameAndPlural in classesNamesAndPlurals)
-            {
-        #>
-        public DbSet<<#= nameAndPlural.Item1 #>> <#= nameAndPlural.Item2 #> { get; set; }
-        <# 
-            } 
-        #>
-    }
+	using Microsoft.EntityFrameworkCore;
+
+	public class <#=contextName#>Context : DbContext
+	{
+		public <#=contextName#>Context(DbContextOptions<<#=contextName#>Context> options)
+			: base(options)
+		{
+		}<#
+
+foreach(Tuple<string, string> nameAndPlural in classesNamesAndPlurals) {
+	#>
+
+		public DbSet<<#= nameAndPlural.Item1 #>> <#= nameAndPlural.Item2 #> { get; set; }<# 
+} 
+#>
+
+	}
 }

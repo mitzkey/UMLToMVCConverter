@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
 namespace Test.Models
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Web;
+
 	public class Baby : Person {
 		
 			public class Nested {
