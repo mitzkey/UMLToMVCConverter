@@ -1,6 +1,5 @@
 ﻿namespace UMLToMVCConverter
 {
-    using System;
     using System.IO;
     using System.Text;
     using UMLToMVCConverter.ExtensionMethods;
