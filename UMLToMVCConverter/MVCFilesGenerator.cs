@@ -13,6 +13,7 @@
 
     internal class MvcFilesGenerator
     {
+        private const string TemporaryNamespaceName = "Default";
         private readonly string namespaceName;
         private readonly List<CodeTypeDeclaration> types;
         private readonly string outputPath;
@@ -42,7 +43,7 @@
             this.xmiWrapper = new XmiWrapper(xdoc, xmiNamespace, umlNamespace, attributeComparer);
             this.umlTypesHelper = new UmlTypesHelper(this.xmiWrapper, this.types);
 
-            this.namespaceName = "Test";
+            this.namespaceName = TemporaryNamespaceName;
         }
         public string GenerateMvcFiles()
         {
