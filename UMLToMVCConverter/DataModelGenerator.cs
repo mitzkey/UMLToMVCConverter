@@ -11,20 +11,19 @@
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.Mappers;
 
-    internal class MvcFilesGenerator
+    internal class DataModelGenerator
     {
         private const string TemporaryNamespaceName = "Default";
         private readonly string namespaceName;
         private readonly List<CodeTypeDeclaration> types;
-        private readonly string outputPath;
         private readonly List<CodeTypeDeclaration> typeDeclarations;
         private readonly XmiWrapper xmiWrapper;
         private readonly UmlTypesHelper umlTypesHelper;
+        private readonly IFilesGenerator filesGenerator;
 
-        public MvcFilesGenerator(string xmiPath, string outputPath)
+        public DataModelGenerator(string xmiPath, IFilesGenerator filesGenerator)
         {
-            Insist.IsNotNullOrWhiteSpace(outputPath, nameof(outputPath));
-            this.outputPath = outputPath;
+            this.filesGenerator = filesGenerator;
 
             var xdoc = XDocument.Load(xmiPath);
             Insist.IsNotNull(xdoc.Root, nameof(xdoc.Root));
@@ -47,8 +46,6 @@
         }
         public string GenerateMvcFiles()
         {
-            this.ClearOutputDirectory();
-
             var umlModels = this.xmiWrapper.GetXUmlModels();
             foreach (var umlModel in umlModels)
             {
@@ -72,7 +69,7 @@
                 this.GenerateInheritanceRelations(xTypes);
             }
 
-            this.GenerateFiles(this.types, this.namespaceName);
+            this.filesGenerator.GenerateFiles(this.types, this.namespaceName);
 
             return "File successfully processed";
         }
@@ -231,94 +228,6 @@
                 }
 
                 codeTypeDeclaration.Members.Add(codeMemberProperty);
-            }
-        }
-
-        private void GenerateFiles(List<CodeTypeDeclaration> typesToGenerate, string namespaceNameToGenerate)
-        {
-            this.GenerateModels(typesToGenerate, namespaceNameToGenerate);
-
-            var standaloneEntityTypes = typesToGenerate.
-                Where(i => !i.TypeAttributes.HasFlag(TypeAttributes.Abstract)
-                    && !i.IsStruct)
-                .ToList();
-
-            this.GenerateDbContextClass(standaloneEntityTypes, namespaceNameToGenerate);
-
-            this.GenerateControllers(standaloneEntityTypes, namespaceNameToGenerate);
-
-            this.GenerateViews(standaloneEntityTypes, namespaceNameToGenerate);
-        }
-
-        private void GenerateDbContextClass(List<CodeTypeDeclaration> classes, string contextName)
-        {
-            var tmpl = new DbContextTextTemplate(classes, contextName);
-            var output = tmpl.TransformText();
-            Directory.CreateDirectory(Path.Combine(this.outputPath, "Models"));
-            var fileSubPath = @"Models\" + contextName + "Context.cs";
-            var fileOutputPath = Path.Combine(this.outputPath, fileSubPath);
-            File.WriteAllText(fileOutputPath, output);
-        }
-
-        private void GenerateControllers(IEnumerable<CodeTypeDeclaration> classes, string contextName)
-        {
-            foreach (var ctd in classes)
-            {
-                var tmpl = new ControllerTextTemplate(ctd, contextName);
-                var output = tmpl.TransformText();
-                Directory.CreateDirectory(Path.Combine(this.outputPath, "Controllers"));
-                var filesSubPath = @"Controllers\" + ctd.Name + "Controller.cs";
-                var filesOutputPath = Path.Combine(this.outputPath, filesSubPath);
-                File.WriteAllText(filesOutputPath, output);
-
-            }            
-        }
-
-        private void GenerateViews(IEnumerable<CodeTypeDeclaration> classes, string contextName)
-        {
-            foreach (var ctd in classes)
-            {
-                var tmpl = new ViewIndexTextTemplate(ctd, contextName);
-                var output = tmpl.TransformText();
-                Directory.CreateDirectory(Path.Combine(this.outputPath, @"Views\" +ctd.Name));
-                var filesSubPath = @"Views\" + ctd.Name + @"\Index.cshtml";
-                var filesOutputPath = Path.Combine(this.outputPath, filesSubPath);
-                File.WriteAllText(filesOutputPath, output);
-
-            }
-        }
-
-        private void GenerateModels(IEnumerable<CodeTypeDeclaration> classes, string contextName)
-        {
-            foreach (var ctd in classes)
-            {
-                var tmpl = new ModelClassTextTemplate(ctd, contextName);
-                var output = tmpl.TransformText();
-                Directory.CreateDirectory(Path.Combine(this.outputPath, "Models"));
-                var filesSubPath = @"Models\" + ctd.Name + ".cs";
-                var filesOutputPath = Path.Combine(this.outputPath, filesSubPath);
-                File.WriteAllText(filesOutputPath, output);
-            }
-        }
-
-        private void ClearOutputDirectory()
-        {
-            ClearFolder(this.outputPath);
-        }
-
-        private void ClearFolder(string path)
-        {
-            var directory = new DirectoryInfo(path);
-
-            foreach (var file in directory.GetFiles())
-            {
-                file.Delete();
-            }
-
-            foreach (var subDirectory in directory.GetDirectories())
-            {
-                ClearFolder(subDirectory.FullName);
-                subDirectory.Delete();
             }
         }
     }

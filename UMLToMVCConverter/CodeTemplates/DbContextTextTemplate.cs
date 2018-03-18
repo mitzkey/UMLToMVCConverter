@@ -62,7 +62,7 @@ namespace UMLToMVCConverter.CodeTemplates
             #line 17 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
 
 
-foreach(Tuple<string, string> nameAndPlural in classesNamesAndPlurals) {
+foreach(Tuple<string, string> nameAndPlural in this.typessNamesAndPlurals) {
 	
             
             #line default

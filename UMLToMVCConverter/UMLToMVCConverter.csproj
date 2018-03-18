@@ -104,6 +104,7 @@
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.Data.cs">
       <DependentUpon>ViewIndexTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityFrameworkFilesGenerator.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeMemberMethod.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeMemberProperty.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="ExtendedTypes\ExtendedCodeTypeReference.cs" />
     <Compile Include="ExtendedTypes\ExtendedType.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="IFilesGenerator.cs" />
     <Compile Include="Insist.cs" />
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
     <Compile Include="UmlTypesHelper.cs" />
@@ -124,7 +126,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AttributeEqualityComparer.cs" />
-    <Compile Include="MVCFilesGenerator.cs" />
+    <Compile Include="DataModelGenerator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

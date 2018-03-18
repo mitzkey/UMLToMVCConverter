@@ -10,29 +10,27 @@ namespace UMLToMVCConverter.CodeTemplates
 {
     public partial class DbContextTextTemplate
     {
-        List<CodeTypeDeclaration> classes;
-        List<Tuple<string, string>> classesNamesAndPlurals;
-        string contextName;
+        private readonly List<Tuple<string, string>> typessNamesAndPlurals;
+        private readonly string contextName;
 
-        public DbContextTextTemplate(List<CodeTypeDeclaration> classes, string contextName)
+        public DbContextTextTemplate(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations, string contextName)
         {
-            this.classes = classes;
             this.contextName = contextName;
-            classesNamesAndPlurals = new List<Tuple<string, string>>();
-            foreach (CodeTypeDeclaration ctd in classes)
+            this.typessNamesAndPlurals = new List<Tuple<string, string>>();
+            foreach (var ctd in codeTypeDeclarations)
             {
-                string className = ctd.Name;
-                string classNamePlural;
+                string typeName = ctd.Name;
+                string typeNamePlural;
                 if (System.Globalization.CultureInfo.CurrentCulture.Name.Substring(0, 1) == "en")
                 {
-                    PluralizationService ps = PluralizationService.CreateService(System.Globalization.CultureInfo.CurrentCulture);
-                    classNamePlural = ps.Pluralize(className);
+                    var ps = PluralizationService.CreateService(System.Globalization.CultureInfo.CurrentCulture);
+                    typeNamePlural = ps.Pluralize(typeName);
                 }
                 else 
                 {
-                    classNamePlural = className + "Set";
+                    typeNamePlural = typeName + "Set";
                 }
-                classesNamesAndPlurals.Add(new Tuple<string,string>(className, classNamePlural));
+                this.typessNamesAndPlurals.Add(new Tuple<string,string>(typeName, typeNamePlural));
             }
         }
     }
