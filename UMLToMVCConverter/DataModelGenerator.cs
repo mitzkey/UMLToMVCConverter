@@ -69,7 +69,7 @@
                 this.GenerateInheritanceRelations(xTypes);
             }
 
-            this.filesGenerator.GenerateFiles(this.types, this.namespaceName);
+            this.filesGenerator.SetUpMvcProject(this.types, this.namespaceName);
 
             return "File successfully processed";
         }

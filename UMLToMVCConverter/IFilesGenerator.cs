@@ -5,6 +5,6 @@
 
     public interface IFilesGenerator
     {
-        void GenerateFiles(List<CodeTypeDeclaration> typesToGenerate, string namespaceNameToGenerate);
+        void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations, string contextName);
     }
 }

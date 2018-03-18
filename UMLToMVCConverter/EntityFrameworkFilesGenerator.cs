@@ -1,11 +1,13 @@
 ﻿namespace UMLToMVCConverter
 {
+    using System;
     using System.CodeDom;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Reflection;
     using UMLToMVCConverter.CodeTemplates;
+    using Microsoft.Extensions.Configuration;
 
     public class EntityFrameworkFilesGenerator : IFilesGenerator
     {
@@ -17,9 +19,15 @@
             this.modelsOutputPath = Path.Combine(mvcProjectPath, @"Models");
         }
 
-        public void GenerateFiles(List<CodeTypeDeclaration> typesToGenerate, string namespaceNameToGenerate)
+        public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations, string contextName)
         {
-            this.GenerateModelsAndDbContext(typesToGenerate, namespaceNameToGenerate);
+            this.SetUpDbConnection();
+            this.GenerateModelsAndDbContext(codeTypeDeclarations, contextName);
+        }
+
+        private void SetUpDbConnection()
+        {
+            throw new NotImplementedException();
         }
 
         private void GenerateModelsAndDbContext(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations, string contextName)
