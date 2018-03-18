@@ -32,7 +32,7 @@ namespace UMLToMVCConverter.CodeTemplates
             this.Write("namespace ");
             
             #line 8 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mvcProjectName));
             
             #line default
             #line hidden
@@ -41,7 +41,7 @@ namespace UMLToMVCConverter.CodeTemplates
             
             #line 15 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
 
-BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(_class, contextName);
+BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(_class, mvcProjectName);
 string code = tmpl.TransformText();
 
             

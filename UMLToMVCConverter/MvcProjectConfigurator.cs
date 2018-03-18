@@ -12,16 +12,20 @@
 
     public class MvcProjectConfigurator : IMvcProjectConfigurator
     {
-        private readonly string modelsOutputPath;
+        private readonly string modelsFolderPath;
         private readonly string appsettingJsonPath;
         private readonly string connectionString;
+        private readonly string mvcProjectName;
 
         public MvcProjectConfigurator(string mvcProjectPath, string connectionString)
         {
             Insist.IsNotNullOrWhiteSpace(mvcProjectPath, nameof(mvcProjectPath));
-            this.modelsOutputPath = Path.Combine(mvcProjectPath, @"Models");
+            Insist.IsNotNullOrWhiteSpace(connectionString, nameof(connectionString));
+
+            this.modelsFolderPath = Path.Combine(mvcProjectPath, @"Models");
             this.appsettingJsonPath = Path.Combine(mvcProjectPath, "appsettings.json");
             this.connectionString = connectionString;
+            this.mvcProjectName = Path.GetFileName(mvcProjectPath);
         }
 
         public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName)
@@ -29,7 +33,10 @@
             Insist.IsNotNullOrWhiteSpace(namespaceName, nameof(namespaceName));
 
             this.SetUpDbConnection(namespaceName);
-            this.GenerateModelsAndDbContext(codeTypeDeclarations, namespaceName);
+            PrepareFolder(this.modelsFolderPath);
+            
+            this.GenerateModels(codeTypeDeclarations, mvcProjectName);
+            this.GenerateDbContextClass(codeTypeDeclarations, namespaceName, mvcProjectName);
         }
 
         private void SetUpDbConnection(string namespaceName)
@@ -53,33 +60,30 @@
             File.WriteAllText(this.appsettingJsonPath, appsettingsJsonOutput);
         }
 
-        private void GenerateModelsAndDbContext(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName)
+        private void GenerateModels(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations, string mvcProjectName)
         {
-            PrepareFolder(this.modelsOutputPath);
-
             var codeTypeDeclarationsList = codeTypeDeclarations.ToList();
             foreach (var ctd in codeTypeDeclarationsList)
             {
-                var tmpl = new ModelClassTextTemplate(ctd, namespaceName);
+                var tmpl = new ModelClassTextTemplate(ctd, mvcProjectName);
                 var fileContent = tmpl.TransformText();
-                var filesOutputPath = Path.Combine(this.modelsOutputPath, ctd.Name + ".cs");
+                var filesOutputPath = Path.Combine(this.modelsFolderPath, ctd.Name + ".cs");
                 File.WriteAllText(filesOutputPath, fileContent);
             }
+        }
 
-            var standaloneEntityTypes = codeTypeDeclarationsList.
+        private void GenerateDbContextClass(List<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName, string mvcProjectName)
+        {
+            var standaloneEntityTypes = codeTypeDeclarations.
                 Where(i => !i.TypeAttributes.HasFlag(TypeAttributes.Abstract)
                            && !i.IsStruct)
                 .ToList();
 
-            this.GenerateDbContextClass(standaloneEntityTypes, namespaceName);
-        }
-
-        private void GenerateDbContextClass(List<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName)
-        {
-            var tmpl = new DbContextTextTemplate(codeTypeDeclarations, namespaceName);
-            var fileContent = tmpl.TransformText();
             var contextName = GetContextName(namespaceName);
-            var fileOutputPath = Path.Combine(this.modelsOutputPath, contextName + ".cs");
+
+            var tmpl = new DbContextTextTemplate(standaloneEntityTypes, contextName, mvcProjectName);
+            var fileContent = tmpl.TransformText();
+            var fileOutputPath = Path.Combine(this.modelsFolderPath, contextName + ".cs");
             File.WriteAllText(fileOutputPath, fileContent);
         }
 

@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DefaultMVCApp
 {
-    using Default.Models;
+    using DefaultMVCApp.Models;
     using Microsoft.EntityFrameworkCore;
 
     public class Startup

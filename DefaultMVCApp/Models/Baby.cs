@@ -1,4 +1,4 @@
-namespace Default.Models
+namespace DefaultMVCApp.Models
 {
 	using System;
 	using System.Collections.Generic;

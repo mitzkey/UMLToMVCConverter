@@ -11,14 +11,14 @@ namespace UMLToMVCConverter.CodeTemplates
     public partial class ModelClassTextTemplate
     {
         CodeTypeDeclaration _class;
-        string contextName;
+        string mvcProjectName;
         string baseClassName;
         bool isAbstract;
 
-        public ModelClassTextTemplate(CodeTypeDeclaration _class, string contextName) {
+        public ModelClassTextTemplate(CodeTypeDeclaration _class, string mvcProjectName) {
             this._class = _class;
             isAbstract = _class.TypeAttributes.HasFlag(TypeAttributes.Abstract);
-            this.contextName = contextName;
+            this.mvcProjectName = mvcProjectName;
             if (_class.BaseTypes.Count > 0) {
                 this.baseClassName = _class.BaseTypes[0].BaseType;
             }

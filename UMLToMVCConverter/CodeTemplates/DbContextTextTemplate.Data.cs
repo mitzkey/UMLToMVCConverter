@@ -10,13 +10,15 @@ namespace UMLToMVCConverter.CodeTemplates
 {
     public partial class DbContextTextTemplate
     {
-        private readonly List<Tuple<string, string>> typessNamesAndPlurals;
+        private readonly List<Tuple<string, string>> typesNamesAndPlurals;
         private readonly string contextName;
+        private readonly string mvcProjectName;
 
-        public DbContextTextTemplate(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations, string contextName)
+        public DbContextTextTemplate(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations, string contextName, string mvcProjectName)
         {
             this.contextName = contextName;
-            this.typessNamesAndPlurals = new List<Tuple<string, string>>();
+            this.mvcProjectName = mvcProjectName;
+            this.typesNamesAndPlurals = new List<Tuple<string, string>>();
             foreach (var ctd in codeTypeDeclarations)
             {
                 string typeName = ctd.Name;
@@ -30,7 +32,7 @@ namespace UMLToMVCConverter.CodeTemplates
                 {
                     typeNamePlural = typeName + "Set";
                 }
-                this.typessNamesAndPlurals.Add(new Tuple<string,string>(typeName, typeNamePlural));
+                this.typesNamesAndPlurals.Add(new Tuple<string,string>(typeName, typeNamePlural));
             }
         }
     }

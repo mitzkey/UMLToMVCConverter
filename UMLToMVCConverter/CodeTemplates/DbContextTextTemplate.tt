@@ -5,18 +5,18 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.CodeDom" #>
 <#@ output extension=".cs" #>
-namespace <#= contextName #>.Models
+namespace <#= mvcProjectName #>.Models
 {
 	using Microsoft.EntityFrameworkCore;
 
-	public class <#=contextName#>Context : DbContext
+	public class <#=contextName#> : DbContext
 	{
-		public <#=contextName#>Context(DbContextOptions<<#=contextName#>Context> options)
+		public <#=contextName#>(DbContextOptions<<#=contextName#>> options)
 			: base(options)
 		{
 		}<#
 
-foreach(Tuple<string, string> nameAndPlural in classesNamesAndPlurals) {
+foreach(Tuple<string, string> nameAndPlural in typesNamesAndPlurals) {
 	#>
 
 

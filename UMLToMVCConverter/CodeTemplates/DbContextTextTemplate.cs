@@ -32,7 +32,7 @@ namespace UMLToMVCConverter.CodeTemplates
             this.Write("namespace ");
             
             #line 8 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(mvcProjectName));
             
             #line default
             #line hidden
@@ -43,26 +43,26 @@ namespace UMLToMVCConverter.CodeTemplates
             
             #line default
             #line hidden
-            this.Write("Context : DbContext\r\n\t{\r\n\t\tpublic ");
+            this.Write(" : DbContext\r\n\t{\r\n\t\tpublic ");
             
             #line 14 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
             
             #line default
             #line hidden
-            this.Write("Context(DbContextOptions<");
+            this.Write("(DbContextOptions<");
             
             #line 14 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(contextName));
             
             #line default
             #line hidden
-            this.Write("Context> options)\r\n\t\t\t: base(options)\r\n\t\t{\r\n\t\t}");
+            this.Write("> options)\r\n\t\t\t: base(options)\r\n\t\t{\r\n\t\t}");
             
             #line 17 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
 
 
-foreach(Tuple<string, string> nameAndPlural in this.typessNamesAndPlurals) {
+foreach(Tuple<string, string> nameAndPlural in typesNamesAndPlurals) {
 	
             
             #line default
