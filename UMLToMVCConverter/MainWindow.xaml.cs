@@ -16,15 +16,14 @@ namespace UMLToMVCConverter
         public MainWindow()
         {
             InitializeComponent();
-            //TODO: tymczasowo żeby nie klikać za każdym razem okna
-            MvcFilesGenerator cg = new MvcFilesGenerator(TemporaryHardCodedDiagramPath, OutputPath);
+            var cg = new MvcFilesGenerator(TemporaryHardCodedDiagramPath, OutputPath);
             MessageBox.Show(cg.GenerateMvcFiles());
             this.Close();
         }
 
         private void BtnOpenXMI_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -36,7 +35,7 @@ namespace UMLToMVCConverter
         {
             if (!String.IsNullOrEmpty(xmiPath))
             {
-                MvcFilesGenerator cg = new MvcFilesGenerator(xmiPath, @"..\..\Output");
+                var cg = new MvcFilesGenerator(this.xmiPath, OutputPath);
                 MessageBox.Show(cg.GenerateMvcFiles());
             }
             else
