@@ -6,14 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Test.DAL;
-using Test.Models;
+using Default.DAL;
+using Default.Models;
 
-namespace Test.Controllers
+namespace Default.Controllers
 {
     public class WorkerController : Controller
     {
-        private TestContext db = new TestContext();
+        private DefaultContext db = new DefaultContext();
 
         // GET: Worker
         public ActionResult Index()
