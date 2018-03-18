@@ -7,6 +7,7 @@
     using System.Reflection;
     using System.Xml.Linq;
     using UMLToMVCConverter.ExtendedTypes;
+    using UMLToMVCConverter.ExtensionMethods;
 
     public class UmlTypesHelper
     {

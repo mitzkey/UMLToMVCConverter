@@ -9,6 +9,7 @@
     using System.Reflection;
     using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.ExtendedTypes;
+    using UMLToMVCConverter.ExtensionMethods;
     using UMLToMVCConverter.Mappers;
 
     internal class DataModelGenerator
@@ -19,11 +20,11 @@
         private readonly List<CodeTypeDeclaration> typeDeclarations;
         private readonly XmiWrapper xmiWrapper;
         private readonly UmlTypesHelper umlTypesHelper;
-        private readonly IFilesGenerator filesGenerator;
+        private readonly IMvcProjectConfigurator mvcProjectConfigurator;
 
-        public DataModelGenerator(string xmiPath, IFilesGenerator filesGenerator)
+        public DataModelGenerator(string xmiPath, IMvcProjectConfigurator mvcProjectConfigurator)
         {
-            this.filesGenerator = filesGenerator;
+            this.mvcProjectConfigurator = mvcProjectConfigurator;
 
             var xdoc = XDocument.Load(xmiPath);
             Insist.IsNotNull(xdoc.Root, nameof(xdoc.Root));
@@ -69,7 +70,7 @@
                 this.GenerateInheritanceRelations(xTypes);
             }
 
-            this.filesGenerator.SetUpMvcProject(this.types, this.namespaceName);
+            this.mvcProjectConfigurator.SetUpMvcProject(this.types, this.namespaceName);
 
             return "File successfully processed";
         }

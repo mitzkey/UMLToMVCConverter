@@ -14,7 +14,8 @@ namespace UMLToMVCConverter.CodeTemplates
     using UMLToMVCConverter;
     using UMLToMVCConverter.ExtendedTypes;
     using System;
-    
+    using UMLToMVCConverter.ExtensionMethods;
+
     /// <summary>
     /// Class to produce the template output
     /// </summary>
