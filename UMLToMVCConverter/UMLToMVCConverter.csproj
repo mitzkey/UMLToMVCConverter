@@ -136,6 +136,7 @@
     <Compile Include="IMvcProjectConfigurator.cs" />
     <Compile Include="Insist.cs" />
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
+    <Compile Include="StartupCsConfigurator.cs" />
     <Compile Include="UmlTypesHelper.cs" />
     <Compile Include="XmiWrapper.cs" />
     <Page Include="MainWindow.xaml">

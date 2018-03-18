@@ -1,5 +1,6 @@
 ﻿namespace UMLToMVCConverter.ExtensionMethods
 {
+    using System;
     using System.Linq;
     using System.Text;
 
@@ -45,6 +46,11 @@
         {
             Insist.IsNotNullOrWhiteSpace(input, nameof(input));
             return input.First().ToString().ToUpper() + input.Substring(1);
+        }
+
+        public static string[] AsArrayOfLines(this string input)
+        {
+            return input.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }
