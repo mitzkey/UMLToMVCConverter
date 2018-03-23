@@ -1,9 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using Microsoft.Win32;
 
 namespace UMLToMVCConverter
 {
+    using System.IO;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -16,18 +17,22 @@ namespace UMLToMVCConverter
         private const string TemporaryHardCodedConnectionString =
             @"Server=(localdb)\mssqllocaldb;Database=Default;Trusted_Connection=True;MultipleActiveResultSets=true";
         private string xmiPath;
+        private string vsSolutionPath;
+        private string dbConnectionString;
 
         public MainWindow()
         {
             InitializeComponent();
+            this.xmiPath = TemporaryHardCodedDiagramPath;
+            this.vsSolutionPath = TemporaryHardCodedMvcProjectPath;
             this.ProcessXmi();
             this.Close();
         }
 
         private void ProcessXmi()
         {
-            var mvcProjectConfigurator = new MvcProjectConfigurator(TemporaryHardCodedMvcProjectPath, TemporaryHardCodedConnectionString);
-            var cg = new DataModelGenerator(TemporaryHardCodedDiagramPath, mvcProjectConfigurator);
+            var mvcProjectConfigurator = new MvcProjectConfigurator(this.vsSolutionPath, TemporaryHardCodedConnectionString);
+            var cg = new DataModelGenerator(this.xmiPath, mvcProjectConfigurator);
             MessageBox.Show(cg.GenerateMvcFiles());
         }
 
@@ -37,13 +42,25 @@ namespace UMLToMVCConverter
 
             if (openFileDialog.ShowDialog() == true)
             {
-                this.xmiPath = openFileDialog.FileName;                
+                this.xmiPath = openFileDialog.FileName;
+                this.label_xmi_path.Content = this.xmiPath;
             }
         }
 
         private void btnProcessXmi_Click(object sender, RoutedEventArgs e)
         {
             this.ProcessXmi();
+        }
+
+        private void btnOpenVSSolution_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                this.vsSolutionPath = Directory.GetParent(openFileDialog.FileName).ToString();
+                this.label_vs_solution_path.Content = this.vsSolutionPath;
+            }
         }
     }
 }

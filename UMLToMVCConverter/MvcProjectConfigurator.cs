@@ -36,7 +36,7 @@
             Insist.IsNotNullOrWhiteSpace(namespaceName, nameof(namespaceName));
 
             this.SetUpDbConnection(namespaceName);
-            PrepareEmptyFolder(this.modelsFolderPath);
+            PrepareModelsFolder(this.modelsFolderPath);
             
             this.GenerateModels(codeTypeDeclarations);
             this.GenerateDbContextClass(codeTypeDeclarations, namespaceName);
@@ -103,12 +103,11 @@
             return namespaceName + "Context";
         }
 
-        private static void PrepareEmptyFolder(string path)
+        private static void PrepareModelsFolder(string path)
         {
             if (Directory.Exists(path))
             {
                 ClearFolder(path);
-                return;
             }
 
             Directory.CreateDirectory(path);
@@ -118,7 +117,7 @@
         {
             var directory = new DirectoryInfo(path);
 
-            foreach (var file in directory.GetFiles())
+            foreach (var file in directory.GetFiles().Where(f => !f.Name.Equals("ErrorViewModel")))
             {
                 file.Delete();
             }
