@@ -1,13 +1,10 @@
 ﻿namespace UMLToMVCConverter
 {
-    using System;
     using System.CodeDom;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Runtime.Remoting.Metadata.W3cXsd2001;
-    using System.Text;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using UMLToMVCConverter.CodeTemplates;
@@ -18,42 +15,48 @@
         private readonly string modelsFolderPath;
         private readonly string connectionString;
         private readonly string mvcProjectName;
-        private readonly string mvcProjectPath;
+        private readonly string mvcProjectFolderPath;
+        private readonly IStartupCsConfigurator startupCsConfigurator;
+        private IMigrationsManager migrationsManager;
+        private IProjectBuilder projectBuilder;
 
-        public MvcProjectConfigurator(string mvcProjectPath, string connectionString)
+        public MvcProjectConfigurator(string mvcProjectFolderPath, string connectionString)
         {
-            Insist.IsNotNullOrWhiteSpace(mvcProjectPath, nameof(mvcProjectPath));
+            Insist.IsNotNullOrWhiteSpace(mvcProjectFolderPath, nameof(mvcProjectFolderPath));
             Insist.IsNotNullOrWhiteSpace(connectionString, nameof(connectionString));
 
-            this.mvcProjectPath = mvcProjectPath;
-            this.modelsFolderPath = Path.Combine(this.mvcProjectPath, @"Models");
+            this.mvcProjectFolderPath = mvcProjectFolderPath;
+            this.modelsFolderPath = Path.Combine(this.mvcProjectFolderPath, @"Models");
             this.connectionString = connectionString;
-            this.mvcProjectName = Path.GetFileName(this.mvcProjectPath);
+            this.mvcProjectName = Path.GetFileName(this.mvcProjectFolderPath);
+
+            this.startupCsConfigurator = new StartupCsConfigurator(this.mvcProjectFolderPath);
         }
 
         public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName)
         {
             Insist.IsNotNullOrWhiteSpace(namespaceName, nameof(namespaceName));
 
-            this.SetUpDbConnection(namespaceName);
+            var dbContextName = GetDbContextName(namespaceName);
+
+            this.SetUpAppsettingsDbConnection(dbContextName);
+
+            this.startupCsConfigurator.SetUpStartupCsDbContextUse(dbContextName);
+
             PrepareModelsFolder(this.modelsFolderPath);
-            
             this.GenerateModels(codeTypeDeclarations);
             this.GenerateDbContextClass(codeTypeDeclarations, namespaceName);
-        }
+            
+            this.projectBuilder = new ProjectBuilder();
+            var mvcProjectAssembly = this.projectBuilder.BuildProject(this.mvcProjectFolderPath);
 
-        private void SetUpDbConnection(string namespaceName)
-        {
-            var contextName = GetContextName(namespaceName);
-
-            this.SetUpAppsettingsDbConnection(contextName);
-
-            StartupCsConfigurator.SetUpStartupCsDbContextUse(contextName, this.mvcProjectPath);
+            this.migrationsManager = new MigrationsManager(this.mvcProjectName, dbContextName, this.mvcProjectFolderPath);
+            this.migrationsManager.AddAndRunMigrations(mvcProjectAssembly);
         }
 
         private void SetUpAppsettingsDbConnection(string contextName)
         {
-            var appsettingJsonPath = Path.Combine(this.mvcProjectPath, "appsettings.json");
+            var appsettingJsonPath = Path.Combine(this.mvcProjectFolderPath, "appsettings.json");
             var appsettingsJsonContent = File.ReadAllText(appsettingJsonPath);
             var appsettingsJson = JObject.Parse(appsettingsJsonContent);
 
@@ -90,7 +93,7 @@
                            && !i.IsStruct)
                 .ToList();
 
-            var contextName = GetContextName(namespaceName);
+            var contextName = GetDbContextName(namespaceName);
 
             var tmpl = new DbContextTextTemplate(standaloneEntityTypes, contextName, this.mvcProjectName);
             var fileContent = tmpl.TransformText();
@@ -98,7 +101,7 @@
             File.WriteAllText(fileOutputPath, fileContent);
         }
 
-        private static string GetContextName(string namespaceName)
+        private static string GetDbContextName(string namespaceName)
         {
             return namespaceName + "Context";
         }

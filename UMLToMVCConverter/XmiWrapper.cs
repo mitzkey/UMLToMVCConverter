@@ -12,11 +12,6 @@
         private readonly AttributeEqualityComparer attributeEqualityComparer;
         private readonly XNamespace xmiNamespace;
         private readonly XNamespace umlNamespace;
-        private static readonly List<string> XElementsWithTypes = new List<string>
-        {
-            "property",
-            "parameter"
-        };
 
         public XmiWrapper(XDocument xmi, XNamespace xmiNamespace, XNamespace umlNamespace, AttributeEqualityComparer attributeEqualityComparer)
         {

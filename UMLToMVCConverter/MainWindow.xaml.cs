@@ -13,25 +13,25 @@ namespace UMLToMVCConverter
         private const string TemporaryHardCodedDiagramPath =
             @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\Diagramy\MainDiagram.xml";
         private const string TemporaryHardCodedMvcProjectPath =
-            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\DefaultMVCApp";
+            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\WebApplication1\WebApplication1";
         private const string TemporaryHardCodedConnectionString =
             @"Server=(localdb)\mssqllocaldb;Database=Default;Trusted_Connection=True;MultipleActiveResultSets=true";
         private string xmiPath;
-        private string vsSolutionPath;
+        private string mvcProjectFolderPath;
         private string dbConnectionString;
 
         public MainWindow()
         {
             InitializeComponent();
             this.xmiPath = TemporaryHardCodedDiagramPath;
-            this.vsSolutionPath = TemporaryHardCodedMvcProjectPath;
+            this.mvcProjectFolderPath = TemporaryHardCodedMvcProjectPath;
             this.ProcessXmi();
             this.Close();
         }
 
         private void ProcessXmi()
         {
-            var mvcProjectConfigurator = new MvcProjectConfigurator(this.vsSolutionPath, TemporaryHardCodedConnectionString);
+            var mvcProjectConfigurator = new MvcProjectConfigurator(this.mvcProjectFolderPath, TemporaryHardCodedConnectionString);
             var cg = new DataModelGenerator(this.xmiPath, mvcProjectConfigurator);
             MessageBox.Show(cg.GenerateMvcFiles());
         }
@@ -58,8 +58,8 @@ namespace UMLToMVCConverter
 
             if (openFileDialog.ShowDialog() == true)
             {
-                this.vsSolutionPath = Directory.GetParent(openFileDialog.FileName).ToString();
-                this.label_vs_solution_path.Content = this.vsSolutionPath;
+                this.mvcProjectFolderPath = Directory.GetParent(openFileDialog.FileName).ToString();
+                this.label_vs_solution_path.Content = this.mvcProjectFolderPath;
             }
         }
     }
