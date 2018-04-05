@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMLToMVCConverter", "UMLToMVCConverter\UMLToMVCConverter.csproj", "{0AB93E32-BD05-4586-A424-40DB1CAA912F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DefaultMVCApp", "DefaultMVCApp\DefaultMVCApp.csproj", "{EF0DA7E0-4819-4750-9CF4-5EA9F703AC4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultMVCApp", "DefaultMVCApp\DefaultMVCApp.csproj", "{EF0DA7E0-4819-4750-9CF4-5EA9F703AC4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreAppBuilder", "DotNetCoreAppBuilder\DotNetCoreAppBuilder.csproj", "{69A85966-D2BB-4780-AD0F-85A56BEEE440}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EF0DA7E0-4819-4750-9CF4-5EA9F703AC4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF0DA7E0-4819-4750-9CF4-5EA9F703AC4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF0DA7E0-4819-4750-9CF4-5EA9F703AC4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69A85966-D2BB-4780-AD0F-85A56BEEE440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69A85966-D2BB-4780-AD0F-85A56BEEE440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69A85966-D2BB-4780-AD0F-85A56BEEE440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69A85966-D2BB-4780-AD0F-85A56BEEE440}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
