@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMLToMVCConverter", "UMLToM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultMVCApp", "DefaultMVCApp\DefaultMVCApp.csproj", "{EF0DA7E0-4819-4750-9CF4-5EA9F703AC4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreAppBuilder", "DotNetCoreAppBuilder\DotNetCoreAppBuilder.csproj", "{69A85966-D2BB-4780-AD0F-85A56BEEE440}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationsService", "DotNetCoreAppBuilder\MigrationsService.csproj", "{69A85966-D2BB-4780-AD0F-85A56BEEE440}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

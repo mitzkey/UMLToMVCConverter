@@ -48,10 +48,11 @@
             this.GenerateDbContextClass(codeTypeDeclarations, namespaceName);
             
             this.projectBuilder = new ProjectBuilder();
-            var mvcProjectAssembly = this.projectBuilder.BuildProject(this.mvcProjectFolderPath);
+            var mvcProjectFilePath = Path.Combine(this.mvcProjectFolderPath, this.mvcProjectName + ".csproj");
+            this.projectBuilder.BuildProject(mvcProjectFilePath, Directory.GetCurrentDirectory());
 
-            this.migrationsManager = new MigrationsManager(this.mvcProjectName, dbContextName, this.mvcProjectFolderPath);
-            this.migrationsManager.AddAndRunMigrations(mvcProjectAssembly);
+            // this.migrationsManager = new MigrationsManager(this.mvcProjectName, dbContextName, this.mvcProjectFolderPath);
+            // this.migrationsManager.AddAndRunMigrations(mvcProjectAssembly);
         }
 
         private void SetUpAppsettingsDbConnection(string contextName)

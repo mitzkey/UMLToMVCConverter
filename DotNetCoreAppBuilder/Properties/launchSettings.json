@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MigrationsService": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\mikolaj.bochajczuk\\Desktop\\priv\\WebApplication1\\WebApplication1\\WebApplication1.csproj"
+    }
+  }
+}

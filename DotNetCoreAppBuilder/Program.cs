@@ -1,54 +1,26 @@
-﻿using System;
-
-namespace DotNetCoreAppBuilder
+﻿namespace MigrationsService
 {
-    using System.Diagnostics;
-    using System.IO;
+    using System;
 
     public class Program
     {
-        static void Main()
+        public static void Main(string[] args)
         {
-            var projectFile =
-                @"C:\Users\mikolaj.bochajczuk\Desktop\priv\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.csproj";
-
-            var outputPath =
-                @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Build output";
-
-            RunBuildScript(projectFile, outputPath);
-
-            Console.ReadLine();
-        }
-
-        private static void RunBuildScript(string projectPath, string outputPath)
-        {
-            var scriptName = "run.bat";
-
-            File.WriteAllText(scriptName, $"dotnet msbuild {projectPath} /p:OutputPath=\"{outputPath}\"");
-            // Start the child process.
-            var process = new Process
+            if (args.Length < 5)
             {
-                StartInfo =
-                {
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    FileName = scriptName
-                }
-            };
+                throw new ArgumentException(
+                    "Not enough arguments, specify: <mvcProjectPath> <mvcProjectName> <dbContextName> <migrationsNamespace> <mvcProjectAssemblyPath>");
+            }
 
-            // Redirect the output stream of the child process.
-            process.Start();
+            var mvcProjectPath = args[0];
+            var mvcProjectName = args[1];
+            var dbContextName = args[2];
+            var migrationsNamespace = args[3];
+            var mvcProjectAssemblyPath = args[4];
 
-            // Do not wait for the child process to exit before
-            // reading to the end of its redirected stream.
-            // p.WaitForExit();
-            // Read the output stream first and then wait.
+            var migrationsService = new MigrationsService(mvcProjectPath, mvcProjectName, dbContextName, migrationsNamespace, mvcProjectAssemblyPath);
 
-            var output = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-
-            Console.WriteLine(output);
-            Console.ReadLine();
+            migrationsService.AddMigration();
         }
     }
 }
