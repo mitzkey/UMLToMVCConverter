@@ -3,12 +3,14 @@
     using System;
     using System.IO;
     using System.Reflection;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.EntityFrameworkCore.Design.Internal;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Internal;
     using Microsoft.EntityFrameworkCore.Migrations;
     using Microsoft.EntityFrameworkCore.Migrations.Design;
+    using Microsoft.EntityFrameworkCore.Migrations.Internal;
     using Microsoft.EntityFrameworkCore.Storage;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -29,12 +31,17 @@
             this.mvcProjectAssembly = Assembly.LoadFile(mvcProjectAssemblyPath);
         }
 
-        public void AddMigration()
+        public string AddMigration()
         {
             var dbContextFullyQualifiedName = $"{this.mvcProjectName}.Models.{this.dbContextName}";
             var dbContext = this.mvcProjectAssembly.GetType(dbContextFullyQualifiedName);
 
-            using (var db = DbContextActivator.CreateInstance(dbContext))
+            var dbContextOptionsType = typeof(DbContextOptions<>);
+            var dbContextOptionsGenericType = dbContextOptionsType.MakeGenericType(dbContext);
+            var dbContextOptions = Activator.CreateInstance(dbContextOptionsGenericType);
+            
+
+            using (var db = (DbContext)Activator.CreateInstance(dbContext, dbContextOptions))
             {
                 var reporter = new OperationReporter(
                     new OperationReportHandler(
@@ -62,6 +69,7 @@
                     .AddSingleton<IOperationReporter>(reporter)
                     .AddSingleton<MigrationsScaffolderDependencies>()
                     .AddSingleton<MigrationsScaffolder>()
+                    .AddSingleton<ISnapshotModelProcessor, SnapshotModelProcessor>()
                     .BuildServiceProvider();
 
                 var scaffolder = designTimeServices.GetRequiredService<MigrationsScaffolder>();
@@ -70,15 +78,31 @@
                     "UMLToMVCConverterMigration_" + Guid.NewGuid(),
                     this.migrationsNamespace);
 
+                var migrationFolder = Path.Combine(this.mvcProjectPath, "Migrations");
+
+                var migrationCodeFilePath = Path.Combine(
+                    migrationFolder,
+                    migration.MigrationId + migration.FileExtension);
+
+                var migrationMetadataCodeFilePath = Path.Combine(
+                    migrationFolder,
+                    migration.MigrationId + ".Designer" + migration.FileExtension);
+
+                var migrationSnapshotFilePath = Path.Combine(
+                    migrationFolder,
+                    migration.SnapshotName + migration.FileExtension);
+
                 File.WriteAllText(
-                    Path.Combine(this.mvcProjectPath, migration.MigrationId + migration.FileExtension),
+                    migrationCodeFilePath,
                     migration.MigrationCode);
                 File.WriteAllText(
-                    Path.Combine(this.mvcProjectPath, migration.MigrationId + ".Designer" + migration.FileExtension),
+                    migrationMetadataCodeFilePath,
                     migration.MetadataCode);
                 File.WriteAllText(
-                    Path.Combine(this.mvcProjectPath, migration.SnapshotName + migration.FileExtension),
+                    migrationSnapshotFilePath,
                     migration.SnapshotCode);
+
+                return migrationCodeFilePath;
             }
         }
 
