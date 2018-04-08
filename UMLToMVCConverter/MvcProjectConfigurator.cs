@@ -17,7 +17,6 @@
         private readonly string mvcProjectName;
         private readonly string mvcProjectFolderPath;
         private readonly IStartupCsConfigurator startupCsConfigurator;
-        private IMigrationsManager migrationsManager;
         private IProjectBuilder projectBuilder;
 
         public MvcProjectConfigurator(string mvcProjectFolderPath, string connectionString)

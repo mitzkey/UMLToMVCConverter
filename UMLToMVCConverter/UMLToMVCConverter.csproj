@@ -128,10 +128,8 @@
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
-    <Compile Include="IMigrationsManager.cs" />
     <Compile Include="IProjectBuilder.cs" />
     <Compile Include="IStartupCsConfigurator.cs" />
-    <Compile Include="MigrationsManager.cs" />
     <Compile Include="MvcProjectConfigurator.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeMemberMethod.cs" />
