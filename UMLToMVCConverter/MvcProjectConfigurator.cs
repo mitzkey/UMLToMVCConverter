@@ -12,24 +12,21 @@
 
     public class MvcProjectConfigurator : IMvcProjectConfigurator
     {
-        private readonly string modelsFolderPath;
+        private readonly MvcProject mvcProject;
         private readonly string connectionString;
-        private readonly string mvcProjectName;
-        private readonly string mvcProjectFolderPath;
+        private readonly string mvcProjectPublishOutputFolder;
         private readonly IStartupCsConfigurator startupCsConfigurator;
-        private IProjectBuilder projectBuilder;
+        private readonly IProjectBuilder projectBuilder;
 
-        public MvcProjectConfigurator(string mvcProjectFolderPath, string connectionString)
+        public MvcProjectConfigurator(MvcProject mvcProject, string connectionString, string mvcProjectPublishOutputFolder)
         {
-            Insist.IsNotNullOrWhiteSpace(mvcProjectFolderPath, nameof(mvcProjectFolderPath));
             Insist.IsNotNullOrWhiteSpace(connectionString, nameof(connectionString));
-
-            this.mvcProjectFolderPath = mvcProjectFolderPath;
-            this.modelsFolderPath = Path.Combine(this.mvcProjectFolderPath, @"Models");
             this.connectionString = connectionString;
-            this.mvcProjectName = Path.GetFileName(this.mvcProjectFolderPath);
+            this.mvcProjectPublishOutputFolder = mvcProjectPublishOutputFolder;
+            this.mvcProject = mvcProject;
 
-            this.startupCsConfigurator = new StartupCsConfigurator(this.mvcProjectFolderPath);
+            this.startupCsConfigurator = new StartupCsConfigurator(this.mvcProject.ProjectFolderPath);
+            this.projectBuilder = new ProjectBuilder();
         }
 
         public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName)
@@ -42,13 +39,12 @@
 
             this.startupCsConfigurator.SetUpStartupCsDbContextUse(dbContextName);
 
-            PrepareModelsFolder(this.modelsFolderPath);
+            PrepareFolder(this.mvcProject.ModelsFolderPath);
             this.GenerateModels(codeTypeDeclarations);
             this.GenerateDbContextClass(codeTypeDeclarations, namespaceName);
-            
-            this.projectBuilder = new ProjectBuilder();
-            var mvcProjectFilePath = Path.Combine(this.mvcProjectFolderPath, this.mvcProjectName + ".csproj");
-            this.projectBuilder.BuildProject(mvcProjectFilePath, Directory.GetCurrentDirectory());
+
+            ClearFolder(this.mvcProject.ViewsFolderPath);
+            this.projectBuilder.BuildProject(this.mvcProject.CsprojFilePath, this.mvcProjectPublishOutputFolder);
 
             // this.migrationsManager = new MigrationsManager(this.mvcProjectName, dbContextName, this.mvcProjectFolderPath);
             // this.migrationsManager.AddAndRunMigrations(mvcProjectAssembly);
@@ -56,7 +52,7 @@
 
         private void SetUpAppsettingsDbConnection(string contextName)
         {
-            var appsettingJsonPath = Path.Combine(this.mvcProjectFolderPath, "appsettings.json");
+            var appsettingJsonPath = Path.Combine(this.mvcProject.ProjectFolderPath, "appsettings.json");
             var appsettingsJsonContent = File.ReadAllText(appsettingJsonPath);
             var appsettingsJson = JObject.Parse(appsettingsJsonContent);
 
@@ -79,9 +75,9 @@
             var codeTypeDeclarationsList = codeTypeDeclarations.ToList();
             foreach (var ctd in codeTypeDeclarationsList)
             {
-                var tmpl = new ModelClassTextTemplate(ctd, this.mvcProjectName);
+                var tmpl = new ModelClassTextTemplate(ctd, this.mvcProject.Name);
                 var fileContent = tmpl.TransformText();
-                var filesOutputPath = Path.Combine(this.modelsFolderPath, ctd.Name + ".cs");
+                var filesOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, ctd.Name + ".cs");
                 File.WriteAllText(filesOutputPath, fileContent);
             }
         }
@@ -95,9 +91,9 @@
 
             var contextName = GetDbContextName(namespaceName);
 
-            var tmpl = new DbContextTextTemplate(standaloneEntityTypes, contextName, this.mvcProjectName);
+            var tmpl = new DbContextTextTemplate(standaloneEntityTypes, contextName, this.mvcProject.Name);
             var fileContent = tmpl.TransformText();
-            var fileOutputPath = Path.Combine(this.modelsFolderPath, contextName + ".cs");
+            var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, contextName + ".cs");
             File.WriteAllText(fileOutputPath, fileContent);
         }
 
@@ -106,7 +102,7 @@
             return namespaceName + "Context";
         }
 
-        private static void PrepareModelsFolder(string path)
+        private static void PrepareFolder(string path)
         {
             if (Directory.Exists(path))
             {
@@ -118,17 +114,20 @@
 
         private static void ClearFolder(string path)
         {
-            var directory = new DirectoryInfo(path);
-
-            foreach (var file in directory.GetFiles().Where(f => !f.Name.Equals("ErrorViewModel")))
+            if (Directory.Exists(path))
             {
-                file.Delete();
-            }
+                var directory = new DirectoryInfo(path);
 
-            foreach (var subDirectory in directory.GetDirectories())
-            {
-                ClearFolder(subDirectory.FullName);
-                subDirectory.Delete();
+                foreach (var file in directory.GetFiles().Where(f => !f.Name.Equals("ErrorViewModel")))
+                {
+                    file.Delete();
+                }
+
+                foreach (var subDirectory in directory.GetDirectories())
+                {
+                    ClearFolder(subDirectory.FullName);
+                    subDirectory.Delete();
+                }
             }
         }
     }

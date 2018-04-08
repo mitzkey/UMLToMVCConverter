@@ -122,6 +122,7 @@
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
     <Compile Include="IProjectBuilder.cs" />
     <Compile Include="IStartupCsConfigurator.cs" />
+    <Compile Include="MvcProject.cs" />
     <Compile Include="MvcProjectConfigurator.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeMemberMethod.cs" />
