@@ -5,9 +5,7 @@
     using System.Linq;
     using System.Xml.Linq;
     using System.CodeDom;
-    using System.IO;
     using System.Reflection;
-    using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
     using UMLToMVCConverter.Mappers;

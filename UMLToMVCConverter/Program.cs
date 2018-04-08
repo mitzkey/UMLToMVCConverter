@@ -3,13 +3,13 @@
     public static class Program
     {
         private const string TemporaryHardCodedDiagramPath =
-            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\Diagramy\MainDiagram.xml";
+            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\Diagramy\MainDiagram.xml";
         private const string TemporaryHardCodedMvcProjectPath =
             @"C:\Users\mikolaj.bochajczuk\Desktop\priv\WebApplication1\WebApplication1";
         private const string TemporaryHardCodedConnectionString =
             @"Server=(localdb)\mssqllocaldb;Database=Default;Trusted_Connection=True;MultipleActiveResultSets=true";
         private const string TemporaryHardCodedMvcBuildFolder =
-            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\Converter Workspace";
+            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\Converter Workspace";
 
         public static void Main(string[] args)
         {
