@@ -16,9 +16,9 @@
             var migrationsNamespace = args[1];
             var mvcProjectAssemblyPath = args[2];
 
-            var migrationsService = new MigrationsService(mvcProjectFolderPath, migrationsNamespace, mvcProjectAssemblyPath);
+            var migrationsService = new MigrationsService(mvcProjectAssemblyPath);
 
-            migrationsService.AddMigration();
+            migrationsService.AddMigration(mvcProjectFolderPath, migrationsNamespace);
         }
     }
 }

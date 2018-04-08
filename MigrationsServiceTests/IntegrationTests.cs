@@ -20,17 +20,27 @@ namespace MigrationsServiceTests
             this.mvcProjectAssemblyPath =
                 @"C:\Users\mikolaj.bochajczuk\Desktop\priv\WebApplication1\WebApplication1\bin\Release\PublishOutput\WebApplication1.dll";
 
-            this.sut = new MigrationsService(this.mvcProjectFolderPath, this.migrationsNamespace, this.mvcProjectAssemblyPath);
+            this.sut = new MigrationsService(this.mvcProjectAssemblyPath);
         }
 
         [Test]
         public void Migration_Is_Added_Successfully()
         {
             // Arrange & Act
-            var result = this.sut.AddMigration();
+            var result = this.sut.AddMigration(this.mvcProjectFolderPath, this.migrationsNamespace);
 
             // Assert
             Assert.That(File.Exists(result));
+        }
+
+        [Test]
+        public void Migration_Is_Run_Successfully()
+        {
+            // Arrange & Act
+            this.sut.RunMigration();
+
+            // Assert
+            Assert.That(true);
         }
     }
 }
