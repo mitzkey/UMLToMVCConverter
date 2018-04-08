@@ -10,7 +10,7 @@
 
         public void BuildProject(string projectFilePath, string outputPath)
         {
-            File.WriteAllText(ScriptName, $@"dotnet msbuild {projectFilePath} /p:OutputPath=""{outputPath}""");
+            File.WriteAllText(ScriptName, $@"dotnet publish {projectFilePath} /p:OutputPath=""{outputPath}""");
             // Start the child process.
             var process = new Process
             {
