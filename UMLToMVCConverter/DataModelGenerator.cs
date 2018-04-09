@@ -12,36 +12,28 @@
 
     public class DataModelGenerator : IDataModelGenerator
     {
-        private const string TemporaryNamespaceName = "Default";
-        private readonly string namespaceName;
         private readonly List<CodeTypeDeclaration> types;
         private readonly List<CodeTypeDeclaration> typeDeclarations;
-        private readonly XmiWrapper xmiWrapper;
-        private readonly UmlTypesHelper umlTypesHelper;
+        private readonly IXmiWrapper xmiWrapper;
+        private readonly IUmlTypesHelper umlTypesHelper;
         private readonly IMvcProjectConfigurator mvcProjectConfigurator;
+        private readonly IUmlVisibilityMapper umlVisibilityMapper;
 
-        public DataModelGenerator(string xmiPath, IMvcProjectConfigurator mvcProjectConfigurator)
+        public DataModelGenerator(
+            IMvcProjectConfigurator mvcProjectConfigurator,
+            IXmiWrapper xmiWrapper,
+            IUmlTypesHelper umlTypesHelper,
+            IUmlVisibilityMapper umlVisibilityMapper)
         {
             this.mvcProjectConfigurator = mvcProjectConfigurator;
-
-            var xdoc = XDocument.Load(xmiPath);
-            Insist.IsNotNull(xdoc.Root, nameof(xdoc.Root));
-
-            var xmiNamespace = xdoc.Root.GetNamespaceOfPrefix("xmi");
-            Insist.IsNotNull(xmiNamespace, nameof(xmiNamespace));
-
-            var umlNamespace = xdoc.Root.GetNamespaceOfPrefix("uml");
-            Insist.IsNotNull(umlNamespace, nameof(umlNamespace));
 
             this.types = new List<CodeTypeDeclaration>();
             this.typeDeclarations = new List<CodeTypeDeclaration>();
 
-            var attributeComparer = new AttributeEqualityComparer();
-
-            this.xmiWrapper = new XmiWrapper(xdoc, xmiNamespace, umlNamespace, attributeComparer);
-            this.umlTypesHelper = new UmlTypesHelper(this.xmiWrapper, this.types);
-
-            this.namespaceName = TemporaryNamespaceName;
+            this.xmiWrapper = xmiWrapper;
+            this.umlTypesHelper = umlTypesHelper;
+            this.umlTypesHelper.CodeTypeDeclarations = this.types;
+            this.umlVisibilityMapper = umlVisibilityMapper;
         }
         public string GenerateMvcFiles()
         {
@@ -68,7 +60,7 @@
                 this.GenerateInheritanceRelations(xTypes);
             }
 
-            this.mvcProjectConfigurator.SetUpMvcProject(this.types, this.namespaceName);
+            this.mvcProjectConfigurator.SetUpMvcProject(this.types);
 
             return "File successfully processed";
         }
@@ -170,7 +162,7 @@
 
                 //visibility
                 var umlVisibility = operation.ObligatoryAttributeValue("visibility");
-                var cSharpVisibility = UmlVisibilityMapper.UmlToCsharp(umlVisibility);
+                var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharp(umlVisibility);
                 codeMemberMethod.Attributes = codeMemberMethod.Attributes | cSharpVisibility;
 
                 var isStatic = Convert.ToBoolean(operation.OptionalAttributeValue("isStatic"));
@@ -202,7 +194,7 @@
                 };
 
                 var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
-                var cSharpVisibility = UmlVisibilityMapper.UmlToCsharp(umlVisibility);
+                var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharp(umlVisibility);
                 codeMemberProperty.Attributes = cSharpVisibility;
 
                 var isStatic = Convert.ToBoolean(attribute.OptionalAttributeValue("isStatic"));

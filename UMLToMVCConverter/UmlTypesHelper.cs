@@ -11,6 +11,8 @@
 
     public class UmlTypesHelper : IUmlTypesHelper
     {
+        public List<CodeTypeDeclaration> CodeTypeDeclarations { get; set; }
+
         private static readonly IReadOnlyDictionary<string, Type> PrimitiveTypesMap = new ReadOnlyDictionary<string, Type>(
             new Dictionary<string, Type>
             {
@@ -23,12 +25,10 @@
                 { "boolean", typeof(bool) }
             });
 
-        private readonly XmiWrapper xmiWrapper;
-        private readonly List<CodeTypeDeclaration> codeTypeDeclarations;
+        private readonly IXmiWrapper xmiWrapper;
 
-        public UmlTypesHelper(XmiWrapper xmiWrapper, List<CodeTypeDeclaration> types)
+        public UmlTypesHelper(IXmiWrapper xmiWrapper)
         {
-            this.codeTypeDeclarations = types;
             this.xmiWrapper = xmiWrapper;
         }
 
@@ -172,7 +172,7 @@
 
             codeTypeDeclaration.Members.Add(valueProperty);
 
-            this.codeTypeDeclarations.Add(codeTypeDeclaration);
+            this.CodeTypeDeclarations.Add(codeTypeDeclaration);
 
             return entityType;
         }

@@ -1,5 +1,7 @@
 ﻿namespace UMLToMVCConverter
 {
+    using System;
+
     public class Application
     {
         private readonly IDataModelGenerator dataModelGenerator;
@@ -11,7 +13,9 @@
 
         public void Run()
         {
-            this.dataModelGenerator.GenerateMvcFiles();
+            var result = this.dataModelGenerator.GenerateMvcFiles();
+            Console.WriteLine(result);
+            Console.ReadLine();
         }
     }
 }

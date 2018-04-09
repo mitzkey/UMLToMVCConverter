@@ -13,40 +13,31 @@
     public class MvcProjectConfigurator : IMvcProjectConfigurator
     {
         private readonly IMvcProject mvcProject;
-        private readonly string connectionString;
-        private readonly string mvcProjectPublishOutputFolder;
         private readonly IStartupCsConfigurator startupCsConfigurator;
-        private readonly IProjectBuilder projectBuilder;
+        private readonly IProjectPublisher projectPublisher;
 
         public MvcProjectConfigurator(
             IMvcProject mvcProject,
-            string connectionString,
             IStartupCsConfigurator startupCsConfigurator,
-            IProjectBuilder projectBuilder)
+            IProjectPublisher projectPublisher)
         {
-            Insist.IsNotNullOrWhiteSpace(connectionString, nameof(connectionString));
-            this.connectionString = connectionString;
             this.mvcProject = mvcProject;
             this.startupCsConfigurator = startupCsConfigurator;
-            this.projectBuilder = projectBuilder;
+            this.projectPublisher = projectPublisher;
         }
 
-        public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName)
+        public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations)
         {
-            Insist.IsNotNullOrWhiteSpace(namespaceName, nameof(namespaceName));
+            this.SetUpAppsettingsDbConnection(this.mvcProject.DbContextName);
 
-            var dbContextName = GetDbContextName(namespaceName);
-
-            this.SetUpAppsettingsDbConnection(dbContextName);
-
-            this.startupCsConfigurator.SetUpStartupCsDbContextUse(dbContextName);
+            this.startupCsConfigurator.SetUpStartupCsDbContextUse(this.mvcProject.DbContextName);
 
             ClearFolder(this.mvcProject.ViewsFolderPath);
             PrepareFolder(this.mvcProject.ModelsFolderPath);
             this.GenerateModels(codeTypeDeclarations);
-            this.GenerateDbContextClass(codeTypeDeclarations, namespaceName);
+            this.GenerateDbContextClass(codeTypeDeclarations, this.mvcProject.DbContextName);
 
-            this.projectBuilder.BuildProject(this.mvcProject.CsprojFilePath, this.mvcProjectPublishOutputFolder);
+            this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
 
             // this.migrationsManager = new MigrationsManager(this.mvcProjectName, dbContextName, this.mvcProjectFolderPath);
             // this.migrationsManager.AddAndRunMigrations(mvcProjectAssembly);
@@ -60,7 +51,7 @@
 
             var connectionStringConfig = new JObject
             {
-                [contextName] = this.connectionString
+                [contextName] = this.mvcProject.DbConnectionString
             };
 
             var connectionStrings = new JProperty("ConnectionStrings", connectionStringConfig);
@@ -91,17 +82,10 @@
                            && !i.IsStruct)
                 .ToList();
 
-            var contextName = GetDbContextName(namespaceName);
-
-            var tmpl = new DbContextTextTemplate(standaloneEntityTypes, contextName, this.mvcProject.Name);
+            var tmpl = new DbContextTextTemplate(standaloneEntityTypes, this.mvcProject.DbContextName, this.mvcProject.Name);
             var fileContent = tmpl.TransformText();
-            var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, contextName + ".cs");
+            var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, this.mvcProject.DbContextName + ".cs");
             File.WriteAllText(fileOutputPath, fileContent);
-        }
-
-        private static string GetDbContextName(string namespaceName)
-        {
-            return namespaceName + "Context";
         }
 
         private static void PrepareFolder(string path)

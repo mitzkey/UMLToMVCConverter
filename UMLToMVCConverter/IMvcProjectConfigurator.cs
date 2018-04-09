@@ -5,6 +5,6 @@
 
     public interface IMvcProjectConfigurator
     {
-        void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName);
+        void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations);
     }
 }

@@ -3,9 +3,9 @@ using System.CodeDom;
 
 namespace UMLToMVCConverter.Mappers
 {
-    class UmlVisibilityMapper
+    public class UmlVisibilityMapper : IUmlVisibilityMapper
     {
-        public static MemberAttributes UmlToCsharp(string umlVisibility)
+        public MemberAttributes UmlToCsharp(string umlVisibility)
         {
             switch (umlVisibility.ToLower())
             {

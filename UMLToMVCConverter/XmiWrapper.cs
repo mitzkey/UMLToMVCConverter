@@ -8,22 +8,22 @@
 
     public class XmiWrapper : IXmiWrapper
     {
-        private readonly XDocument xmi;
-        private readonly AttributeEqualityComparer attributeEqualityComparer;
+        private readonly XDocument xmiDocument;
+        private readonly IXAttributeEqualityComparer attributeEqualityComparer;
         private readonly XNamespace xmiNamespace;
         private readonly XNamespace umlNamespace;
 
-        public XmiWrapper(XDocument xmi, XNamespace xmiNamespace, XNamespace umlNamespace, AttributeEqualityComparer attributeEqualityComparer)
+        public XmiWrapper(XDocument xmiDocument, IXAttributeEqualityComparer attributeEqualityComparer)
         {
-            this.umlNamespace = umlNamespace;
-            this.xmiNamespace = xmiNamespace;
+            this.xmiDocument = xmiDocument;
+            this.xmiNamespace = this.xmiDocument.Root.GetNamespaceOfPrefix("xmi");
+            this.umlNamespace = this.xmiDocument.Root.GetNamespaceOfPrefix("uml");
             this.attributeEqualityComparer = attributeEqualityComparer;
-            this.xmi = xmi;
         }
 
         public IEnumerable<XElement> GetXUmlModels()
         {
-            return this.xmi.Descendants(this.umlNamespace + "Model").ToList();
+            return this.xmiDocument.Descendants(this.umlNamespace + "Model").ToList();
         }
 
         public IEnumerable<XElement> GetXTypes(XElement umlModel)
@@ -45,7 +45,7 @@
 
         public XElement GetXElementById(string id)
         {
-            return this.xmi.Descendants()
+            return this.xmiDocument.Descendants()
                 .SingleOrDefault(e => id.Equals(e.OptionalAttributeValue(this.xmiNamespace + "id")));
         }
 

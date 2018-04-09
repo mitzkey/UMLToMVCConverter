@@ -83,6 +83,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -126,8 +127,14 @@
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
-    <Compile Include="IProjectBuilder.cs" />
+    <Compile Include="IDataModelGenerator.cs" />
+    <Compile Include="IMvcProject.cs" />
+    <Compile Include="IProjectPublisher.cs" />
     <Compile Include="IStartupCsConfigurator.cs" />
+    <Compile Include="IUmlTypesHelper.cs" />
+    <Compile Include="IXAttributeEqualityComparer.cs" />
+    <Compile Include="IXmiWrapper.cs" />
+    <Compile Include="Mappers\IUmlVisibilityMapper.cs" />
     <Compile Include="MvcProject.cs" />
     <Compile Include="MvcProjectConfigurator.cs" />
     <Compile Include="EnumHelper.cs" />
@@ -140,11 +147,11 @@
     <Compile Include="Insist.cs" />
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectBuilder.cs" />
+    <Compile Include="ProjectPublisher.cs" />
     <Compile Include="StartupCsConfigurator.cs" />
     <Compile Include="UmlTypesHelper.cs" />
     <Compile Include="XmiWrapper.cs" />
-    <Compile Include="AttributeEqualityComparer.cs" />
+    <Compile Include="XAttributeEqualityComparer.cs" />
     <Compile Include="DataModelGenerator.cs" />
   </ItemGroup>
   <ItemGroup>

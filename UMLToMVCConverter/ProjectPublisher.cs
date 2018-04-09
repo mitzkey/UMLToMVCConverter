@@ -4,11 +4,11 @@
     using System.Diagnostics;
     using System.IO;
 
-    public class ProjectBuilder : IProjectBuilder
+    public class ProjectPublisher : IProjectPublisher
     {
         private const string ScriptName = "build_dotnet_project.bat";
 
-        public void BuildProject(string projectFilePath, string outputPath)
+        public void PublishProject(string projectFilePath, string outputPath)
         {
             var scriptContent = $@"dotnet publish ""{projectFilePath}"" -o ""{outputPath}""";
             
