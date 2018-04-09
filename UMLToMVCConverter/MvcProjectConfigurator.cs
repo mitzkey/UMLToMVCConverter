@@ -16,17 +16,23 @@
         private readonly IStartupCsConfigurator startupCsConfigurator;
         private readonly IProjectPublisher projectPublisher;
         private readonly IMigrationServiceClient migrationsServiceClient;
+        private readonly ILogger logger;
+        private readonly IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate;
 
         public MvcProjectConfigurator(
             IMvcProject mvcProject,
             IStartupCsConfigurator startupCsConfigurator,
             IProjectPublisher projectPublisher,
-            IMigrationServiceClient migrationsServiceClient)
+            IMigrationServiceClient migrationsServiceClient,
+            ILogger logger,
+            IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate)
         {
             this.mvcProject = mvcProject;
             this.startupCsConfigurator = startupCsConfigurator;
             this.projectPublisher = projectPublisher;
             this.migrationsServiceClient = migrationsServiceClient;
+            this.logger = logger;
+            this.migrationsManagerClassTextTemplate = migrationsManagerClassTextTemplate;
         }
 
         public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations)
@@ -39,7 +45,8 @@
             PrepareFolder(this.mvcProject.ModelsFolderPath);
 
             this.GenerateModels(codeTypeDeclarations);
-            this.GenerateDbContextClass(codeTypeDeclarations, this.mvcProject.DbContextName);
+            this.GenerateDbContextClass(codeTypeDeclarations);
+            this.GenerateMigrationsManager();
 
             this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
 
@@ -52,8 +59,21 @@
             this.migrationsServiceClient.RunMigration();
         }
 
+        private void GenerateMigrationsManager()
+        {
+            this.logger.LogInfo("Generating MigrationsManager.cs");
+
+            var fileContent = this.migrationsManagerClassTextTemplate.TransformText();
+            var fileOutputPath = Path.Combine(this.mvcProject.ProjectFolderPath, "MigrationsManager.cs");
+            File.WriteAllText(fileOutputPath, fileContent);
+
+            this.logger.LogInfo($"Generated {fileOutputPath}");
+        }
+
         private void SetUpAppsettingsDbConnection(string contextName)
         {
+            this.logger.LogInfo("Setting up appsettings.json db connection...");
+
             var appsettingJsonPath = Path.Combine(this.mvcProject.ProjectFolderPath, "appsettings.json");
             var appsettingsJsonContent = File.ReadAllText(appsettingJsonPath);
             var appsettingsJson = JObject.Parse(appsettingsJsonContent);
@@ -74,27 +94,35 @@
 
         private void GenerateModels(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations)
         {
+            this.logger.LogInfo("Generating models...");
+
             var codeTypeDeclarationsList = codeTypeDeclarations.ToList();
             foreach (var ctd in codeTypeDeclarationsList)
             {
-                var tmpl = new ModelClassTextTemplate(ctd, this.mvcProject.Name);
-                var fileContent = tmpl.TransformText();
-                var filesOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, ctd.Name + ".cs");
-                File.WriteAllText(filesOutputPath, fileContent);
+                var template = new ModelClassTextTemplate(ctd, this.mvcProject.Name);
+                var fileContent = template.TransformText();
+                var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, ctd.Name + ".cs");
+                File.WriteAllText(fileOutputPath, fileContent);
+
+                this.logger.LogInfo($"Generated {fileOutputPath}");
             }
         }
 
-        private void GenerateDbContextClass(List<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName)
+        private void GenerateDbContextClass(List<CodeTypeDeclaration> codeTypeDeclarations)
         {
+            this.logger.LogInfo("Generating db context class...");
+
             var standaloneEntityTypes = codeTypeDeclarations.
                 Where(i => !i.TypeAttributes.HasFlag(TypeAttributes.Abstract)
                            && !i.IsStruct)
                 .ToList();
 
-            var tmpl = new DbContextTextTemplate(standaloneEntityTypes, this.mvcProject.DbContextName, this.mvcProject.Name);
-            var fileContent = tmpl.TransformText();
+            var template = new DbContextTextTemplate(standaloneEntityTypes, this.mvcProject.DbContextName, this.mvcProject.Name);
+            var fileContent = template.TransformText();
             var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, this.mvcProject.DbContextName + ".cs");
             File.WriteAllText(fileOutputPath, fileContent);
+
+            this.logger.LogInfo($"Generated {fileOutputPath}");
         }
 
         private static void PrepareFolder(string path)

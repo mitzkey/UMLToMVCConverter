@@ -108,6 +108,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbContextTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="CodeTemplates\IMigrationsManagerClassTextTemplate.cs" />
+    <Compile Include="CodeTemplates\MigrationsManagerClassTextTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MigrationsManagerClassTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTemplates\MigrationsManagerClassTextTemplate.Data.cs">
+	  <DependentUpon>MigrationsManagerClassTextTemplate.tt</DependentUpon>
+	</Compile>
+		
     <Compile Include="CodeTemplates\ModelClassTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -213,7 +223,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="CodeTemplates\MigrationsManagerClassTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MigrationsManagerClassTextTemplate.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,6 +2,7 @@
 {
     using System.Xml.Linq;
     using Autofac;
+    using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.Mappers;
 
     public static class Program
@@ -67,6 +68,7 @@
             builder.RegisterType<XAttributeEqualityComparer>().As<IXAttributeEqualityComparer>().SingleInstance();
             builder.RegisterType<MigrationServiceClient>().As<IMigrationServiceClient>().SingleInstance();
             builder.RegisterType<Logger>().As<ILogger>().SingleInstance();
+            builder.RegisterType<MigrationsManagerClassTextTemplate>().As<IMigrationsManagerClassTextTemplate>().SingleInstance();
 
             return builder.Build();
         }
