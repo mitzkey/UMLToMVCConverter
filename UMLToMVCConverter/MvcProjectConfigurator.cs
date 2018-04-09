@@ -12,21 +12,23 @@
 
     public class MvcProjectConfigurator : IMvcProjectConfigurator
     {
-        private readonly MvcProject mvcProject;
+        private readonly IMvcProject mvcProject;
         private readonly string connectionString;
         private readonly string mvcProjectPublishOutputFolder;
         private readonly IStartupCsConfigurator startupCsConfigurator;
         private readonly IProjectBuilder projectBuilder;
 
-        public MvcProjectConfigurator(MvcProject mvcProject, string connectionString, string mvcProjectPublishOutputFolder)
+        public MvcProjectConfigurator(
+            IMvcProject mvcProject,
+            string connectionString,
+            IStartupCsConfigurator startupCsConfigurator,
+            IProjectBuilder projectBuilder)
         {
             Insist.IsNotNullOrWhiteSpace(connectionString, nameof(connectionString));
             this.connectionString = connectionString;
-            this.mvcProjectPublishOutputFolder = mvcProjectPublishOutputFolder;
             this.mvcProject = mvcProject;
-
-            this.startupCsConfigurator = new StartupCsConfigurator(this.mvcProject.ProjectFolderPath);
-            this.projectBuilder = new ProjectBuilder();
+            this.startupCsConfigurator = startupCsConfigurator;
+            this.projectBuilder = projectBuilder;
         }
 
         public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations, string namespaceName)
@@ -39,11 +41,11 @@
 
             this.startupCsConfigurator.SetUpStartupCsDbContextUse(dbContextName);
 
+            ClearFolder(this.mvcProject.ViewsFolderPath);
             PrepareFolder(this.mvcProject.ModelsFolderPath);
             this.GenerateModels(codeTypeDeclarations);
             this.GenerateDbContextClass(codeTypeDeclarations, namespaceName);
 
-            ClearFolder(this.mvcProject.ViewsFolderPath);
             this.projectBuilder.BuildProject(this.mvcProject.CsprojFilePath, this.mvcProjectPublishOutputFolder);
 
             // this.migrationsManager = new MigrationsManager(this.mvcProjectName, dbContextName, this.mvcProjectFolderPath);

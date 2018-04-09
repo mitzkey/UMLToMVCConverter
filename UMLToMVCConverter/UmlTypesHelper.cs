@@ -9,7 +9,7 @@
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
 
-    public class UmlTypesHelper
+    public class UmlTypesHelper : IUmlTypesHelper
     {
         private static readonly IReadOnlyDictionary<string, Type> PrimitiveTypesMap = new ReadOnlyDictionary<string, Type>(
             new Dictionary<string, Type>

@@ -10,7 +10,7 @@
     using UMLToMVCConverter.ExtensionMethods;
     using UMLToMVCConverter.Mappers;
 
-    internal class DataModelGenerator
+    public class DataModelGenerator : IDataModelGenerator
     {
         private const string TemporaryNamespaceName = "Default";
         private readonly string namespaceName;

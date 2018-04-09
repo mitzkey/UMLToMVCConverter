@@ -6,7 +6,7 @@
     using System.Xml.Linq;
     using UMLToMVCConverter.ExtensionMethods;
 
-    public class XmiWrapper
+    public class XmiWrapper : IXmiWrapper
     {
         private readonly XDocument xmi;
         private readonly AttributeEqualityComparer attributeEqualityComparer;
