@@ -12,22 +12,26 @@
 
         public string ViewsFolderPath => Path.Combine(this.ProjectFolderPath, "Views");
 
-        public string DefaultNamespaceName { get; }
+        public string DbContextPrefix { get; }
 
         public string WorkspaceFolderPath { get; }
 
         public string DbConnectionString { get; }
 
-        public string DbContextName => this.DefaultNamespaceName + "Context";
+        public string DbContextName => this.DbContextPrefix + "Context";
 
         public string StartupCsPath => Path.Combine(this.ProjectFolderPath, "Startup.cs");
+
+        public string DefaultNamespace => this.Name;
+
+        public string AssemblyPath => Path.Combine(this.WorkspaceFolderPath, this.Name + ".dll");
 
         public string CsprojFilePath => Path.Combine(this.ProjectFolderPath, this.Name + ".csproj");
 
         public MvcProject(string projectFolderPath, string defaultNamespaceName, string workspaceFolderPath, string dbConnectionString)
         {
             this.ProjectFolderPath = projectFolderPath;
-            this.DefaultNamespaceName = defaultNamespaceName;
+            this.DbContextPrefix = defaultNamespaceName;
             this.WorkspaceFolderPath = workspaceFolderPath;
             this.DbConnectionString = dbConnectionString;
         }

@@ -65,6 +65,8 @@
             builder.RegisterType<XmiWrapper>().As<IXmiWrapper>().SingleInstance();
             builder.RegisterType<UmlVisibilityMapper>().As<IUmlVisibilityMapper>().SingleInstance();
             builder.RegisterType<XAttributeEqualityComparer>().As<IXAttributeEqualityComparer>().SingleInstance();
+            builder.RegisterType<MigrationServiceClient>().As<IMigrationServiceClient>().SingleInstance();
+            builder.RegisterType<Logger>().As<ILogger>().SingleInstance();
 
             return builder.Build();
         }

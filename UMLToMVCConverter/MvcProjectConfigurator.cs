@@ -15,15 +15,18 @@
         private readonly IMvcProject mvcProject;
         private readonly IStartupCsConfigurator startupCsConfigurator;
         private readonly IProjectPublisher projectPublisher;
+        private readonly IMigrationServiceClient migrationsServiceClient;
 
         public MvcProjectConfigurator(
             IMvcProject mvcProject,
             IStartupCsConfigurator startupCsConfigurator,
-            IProjectPublisher projectPublisher)
+            IProjectPublisher projectPublisher,
+            IMigrationServiceClient migrationsServiceClient)
         {
             this.mvcProject = mvcProject;
             this.startupCsConfigurator = startupCsConfigurator;
             this.projectPublisher = projectPublisher;
+            this.migrationsServiceClient = migrationsServiceClient;
         }
 
         public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations)
@@ -34,13 +37,19 @@
 
             ClearFolder(this.mvcProject.ViewsFolderPath);
             PrepareFolder(this.mvcProject.ModelsFolderPath);
+
             this.GenerateModels(codeTypeDeclarations);
             this.GenerateDbContextClass(codeTypeDeclarations, this.mvcProject.DbContextName);
 
             this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
 
-            // this.migrationsManager = new MigrationsManager(this.mvcProjectName, dbContextName, this.mvcProjectFolderPath);
-            // this.migrationsManager.AddAndRunMigrations(mvcProjectAssembly);
+            this.migrationsServiceClient.AddMigration(
+                this.mvcProject.ProjectFolderPath,
+                this.mvcProject.DefaultNamespace);
+
+            this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
+
+            this.migrationsServiceClient.RunMigration();
         }
 
         private void SetUpAppsettingsDbConnection(string contextName)

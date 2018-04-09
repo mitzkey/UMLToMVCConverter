@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0AB93E32-BD05-4586-A424-40DB1CAA912F}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UMLToMVCConverter</RootNamespace>
     <AssemblyName>UMLToMVCConverter</AssemblyName>
@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,6 +32,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -128,13 +131,17 @@
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
     <Compile Include="IDataModelGenerator.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="IMigrationServiceClient.cs" />
     <Compile Include="IMvcProject.cs" />
     <Compile Include="IProjectPublisher.cs" />
     <Compile Include="IStartupCsConfigurator.cs" />
     <Compile Include="IUmlTypesHelper.cs" />
     <Compile Include="IXAttributeEqualityComparer.cs" />
     <Compile Include="IXmiWrapper.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Mappers\IUmlVisibilityMapper.cs" />
+    <Compile Include="MigrationServiceClient.cs" />
     <Compile Include="MvcProject.cs" />
     <Compile Include="MvcProjectConfigurator.cs" />
     <Compile Include="EnumHelper.cs" />
