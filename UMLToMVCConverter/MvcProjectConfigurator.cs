@@ -44,7 +44,6 @@
 
             this.startupCsConfigurator.SetUpStartupCsDbContextUse(this.mvcProject.DbContextName);
 
-            ClearFolder(this.mvcProject.ViewsFolderPath);
             ClearFolder(this.mvcProject.ControllersFolderPath);
             PrepareFolder(this.mvcProject.ModelsFolderPath);
 
@@ -162,20 +161,22 @@
 
         private static void ClearFolder(string path)
         {
-            if (Directory.Exists(path))
+            if (!Directory.Exists(path))
             {
-                var directory = new DirectoryInfo(path);
+                return;
+            }
 
-                foreach (var file in directory.GetFiles().Where(f => !f.Name.Equals("ErrorViewModel")))
-                {
-                    file.Delete();
-                }
+            var directory = new DirectoryInfo(path);
 
-                foreach (var subDirectory in directory.GetDirectories())
-                {
-                    ClearFolder(subDirectory.FullName);
-                    subDirectory.Delete();
-                }
+            foreach (var file in directory.GetFiles().Where(f => !f.Name.Equals("ErrorViewModel.cs")))
+            {
+                file.Delete();
+            }
+
+            foreach (var subDirectory in directory.GetDirectories())
+            {
+                ClearFolder(subDirectory.FullName);
+                subDirectory.Delete();
             }
         }
     }
