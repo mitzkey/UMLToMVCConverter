@@ -16,7 +16,7 @@
 
         public void PublishProject(string projectFilePath, string outputPath)
         {
-            this.logger.LogInfo("Publishing project...");
+            this.logger.LogInfo("Publishing project into workspace...");
 
             var scriptContent = $@"dotnet publish ""{projectFilePath}"" -o ""{outputPath}""";
             

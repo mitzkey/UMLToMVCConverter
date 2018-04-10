@@ -10,7 +10,7 @@
         private const string TemporaryHardCodedDiagramPath =
             @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\Diagramy\MainDiagram.xml";
         private const string TemporaryHardCodedMvcProjectPath =
-            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\WebApplication1\WebApplication1";
+            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\WebApplication2\WebApplication2";
         private const string TemporaryHardCodedConnectionString =
             @"Server=(localdb)\mssqllocaldb;Database=Default;Trusted_Connection=True;MultipleActiveResultSets=true";
         private const string TemporaryHardCodedWorkFolder =
@@ -69,6 +69,7 @@
             builder.RegisterType<MigrationServiceClient>().As<IMigrationServiceClient>().SingleInstance();
             builder.RegisterType<Logger>().As<ILogger>().SingleInstance();
             builder.RegisterType<MigrationsManagerClassTextTemplate>().As<IMigrationsManagerClassTextTemplate>().SingleInstance();
+            builder.RegisterType<DbContextFactoryClassTextTemplate>().As<IDbContextFactoryClassTextTemplate>().SingleInstance();
 
             return builder.Build();
         }

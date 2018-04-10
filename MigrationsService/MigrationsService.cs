@@ -5,30 +5,33 @@
 
     public class MigrationsService
     {
-        private const string MigrationsManagerTypeName = "WebApplication1.MigrationsManager";
+        private const string MigrationsManagerTypeName = "MigrationsManager";
         private const string AddMigrationMethodName = "AddMigration";
         private const string RunMigrationMethodName = "RunMigration";
         private readonly Type migrationsManagerType;
         private readonly object migrationsManager;
+        private readonly string migrationsNamespace;
 
-        public MigrationsService(string mvcProjectAssemblyPath)
+        public MigrationsService(string mvcProjectAssemblyPath, string migrationsNamespace)
         {
             var mvcProjectAssembly = Assembly.LoadFrom(mvcProjectAssemblyPath);
-            this.migrationsManagerType = mvcProjectAssembly.GetType(MigrationsManagerTypeName);
-            this.migrationsManager = Activator.CreateInstance(migrationsManagerType);
+            this.migrationsNamespace = migrationsNamespace;
+            this.migrationsManagerType = mvcProjectAssembly.GetType($"{this.migrationsNamespace}.{MigrationsManagerTypeName}");
+            this.migrationsManager = Activator.CreateInstance(this.migrationsManagerType);
+            
         }
 
-        public string AddMigration(string mvcProjectFolderPath, string migrationsNamespace)
+        public string AddMigration(string mvcProjectFolderPath)
         {
-            var addMigrationMethodInfo = migrationsManagerType.GetMethod(AddMigrationMethodName);
+            var addMigrationMethodInfo = this.migrationsManagerType.GetMethod(AddMigrationMethodName);
 
             return addMigrationMethodInfo.Invoke(this.migrationsManager,
-                new object[] { mvcProjectFolderPath, migrationsNamespace }).ToString();
+                new object[] { mvcProjectFolderPath, this.migrationsNamespace }).ToString();
         }
 
         public void RunMigration()
         {
-            var runMigrationMethodInfo = migrationsManagerType.GetMethod(RunMigrationMethodName);
+            var runMigrationMethodInfo = this.migrationsManagerType.GetMethod(RunMigrationMethodName);
 
             runMigrationMethodInfo.Invoke(this.migrationsManager, null);
         }

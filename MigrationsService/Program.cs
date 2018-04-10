@@ -18,12 +18,12 @@
             var migrationsNamespace = args[2];
             var mvcProjectAssemblyPath = args[3];
 
-            var migrationsService = new MigrationsService(mvcProjectAssemblyPath);
+            var migrationsService = new MigrationsService(mvcProjectAssemblyPath, migrationsNamespace);
 
             switch (command)
             {
                 case "add-migration":
-                    var migrationAdded = migrationsService.AddMigration(mvcProjectFolderPath, migrationsNamespace);
+                    var migrationAdded = migrationsService.AddMigration(mvcProjectFolderPath);
                     Console.WriteLine("Successfully added migration:\n" + migrationAdded);
                     break;
                 case "update-database":

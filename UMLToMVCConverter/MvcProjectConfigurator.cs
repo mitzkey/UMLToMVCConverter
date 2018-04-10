@@ -18,6 +18,7 @@
         private readonly IMigrationServiceClient migrationsServiceClient;
         private readonly ILogger logger;
         private readonly IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate;
+        private readonly IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate;
 
         public MvcProjectConfigurator(
             IMvcProject mvcProject,
@@ -25,7 +26,8 @@
             IProjectPublisher projectPublisher,
             IMigrationServiceClient migrationsServiceClient,
             ILogger logger,
-            IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate)
+            IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate,
+            IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate)
         {
             this.mvcProject = mvcProject;
             this.startupCsConfigurator = startupCsConfigurator;
@@ -33,6 +35,7 @@
             this.migrationsServiceClient = migrationsServiceClient;
             this.logger = logger;
             this.migrationsManagerClassTextTemplate = migrationsManagerClassTextTemplate;
+            this.dbContextFactoryClassTextTemplate = dbContextFactoryClassTextTemplate;
         }
 
         public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations)
@@ -42,11 +45,14 @@
             this.startupCsConfigurator.SetUpStartupCsDbContextUse(this.mvcProject.DbContextName);
 
             ClearFolder(this.mvcProject.ViewsFolderPath);
+            ClearFolder(this.mvcProject.ControllersFolderPath);
             PrepareFolder(this.mvcProject.ModelsFolderPath);
 
             this.GenerateModels(codeTypeDeclarations);
             this.GenerateDbContextClass(codeTypeDeclarations);
             this.GenerateMigrationsManager();
+            this.GenerateDbContextFactoryClass();
+            Directory.CreateDirectory(this.mvcProject.MigrationsFolderPath);
 
             this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
 
@@ -57,6 +63,17 @@
             this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
 
             this.migrationsServiceClient.RunMigration();
+        }
+
+        private void GenerateDbContextFactoryClass()
+        {
+            this.logger.LogInfo("Generating DesignTimeDbContextFactory.cs");
+
+            var fileContent = this.dbContextFactoryClassTextTemplate.TransformText();
+            var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, "DesignTimeDbContextFactory.cs");
+            File.WriteAllText(fileOutputPath, fileContent);
+
+            this.logger.LogInfo($"Generated {fileOutputPath}");
         }
 
         private void GenerateMigrationsManager()
@@ -74,8 +91,8 @@
         {
             this.logger.LogInfo("Setting up appsettings.json db connection...");
 
-            var appsettingJsonPath = Path.Combine(this.mvcProject.ProjectFolderPath, "appsettings.json");
-            var appsettingsJsonContent = File.ReadAllText(appsettingJsonPath);
+            var appsettingsJsonPath = Path.Combine(this.mvcProject.ProjectFolderPath, "appsettings.json");
+            var appsettingsJsonContent = File.ReadAllText(appsettingsJsonPath);
             var appsettingsJson = JObject.Parse(appsettingsJsonContent);
 
             var connectionStringConfig = new JObject
@@ -89,7 +106,15 @@
 
             var appsettingsJsonOutput = JsonConvert.SerializeObject(appsettingsJson, Formatting.Indented);
 
-            File.WriteAllText(appsettingJsonPath, appsettingsJsonOutput);
+            File.WriteAllText(appsettingsJsonPath, appsettingsJsonOutput);
+
+            this.logger.LogInfo($"Generated: {appsettingsJsonPath}");
+
+            var appsettingsJsonWorkingDirPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+
+            File.WriteAllText(appsettingsJsonWorkingDirPath, appsettingsJsonOutput);
+
+            this.logger.LogInfo($"Generated: {appsettingsJsonWorkingDirPath}");
         }
 
         private void GenerateModels(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations)

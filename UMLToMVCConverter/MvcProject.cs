@@ -30,6 +30,10 @@
 
         public string MigrationsFolderName => "Migrations";
 
+        public string ControllersFolderPath => Path.Combine(this.ProjectFolderPath, "Controllers");
+
+        public string MigrationsFolderPath => Path.Combine(this.ProjectFolderPath, this.MigrationsFolderName);
+
         public string CsprojFilePath => Path.Combine(this.ProjectFolderPath, this.Name + ".csproj");
 
         public MvcProject(string projectFolderPath, string defaultNamespaceName, string workspaceFolderPath, string dbConnectionString)
