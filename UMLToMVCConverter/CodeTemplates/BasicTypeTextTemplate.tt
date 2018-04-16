@@ -3,6 +3,7 @@
 <#@ import namespace="System.Collections.Generic"#>
 <#@ import namespace="UMLToMVCConverter"#>
 <#@ import namespace="UMLToMVCConverter.ExtendedTypes"#>
+<#@ import namespace="UMLToMVCConverter.ExtensionMethods"#>
 <#@ assembly name="System.Core"#>
 <#
 if(_class.IsStruct) {
@@ -53,11 +54,17 @@ foreach (var cm in _class.Members) {
         if (type.ExtType.IsCollection) {
 			#>virtual <#
 		}
-		#><#= type.ExtTypeName + " " + cmp.Name #> { get; <#
-		if (!cmp.HasSet) {
-			#>private <#
+		#><#= type.ExtTypeName + " " + cmp.Name #> { get<#
+		if (cmp.IsDerived) {
+			#> { throw new NotImplementedException(); } <#
 		}
-		#>set; }<#
+		else {
+			#>; <#
+		}
+		if (cmp.HasSet) {
+			#>set; <#
+		}
+		#>}<#
 		if (cmp.HasDefaultValue) {
 			#> = <#=cmp.DefaultValueString#>;<#
 		}

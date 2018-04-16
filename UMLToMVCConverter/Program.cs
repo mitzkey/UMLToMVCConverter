@@ -20,11 +20,17 @@
 
         public static void Main(string[] args)
         {
-            var xmiPath = TemporaryHardCodedDiagramPath;
-            var mvcProjectFolderPath = TemporaryHardCodedMvcProjectPath;
-            var dbConnectionString = TemporaryHardCodedConnectionString;
-            var workspaceFolderPath = TemporaryHardCodedWorkFolder;
-            var defaultNamespaceName = TemporaryHardCodedDefaultNamespaceName;
+            //var xmiPath = TemporaryHardCodedDiagramPath;
+            //var mvcProjectFolderPath = TemporaryHardCodedMvcProjectPath;
+            //var dbConnectionString = TemporaryHardCodedConnectionString;
+            //var workspaceFolderPath = TemporaryHardCodedWorkFolder;
+            //var defaultNamespaceName = TemporaryHardCodedDefaultNamespaceName;
+
+            var xmiPath = args[0];
+            var mvcProjectFolderPath = args[1];
+            var dbConnectionString = args[2];
+            var workspaceFolderPath = args[3];
+            var defaultNamespaceName = args[4];
 
             var container = ConfigureContainer(
                 xmiPath,

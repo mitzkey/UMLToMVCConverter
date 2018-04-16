@@ -190,7 +190,8 @@
                 var codeMemberProperty = new ExtendedCodeMemberProperty
                 {
                     Type = typeRef,
-                    Name = attribute.ObligatoryAttributeValue("name").FirstCharToUpper()
+                    Name = attribute.ObligatoryAttributeValue("name").FirstCharToUpper(),
+                    HasSet = true
                 };
 
                 var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
@@ -204,7 +205,10 @@
                 }
 
                 var xIsReadonly = Convert.ToBoolean(attribute.OptionalAttributeValue("isReadOnly"));
-                codeMemberProperty.HasSet = !xIsReadonly;
+                if (xIsReadonly)
+                {
+                    codeMemberProperty.HasSet = false;
+                }
 
                 var xDefaultValue = attribute.Element("defaultValue");
                 if (xDefaultValue != null)
@@ -216,6 +220,13 @@
                     }
 
                     codeMemberProperty.DefaultValueString = xDefaultValue.ObligatoryAttributeValue("value");
+                }
+
+                var xIsDerived = Convert.ToBoolean(attribute.OptionalAttributeValue("isDerived"));
+                if (xIsDerived)
+                {
+                    codeMemberProperty.HasSet = false;
+                    codeMemberProperty.IsDerived = true;
                 }
 
                 codeTypeDeclaration.Members.Add(codeMemberProperty);

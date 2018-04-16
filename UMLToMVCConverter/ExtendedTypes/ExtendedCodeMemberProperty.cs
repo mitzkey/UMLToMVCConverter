@@ -40,5 +40,7 @@
                 this.HasDefaultValue = true;
             }
         }
+
+        public bool IsDerived { get; set; }
     }
 }
