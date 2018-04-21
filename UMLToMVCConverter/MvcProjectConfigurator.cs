@@ -8,6 +8,7 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using UMLToMVCConverter.CodeTemplates;
+    using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
 
     public class MvcProjectConfigurator : IMvcProjectConfigurator
@@ -44,7 +45,7 @@
             this.dbContextClassTextTemplate = dbContextClassTextTemplate;
         }
 
-        public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations)
+        public void SetUpMvcProject(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations)
         {
             this.nugetPackageInstaller.InstallEntityFrameworkPackage(this.mvcProject.CsprojFilePath);
 
@@ -140,7 +141,7 @@
             }
         }
 
-        private void GenerateDbContextClass(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations)
+        private void GenerateDbContextClass(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations)
         {
             this.logger.LogInfo("Generating db context class...");
 

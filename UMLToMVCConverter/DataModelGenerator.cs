@@ -12,8 +12,8 @@
 
     public class DataModelGenerator : IDataModelGenerator
     {
-        private readonly List<CodeTypeDeclaration> types;
-        private readonly List<CodeTypeDeclaration> typeDeclarations;
+        private readonly List<ExtendedCodeTypeDeclaration> types;
+        private readonly List<ExtendedCodeTypeDeclaration> typeDeclarations;
         private readonly IXmiWrapper xmiWrapper;
         private readonly IUmlTypesHelper umlTypesHelper;
         private readonly IMvcProjectConfigurator mvcProjectConfigurator;
@@ -27,8 +27,8 @@
         {
             this.mvcProjectConfigurator = mvcProjectConfigurator;
 
-            this.types = new List<CodeTypeDeclaration>();
-            this.typeDeclarations = new List<CodeTypeDeclaration>();
+            this.types = new List<ExtendedCodeTypeDeclaration>();
+            this.typeDeclarations = new List<ExtendedCodeTypeDeclaration>();
 
             this.xmiWrapper = xmiWrapper;
             this.umlTypesHelper = umlTypesHelper;
@@ -95,11 +95,11 @@
 
         private void DeclareTypeFromXElement(XElement xType)
         {
-            var typeDeclaration = new CodeTypeDeclaration {Name = xType.ObligatoryAttributeValue("name")};
+            var typeDeclaration = new ExtendedCodeTypeDeclaration {Name = xType.ObligatoryAttributeValue("name")};
             this.typeDeclarations.Add(typeDeclaration);
         }
 
-        private CodeTypeDeclaration BuildTypeFromXElement(XElement type)
+        private ExtendedCodeTypeDeclaration BuildTypeFromXElement(XElement type)
         {
             var codeTypeDeclarationName = type.ObligatoryAttributeValue("name");
             var codeTypeDeclaration = this.typeDeclarations.Single(t => t.Name.Equals(codeTypeDeclarationName));
@@ -175,7 +175,7 @@
             }
         }
 
-        private void GenerateAttributes(XElement type, CodeTypeDeclaration codeTypeDeclaration)
+        private void GenerateAttributes(XElement type, ExtendedCodeTypeDeclaration codeTypeDeclaration)
         {
             var attributes = this.xmiWrapper.GetXAttributes(type);
             foreach (var attribute in attributes)
@@ -214,7 +214,7 @@
                 if (xDefaultValue != null)
                 {
                     var extendedType = (ExtendedCodeTypeReference) codeMemberProperty.Type;
-                    if (extendedType.IsGeneric || extendedType.IsNametType)
+                    if (extendedType.IsGeneric || extendedType.IsNamedType)
                     {
                         throw new NotSupportedException("No default value for generic or declared named types supported");
                     }
@@ -227,6 +227,13 @@
                 {
                     codeMemberProperty.HasSet = false;
                     codeMemberProperty.IsDerived = true;
+                }
+
+                var xIsID = Convert.ToBoolean(attribute.OptionalAttributeValue("isID"));
+                if (xIsID)
+                {
+                    codeMemberProperty.IsID = true;
+                    codeTypeDeclaration.IDs.Add(codeMemberProperty);
                 }
 
                 codeTypeDeclaration.Members.Add(codeMemberProperty);

@@ -11,7 +11,7 @@
 
     public class UmlTypesHelper : IUmlTypesHelper
     {
-        public List<CodeTypeDeclaration> CodeTypeDeclarations { get; set; }
+        public List<ExtendedCodeTypeDeclaration> CodeTypeDeclarations { get; set; }
 
         private static readonly IReadOnlyDictionary<string, Type> PrimitiveTypesMap = new ReadOnlyDictionary<string, Type>(
             new Dictionary<string, Type>
@@ -153,7 +153,7 @@
             var name = xElement.ObligatoryAttributeValue("name");
             name = name.FirstCharToUpper();
 
-            var codeTypeDeclaration = new CodeTypeDeclaration(name)
+            var codeTypeDeclaration = new ExtendedCodeTypeDeclaration(name)
             {
                 IsStruct = false,
                 TypeAttributes = TypeAttributes.Public

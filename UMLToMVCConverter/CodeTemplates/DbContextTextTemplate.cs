@@ -85,7 +85,41 @@ foreach(Tuple<string, string> nameAndPlural in typesNamesAndPlurals) {
             
             #line 23 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
  
-} 
+}
+ 
+if (this.onModelCreatingBlock) {
+	
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\r\n\t\tprotected override void OnModelCreating(ModelBuilder modelBuilder) {\r\n");
+            
+            #line 31 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+	foreach (var complexKey in this.complexKeys) {
+
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\tmodelBuilder.Entity<");
+            
+            #line 32 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(complexKey.Key));
+            
+            #line default
+            #line hidden
+            this.Write(">()\r\n\t\t\t\t.HasKey(c => new { ");
+            
+            #line 33 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", complexKey.Value.Select(s => "c." + s).ToArray())));
+            
+            #line default
+            #line hidden
+            this.Write(" });\r\n\t\t}");
+            
+            #line 34 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+
+	}
+}
 
             
             #line default

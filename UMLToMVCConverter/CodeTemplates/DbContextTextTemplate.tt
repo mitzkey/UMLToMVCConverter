@@ -21,7 +21,19 @@ foreach(Tuple<string, string> nameAndPlural in typesNamesAndPlurals) {
 
 
 		public DbSet<<#= nameAndPlural.Item1 #>> <#= nameAndPlural.Item2 #> { get; set; }<# 
-} 
+}
+ 
+if (this.onModelCreatingBlock) {
+	#>
+
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder) {
+<#	foreach (var complexKey in this.complexKeys) {
+#>			modelBuilder.Entity<<#=complexKey.Key#>>()
+				.HasKey(c => new { <#=string.Join(", ", complexKey.Value.Select(s => "c." + s).ToArray())#> });
+		}<#
+	}
+}
 #>
 
 	}

@@ -1,10 +1,10 @@
 ﻿namespace UMLToMVCConverter
 {
-    using System.CodeDom;
     using System.Collections.Generic;
+    using UMLToMVCConverter.ExtendedTypes;
 
     public interface IMvcProjectConfigurator
     {
-        void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations);
+        void SetUpMvcProject(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations);
     }
 }

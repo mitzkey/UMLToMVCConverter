@@ -14,7 +14,7 @@ namespace UMLToMVCConverter.ExtendedTypes
 
         public List<ExtendedType> Generics => this.ExtType.Generics;
 
-        public bool IsNametType => this.ExtType.IsNamedType;
+        public bool IsNamedType => this.ExtType.IsNamedType;
 
         private ExtendedCodeTypeReference(Type type, bool isBaseType, bool isGeneric = false, IEnumerable<ExtendedType> generics = null)
             : base(type)

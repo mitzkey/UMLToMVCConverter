@@ -1,27 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.CodeDom;
 using System.Data.Entity.Design.PluralizationServices;
 
 namespace UMLToMVCConverter.CodeTemplates
 {
+    using System.Linq;
+    using UMLToMVCConverter.ExtendedTypes;
+
     public partial class DbContextTextTemplate : IDbContextClassTextTemplate
     {
         private readonly List<Tuple<string, string>> typesNamesAndPlurals;
         private IMvcProject mvcProject;
+        private bool onModelCreatingBlock;
+        private readonly Dictionary<string, IEnumerable<string>> complexKeys;
 
         public DbContextTextTemplate(IMvcProject mvcProject)
         {
             this.mvcProject = mvcProject;
             this.typesNamesAndPlurals = new List<Tuple<string, string>>();
-
+            this.onModelCreatingBlock = false;
+            this.complexKeys = new Dictionary<string, IEnumerable<string>>();
         }
 
-        public string TransformText(List<CodeTypeDeclaration> codeTypeDeclarations)
+        public string TransformText(List<ExtendedCodeTypeDeclaration> codeTypeDeclarations)
         {
-            foreach (var ctd in codeTypeDeclarations)
+            foreach (var codeTypeDeclaration in codeTypeDeclarations)
             {
-                string typeName = ctd.Name;
+                if (codeTypeDeclaration.HasComplexKey)
+                {
+                    this.onModelCreatingBlock = true;
+                    this.complexKeys.Add(codeTypeDeclaration.Name, codeTypeDeclaration.IDs.Select(x => x.Name));
+                }
+
+                var typeName = codeTypeDeclaration.Name;
                 string typeNamePlural;
                 if (System.Globalization.CultureInfo.CurrentCulture.Name.Substring(0, 1) == "en")
                 {
@@ -30,7 +41,7 @@ namespace UMLToMVCConverter.CodeTemplates
                 }
                 else
                 {
-                    typeNamePlural = typeName + "Set";
+                    typeNamePlural = typeName;
                 }
                 this.typesNamesAndPlurals.Add(new Tuple<string, string>(typeName, typeNamePlural));
             }
