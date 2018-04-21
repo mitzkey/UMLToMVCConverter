@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
-    <Compile Include="CodeTemplates\BasicTypeTextTemplate1.cs">
+    <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
@@ -133,7 +133,7 @@
     <Compile Include="CodeTemplates\ModelClassTextTemplate.Data.cs">
       <DependentUpon>ModelClassTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\PureClassTextTemplate.Data.cs">
+    <Compile Include="CodeTemplates\BasicClassTextTemplate.Data.cs">
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
@@ -150,7 +150,7 @@
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
     <Compile Include="IDataModelGenerator.cs" />
     <Compile Include="CodeTemplates\IDbContextFactoryClassTextTemplate.cs" />
-    <Compile Include="IDbContextClassTextTemplate.cs" />
+    <Compile Include="CodeTemplates\IDbContextClassTextTemplate.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IMigrationServiceClient.cs" />
     <Compile Include="IMvcProject.cs" />
@@ -218,7 +218,7 @@
     </None>
     <None Include="CodeTemplates\BasicTypeTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>BasicTypeTextTemplate1.cs</LastGenOutput>
+      <LastGenOutput>BasicTypeTextTemplate.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\ViewIndexTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

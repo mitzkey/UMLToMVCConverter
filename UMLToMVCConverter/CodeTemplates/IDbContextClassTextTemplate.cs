@@ -1,4 +1,4 @@
-namespace UMLToMVCConverter
+namespace UMLToMVCConverter.CodeTemplates
 {
     using System.Collections.Generic;
     using UMLToMVCConverter.ExtendedTypes;
