@@ -76,6 +76,8 @@
             builder.RegisterType<Logger>().As<ILogger>().SingleInstance();
             builder.RegisterType<MigrationsManagerClassTextTemplate>().As<IMigrationsManagerClassTextTemplate>().SingleInstance();
             builder.RegisterType<DbContextFactoryClassTextTemplate>().As<IDbContextFactoryClassTextTemplate>().SingleInstance();
+            builder.RegisterType<NugetPackageInstaller>().As<INugetPackageInstaller>().SingleInstance();
+            builder.RegisterType<ScriptRunner>().As<IScriptRunner>().SingleInstance();
 
             return builder.Build();
         }

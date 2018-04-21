@@ -19,6 +19,7 @@
         private readonly ILogger logger;
         private readonly IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate;
         private readonly IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate;
+        private readonly INugetPackageInstaller nugetPackageInstaller;
 
         public MvcProjectConfigurator(
             IMvcProject mvcProject,
@@ -27,7 +28,8 @@
             IMigrationServiceClient migrationsServiceClient,
             ILogger logger,
             IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate,
-            IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate)
+            IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate,
+            INugetPackageInstaller nugetPackageInstaller)
         {
             this.mvcProject = mvcProject;
             this.startupCsConfigurator = startupCsConfigurator;
@@ -36,11 +38,14 @@
             this.logger = logger;
             this.migrationsManagerClassTextTemplate = migrationsManagerClassTextTemplate;
             this.dbContextFactoryClassTextTemplate = dbContextFactoryClassTextTemplate;
+            this.nugetPackageInstaller = nugetPackageInstaller;
         }
 
         public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations)
         {
-            this.SetUpAppsettingsDbConnection(this.mvcProject.DbContextName);
+            this.nugetPackageInstaller.InstallEntityFrameworkPackage(this.mvcProject.CsprojFilePath);
+
+            this.SetUpAppsettingsDbConnection();
 
             this.startupCsConfigurator.SetUpStartupCsDbContextUse(this.mvcProject.DbContextName);
 
@@ -86,7 +91,7 @@
             this.logger.LogInfo($"Generated {fileOutputPath}");
         }
 
-        private void SetUpAppsettingsDbConnection(string contextName)
+        private void SetUpAppsettingsDbConnection()
         {
             this.logger.LogInfo("Setting up appsettings.json db connection...");
 
@@ -96,7 +101,7 @@
 
             var connectionStringConfig = new JObject
             {
-                [contextName] = this.mvcProject.DbConnectionString
+                [this.mvcProject.DbContextName] = this.mvcProject.DbConnectionString
             };
 
             var connectionStrings = new JProperty("ConnectionStrings", connectionStringConfig);
