@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.CodeDom"#>
 <#@ output extension=".cs" #>
-namespace <#= mvcProjectName #>.Models
+namespace <#= this.mvcProject.Name #>.Models
 {
 	using System;
 	using System.Collections.Generic;
@@ -13,7 +13,6 @@ namespace <#= mvcProjectName #>.Models
 	using System.Web;
 
 <#
-BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(_class, mvcProjectName);
-string code = tmpl.TransformText();
+var code = this.basicTypeTextTemplate.TransformText(codeTypeDeclaration);
 #><#= code #>
 }

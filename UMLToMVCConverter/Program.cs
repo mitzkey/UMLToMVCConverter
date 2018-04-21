@@ -79,6 +79,8 @@
             builder.RegisterType<NugetPackageInstaller>().As<INugetPackageInstaller>().SingleInstance();
             builder.RegisterType<ScriptRunner>().As<IScriptRunner>().SingleInstance();
             builder.RegisterType<DbContextTextTemplate>().As<IDbContextClassTextTemplate>().SingleInstance();
+            builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
+            builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();
 
             return builder.Build();
         }

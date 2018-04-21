@@ -116,6 +116,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbContextTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="CodeTemplates\IBasicTypeTextTemplate.cs" />
     <Compile Include="CodeTemplates\IMigrationsManagerClassTextTemplate.cs" />
     <Compile Include="CodeTemplates\MigrationsManagerClassTextTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -133,7 +134,7 @@
     <Compile Include="CodeTemplates\ModelClassTextTemplate.Data.cs">
       <DependentUpon>ModelClassTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\BasicClassTextTemplate.Data.cs">
+    <Compile Include="CodeTemplates\BasicTypeTextTemplate.Data.cs">
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
@@ -153,6 +154,7 @@
     <Compile Include="CodeTemplates\IDbContextClassTextTemplate.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IMigrationServiceClient.cs" />
+    <Compile Include="CodeTemplates\IModelClassTextTemplate.cs" />
     <Compile Include="IMvcProject.cs" />
     <Compile Include="INugetPackageInstaller.cs" />
     <Compile Include="IProjectPublisher.cs" />

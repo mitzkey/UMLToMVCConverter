@@ -1,10 +1,10 @@
 ﻿namespace UMLToMVCConverter
 {
-    using System.CodeDom;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using Autofac;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using UMLToMVCConverter.CodeTemplates;
@@ -22,6 +22,7 @@
         private readonly IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate;
         private readonly INugetPackageInstaller nugetPackageInstaller;
         private readonly IDbContextClassTextTemplate dbContextClassTextTemplate;
+        private readonly IComponentContext componentContext;
 
         public MvcProjectConfigurator(
             IMvcProject mvcProject,
@@ -32,7 +33,8 @@
             IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate,
             IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate,
             INugetPackageInstaller nugetPackageInstaller,
-            IDbContextClassTextTemplate dbContextClassTextTemplate)
+            IDbContextClassTextTemplate dbContextClassTextTemplate,
+            IComponentContext componentContext)
         {
             this.mvcProject = mvcProject;
             this.startupCsConfigurator = startupCsConfigurator;
@@ -43,6 +45,7 @@
             this.dbContextFactoryClassTextTemplate = dbContextFactoryClassTextTemplate;
             this.nugetPackageInstaller = nugetPackageInstaller;
             this.dbContextClassTextTemplate = dbContextClassTextTemplate;
+            this.componentContext = componentContext;
         }
 
         public void SetUpMvcProject(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations)
@@ -125,16 +128,16 @@
             this.logger.LogInfo($"Generated: {appsettingsJsonWorkingDirPath}");
         }
 
-        private void GenerateModels(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations)
+        private void GenerateModels(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations)
         {
             this.logger.LogInfo("Generating models...");
 
             var codeTypeDeclarationsList = codeTypeDeclarations.ToList();
-            foreach (var ctd in codeTypeDeclarationsList)
+            foreach (var codeTypeDeclaration in codeTypeDeclarationsList)
             {
-                var template = new ModelClassTextTemplate(ctd, this.mvcProject.Name);
-                var fileContent = template.TransformText();
-                var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, ctd.Name + ".cs");
+                var modelClassTextTemplate = this.componentContext.Resolve<IModelClassTextTemplate>();
+                var fileContent = modelClassTextTemplate.TransformText(codeTypeDeclaration);
+                var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, codeTypeDeclaration.Name + ".cs");
                 File.WriteAllText(fileOutputPath, fileContent);
 
                 this.logger.LogInfo($"Generated {fileOutputPath}");

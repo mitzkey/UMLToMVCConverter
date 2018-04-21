@@ -19,7 +19,7 @@ namespace UMLToMVCConverter.CodeTemplates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+    #line 1 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "15.0.0.0")]
     public partial class ModelClassTextTemplate : ModelClassTextTemplateBase
     {
@@ -31,24 +31,23 @@ namespace UMLToMVCConverter.CodeTemplates
         {
             this.Write("namespace ");
             
-            #line 8 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(mvcProjectName));
+            #line 8 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.mvcProject.Name));
             
             #line default
             #line hidden
             this.Write(".Models\r\n{\r\n\tusing System;\r\n\tusing System.Collections.Generic;\r\n\tusing System.Lin" +
                     "q;\r\n\tusing System.Web;\r\n\r\n");
             
-            #line 15 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+            #line 15 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
 
-BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(_class, mvcProjectName);
-string code = tmpl.TransformText();
+var code = this.basicTypeTextTemplate.TransformText(codeTypeDeclaration);
 
             
             #line default
             #line hidden
             
-            #line 18 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inżynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+            #line 17 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(code));
             
             #line default

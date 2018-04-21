@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.CodeDom;
-using System.Reflection;
-
-namespace UMLToMVCConverter.CodeTemplates
+﻿namespace UMLToMVCConverter.CodeTemplates
 {
-    public partial class ModelClassTextTemplate
-    {
-        CodeTypeDeclaration _class;
-        string mvcProjectName;
-        string baseClassName;
-        bool isAbstract;
+    using UMLToMVCConverter.ExtendedTypes;
 
-        public ModelClassTextTemplate(CodeTypeDeclaration _class, string mvcProjectName) {
-            this._class = _class;
-            isAbstract = _class.TypeAttributes.HasFlag(TypeAttributes.Abstract);
-            this.mvcProjectName = mvcProjectName;
-            if (_class.BaseTypes.Count > 0) {
-                this.baseClassName = _class.BaseTypes[0].BaseType;
-            }
+    public partial class ModelClassTextTemplate : IModelClassTextTemplate
+    {
+        private readonly IMvcProject mvcProject;
+        private readonly IBasicTypeTextTemplate basicTypeTextTemplate;
+        ExtendedCodeTypeDeclaration codeTypeDeclaration;
+
+        public ModelClassTextTemplate(IMvcProject mvcProject, IBasicTypeTextTemplate basicTypeTextTemplate)
+        {
+            this.mvcProject = mvcProject;
+            this.basicTypeTextTemplate = basicTypeTextTemplate;
         }
 
+        public string TransformText(ExtendedCodeTypeDeclaration extendedCodeTypeDeclaration)
+        {
+            this.codeTypeDeclaration = extendedCodeTypeDeclaration;
+            return this.TransformText();
+        }
     }
 }

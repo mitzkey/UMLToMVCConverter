@@ -4,41 +4,42 @@
 <#@ import namespace="UMLToMVCConverter"#>
 <#@ import namespace="UMLToMVCConverter.ExtendedTypes"#>
 <#@ import namespace="UMLToMVCConverter.ExtensionMethods"#>
+<#@ import namespace="Autofac"#>
 <#@ assembly name="System.Core"#>
 <#
-if(_class.IsStruct) {
+if(this.codeTypeDeclaration.IsStruct) {
 	#>	[ComplexType]
 <#
 }
 
 #>	public<#
 
-if(isAbstract) {
+if(this.codeTypeDeclaration.IsAbstract) {
 	#> abstract<#
 }
 
-#> class <#=_class.Name#> <#
+#> class <#=this.codeTypeDeclaration.Name#> <#
 
-if(baseClassName != null) {
-	#>: <#= baseClassName#> <#
+if(this.codeTypeDeclaration.BaseClassName != null) {
+	#>: <#= this.codeTypeDeclaration.BaseClassName#> <#
 }
 
 #>{<#
 
-if(_class.IsClass && string.IsNullOrWhiteSpace(baseClassName)) {
+if(this.codeTypeDeclaration.IsClass && string.IsNullOrWhiteSpace(this.codeTypeDeclaration.BaseClassName)) {
 	#>
 
 
 		public int ID {get; set;}<#
 }
 
-foreach (var cm in _class.Members) {
+foreach (var cm in this.codeTypeDeclaration.Members) {
 
 	if (cm is CodeTypeDeclaration) {
-		CodeTypeDeclaration ctd = (CodeTypeDeclaration) cm;
-		BasicTypeTextTemplate tmpl = new BasicTypeTextTemplate(ctd, contextName);
-		string inner_class = tmpl.TransformText();
-		#><#=inner_class.AddNewLines(2).NewSection().NewSection()#><#
+		var ctd = (ExtendedCodeTypeDeclaration) cm;
+		var tmpl = this.componentContext.Resolve<IBasicTypeTextTemplate>();
+		string innerClass = tmpl.TransformText(ctd);
+		#><#=innerClass.AddNewLines(2).NewSection().NewSection()#><#
 	}
 	else if (cm is CodeMemberProperty) {
 		var cmp = (ExtendedCodeMemberProperty) cm;
