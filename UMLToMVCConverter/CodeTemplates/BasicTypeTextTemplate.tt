@@ -26,7 +26,9 @@ if(this.codeTypeDeclaration.BaseClassName != null) {
 
 #>{<#
 
-if(this.codeTypeDeclaration.IsClass && string.IsNullOrWhiteSpace(this.codeTypeDeclaration.BaseClassName)) {
+if(this.codeTypeDeclaration.IsClass 
+	&& string.IsNullOrWhiteSpace(this.codeTypeDeclaration.BaseClassName)
+	&& !this.codeTypeDeclaration.HasKey) {
 	#>
 
 
@@ -48,7 +50,12 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 		#>
 
 
-		public <#
+		<#
+		if (!this.codeTypeDeclaration.HasComplexKey && cmp.IsID) {
+			#>[Key]
+		<#						
+		}
+		#>public <#
 		if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {
 			#>static <#
 		}
