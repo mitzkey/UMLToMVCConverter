@@ -20,6 +20,7 @@
         private readonly IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate;
         private readonly IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate;
         private readonly INugetPackageInstaller nugetPackageInstaller;
+        private readonly IDbContextClassTextTemplate dbContextClassTextTemplate;
 
         public MvcProjectConfigurator(
             IMvcProject mvcProject,
@@ -29,7 +30,8 @@
             ILogger logger,
             IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate,
             IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate,
-            INugetPackageInstaller nugetPackageInstaller)
+            INugetPackageInstaller nugetPackageInstaller,
+            IDbContextClassTextTemplate dbContextClassTextTemplate)
         {
             this.mvcProject = mvcProject;
             this.startupCsConfigurator = startupCsConfigurator;
@@ -39,6 +41,7 @@
             this.migrationsManagerClassTextTemplate = migrationsManagerClassTextTemplate;
             this.dbContextFactoryClassTextTemplate = dbContextFactoryClassTextTemplate;
             this.nugetPackageInstaller = nugetPackageInstaller;
+            this.dbContextClassTextTemplate = dbContextClassTextTemplate;
         }
 
         public void SetUpMvcProject(List<CodeTypeDeclaration> codeTypeDeclarations)
@@ -137,7 +140,7 @@
             }
         }
 
-        private void GenerateDbContextClass(List<CodeTypeDeclaration> codeTypeDeclarations)
+        private void GenerateDbContextClass(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations)
         {
             this.logger.LogInfo("Generating db context class...");
 
@@ -146,8 +149,7 @@
                            && !i.IsStruct)
                 .ToList();
 
-            var template = new DbContextTextTemplate(standaloneEntityTypes, this.mvcProject.DbContextName, this.mvcProject.Name);
-            var fileContent = template.TransformText();
+            var fileContent = this.dbContextClassTextTemplate.TransformText(standaloneEntityTypes);
             var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, this.mvcProject.DbContextName + ".cs");
             File.WriteAllText(fileOutputPath, fileContent);
 

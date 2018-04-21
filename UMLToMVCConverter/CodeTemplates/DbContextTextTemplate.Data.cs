@@ -5,17 +5,20 @@ using System.Data.Entity.Design.PluralizationServices;
 
 namespace UMLToMVCConverter.CodeTemplates
 {
-    public partial class DbContextTextTemplate
+    public partial class DbContextTextTemplate : IDbContextClassTextTemplate
     {
         private readonly List<Tuple<string, string>> typesNamesAndPlurals;
-        private readonly string contextName;
-        private readonly string mvcProjectName;
+        private IMvcProject mvcProject;
 
-        public DbContextTextTemplate(IEnumerable<CodeTypeDeclaration> codeTypeDeclarations, string contextName, string mvcProjectName)
+        public DbContextTextTemplate(IMvcProject mvcProject)
         {
-            this.contextName = contextName;
-            this.mvcProjectName = mvcProjectName;
+            this.mvcProject = mvcProject;
             this.typesNamesAndPlurals = new List<Tuple<string, string>>();
+
+        }
+
+        public string TransformText(List<CodeTypeDeclaration> codeTypeDeclarations)
+        {
             foreach (var ctd in codeTypeDeclarations)
             {
                 string typeName = ctd.Name;
@@ -25,12 +28,14 @@ namespace UMLToMVCConverter.CodeTemplates
                     var ps = PluralizationService.CreateService(System.Globalization.CultureInfo.CurrentCulture);
                     typeNamePlural = ps.Pluralize(typeName);
                 }
-                else 
+                else
                 {
                     typeNamePlural = typeName + "Set";
                 }
-                this.typesNamesAndPlurals.Add(new Tuple<string,string>(typeName, typeNamePlural));
+                this.typesNamesAndPlurals.Add(new Tuple<string, string>(typeName, typeNamePlural));
             }
+
+            return this.TransformText();
         }
     }
 }

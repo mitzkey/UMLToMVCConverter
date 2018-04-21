@@ -5,13 +5,13 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.CodeDom" #>
 <#@ output extension=".cs" #>
-namespace <#= mvcProjectName #>.Models
+namespace <#= this.mvcProject.Name #>.Models
 {
 	using Microsoft.EntityFrameworkCore;
 
-	public class <#=contextName#> : DbContext
+	public class <#=this.mvcProject.DbContextName#> : DbContext
 	{
-		public <#=contextName#>(DbContextOptions<<#=contextName#>> options)
+		public <#=this.mvcProject.DbContextName#>(DbContextOptions<<#=this.mvcProject.DbContextName#>> options)
 			: base(options)
 		{
 		}<#

@@ -149,6 +149,7 @@
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
     <Compile Include="IDataModelGenerator.cs" />
     <Compile Include="CodeTemplates\IDbContextFactoryClassTextTemplate.cs" />
+    <Compile Include="IDbContextClassTextTemplate.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IMigrationServiceClient.cs" />
     <Compile Include="IMvcProject.cs" />
