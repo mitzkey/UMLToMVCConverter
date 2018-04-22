@@ -156,7 +156,6 @@
     <Compile Include="IMigrationServiceClient.cs" />
     <Compile Include="CodeTemplates\IModelClassTextTemplate.cs" />
     <Compile Include="IMvcProject.cs" />
-    <Compile Include="INugetPackageInstaller.cs" />
     <Compile Include="IProjectPublisher.cs" />
     <Compile Include="IScriptRunner.cs" />
     <Compile Include="IStartupCsConfigurator.cs" />
@@ -177,7 +176,6 @@
     <Compile Include="IMvcProjectConfigurator.cs" />
     <Compile Include="Insist.cs" />
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
-    <Compile Include="NugetPackageInstaller.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectPublisher.cs" />
     <Compile Include="ScriptRunner.cs" />

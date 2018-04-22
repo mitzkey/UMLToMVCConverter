@@ -20,7 +20,6 @@
         private readonly ILogger logger;
         private readonly IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate;
         private readonly IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate;
-        private readonly INugetPackageInstaller nugetPackageInstaller;
         private readonly IDbContextClassTextTemplate dbContextClassTextTemplate;
         private readonly IComponentContext componentContext;
 
@@ -32,7 +31,6 @@
             ILogger logger,
             IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate,
             IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate,
-            INugetPackageInstaller nugetPackageInstaller,
             IDbContextClassTextTemplate dbContextClassTextTemplate,
             IComponentContext componentContext)
         {
@@ -43,15 +41,12 @@
             this.logger = logger;
             this.migrationsManagerClassTextTemplate = migrationsManagerClassTextTemplate;
             this.dbContextFactoryClassTextTemplate = dbContextFactoryClassTextTemplate;
-            this.nugetPackageInstaller = nugetPackageInstaller;
             this.dbContextClassTextTemplate = dbContextClassTextTemplate;
             this.componentContext = componentContext;
         }
 
         public void SetUpMvcProject(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations)
         {
-            this.nugetPackageInstaller.InstallEntityFrameworkPackage(this.mvcProject.CsprojFilePath);
-
             this.SetUpAppsettingsDbConnection();
 
             this.startupCsConfigurator.SetUpStartupCsDbContextUse(this.mvcProject.DbContextName);
