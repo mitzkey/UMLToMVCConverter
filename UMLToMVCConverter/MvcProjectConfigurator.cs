@@ -46,7 +46,7 @@
             this.componentContext = componentContext;
         }
 
-        public void SetUpMvcProject(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations)
+        public void SetUpMvcProject(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<IRelationship> relationships)
         {
             this.SetUpAppsettingsDbConnection();
 
@@ -56,7 +56,7 @@
             PrepareFolder(this.mvcProject.ModelsFolderPath);
 
             this.GenerateModels(codeTypeDeclarations);
-            this.GenerateDbContextClass(codeTypeDeclarations);
+            this.GenerateDbContextClass(codeTypeDeclarations, relationships);
             this.GenerateMigrationsManager();
             this.GenerateDbContextFactoryClass();
             Directory.CreateDirectory(this.mvcProject.MigrationsFolderPath);
@@ -140,7 +140,7 @@
             }
         }
 
-        private void GenerateDbContextClass(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations)
+        private void GenerateDbContextClass(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<IRelationship> relationships)
         {
             this.logger.LogInfo("Generating db context class...");
 
@@ -149,7 +149,7 @@
                            && !i.IsStruct)
                 .ToList();
 
-            var fileContent = this.dbContextClassTextTemplate.TransformText(standaloneEntityTypes);
+            var fileContent = this.dbContextClassTextTemplate.TransformText(standaloneEntityTypes, relationships);
             var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, this.mvcProject.DbContextName + ".cs");
             File.WriteAllText(fileOutputPath, fileContent);
 

@@ -9,6 +9,9 @@ namespace WebApplication1.Models
 	public class Wheel {
 
 		public int ID {get; set;}
+		public String CarBrand { get; set; }
+		public String CarModel { get; set; }
+		public String CarVersion { get; set; }
 
 		public Nullable<Double> Perimeter { get; set; }
 

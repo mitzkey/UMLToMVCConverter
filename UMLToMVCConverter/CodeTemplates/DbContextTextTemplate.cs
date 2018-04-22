@@ -100,23 +100,89 @@ if (this.onModelCreatingBlock) {
             
             #line default
             #line hidden
-            this.Write("\t\t\tmodelBuilder.Entity<");
+            this.Write("\r\n\t\t\tmodelBuilder.Entity<");
             
-            #line 32 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 34 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(complexKey.Key));
             
             #line default
             #line hidden
             this.Write(">()\r\n\t\t\t\t.HasKey(c => new { ");
             
-            #line 33 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 35 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", complexKey.Value.Select(s => "c." + s).ToArray())));
             
             #line default
             #line hidden
-            this.Write(" });\r\n\t\t}");
+            this.Write(" });");
             
-            #line 34 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 35 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+
+	}
+	foreach (var relationship in this.relationships) {
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\r\n\t\t\tmodelBuilder.Entity<");
+            
+            #line 41 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceEntityName));
+            
+            #line default
+            #line hidden
+            this.Write(">()\r\n\t\t        .HasOne(typeof(");
+            
+            #line 42 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetEntityName));
+            
+            #line default
+            #line hidden
+            this.Write("))\r\n\t\t        .With");
+            
+            #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.Multiplicity.Name));
+            
+            #line default
+            #line hidden
+            this.Write("(\"");
+            
+            #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceEntityName));
+            
+            #line default
+            #line hidden
+            this.Write("\")\r\n\t\t        .HasForeignKey(typeof(");
+            
+            #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetEntityName));
+            
+            #line default
+            #line hidden
+            this.Write("), ");
+            
+            #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.ForeignKeysStringEnumeration));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n                .IsRequired(");
+            
+            #line 45 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.Multiplicity.IsObligatoryString));
+            
+            #line default
+            #line hidden
+            this.Write(")\r\n                .OnDelete(DeleteBehavior.");
+            
+            #line 46 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DeleteBehavior));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n\r\n");
+            
+            #line 48 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
 
 	}
 }
@@ -124,7 +190,7 @@ if (this.onModelCreatingBlock) {
             
             #line default
             #line hidden
-            this.Write("\r\n\t}\r\n}");
+            this.Write("\r\n\t\t}\r\n\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

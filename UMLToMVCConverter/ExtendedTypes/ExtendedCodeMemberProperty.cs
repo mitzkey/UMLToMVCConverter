@@ -8,7 +8,7 @@
     {
         private string defaultValueString;
 
-        private IReadOnlyDictionary<Type, string> @switch;
+        private IReadOnlyDictionary<Type, string> defaultValueFormats;
 
         public bool HasDefaultValue { get; private set; }
 
@@ -18,7 +18,7 @@
             {
                 var codeTypeReference = (ExtendedCodeTypeReference)base.Type;
                 var type = codeTypeReference.ExtType.Type;
-                var result = this.@switch[type];
+                var result = this.defaultValueFormats[type];
                 if (result == null)
                 {
                     throw new NotSupportedException("Default value for type: " + type + " not supported.");
@@ -30,7 +30,7 @@
             {
                 this.defaultValueString = value;
 
-                this.@switch = new Dictionary<Type, string> {
+                this.defaultValueFormats = new Dictionary<Type, string> {
                     { typeof(string), "\"" + this.defaultValueString + "\"" },
                     { typeof(int), this.defaultValueString },
                     { typeof(double), this.defaultValueString + "d" },

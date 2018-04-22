@@ -93,6 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="CodeTemplates\Composition.cs" />
     <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -138,6 +139,8 @@
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.Data.cs">
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="CodeTemplates\IRelationship.cs" />
+    <Compile Include="CodeTemplates\RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -164,6 +167,7 @@
     <Compile Include="Interfaces\IUmlTypesHelper.cs" />
     <Compile Include="Interfaces\IXAttributeEqualityComparer.cs" />
     <Compile Include="Interfaces\IXmiWrapper.cs" />
+    <Compile Include="IRelationshipFactory.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Mappers\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
@@ -180,6 +184,7 @@
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectPublisher.cs" />
+    <Compile Include="RelationshipFactory.cs" />
     <Compile Include="ScriptRunner.cs" />
     <Compile Include="StartupCsConfigurator.cs" />
     <Compile Include="UmlTypesHelper.cs" />

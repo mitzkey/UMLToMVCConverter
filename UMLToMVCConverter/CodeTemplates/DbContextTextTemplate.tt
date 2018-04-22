@@ -29,12 +29,27 @@ if (this.onModelCreatingBlock) {
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 <#	foreach (var complexKey in this.complexKeys) {
-#>			modelBuilder.Entity<<#=complexKey.Key#>>()
-				.HasKey(c => new { <#=string.Join(", ", complexKey.Value.Select(s => "c." + s).ToArray())#> });
-		}<#
+#>
+
+			modelBuilder.Entity<<#=complexKey.Key#>>()
+				.HasKey(c => new { <#=string.Join(", ", complexKey.Value.Select(s => "c." + s).ToArray())#> });<#
+	}
+	foreach (var relationship in this.relationships) {
+#>
+
+
+			modelBuilder.Entity<<#=relationship.SourceEntityName#>>()
+		        .HasOne(typeof(<#=relationship.TargetEntityName#>))
+		        .With<#=relationship.Multiplicity.Name#>("<#=relationship.SourceEntityName#>")
+		        .HasForeignKey(typeof(<#=relationship.TargetEntityName#>), <#=relationship.ForeignKeysStringEnumeration#>)
+                .IsRequired(<#=relationship.Multiplicity.IsObligatoryString#>)
+                .OnDelete(DeleteBehavior.<#=relationship.DeleteBehavior#>);
+
+<#
 	}
 }
 #>
 
+		}
 	}
 }

@@ -6,7 +6,7 @@
 
     public class ExtendedCodeTypeDeclaration : CodeTypeDeclaration
     {
-        public List<ExtendedCodeMemberProperty> IDs = new List<ExtendedCodeMemberProperty>();
+        public List<ExtendedCodeMemberProperty> IDs { get; }
 
         public bool HasComplexKey => this.IDs.Count > 1;
 
@@ -18,13 +18,15 @@
             ? this.BaseTypes[0].BaseType
             : null;
 
+        public string XmiID { get; set; }
+
+        public Dictionary<string, ExtendedCodeMemberProperty> ForeignKeys { get; }
+
         public ExtendedCodeTypeDeclaration(string name)
             : base(name)
         {
-        }
-
-        public ExtendedCodeTypeDeclaration()
-        {
+            this.ForeignKeys = new Dictionary<string, ExtendedCodeMemberProperty>();
+            this.IDs = new List<ExtendedCodeMemberProperty>();
         }
     }
 }

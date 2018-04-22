@@ -1,5 +1,8 @@
 ﻿namespace UMLToMVCConverter.Interfaces
 {
+    using System.Collections.Generic;
+    using UMLToMVCConverter.CodeTemplates;
+
     public interface IMvcProject
     {
         string CsprojFilePath { get; }

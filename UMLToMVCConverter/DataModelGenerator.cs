@@ -6,6 +6,7 @@
     using System.Xml.Linq;
     using System.CodeDom;
     using System.Reflection;
+    using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
     using UMLToMVCConverter.Interfaces;
@@ -20,24 +21,29 @@
         private readonly IMvcProjectConfigurator mvcProjectConfigurator;
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
         private readonly IAttributeNameResolver attributeNameResolver;
+        private readonly List<IRelationship> relationships;
+        private readonly IRelationshipFactory relationshipFactory;
 
         public DataModelGenerator(
             IMvcProjectConfigurator mvcProjectConfigurator,
             IXmiWrapper xmiWrapper,
             IUmlTypesHelper umlTypesHelper,
             IUmlVisibilityMapper umlVisibilityMapper,
-            IAttributeNameResolver attributeNameResolver)
+            IAttributeNameResolver attributeNameResolver,
+            IRelationshipFactory relationshipFactory)
         {
             this.mvcProjectConfigurator = mvcProjectConfigurator;
 
             this.types = new List<ExtendedCodeTypeDeclaration>();
             this.typeDeclarations = new List<ExtendedCodeTypeDeclaration>();
+            this.relationships = new List<IRelationship>();
 
             this.xmiWrapper = xmiWrapper;
             this.umlTypesHelper = umlTypesHelper;
             this.umlTypesHelper.CodeTypeDeclarations = this.types;
             this.umlVisibilityMapper = umlVisibilityMapper;
             this.attributeNameResolver = attributeNameResolver;
+            this.relationshipFactory = relationshipFactory;
         }
         public string GenerateMvcFiles()
         {
@@ -52,21 +58,79 @@
 
                 foreach (var type in xTypes)
                 {
-                    this.DeclareTypeFromXElement(type);
+                    this.DeclareType(type);
                 }
 
                 foreach (var type in xTypesToBuild)
                 {
-                    var codeTypeDeclaration = this.BuildTypeFromXElement(type);
+                    var codeTypeDeclaration = this.BuildType(type);
                     this.types.Add(codeTypeDeclaration);                                                                               
                 }
 
                 this.GenerateInheritanceRelations(xTypes);
+
+                this.GenerateAssociations(this.xmiWrapper.GetXAssociations(umlModel));
             }
 
-            this.mvcProjectConfigurator.SetUpMvcProject(this.types);
+            this.mvcProjectConfigurator.SetUpMvcProject(this.types, this.relationships);
 
             return "File successfully processed";
+        }
+
+        private void GenerateAssociations(IEnumerable<XElement> xAssociations)
+        {
+            foreach (var xAssociation in xAssociations)
+            {
+                var associationEnds = this.xmiWrapper.GetAssociationEnds(xAssociation);
+
+                var aggregationKind = associationEnds.Item1.OptionalAttributeValue("aggregation")
+                                      ?? associationEnds.Item2.OptionalAttributeValue("aggregation");
+
+                if (aggregationKind == "composite")
+                {
+                    var ownerTypeAssociationProperty =
+                        string.IsNullOrWhiteSpace(associationEnds.Item1.OptionalAttributeValue("aggregation"))
+                            ? associationEnds.Item2
+                            : associationEnds.Item1;
+
+                    this.AddCompositionNavigationalProperty(ownerTypeAssociationProperty);
+
+                    var ownedTypeAssociationProperty = associationEnds.Item1.Equals(ownerTypeAssociationProperty)
+                        ? associationEnds.Item2
+                        : associationEnds.Item1;
+
+                    this.AddCompositionNavigationalProperty(ownedTypeAssociationProperty);
+
+                    var ownerTypeId = this.xmiWrapper.GetElementsId(ownerTypeAssociationProperty.Parent);
+
+                    var ownerType = this.types.Single(x => x.XmiID == ownerTypeId);
+
+                    var ownedTypeId = this.xmiWrapper.GetElementsId(ownedTypeAssociationProperty.Parent);
+
+                    var ownedType = this.types.Single(x => x.XmiID == ownedTypeId);
+
+                    foreach (var ownersID in ownerType.IDs)
+                    {
+                        ownedType.ForeignKeys.Add(ownerType.Name + ownersID.Name, ownersID);
+                    }
+                }
+
+                var relationship = this.relationshipFactory.Create(xAssociation, this.types);
+                this.relationships.Add(relationship);
+            }
+        }
+
+        private void AddCompositionNavigationalProperty(XElement associationProperty)
+        {
+            var typeId = this.xmiWrapper.GetElementsId(associationProperty.Parent);
+
+            var type = this.types.Single(x => x.XmiID == typeId);
+
+            var navigationalProperty = this.GenerateAttribute(type, associationProperty);
+
+            navigationalProperty.IsVirtual = true;
+
+            type.Members.Add(navigationalProperty);
         }
 
         private void GenerateInheritanceRelations(IEnumerable<XElement> xTypes)
@@ -97,13 +161,16 @@
             }
         }
 
-        private void DeclareTypeFromXElement(XElement xType)
+        private void DeclareType(XElement xType)
         {
-            var typeDeclaration = new ExtendedCodeTypeDeclaration {Name = xType.ObligatoryAttributeValue("name")};
+            var typeDeclaration = new ExtendedCodeTypeDeclaration (xType.ObligatoryAttributeValue("name"))
+            {
+                XmiID = this.xmiWrapper.GetElementsId(xType)
+            };
             this.typeDeclarations.Add(typeDeclaration);
         }
 
-        private ExtendedCodeTypeDeclaration BuildTypeFromXElement(XElement type)
+        private ExtendedCodeTypeDeclaration BuildType(XElement type)
         {
             var codeTypeDeclarationName = type.ObligatoryAttributeValue("name");
             var codeTypeDeclaration = this.typeDeclarations.Single(t => t.Name.Equals(codeTypeDeclarationName));
@@ -128,7 +195,7 @@
             var nestedClasses = type.Descendants("nestedClassifier").ToList();
             foreach (var nestedClass in nestedClasses)
             {
-                var ctdNested = this.BuildTypeFromXElement(nestedClass);
+                var ctdNested = this.BuildType(nestedClass);
                 codeTypeDeclaration.Members.Add(ctdNested);
             }
 
@@ -181,72 +248,75 @@
 
         private void GenerateAttributes(XElement type, ExtendedCodeTypeDeclaration codeTypeDeclaration)
         {
-            var attributes = this.xmiWrapper.GetXAttributes(type);
+            var attributes = this.xmiWrapper
+                .GetXAttributes(type)
+                .Where(a => string.IsNullOrWhiteSpace(a.OptionalAttributeValue("association")));
             foreach (var attribute in attributes)
             {
-                Insist.IsNotNull(attribute, nameof(attribute));
-
-                //type                
-                var cSharpType = this.umlTypesHelper.GetXElementCsharpType(attribute);
-                CodeTypeReference typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
-
-                //declaration
-                var codeMemberProperty = new ExtendedCodeMemberProperty
-                {
-                    Type = typeRef,
-                    Name = this.attributeNameResolver.GetName(attribute),
-                    HasSet = true
-                };
-
-                var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
-                var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharp(umlVisibility);
-                codeMemberProperty.Attributes = codeMemberProperty.Attributes | cSharpVisibility;
-
-                var isStatic = Convert.ToBoolean(attribute.OptionalAttributeValue("isStatic"));
-                if (isStatic)
-                {
-                    codeMemberProperty.Attributes = codeMemberProperty.Attributes | MemberAttributes.Static;
-                }
-
-                var xIsReadonly = Convert.ToBoolean(attribute.OptionalAttributeValue("isReadOnly"));
-                if (xIsReadonly)
-                {
-                    codeMemberProperty.HasSet = false;
-                }
-
-                var xDefaultValue = attribute.Element("defaultValue");
-                if (xDefaultValue != null)
-                {
-                    var extendedType = (ExtendedCodeTypeReference) codeMemberProperty.Type;
-                    if (extendedType.IsGeneric || extendedType.IsNamedType)
-                    {
-                        throw new NotSupportedException("No default value for generic or declared named types supported");
-                    }
-
-                    codeMemberProperty.DefaultValueString = xDefaultValue.ObligatoryAttributeValue("value");
-                }
-
-                var xIsDerived = Convert.ToBoolean(attribute.OptionalAttributeValue("isDerived"));
-                if (xIsDerived)
-                {
-                    codeMemberProperty.HasSet = false;
-                    codeMemberProperty.IsDerived = true;
-                }
-
-                var xIsID = Convert.ToBoolean(attribute.OptionalAttributeValue("isID"));
-                if (xIsID)
-                {
-                    codeMemberProperty.IsID = true;
-                    codeTypeDeclaration.IDs.Add(codeMemberProperty);
-                }
-
-                if (!string.IsNullOrWhiteSpace(attribute.OptionalAttributeValue("association")))
-                {
-                    codeMemberProperty.IsVirtual = true;
-                }
-
+                var codeMemberProperty = this.GenerateAttribute(codeTypeDeclaration, attribute);
                 codeTypeDeclaration.Members.Add(codeMemberProperty);
             }
+        }
+
+        private ExtendedCodeMemberProperty GenerateAttribute(ExtendedCodeTypeDeclaration codeTypeDeclaration, XElement attribute)
+        {
+            Insist.IsNotNull(attribute, nameof(attribute));
+
+            //type                
+            var cSharpType = this.umlTypesHelper.GetXElementCsharpType(attribute);
+            CodeTypeReference typeRef = ExtendedCodeTypeReference.CreateForType(cSharpType);
+
+            //declaration
+            var codeMemberProperty = new ExtendedCodeMemberProperty
+            {
+                Type = typeRef,
+                Name = this.attributeNameResolver.GetName(attribute),
+                HasSet = true
+            };
+
+            var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
+            var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharp(umlVisibility);
+            codeMemberProperty.Attributes = codeMemberProperty.Attributes | cSharpVisibility;
+
+            var isStatic = Convert.ToBoolean(attribute.OptionalAttributeValue("isStatic"));
+            if (isStatic)
+            {
+                codeMemberProperty.Attributes = codeMemberProperty.Attributes | MemberAttributes.Static;
+            }
+
+            var xIsReadonly = Convert.ToBoolean(attribute.OptionalAttributeValue("isReadOnly"));
+            if (xIsReadonly)
+            {
+                codeMemberProperty.HasSet = false;
+            }
+
+            var xDefaultValue = attribute.Element("defaultValue");
+            if (xDefaultValue != null)
+            {
+                var extendedType = (ExtendedCodeTypeReference) codeMemberProperty.Type;
+                if (extendedType.IsGeneric || extendedType.IsNamedType)
+                {
+                    throw new NotSupportedException("No default value for generic or declared named types supported");
+                }
+
+                codeMemberProperty.DefaultValueString = xDefaultValue.ObligatoryAttributeValue("value");
+            }
+
+            var xIsDerived = Convert.ToBoolean(attribute.OptionalAttributeValue("isDerived"));
+            if (xIsDerived)
+            {
+                codeMemberProperty.HasSet = false;
+                codeMemberProperty.IsDerived = true;
+            }
+
+            var xIsID = Convert.ToBoolean(attribute.OptionalAttributeValue("isID"));
+            if (xIsID)
+            {
+                codeMemberProperty.IsID = true;
+                codeTypeDeclaration.IDs.Add(codeMemberProperty);
+            }
+
+            return codeMemberProperty;
         }
     }
 }

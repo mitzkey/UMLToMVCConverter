@@ -28,8 +28,18 @@ namespace WebApplication1.Models
 		public DbSet<Wheel> Wheel { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
 			modelBuilder.Entity<Car>()
 				.HasKey(c => new { c.Brand, c.Model, c.Version });
+
+			modelBuilder.Entity<Car>()
+		        .HasOne(typeof(Wheel))
+		        .WithOne("Car")
+		        .HasForeignKey(typeof(Wheel), "CarBrand", "CarModel", "CarVersion")
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
 		}
 	}
 }

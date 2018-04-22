@@ -35,6 +35,13 @@ if(this.codeTypeDeclaration.IsClass
 		public int ID {get; set;}<#
 }
 
+foreach (var foreignKey in this.codeTypeDeclaration.ForeignKeys) {
+	var type = (ExtendedCodeTypeReference)foreignKey.Value.Type;
+	#>
+
+		public <#= type.ExtTypeName + " " + foreignKey.Key #> { get; set; }<#
+}
+
 foreach (var cm in this.codeTypeDeclaration.Members) {
 
 	if (cm is CodeTypeDeclaration) {
@@ -46,7 +53,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 	else if (cm is CodeMemberProperty) {
 		var cmp = (ExtendedCodeMemberProperty) cm;
 		string generics = "";
-		ExtendedCodeTypeReference type = (ExtendedCodeTypeReference)cmp.Type;
+		var type = (ExtendedCodeTypeReference)cmp.Type;
 		#>
 
 

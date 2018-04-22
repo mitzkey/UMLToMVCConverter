@@ -32,8 +32,7 @@
             return umlModel.Descendants()
                 .Where(i => i.Attributes().
                                 Contains(new XAttribute(this.xmiNamespace + "type", "uml:Class"), this.attributeEqualityComparer)
-                            || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:DataType"), this.attributeEqualityComparer))
-                .ToList();
+                            || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:DataType"), this.attributeEqualityComparer));
         }
 
         public XElement GetXClassGeneralization(XElement type)
@@ -53,6 +52,35 @@
         public string ObligatoryAttributeValueWithNamespace(XElement type, string s)
         {
             return type.ObligatoryAttributeValue(this.xmiNamespace + s);
+        }
+
+        public IEnumerable<XElement> GetXAssociations(XElement umlModel)
+        {
+            return umlModel.Descendants()
+                .Where(i => i.Attributes().
+                                Contains(new XAttribute(this.xmiNamespace + "type", "uml:Association"), this.attributeEqualityComparer));
+        }
+
+        public Tuple<XElement, XElement> GetAssociationEnds(XElement xAssociation)
+        {
+            var firstEndId = xAssociation
+                .Descendants("memberEnd")
+                .First()
+                .ObligatoryAttributeValue(this.xmiNamespace + "idref");
+            var secondEndId = xAssociation
+                .Descendants("memberEnd")
+                .Single(x => x.ObligatoryAttributeValue(this.xmiNamespace + "idref") != firstEndId)
+                .ObligatoryAttributeValue(this.xmiNamespace + "idref");
+
+            var firstEnd = this.GetXElementById(firstEndId);
+            var secondEnd = this.GetXElementById(secondEndId);
+
+            return new Tuple<XElement, XElement>(firstEnd, secondEnd);
+        }
+
+        public string GetElementsId(XElement xElement)
+        {
+            return xElement.ObligatoryAttributeValue(this.xmiNamespace + "id");
         }
 
         public IEnumerable<XElement> GetXAttributes(XElement type)
