@@ -2,6 +2,7 @@
 {
     using Autofac;
     using UMLToMVCConverter.ExtendedTypes;
+    using UMLToMVCConverter.Interfaces;
 
     public partial class BasicTypeTextTemplate : IBasicTypeTextTemplate
     {

@@ -1,6 +1,7 @@
 ﻿namespace UMLToMVCConverter
 {
     using System;
+    using UMLToMVCConverter.Interfaces;
 
     public class Application
     {

@@ -8,6 +8,7 @@
     using System.Reflection;
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
+    using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.Mappers;
 
     public class DataModelGenerator : IDataModelGenerator
@@ -18,12 +19,14 @@
         private readonly IUmlTypesHelper umlTypesHelper;
         private readonly IMvcProjectConfigurator mvcProjectConfigurator;
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
+        private readonly IAttributeNameResolver attributeNameResolver;
 
         public DataModelGenerator(
             IMvcProjectConfigurator mvcProjectConfigurator,
             IXmiWrapper xmiWrapper,
             IUmlTypesHelper umlTypesHelper,
-            IUmlVisibilityMapper umlVisibilityMapper)
+            IUmlVisibilityMapper umlVisibilityMapper,
+            IAttributeNameResolver attributeNameResolver)
         {
             this.mvcProjectConfigurator = mvcProjectConfigurator;
 
@@ -34,6 +37,7 @@
             this.umlTypesHelper = umlTypesHelper;
             this.umlTypesHelper.CodeTypeDeclarations = this.types;
             this.umlVisibilityMapper = umlVisibilityMapper;
+            this.attributeNameResolver = attributeNameResolver;
         }
         public string GenerateMvcFiles()
         {
@@ -190,13 +194,13 @@
                 var codeMemberProperty = new ExtendedCodeMemberProperty
                 {
                     Type = typeRef,
-                    Name = attribute.ObligatoryAttributeValue("name").FirstCharToUpper(),
+                    Name = this.attributeNameResolver.GetName(attribute),
                     HasSet = true
                 };
 
                 var umlVisibility = attribute.ObligatoryAttributeValue("visibility");
                 var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharp(umlVisibility);
-                codeMemberProperty.Attributes = cSharpVisibility;
+                codeMemberProperty.Attributes = codeMemberProperty.Attributes | cSharpVisibility;
 
                 var isStatic = Convert.ToBoolean(attribute.OptionalAttributeValue("isStatic"));
                 if (isStatic)
@@ -234,6 +238,11 @@
                 {
                     codeMemberProperty.IsID = true;
                     codeTypeDeclaration.IDs.Add(codeMemberProperty);
+                }
+
+                if (!string.IsNullOrWhiteSpace(attribute.OptionalAttributeValue("association")))
+                {
+                    codeMemberProperty.IsVirtual = true;
                 }
 
                 codeTypeDeclaration.Members.Add(codeMemberProperty);

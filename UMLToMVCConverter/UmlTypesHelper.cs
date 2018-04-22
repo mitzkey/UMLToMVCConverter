@@ -8,6 +8,7 @@
     using System.Xml.Linq;
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
+    using UMLToMVCConverter.Interfaces;
 
     public class UmlTypesHelper : IUmlTypesHelper
     {
@@ -22,6 +23,7 @@
                 { "double", typeof(double) },
                 { "void", typeof(void) },
                 { "int", typeof(int) },
+                { "real", typeof(double) },
                 { "boolean", typeof(bool) }
             });
 

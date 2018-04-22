@@ -6,6 +6,7 @@ namespace UMLToMVCConverter.CodeTemplates
 {
     using System.Linq;
     using UMLToMVCConverter.ExtendedTypes;
+    using UMLToMVCConverter.Interfaces;
 
     public partial class DbContextTextTemplate : IDbContextClassTextTemplate
     {

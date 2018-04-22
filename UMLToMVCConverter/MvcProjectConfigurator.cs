@@ -10,6 +10,7 @@
     using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
+    using UMLToMVCConverter.Interfaces;
 
     public class MvcProjectConfigurator : IMvcProjectConfigurator
     {

@@ -1,5 +1,7 @@
 ﻿namespace UMLToMVCConverter.CodeTemplates
 {
+    using UMLToMVCConverter.Interfaces;
+
     public partial class MigrationsManagerClassTextTemplate : IMigrationsManagerClassTextTemplate
     {
         private readonly IMvcProject mvcProject;

@@ -59,7 +59,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 		if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {
 			#>static <#
 		}
-        if (type.ExtType.IsCollection) {
+        if (type.ExtType.IsCollection || cmp.IsVirtual) {
 			#>virtual <#
 		}
 		#><#= type.ExtTypeName + " " + cmp.Name #> { get<#

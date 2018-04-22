@@ -1,5 +1,7 @@
 ﻿namespace UMLToMVCConverter
 {
+    using UMLToMVCConverter.Interfaces;
+
     public class ProjectPublisher : IProjectPublisher
     {
         private readonly ILogger logger;

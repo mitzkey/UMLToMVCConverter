@@ -181,7 +181,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             #line 60 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 		}
-        if (type.ExtType.IsCollection) {
+        if (type.ExtType.IsCollection || cmp.IsVirtual) {
 			
             
             #line default

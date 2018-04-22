@@ -1,8 +1,7 @@
-﻿using System.Xml.Linq;
-
-namespace UMLToMVCConverter
+﻿namespace UMLToMVCConverter.Interfaces
 {
     using System.Collections.Generic;
+    using System.Xml.Linq;
 
     public interface IXAttributeEqualityComparer : IEqualityComparer<XAttribute>
     {

@@ -25,6 +25,8 @@ namespace WebApplication1.Models
 
 		public DbSet<WithSingleIDProperty> WithSingleIDProperty { get; set; }
 
+		public DbSet<Wheel> Wheel { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 			modelBuilder.Entity<Car>()
 				.HasKey(c => new { c.Brand, c.Model, c.Version });

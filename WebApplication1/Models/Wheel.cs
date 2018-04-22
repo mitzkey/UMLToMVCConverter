@@ -6,14 +6,12 @@ namespace WebApplication1.Models
 	using System.Web;
 	using System.ComponentModel.DataAnnotations;
 
-	public class Car {
+	public class Wheel {
 
-		public String Brand { get; set; }
+		public int ID {get; set;}
 
-		public String Model { get; set; }
+		public Nullable<Double> Perimeter { get; set; }
 
-		public String Version { get; set; }
-
-		public virtual Wheel Wheel { get; set; }
+		public virtual Car Car { get; set; }
 	}
 }

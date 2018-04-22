@@ -2,6 +2,8 @@
 
 namespace UMLToMVCConverter
 {
+    using UMLToMVCConverter.Interfaces;
+
     public class XAttributeEqualityComparer : IXAttributeEqualityComparer
     {
         public bool Equals(XAttribute x, XAttribute y)

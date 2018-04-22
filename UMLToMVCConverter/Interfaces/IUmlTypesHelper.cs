@@ -1,9 +1,8 @@
-﻿using System.Xml.Linq;
-using UMLToMVCConverter.ExtendedTypes;
-
-namespace UMLToMVCConverter
+﻿namespace UMLToMVCConverter.Interfaces
 {
     using System.Collections.Generic;
+    using System.Xml.Linq;
+    using UMLToMVCConverter.ExtendedTypes;
 
     public interface IUmlTypesHelper
     {

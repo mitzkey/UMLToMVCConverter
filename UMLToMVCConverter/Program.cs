@@ -3,6 +3,7 @@
     using System.Xml.Linq;
     using Autofac;
     using UMLToMVCConverter.CodeTemplates;
+    using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.Mappers;
 
     public static class Program
@@ -78,6 +79,7 @@
             builder.RegisterType<DbContextFactoryClassTextTemplate>().As<IDbContextFactoryClassTextTemplate>().SingleInstance();
             builder.RegisterType<ScriptRunner>().As<IScriptRunner>().SingleInstance();
             builder.RegisterType<DbContextTextTemplate>().As<IDbContextClassTextTemplate>().SingleInstance();
+            builder.RegisterType<AttributeNameResolver>().As<IAttributeNameResolver>().SingleInstance();
             builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
             builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();
 

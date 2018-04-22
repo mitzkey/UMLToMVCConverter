@@ -42,6 +42,9 @@
         }
 
         public bool IsDerived { get; set; }
+
         public bool IsID { get; set; }
+
+        public bool IsVirtual { get; set; }
     }
 }
