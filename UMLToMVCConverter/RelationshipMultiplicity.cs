@@ -1,4 +1,4 @@
-﻿namespace UMLToMVCConverter.CodeTemplates
+﻿namespace UMLToMVCConverter
 {
     public class RelationshipMultiplicity
     {

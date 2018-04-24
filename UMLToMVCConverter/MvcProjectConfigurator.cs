@@ -46,7 +46,9 @@
             this.componentContext = componentContext;
         }
 
-        public void SetUpMvcProject(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<IRelationship> relationships)
+        public void SetUpMvcProject(
+            IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations,
+            IEnumerable<IRelationship> relationships)
         {
             this.SetUpAppsettingsDbConnection();
 

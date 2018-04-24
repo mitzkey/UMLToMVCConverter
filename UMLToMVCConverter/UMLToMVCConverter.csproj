@@ -93,7 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\Composition.cs" />
+    <Compile Include="Composition.cs" />
     <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -139,8 +139,8 @@
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.Data.cs">
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\IRelationship.cs" />
-    <Compile Include="CodeTemplates\RelationshipMultiplicity.cs" />
+    <Compile Include="Interfaces\IRelationship.cs" />
+    <Compile Include="RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -153,7 +153,7 @@
     <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
-    <Compile Include="IAttributeNameResolver.cs" />
+    <Compile Include="Interfaces\IAttributeNameResolver.cs" />
     <Compile Include="Interfaces\IDataModelGenerator.cs" />
     <Compile Include="CodeTemplates\IDbContextFactoryClassTextTemplate.cs" />
     <Compile Include="CodeTemplates\IDbContextClassTextTemplate.cs" />
@@ -167,7 +167,7 @@
     <Compile Include="Interfaces\IUmlTypesHelper.cs" />
     <Compile Include="Interfaces\IXAttributeEqualityComparer.cs" />
     <Compile Include="Interfaces\IXmiWrapper.cs" />
-    <Compile Include="IRelationshipFactory.cs" />
+    <Compile Include="Interfaces\IRelationshipFactory.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Mappers\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />

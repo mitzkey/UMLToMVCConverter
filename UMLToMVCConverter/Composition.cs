@@ -1,7 +1,8 @@
-﻿namespace UMLToMVCConverter.CodeTemplates
+﻿namespace UMLToMVCConverter
 {
     using System.Collections.Generic;
     using System.Linq;
+    using UMLToMVCConverter.Interfaces;
 
     public class Composition : IRelationship
     {
