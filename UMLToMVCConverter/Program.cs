@@ -61,7 +61,6 @@
             builder.RegisterType<ScriptRunner>().As<IScriptRunner>().SingleInstance();
             builder.RegisterType<DbContextTextTemplate>().As<IDbContextClassTextTemplate>().SingleInstance();
             builder.RegisterType<AttributeNameResolver>().As<IAttributeNameResolver>().SingleInstance();
-            builder.RegisterType<AssociationFactory>().As<IAssociationFactory>().SingleInstance();
             builder.RegisterType<TypesFactory>().As<ITypesFactory>().SingleInstance();
             builder.RegisterType<MvcProjectFilesGenerator>().As<IMvcProjectFilesGenerator>().SingleInstance();
             builder.RegisterType<DataModelFactory>().As<IDataModelFactory>().SingleInstance();

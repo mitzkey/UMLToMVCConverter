@@ -87,7 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
-    <Compile Include="Association.cs" />
     <Compile Include="AssociationsFactory.cs" />
     <Compile Include="AttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
@@ -177,7 +176,6 @@
     <Compile Include="Interfaces\IUmlTypesHelper.cs" />
     <Compile Include="Interfaces\IXAttributeEqualityComparer.cs" />
     <Compile Include="Interfaces\IXmiWrapper.cs" />
-    <Compile Include="Interfaces\IAssociationFactory.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Mappers\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
@@ -192,7 +190,6 @@
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectPublisher.cs" />
-    <Compile Include="AssociationFactory.cs" />
     <Compile Include="ScriptRunner.cs" />
     <Compile Include="StartupCsConfigurator.cs" />
     <Compile Include="TypesFactory.cs" />
