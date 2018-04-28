@@ -63,12 +63,11 @@
             this.GenerateDbContextFactoryClass();
             Directory.CreateDirectory(this.mvcProject.MigrationsFolderPath);
 
-            this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
+            this.projectPublisher.PublishProject();
 
-            this.migrationsServiceClient.AddMigration(
-            );
+            this.migrationsServiceClient.AddMigration();
 
-            this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
+            this.projectPublisher.PublishProject();
 
             this.migrationsServiceClient.RunMigration();
         }

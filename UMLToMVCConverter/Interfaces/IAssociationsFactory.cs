@@ -1,9 +1,8 @@
-﻿namespace UMLToMVCConverter
+﻿namespace UMLToMVCConverter.Interfaces
 {
     using System.Collections.Generic;
     using System.Xml.Linq;
     using UMLToMVCConverter.ExtendedTypes;
-    using UMLToMVCConverter.Interfaces;
 
     public interface IAssociationsFactory
     {

@@ -66,6 +66,8 @@
         {
             var types = new List<ExtendedCodeTypeDeclaration>();
 
+            this.umlTypesHelper.CodeTypeDeclarations = types;
+
             foreach (var xType in xTypesToBuild)
             {
                 types.Add(this.BuildType(xType, typeDeclarations));

@@ -10,17 +10,20 @@
         private readonly IMvcProjectFilesGenerator mvcProjectFilesGenerator;
         private readonly IMigrationServiceClient migrationServiceClient;
         private readonly IXmiWrapper xmiWrapper;
+        private readonly IProjectPublisher projectPublisher;
 
         public Application(
             IDataModelFactory dataModelFactory,
             IMvcProjectFilesGenerator mvcProjectFilesGenerator,
             IMigrationServiceClient migrationServiceClient,
-            IXmiWrapper xmiWrapper)
+            IXmiWrapper xmiWrapper,
+            IProjectPublisher projectPublisher)
         {
             this.dataModelFactory = dataModelFactory;
             this.mvcProjectFilesGenerator = mvcProjectFilesGenerator;
             this.migrationServiceClient = migrationServiceClient;
             this.xmiWrapper = xmiWrapper;
+            this.projectPublisher = projectPublisher;
         }
 
         public void Run()
@@ -31,7 +34,11 @@
 
             this.mvcProjectFilesGenerator.GenerateFiles(dataModel);
 
+            this.projectPublisher.PublishProject();
+
             this.migrationServiceClient.AddMigration();
+
+            this.projectPublisher.PublishProject();
 
             this.migrationServiceClient.RunMigration();
 

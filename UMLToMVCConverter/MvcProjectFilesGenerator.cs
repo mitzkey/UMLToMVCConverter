@@ -46,6 +46,7 @@
             this.GenerateDbContextClass(dataModel.Types, dataModel.Associations);
             this.GenerateMigrationsManager();
             this.GenerateDbContextFactoryClass();
+            Directory.CreateDirectory(this.mvcProject.MigrationsFolderPath);
         }
 
         private void GenerateDbContextFactoryClass()

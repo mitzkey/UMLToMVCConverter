@@ -143,7 +143,7 @@
     </Compile>
     <Compile Include="DataModel.cs" />
     <Compile Include="DataModelFactory.cs" />
-    <Compile Include="IAssociationsFactory.cs" />
+    <Compile Include="Interfaces\IAssociationsFactory.cs" />
     <Compile Include="IDataModelFactory.cs" />
     <Compile Include="IMvcProjectFilesGenerator.cs" />
     <Compile Include="Interfaces\IRelationship.cs" />
