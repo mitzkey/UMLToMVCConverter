@@ -2,7 +2,7 @@
 {
     public interface IMigrationServiceClient
     {
-        void AddMigration(string mvcProjectProjectFolderPath, string mvcProjectDefaultNamespace);
+        void AddMigration();
         void RunMigration();
     }
 }

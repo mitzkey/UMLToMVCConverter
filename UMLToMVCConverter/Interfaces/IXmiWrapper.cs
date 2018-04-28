@@ -9,7 +9,7 @@
         Multiplicity GetMultiplicity(XElement attribute);
         string GetPrimitiveUmlType(XElement xProperty);
         IEnumerable<XElement> GetXAttributes(XElement type);
-        XElement GetXClassGeneralization(XElement type);
+        XElement GetXTypeGeneralization(XElement type);
         XElement GetXElementById(string id);
         IEnumerable<XElement> GetXOperations(XElement type);
         IEnumerable<XElement> GetXParameters(XElement operation);

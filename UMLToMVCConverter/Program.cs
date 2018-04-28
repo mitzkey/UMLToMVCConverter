@@ -8,25 +8,8 @@
 
     public static class Program
     {
-        private const string TemporaryHardCodedDiagramPath =
-            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\Diagramy\MainDiagram.xml";
-        private const string TemporaryHardCodedMvcProjectPath =
-            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\WebApplication2\WebApplication2";
-        private const string TemporaryHardCodedConnectionString =
-            @"Server=(localdb)\mssqllocaldb;Database=Default;Trusted_Connection=True;MultipleActiveResultSets=true";
-        private const string TemporaryHardCodedWorkFolder =
-            @"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\Converter Workspace";
-        private const string TemporaryHardCodedDefaultNamespaceName =
-            @"Default";
-
         public static void Main(string[] args)
         {
-            //var xmiPath = TemporaryHardCodedDiagramPath;
-            //var mvcProjectFolderPath = TemporaryHardCodedMvcProjectPath;
-            //var dbConnectionString = TemporaryHardCodedConnectionString;
-            //var workspaceFolderPath = TemporaryHardCodedWorkFolder;
-            //var defaultNamespaceName = TemporaryHardCodedDefaultNamespaceName;
-
             var xmiPath = args[0];
             var mvcProjectFolderPath = args[1];
             var dbConnectionString = args[2];
@@ -80,7 +63,11 @@
             builder.RegisterType<ScriptRunner>().As<IScriptRunner>().SingleInstance();
             builder.RegisterType<DbContextTextTemplate>().As<IDbContextClassTextTemplate>().SingleInstance();
             builder.RegisterType<AttributeNameResolver>().As<IAttributeNameResolver>().SingleInstance();
-            builder.RegisterType<RelationshipFactory>().As<IRelationshipFactory>().SingleInstance();
+            builder.RegisterType<AssociationFactory>().As<IAssociationFactory>().SingleInstance();
+            builder.RegisterType<TypesFactory>().As<ITypesFactory>().SingleInstance();
+            builder.RegisterType<MvcProjectFilesGenerator>().As<IMvcProjectFilesGenerator>().SingleInstance();
+            builder.RegisterType<DataModelFactory>().As<IDataModelFactory>().SingleInstance();
+
             builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
             builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();
 

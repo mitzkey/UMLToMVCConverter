@@ -35,7 +35,7 @@
                             || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:DataType"), this.attributeEqualityComparer));
         }
 
-        public XElement GetXClassGeneralization(XElement type)
+        public XElement GetXTypeGeneralization(XElement type)
         {
             return type
                 .Descendants("generalization")

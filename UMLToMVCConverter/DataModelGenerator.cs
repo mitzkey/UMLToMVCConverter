@@ -22,7 +22,7 @@
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
         private readonly IAttributeNameResolver attributeNameResolver;
         private readonly List<IRelationship> relationships;
-        private readonly IRelationshipFactory relationshipFactory;
+        private readonly IAssociationFactory associationFactory;
 
         public DataModelGenerator(
             IMvcProjectConfigurator mvcProjectConfigurator,
@@ -30,7 +30,7 @@
             IUmlTypesHelper umlTypesHelper,
             IUmlVisibilityMapper umlVisibilityMapper,
             IAttributeNameResolver attributeNameResolver,
-            IRelationshipFactory relationshipFactory)
+            IAssociationFactory associationFactory)
         {
             this.mvcProjectConfigurator = mvcProjectConfigurator;
 
@@ -43,8 +43,9 @@
             this.umlTypesHelper.CodeTypeDeclarations = this.types;
             this.umlVisibilityMapper = umlVisibilityMapper;
             this.attributeNameResolver = attributeNameResolver;
-            this.relationshipFactory = relationshipFactory;
+            this.associationFactory = associationFactory;
         }
+
         public string GenerateMvcFiles()
         {
             var umlModels = this.xmiWrapper.GetXUmlModels();
@@ -115,7 +116,7 @@
                     }
                 }
 
-                var relationship = this.relationshipFactory.Create(xAssociation, this.types);
+                var relationship = this.associationFactory.Create(xAssociation, this.types);
                 this.relationships.Add(relationship);
             }
         }
@@ -138,7 +139,7 @@
             foreach (var type in xTypes)
             {
                 //klasa bazowa
-                var xCurrClassGeneralization = this.xmiWrapper.GetXClassGeneralization(type);
+                var xCurrClassGeneralization = this.xmiWrapper.GetXTypeGeneralization(type);
                 if (xCurrClassGeneralization != null)
                 {
                     var baseClassId = xCurrClassGeneralization.ObligatoryAttributeValue("general");

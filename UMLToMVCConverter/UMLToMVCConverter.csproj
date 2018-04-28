@@ -87,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="Association.cs" />
+    <Compile Include="AssociationsFactory.cs" />
     <Compile Include="AttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -139,7 +141,16 @@
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.Data.cs">
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel.cs" />
+    <Compile Include="DataModelFactory.cs" />
+    <Compile Include="IAssociationsFactory.cs" />
+    <Compile Include="IDataModelFactory.cs" />
+    <Compile Include="IMvcProjectFilesGenerator.cs" />
     <Compile Include="Interfaces\IRelationship.cs" />
+    <Compile Include="Interfaces\IRelationshipFactory.cs" />
+    <Compile Include="ITypesFactory.cs" />
+    <Compile Include="MvcProjectFilesGenerator.cs" />
+    <Compile Include="RelationshipFactory.cs" />
     <Compile Include="RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -167,7 +178,7 @@
     <Compile Include="Interfaces\IUmlTypesHelper.cs" />
     <Compile Include="Interfaces\IXAttributeEqualityComparer.cs" />
     <Compile Include="Interfaces\IXmiWrapper.cs" />
-    <Compile Include="Interfaces\IRelationshipFactory.cs" />
+    <Compile Include="Interfaces\IAssociationFactory.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Mappers\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
@@ -184,9 +195,10 @@
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectPublisher.cs" />
-    <Compile Include="RelationshipFactory.cs" />
+    <Compile Include="AssociationFactory.cs" />
     <Compile Include="ScriptRunner.cs" />
     <Compile Include="StartupCsConfigurator.cs" />
+    <Compile Include="TypesFactory.cs" />
     <Compile Include="UmlTypesHelper.cs" />
     <Compile Include="XmiWrapper.cs" />
     <Compile Include="XAttributeEqualityComparer.cs" />

@@ -7,11 +7,11 @@
     using UMLToMVCConverter.ExtensionMethods;
     using UMLToMVCConverter.Interfaces;
 
-    public class RelationshipFactory : IRelationshipFactory
+    public class AssociationFactory : IAssociationFactory
     {
         private readonly IXmiWrapper xmiWrapper;
 
-        public RelationshipFactory(IXmiWrapper xmiWrapper)
+        public AssociationFactory(IXmiWrapper xmiWrapper)
         {
             this.xmiWrapper = xmiWrapper;
         }

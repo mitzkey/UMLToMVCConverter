@@ -66,8 +66,7 @@
             this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
 
             this.migrationsServiceClient.AddMigration(
-                this.mvcProject.ProjectFolderPath,
-                this.mvcProject.DefaultNamespace);
+            );
 
             this.projectPublisher.PublishProject(this.mvcProject.CsprojFilePath, this.mvcProject.WorkspaceFolderPath);
 

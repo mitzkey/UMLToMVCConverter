@@ -18,7 +18,7 @@
             this.logger = logger;
         }
 
-        public void AddMigration(string mvcProjectProjectFolderPath, string mvcProjectDefaultNamespace)
+        public void AddMigration()
         {
             var scriptContent = $@"dotnet {MigrationsServiceAssemblyPath} add-migration ""{this.mvcProject.ProjectFolderPath}"" ""{this.mvcProject.DefaultNamespace}"" ""{this.mvcProject.AssemblyPath}""";
 
