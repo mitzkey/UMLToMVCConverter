@@ -165,7 +165,6 @@
     <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="ExtensionMethods\XElementExtensions.cs" />
     <Compile Include="Interfaces\IAttributeNameResolver.cs" />
-    <Compile Include="Interfaces\IDataModelGenerator.cs" />
     <Compile Include="CodeTemplates\IDbContextFactoryClassTextTemplate.cs" />
     <Compile Include="CodeTemplates\IDbContextClassTextTemplate.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
@@ -183,14 +182,12 @@
     <Compile Include="Mappers\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
     <Compile Include="MvcProject.cs" />
-    <Compile Include="MvcProjectConfigurator.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeMemberMethod.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeMemberProperty.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeParameterDeclarationExpression.cs" />
     <Compile Include="ExtendedTypes\ExtendedCodeTypeReference.cs" />
     <Compile Include="ExtendedTypes\ExtendedType.cs" />
-    <Compile Include="Interfaces\IMvcProjectConfigurator.cs" />
     <Compile Include="Insist.cs" />
     <Compile Include="Mappers\UMLVisibilityMapper.cs" />
     <Compile Include="Program.cs" />
@@ -202,7 +199,6 @@
     <Compile Include="UmlTypesHelper.cs" />
     <Compile Include="XmiWrapper.cs" />
     <Compile Include="XAttributeEqualityComparer.cs" />
-    <Compile Include="DataModelGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Multiplicity.cs" />

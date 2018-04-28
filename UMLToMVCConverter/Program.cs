@@ -48,8 +48,6 @@
             builder.RegisterInstance(xmiDocument).As<XDocument>().SingleInstance();
 
             builder.RegisterType<Application>().AsSelf().SingleInstance();
-            builder.RegisterType<DataModelGenerator>().As<IDataModelGenerator>().SingleInstance();
-            builder.RegisterType<MvcProjectConfigurator>().As<IMvcProjectConfigurator>().SingleInstance();
             builder.RegisterType<ProjectPublisher>().As<IProjectPublisher>().SingleInstance();
             builder.RegisterType<StartupCsConfigurator>().As<IStartupCsConfigurator>().SingleInstance();
             builder.RegisterType<UmlTypesHelper>().As<IUmlTypesHelper>().SingleInstance();
