@@ -7,16 +7,16 @@
     using UMLToMVCConverter.ExtensionMethods;
     using UMLToMVCConverter.Interfaces;
 
-    public class RelationshipFactory : IRelationshipFactory
+    public class EFRelationshipModelFactory : IEFRelationshipModelFactory
     {
         private readonly IXmiWrapper xmiWrapper;
 
-        public RelationshipFactory(IXmiWrapper xmiWrapper)
+        public EFRelationshipModelFactory(IXmiWrapper xmiWrapper)
         {
             this.xmiWrapper = xmiWrapper;
         }
 
-        public IRelationship Create(XElement xAssociation, IEnumerable<ExtendedCodeTypeDeclaration> types)
+        public EFRelationshipModel Create(XElement xAssociation, IEnumerable<ExtendedCodeTypeDeclaration> types)
         {
             var associationEnds = this.xmiWrapper.GetAssociationEnds(xAssociation);
 
@@ -47,7 +47,7 @@
                     IsObligatory = false
                 };
 
-                return new Composition(foreignKeyPropertyNames)
+                return new EFRelationshipModel(foreignKeyPropertyNames)
                 {
                     DeleteBehavior = "Cascade",
                     Multiplicity = multiplicity,

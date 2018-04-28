@@ -2,13 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using UMLToMVCConverter.Interfaces;
 
-    public class Composition : IRelationship
+    public class EFRelationshipModel
     {
         private readonly IEnumerable<string> foreignKeyPropertyNames;
 
-        public Composition(IEnumerable<string> foreignKeyPropertyNames)
+        public EFRelationshipModel(IEnumerable<string> foreignKeyPropertyNames)
         {
             this.foreignKeyPropertyNames = foreignKeyPropertyNames;
         }

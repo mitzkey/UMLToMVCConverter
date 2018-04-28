@@ -1,5 +1,6 @@
 ﻿namespace UMLToMVCConverter
 {
+    using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Interfaces;
 
@@ -16,7 +17,7 @@
 
         public DataModel Create(XElement xUmlModel)
         {
-            var types = this.typesFactory.Create(xUmlModel);
+            var types = this.typesFactory.Create(xUmlModel).ToList();
 
             var associations = this.associationsFactory.Create(xUmlModel, types);
 

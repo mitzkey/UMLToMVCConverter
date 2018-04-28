@@ -94,7 +94,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="Composition.cs" />
+    <Compile Include="EFRelationshipModel.cs" />
     <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -145,11 +145,10 @@
     <Compile Include="Interfaces\IAssociationsFactory.cs" />
     <Compile Include="IDataModelFactory.cs" />
     <Compile Include="IMvcProjectFilesGenerator.cs" />
-    <Compile Include="Interfaces\IRelationship.cs" />
-    <Compile Include="Interfaces\IRelationshipFactory.cs" />
+    <Compile Include="Interfaces\IEFRelationshipModelFactory.cs" />
     <Compile Include="ITypesFactory.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
-    <Compile Include="RelationshipFactory.cs" />
+    <Compile Include="EFRelationshipModelFactory.cs" />
     <Compile Include="RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>

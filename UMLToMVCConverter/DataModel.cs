@@ -2,18 +2,17 @@
 {
     using System.Collections.Generic;
     using UMLToMVCConverter.ExtendedTypes;
-    using UMLToMVCConverter.Interfaces;
 
     public class DataModel
     {
-        public DataModel(IEnumerable<ExtendedCodeTypeDeclaration> types, IEnumerable<IRelationship> associations)
+        public DataModel(IEnumerable<ExtendedCodeTypeDeclaration> types, IEnumerable<EFRelationshipModel> efRelationshipModels)
         {
             this.Types = types;
-            this.Associations = associations;
+            this.EFRelationshipModels = efRelationshipModels;
         }
 
         public IEnumerable<ExtendedCodeTypeDeclaration> Types { get; set; }
 
-        public IEnumerable<IRelationship> Associations { get; set; }
+        public IEnumerable<EFRelationshipModel> EFRelationshipModels { get; set; }
     }
 }

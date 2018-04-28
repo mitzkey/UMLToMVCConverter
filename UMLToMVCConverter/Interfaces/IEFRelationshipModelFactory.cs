@@ -4,8 +4,8 @@
     using System.Xml.Linq;
     using UMLToMVCConverter.ExtendedTypes;
 
-    public interface IRelationshipFactory
+    public interface IEFRelationshipModelFactory
     {
-        IRelationship Create(XElement xAssociation, IEnumerable<ExtendedCodeTypeDeclaration> types);
+        EFRelationshipModel Create(XElement xAssociation, IEnumerable<ExtendedCodeTypeDeclaration> types);
     }
 }

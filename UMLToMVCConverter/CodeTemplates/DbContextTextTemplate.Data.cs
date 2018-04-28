@@ -14,7 +14,7 @@ namespace UMLToMVCConverter.CodeTemplates
         private IMvcProject mvcProject;
         private bool onModelCreatingBlock;
         private readonly Dictionary<string, IEnumerable<string>> complexKeys;
-        private IEnumerable<IRelationship> relationships;
+        private IEnumerable<EFRelationshipModel> relationships;
 
         public DbContextTextTemplate(IMvcProject mvcProject)
         {
@@ -24,9 +24,9 @@ namespace UMLToMVCConverter.CodeTemplates
             this.complexKeys = new Dictionary<string, IEnumerable<string>>();
         }
 
-        public string TransformText(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<IRelationship> relationships)
+        public string TransformText(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<EFRelationshipModel> relationshipModels)
         {
-            this.relationships = relationships;
+            this.relationships = relationshipModels;
 
             foreach (var codeTypeDeclaration in codeTypeDeclarations)
             {

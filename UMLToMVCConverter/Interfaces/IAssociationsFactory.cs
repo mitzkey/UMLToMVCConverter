@@ -6,6 +6,6 @@
 
     public interface IAssociationsFactory
     {
-        IEnumerable<IRelationship> Create(XElement xUmlModel, IEnumerable<ExtendedCodeTypeDeclaration> types);
+        IEnumerable<EFRelationshipModel> Create(XElement xUmlModel, IEnumerable<ExtendedCodeTypeDeclaration> types);
     }
 }

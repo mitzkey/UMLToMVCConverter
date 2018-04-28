@@ -13,23 +13,23 @@
     public class AssociationsFactory : IAssociationsFactory
     {
         private readonly IXmiWrapper xmiWrapper;
-        private readonly IRelationshipFactory relationshipFactory;
+        private readonly IEFRelationshipModelFactory iefRelationshipModelFactory;
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
         private readonly IUmlTypesHelper umlTypesHelper;
         private readonly IAttributeNameResolver attributeNameResolver;
 
-        public AssociationsFactory(IXmiWrapper xmiWrapper, IRelationshipFactory relationshipFactory, IUmlVisibilityMapper umlVisibilityMapper, IUmlTypesHelper umlTypesHelper, IAttributeNameResolver attributeNameResolver)
+        public AssociationsFactory(IXmiWrapper xmiWrapper, IEFRelationshipModelFactory iefRelationshipModelFactory, IUmlVisibilityMapper umlVisibilityMapper, IUmlTypesHelper umlTypesHelper, IAttributeNameResolver attributeNameResolver)
         {
             this.xmiWrapper = xmiWrapper;
-            this.relationshipFactory = relationshipFactory;
+            this.iefRelationshipModelFactory = iefRelationshipModelFactory;
             this.umlVisibilityMapper = umlVisibilityMapper;
             this.umlTypesHelper = umlTypesHelper;
             this.attributeNameResolver = attributeNameResolver;
         }
 
-        public IEnumerable<IRelationship> Create(XElement xUmlModel, IEnumerable<ExtendedCodeTypeDeclaration> types)
+        public IEnumerable<EFRelationshipModel> Create(XElement xUmlModel, IEnumerable<ExtendedCodeTypeDeclaration> types)
         {
-            var relationships = new List<IRelationship>();
+            var relationshipModels = new List<EFRelationshipModel>();
 
             var xAssociations = this.xmiWrapper.GetXAssociations(xUmlModel);
 
@@ -71,11 +71,11 @@
                     }
                 }
 
-                var relationship = this.relationshipFactory.Create(xAssociation, typesList);
-                relationships.Add(relationship);
+                var relationship = this.iefRelationshipModelFactory.Create(xAssociation, typesList);
+                relationshipModels.Add(relationship);
             }
 
-            return relationships;
+            return relationshipModels;
         }
 
         private void AddCompositionNavigationalProperty(XElement associationProperty, IEnumerable<ExtendedCodeTypeDeclaration> types)

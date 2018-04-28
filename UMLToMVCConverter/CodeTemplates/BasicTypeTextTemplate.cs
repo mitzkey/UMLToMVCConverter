@@ -10,13 +10,10 @@
 namespace UMLToMVCConverter.CodeTemplates
 {
     using System.CodeDom;
-    using System.Collections.Generic;
-    using UMLToMVCConverter;
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
     using Autofac;
-    using System;
-    
+
     /// <summary>
     /// Class to produce the template output
     /// </summary>
