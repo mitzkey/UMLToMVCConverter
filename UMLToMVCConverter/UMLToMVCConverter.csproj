@@ -86,8 +86,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aggregation.cs" />
+    <Compile Include="AggregationKinds.cs" />
     <Compile Include="Application.cs" />
-    <Compile Include="AssociationsFactory.cs" />
+    <Compile Include="AggregationsFactory.cs" />
     <Compile Include="AttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -142,7 +144,9 @@
     </Compile>
     <Compile Include="DataModel.cs" />
     <Compile Include="DataModelFactory.cs" />
-    <Compile Include="Interfaces\IAssociationsFactory.cs" />
+    <Compile Include="ForeignKeysGenerator.cs" />
+    <Compile Include="IForeignKeysGenerator.cs" />
+    <Compile Include="Interfaces\IAggregationsFactory.cs" />
     <Compile Include="IDataModelFactory.cs" />
     <Compile Include="IMvcProjectFilesGenerator.cs" />
     <Compile Include="Interfaces\IEFRelationshipModelFactory.cs" />

@@ -6,11 +6,11 @@
 
     public class ExtendedCodeTypeDeclaration : CodeTypeDeclaration
     {
-        public List<ExtendedCodeMemberProperty> IDs { get; }
+        public List<ExtendedCodeMemberProperty> PrimaryKeyAttributes { get; }
 
-        public bool HasComplexKey => this.IDs.Count > 1;
+        public bool HasComplexKey => this.PrimaryKeyAttributes.Count > 1;
 
-        public bool HasKey => this.IDs.Count > 0;
+        public bool HasKey => this.PrimaryKeyAttributes.Count > 0;
 
         public bool IsAbstract => this.TypeAttributes.HasFlag(TypeAttributes.Abstract);
 
@@ -26,7 +26,7 @@
             : base(name)
         {
             this.ForeignKeys = new Dictionary<string, ExtendedCodeMemberProperty>();
-            this.IDs = new List<ExtendedCodeMemberProperty>();
+            this.PrimaryKeyAttributes = new List<ExtendedCodeMemberProperty>();
         }
     }
 }

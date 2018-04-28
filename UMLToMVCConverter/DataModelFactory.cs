@@ -7,21 +7,29 @@
     public class DataModelFactory : IDataModelFactory
     {
         private readonly ITypesFactory typesFactory;
-        private readonly IAssociationsFactory associationsFactory;
+        private readonly IAggregationsFactory aggregationsFactory;
+        private readonly IForeignKeysGenerator foreignKeysGenerator;
+        private readonly IEFRelationshipModelFactory efRelationshipModelFactory;
 
-        public DataModelFactory(ITypesFactory typesFactory, IAssociationsFactory associationsFactory)
+        public DataModelFactory(ITypesFactory typesFactory, IAggregationsFactory aggregationsFactory, IForeignKeysGenerator foreignKeysGenerator, IEFRelationshipModelFactory efRelationshipModelFactory)
         {
             this.typesFactory = typesFactory;
-            this.associationsFactory = associationsFactory;
+            this.aggregationsFactory = aggregationsFactory;
+            this.foreignKeysGenerator = foreignKeysGenerator;
+            this.efRelationshipModelFactory = efRelationshipModelFactory;
         }
 
         public DataModel Create(XElement xUmlModel)
         {
             var types = this.typesFactory.Create(xUmlModel).ToList();
 
-            var associations = this.associationsFactory.Create(xUmlModel, types);
+            var aggregations = this.aggregationsFactory.Create(xUmlModel, types).ToList();
 
-            return new DataModel(types, associations);
+            this.foreignKeysGenerator.Generate(aggregations);
+
+            var efRelationshipModels = this.efRelationshipModelFactory.Create(aggregations);
+
+            return new DataModel(types, efRelationshipModels);
         }
     }
 }

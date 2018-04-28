@@ -4,8 +4,8 @@
     using System.Xml.Linq;
     using UMLToMVCConverter.ExtendedTypes;
 
-    public interface IAssociationsFactory
+    public interface IAggregationsFactory
     {
-        IEnumerable<EFRelationshipModel> Create(XElement xUmlModel, IEnumerable<ExtendedCodeTypeDeclaration> types);
+        IEnumerable<Aggregation> Create(XElement xUmlModel, IEnumerable<ExtendedCodeTypeDeclaration> types);
     }
 }

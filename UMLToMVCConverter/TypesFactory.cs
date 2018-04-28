@@ -216,7 +216,7 @@
             if (xIsID)
             {
                 property.IsID = true;
-                type.IDs.Add(property);
+                type.PrimaryKeyAttributes.Add(property);
             }
 
             return property;

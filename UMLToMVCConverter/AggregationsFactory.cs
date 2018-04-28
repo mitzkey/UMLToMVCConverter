@@ -10,7 +10,7 @@
     using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.Mappers;
 
-    public class AssociationsFactory : IAssociationsFactory
+    public class AggregationsFactory : IAggregationsFactory
     {
         private readonly IXmiWrapper xmiWrapper;
         private readonly IEFRelationshipModelFactory iefRelationshipModelFactory;
@@ -18,7 +18,7 @@
         private readonly IUmlTypesHelper umlTypesHelper;
         private readonly IAttributeNameResolver attributeNameResolver;
 
-        public AssociationsFactory(IXmiWrapper xmiWrapper, IEFRelationshipModelFactory iefRelationshipModelFactory, IUmlVisibilityMapper umlVisibilityMapper, IUmlTypesHelper umlTypesHelper, IAttributeNameResolver attributeNameResolver)
+        public AggregationsFactory(IXmiWrapper xmiWrapper, IEFRelationshipModelFactory iefRelationshipModelFactory, IUmlVisibilityMapper umlVisibilityMapper, IUmlTypesHelper umlTypesHelper, IAttributeNameResolver attributeNameResolver)
         {
             this.xmiWrapper = xmiWrapper;
             this.iefRelationshipModelFactory = iefRelationshipModelFactory;
@@ -27,68 +27,64 @@
             this.attributeNameResolver = attributeNameResolver;
         }
 
-        public IEnumerable<EFRelationshipModel> Create(XElement xUmlModel, IEnumerable<ExtendedCodeTypeDeclaration> types)
+        public IEnumerable<Aggregation> Create(XElement xUmlModel, IEnumerable<ExtendedCodeTypeDeclaration> types)
         {
-            var relationshipModels = new List<EFRelationshipModel>();
+            var aggregations = new List<Aggregation>();
 
-            var xAssociations = this.xmiWrapper.GetXAssociations(xUmlModel);
+            var xAggregations = this.xmiWrapper.GetXAggregations(xUmlModel);
 
             var typesList = types.ToList();
 
-            foreach (var xAssociation in xAssociations)
+            foreach (var xAggregation in xAggregations)
             {
-                var associationEnds = this.xmiWrapper.GetAssociationEnds(xAssociation);
+                var associationEnds = this.xmiWrapper.GetAssociationEnds(xAggregation);
 
                 var aggregationKind = associationEnds.Item1.OptionalAttributeValue("aggregation")
                                       ?? associationEnds.Item2.OptionalAttributeValue("aggregation");
                 
                 if (aggregationKind == "composite")
                 {
-                    var ownerTypeAssociationProperty =
+                    var compositeTypeAssociationProperty =
                         string.IsNullOrWhiteSpace(associationEnds.Item1.OptionalAttributeValue("aggregation"))
                             ? associationEnds.Item2
                             : associationEnds.Item1;
 
-                    this.AddCompositionNavigationalProperty(ownerTypeAssociationProperty, typesList);
-
-                    var ownedTypeAssociationProperty = associationEnds.Item1.Equals(ownerTypeAssociationProperty)
+                    var composedTypeAssociationProperty = associationEnds.Item1.Equals(compositeTypeAssociationProperty)
                         ? associationEnds.Item2
                         : associationEnds.Item1;
 
-                    this.AddCompositionNavigationalProperty(ownedTypeAssociationProperty, typesList);
+                    var compositeTypeId = this.xmiWrapper.GetElementsId(compositeTypeAssociationProperty.Parent);
 
-                    var ownerTypeId = this.xmiWrapper.GetElementsId(ownerTypeAssociationProperty.Parent);
+                    var compositeType = typesList.Single(x => x.XmiID == compositeTypeId);
 
-                    var ownerType = typesList.Single(x => x.XmiID == ownerTypeId);
+                    compositeType.Members.Add(this.CreateCompositionNavigationalProperty(compositeTypeAssociationProperty, compositeType));
 
-                    var ownedTypeId = this.xmiWrapper.GetElementsId(ownedTypeAssociationProperty.Parent);
+                    var composedTypeId = this.xmiWrapper.GetElementsId(composedTypeAssociationProperty.Parent);
 
-                    var ownedType = typesList.Single(x => x.XmiID == ownedTypeId);
+                    var composedType = typesList.Single(x => x.XmiID == composedTypeId);
 
-                    foreach (var ownersID in ownerType.IDs)
-                    {
-                        ownedType.ForeignKeys.Add(ownerType.Name + ownersID.Name, ownersID);
-                    }
+                    composedType.Members.Add(this.CreateCompositionNavigationalProperty(composedTypeAssociationProperty, composedType));
+
+                    aggregations.Add(
+                        new Aggregation
+                        {
+                            AggregationKind = AggregationKinds.Composition,
+                            CompositeType = compositeType,
+                            ComposedType = composedType
+                        });
                 }
-
-                var relationship = this.iefRelationshipModelFactory.Create(xAssociation, typesList);
-                relationshipModels.Add(relationship);
             }
 
-            return relationshipModels;
+            return aggregations;
         }
 
-        private void AddCompositionNavigationalProperty(XElement associationProperty, IEnumerable<ExtendedCodeTypeDeclaration> types)
+        private ExtendedCodeMemberProperty CreateCompositionNavigationalProperty(XElement aggregationProperty, ExtendedCodeTypeDeclaration type)
         {
-            var typeId = this.xmiWrapper.GetElementsId(associationProperty.Parent);
-
-            var type = types.Single(x => x.XmiID == typeId);
-
-            var navigationalProperty = this.GenerateAttribute(type, associationProperty);
+            var navigationalProperty = this.GenerateAttribute(type, aggregationProperty);
 
             navigationalProperty.IsVirtual = true;
 
-            type.Members.Add(navigationalProperty);
+            return navigationalProperty;
         }
 
         private ExtendedCodeMemberProperty GenerateAttribute(ExtendedCodeTypeDeclaration codeTypeDeclaration, XElement attribute)
@@ -146,7 +142,7 @@
             if (xIsID)
             {
                 codeMemberProperty.IsID = true;
-                codeTypeDeclaration.IDs.Add(codeMemberProperty);
+                codeTypeDeclaration.PrimaryKeyAttributes.Add(codeMemberProperty);
             }
 
             return codeMemberProperty;

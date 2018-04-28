@@ -33,7 +33,7 @@ namespace UMLToMVCConverter.CodeTemplates
                 if (codeTypeDeclaration.HasComplexKey)
                 {
                     this.onModelCreatingBlock = true;
-                    this.complexKeys.Add(codeTypeDeclaration.Name, codeTypeDeclaration.IDs.Select(x => x.Name));
+                    this.complexKeys.Add(codeTypeDeclaration.Name, codeTypeDeclaration.PrimaryKeyAttributes.Select(x => x.Name));
                 }
 
                 var typeName = codeTypeDeclaration.Name;

@@ -22,5 +22,6 @@
         IEnumerable<XElement> GetXAssociations(XElement umlModel);
         Tuple<XElement, XElement> GetAssociationEnds(XElement xAssociation);
         string GetElementsId(XElement xElement);
+        IEnumerable<XElement> GetXAggregations(XElement xUmlModel);
     }
 }

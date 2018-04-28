@@ -64,8 +64,9 @@
             builder.RegisterType<TypesFactory>().As<ITypesFactory>().SingleInstance();
             builder.RegisterType<MvcProjectFilesGenerator>().As<IMvcProjectFilesGenerator>().SingleInstance();
             builder.RegisterType<DataModelFactory>().As<IDataModelFactory>().SingleInstance();
-            builder.RegisterType<AssociationsFactory>().As<IAssociationsFactory>().SingleInstance();
+            builder.RegisterType<AggregationsFactory>().As<IAggregationsFactory>().SingleInstance();
             builder.RegisterType<EFRelationshipModelFactory>().As<IEFRelationshipModelFactory>().SingleInstance();
+            builder.RegisterType<ForeignKeysGenerator>().As<IForeignKeysGenerator>().SingleInstance();
 
             builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
             builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();

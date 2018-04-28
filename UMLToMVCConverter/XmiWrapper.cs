@@ -83,6 +83,24 @@
             return xElement.ObligatoryAttributeValue(this.xmiNamespace + "id");
         }
 
+        public IEnumerable<XElement> GetXAggregations(XElement xUmlModel)
+        {
+            var xAssociations = this.GetXAssociations(xUmlModel);
+
+            foreach (var xAssociation in xAssociations)
+            {
+                var associationEnds = this.GetAssociationEnds(xAssociation);
+
+                if (!string.IsNullOrWhiteSpace(associationEnds.Item1.OptionalAttributeValue("aggregation"))
+                    || !string.IsNullOrWhiteSpace(associationEnds.Item2.OptionalAttributeValue("aggregation")))
+                {
+                    yield return xAssociation;
+                }
+            }
+
+
+        }
+
         public IEnumerable<XElement> GetXAttributes(XElement type)
         {
             return type.Descendants("ownedAttribute")
