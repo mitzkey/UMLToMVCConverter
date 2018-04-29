@@ -151,10 +151,12 @@
     <Compile Include="IDataModelFactory.cs" />
     <Compile Include="IMvcProjectFilesGenerator.cs" />
     <Compile Include="Interfaces\IEFRelationshipModelFactory.cs" />
+    <Compile Include="IPropertyGenerator.cs" />
     <Compile Include="ITypesFactory.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
     <Compile Include="EFRelationshipModelFactory.cs" />
     <Compile Include="NavigationalPropertiesGenerator.cs" />
+    <Compile Include="PropertyGenerator.cs" />
     <Compile Include="RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>

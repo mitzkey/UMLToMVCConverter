@@ -68,6 +68,7 @@
             builder.RegisterType<EFRelationshipModelFactory>().As<IEFRelationshipModelFactory>().SingleInstance();
             builder.RegisterType<ForeignKeysGenerator>().As<IForeignKeysGenerator>().SingleInstance();
             builder.RegisterType<NavigationalPropertiesGenerator>().As<INavigationalPropertiesGenerator>().SingleInstance();
+            builder.RegisterType<PropertyGenerator>().As<IPropertyGenerator>().SingleInstance();
 
             builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
             builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();
