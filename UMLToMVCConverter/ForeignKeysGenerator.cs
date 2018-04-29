@@ -8,8 +8,8 @@
         {
             foreach (var aggregation in aggregations)
             {
-                var compositeType = aggregation.CompositeType;
-                var composedType = aggregation.ComposedType;
+                var compositeType = aggregation.PrincipalType;
+                var composedType = aggregation.DependentType;
 
                 foreach (var compositeTypePrimaryKeyAttribute in compositeType.PrimaryKeyAttributes)
                 {

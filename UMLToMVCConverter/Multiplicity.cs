@@ -4,6 +4,7 @@
     {
         ZeroOrOne,
         ExactlyOne,
-        Multiple
+        ZeroOrMore,
+        OneOrMore
     }
 }

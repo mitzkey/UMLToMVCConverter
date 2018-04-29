@@ -169,7 +169,13 @@
                 && (multiplicityUpperBound == "*"
                     || Convert.ToInt32(multiplicityUpperBound) > 1))
             {
-                return Multiplicity.Multiple;
+                if (!string.IsNullOrWhiteSpace(multiplicityLowerBound)
+                    && Convert.ToInt32(multiplicityLowerBound) > 0)
+                {
+                    return Multiplicity.OneOrMore;
+                }
+
+                return Multiplicity.ZeroOrMore;
             }
 
             if (string.IsNullOrWhiteSpace(multiplicityLowerBound) || Convert.ToInt32(multiplicityLowerBound) == 0)

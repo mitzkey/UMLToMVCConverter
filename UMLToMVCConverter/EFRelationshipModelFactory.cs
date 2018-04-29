@@ -14,7 +14,7 @@
                 switch (aggregation.AggregationKind)
                 {
                     case AggregationKinds.Composition:
-                        var foreignKeyPropertyNames = aggregation.ComposedType.ForeignKeys.Keys;
+                        var foreignKeyPropertyNames = aggregation.DependentType.ForeignKeys.Keys;
                         var multiplicity = new RelationshipMultiplicity
                         {
                             Name = "One",
@@ -25,8 +25,8 @@
                         {
                             DeleteBehavior = "Cascade",
                             Multiplicity = multiplicity,
-                            SourceEntityName = aggregation.CompositeType.Name,
-                            TargetEntityName = aggregation.ComposedType.Name
+                            SourceEntityName = aggregation.PrincipalType.Name,
+                            TargetEntityName = aggregation.DependentType.Name
                         });
                         break;
                 }

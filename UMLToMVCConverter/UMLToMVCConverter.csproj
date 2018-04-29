@@ -146,6 +146,7 @@
     <Compile Include="DataModelFactory.cs" />
     <Compile Include="ForeignKeysGenerator.cs" />
     <Compile Include="IForeignKeysGenerator.cs" />
+    <Compile Include="INavigationalPropertiesGenerator.cs" />
     <Compile Include="Interfaces\IAggregationsFactory.cs" />
     <Compile Include="IDataModelFactory.cs" />
     <Compile Include="IMvcProjectFilesGenerator.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="ITypesFactory.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
     <Compile Include="EFRelationshipModelFactory.cs" />
+    <Compile Include="NavigationalPropertiesGenerator.cs" />
     <Compile Include="RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>

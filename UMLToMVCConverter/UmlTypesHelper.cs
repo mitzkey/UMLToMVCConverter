@@ -82,7 +82,9 @@
                     return this.GetNullableType(xElement);
                 case Multiplicity.ExactlyOne:
                     return this.GetNotNullableType(xElement);
-                case Multiplicity.Multiple:
+                case Multiplicity.ZeroOrMore:
+                    return this.GetMultipleType(xElement);
+                case Multiplicity.OneOrMore:
                     return this.GetMultipleType(xElement);
                 default:
                     throw new Exception("Multiplicity not found for property: " + xElement);
