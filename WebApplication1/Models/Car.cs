@@ -14,6 +14,6 @@ namespace WebApplication1.Models
 
 		public String Version { get; set; }
 
-		public virtual Wheel Wheel { get; set; }
+		public virtual SteeringWheel SteeringWheel { get; set; }
 	}
 }

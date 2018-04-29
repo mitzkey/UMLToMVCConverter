@@ -25,7 +25,7 @@ namespace WebApplication1.Models
 
 		public DbSet<WithSingleIDProperty> WithSingleIDProperty { get; set; }
 
-		public DbSet<Wheel> Wheel { get; set; }
+		public DbSet<SteeringWheel> SteeringWheel { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
@@ -33,9 +33,9 @@ namespace WebApplication1.Models
 				.HasKey(c => new { c.Brand, c.Model, c.Version });
 
 			modelBuilder.Entity<Car>()
-		        .HasOne(typeof(Wheel))
+		        .HasOne(typeof(SteeringWheel))
 		        .WithOne("Car")
-		        .HasForeignKey(typeof(Wheel), "CarBrand", "CarModel", "CarVersion")
+		        .HasForeignKey(typeof(SteeringWheel), "CarBrand", "CarModel", "CarVersion")
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 

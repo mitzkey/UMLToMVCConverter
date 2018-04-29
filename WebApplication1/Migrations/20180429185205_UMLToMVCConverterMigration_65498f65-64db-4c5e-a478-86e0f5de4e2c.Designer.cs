@@ -11,9 +11,10 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20180429185205_UMLToMVCConverterMigration_65498f65-64db-4c5e-a478-86e0f5de4e2c")]
+    partial class UMLToMVCConverterMigration_65498f6564db4c5ea47886e0f5de4e2c
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

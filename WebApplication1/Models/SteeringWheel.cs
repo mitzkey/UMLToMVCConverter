@@ -6,7 +6,7 @@ namespace WebApplication1.Models
 	using System.Web;
 	using System.ComponentModel.DataAnnotations;
 
-	public class Wheel {
+	public class SteeringWheel {
 
 		public int ID {get; set;}
 		public String CarBrand { get; set; }
