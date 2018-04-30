@@ -176,7 +176,7 @@ if (this.onModelCreatingBlock) {
             this.Write(")\r\n                .IsRequired(");
             
             #line 45 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DependentTypeMultiplicity.IsObligatoryString));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.PrincipalTypeMultiplicity.IsObligatoryString));
             
             #line default
             #line hidden
