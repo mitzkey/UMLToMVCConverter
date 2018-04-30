@@ -38,11 +38,11 @@ if (this.onModelCreatingBlock) {
 #>
 
 
-			modelBuilder.Entity<<#=relationship.SourceEntityName#>>()
-		        .HasOne(typeof(<#=relationship.TargetEntityName#>))
-		        .With<#=relationship.Multiplicity.Name#>("<#=relationship.SourceEntityName#>")
-		        .HasForeignKey(typeof(<#=relationship.TargetEntityName#>), <#=relationship.ForeignKeysStringEnumeration#>)
-                .IsRequired(<#=relationship.Multiplicity.IsObligatoryString#>)
+			modelBuilder.Entity<<#=relationship.PrincipalTypeName#>>()
+		        .Has<#=relationship.DependentTypeMultiplicity.Name#>(typeof(<#=relationship.DependentTypeName#>))
+		        .With<#=relationship.PrincipalTypeMultiplicity.Name#>("<#=relationship.PrincipalTypeName#>")
+		        .HasForeignKey("<#=relationship.DependentTypeName#>", <#=relationship.ForeignKeysStringEnumeration#>)
+                .IsRequired(<#=relationship.DependentTypeMultiplicity.IsObligatoryString#>)
                 .OnDelete(DeleteBehavior.<#=relationship.DeleteBehavior#>);
 
 <#

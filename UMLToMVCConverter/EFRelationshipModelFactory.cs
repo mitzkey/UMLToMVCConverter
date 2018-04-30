@@ -1,5 +1,6 @@
 ﻿namespace UMLToMVCConverter
 {
+    using System;
     using System.Collections.Generic;
     using UMLToMVCConverter.Interfaces;
 
@@ -15,24 +16,57 @@
                 {
                     case AggregationKinds.Composition:
                         var foreignKeyPropertyNames = aggregation.DependentType.ForeignKeys.Keys;
-                        var multiplicity = new RelationshipMultiplicity
-                        {
-                            Name = "One",
-                            IsObligatory = false
-                        };
+
+                        var principalTypeMultiplicity = this.GetRelationshipMultiplicity(aggregation.PrincipalTypeMultiplicity);
+                        var dependentTypeMultiplicity = this.GetRelationshipMultiplicity(aggregation.DependentTypeMultiplicity);
 
                         models.Add(new EFRelationshipModel(foreignKeyPropertyNames)
                         {
                             DeleteBehavior = "Cascade",
-                            Multiplicity = multiplicity,
-                            SourceEntityName = aggregation.PrincipalType.Name,
-                            TargetEntityName = aggregation.DependentType.Name
+                            PrincipalTypeMultiplicity = principalTypeMultiplicity,
+                            DependentTypeMultiplicity = dependentTypeMultiplicity,
+                            PrincipalTypeName = aggregation.PrincipalType.Name,
+                            DependentTypeName = aggregation.DependentType.Name
                         });
                         break;
                 }
             }
 
             return models;
+        }
+
+        private RelationshipMultiplicity GetRelationshipMultiplicity(Multiplicity multiplicity)
+        {
+            string name;
+            bool isObligatory;
+
+            switch (multiplicity)
+            {
+                case Multiplicity.ExactlyOne:
+                    name = "One";
+                    isObligatory = true;
+                    break;
+                case Multiplicity.ZeroOrOne:
+                    name = "One";
+                    isObligatory = false;
+                    break;
+                case Multiplicity.ZeroOrMore:
+                    name = "Many";
+                    isObligatory = false;
+                    break;
+                case Multiplicity.OneOrMore:
+                    name = "Many";
+                    isObligatory = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(multiplicity), multiplicity, null);
+            }
+
+            return new RelationshipMultiplicity
+            {
+                Name = name,
+                IsObligatory = isObligatory
+            };
         }
     }
 }

@@ -27,15 +27,28 @@ namespace WebApplication1.Models
 
 		public DbSet<SteeringWheel> SteeringWheel { get; set; }
 
+		public DbSet<CarRadio> CarRadio { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
 			modelBuilder.Entity<Car>()
 				.HasKey(c => new { c.Brand, c.Model, c.Version });
 
+            // to jest Car 1 - SteeringWheel 0..1
 			modelBuilder.Entity<Car>()
 		        .HasOne(typeof(SteeringWheel))
 		        .WithOne("Car")
-		        .HasForeignKey(typeof(SteeringWheel), "CarBrand", "CarModel", "CarVersion")
+		        .HasForeignKey("SteeringWheel", "CarBrand", "CarModel", "CarVersion")
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // jak zrobic 1 - 1??
+
+            // to jest Car 0..1 - CarRadio 0..1
+			modelBuilder.Entity<Car>()
+		        .HasOne(typeof(CarRadio))
+		        .WithOne("Car")
+		        .HasForeignKey("CarRadio", "CarBrand", "CarModel", "CarVersion")
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 

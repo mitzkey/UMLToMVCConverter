@@ -12,11 +12,11 @@
             this.foreignKeyPropertyNames = foreignKeyPropertyNames;
         }
 
-        public string SourceEntityName { get; set; }
+        public string PrincipalTypeName { get; set; }
 
-        public string TargetEntityName { get; set; }
+        public string DependentTypeName { get; set; }
 
-        public RelationshipMultiplicity Multiplicity { get; set; }
+        public RelationshipMultiplicity PrincipalTypeMultiplicity { get; set; }
 
         public string ForeignKeysStringEnumeration
         {
@@ -28,5 +28,7 @@
         }
 
         public string DeleteBehavior { get; set; }
+
+        public RelationshipMultiplicity DependentTypeMultiplicity { get; set; }
     }
 }

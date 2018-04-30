@@ -42,13 +42,39 @@ namespace WebApplication1.Migrations
 
                     b.Property<string>("Version");
 
+                    b.Property<int?>("CarRadioID");
+
                     b.Property<int?>("SteeringWheelID");
 
                     b.HasKey("Brand", "Model", "Version");
 
+                    b.HasIndex("CarRadioID");
+
                     b.HasIndex("SteeringWheelID");
 
                     b.ToTable("Car");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.CarRadio", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CarBrand");
+
+                    b.Property<string>("CarModel");
+
+                    b.Property<string>("CarVersion");
+
+                    b.Property<string>("Producer");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CarBrand", "CarModel", "CarVersion")
+                        .IsUnique()
+                        .HasFilter("[CarBrand] IS NOT NULL AND [CarModel] IS NOT NULL AND [CarVersion] IS NOT NULL");
+
+                    b.ToTable("CarRadio");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.CompanyInfo", b =>
@@ -108,19 +134,21 @@ namespace WebApplication1.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CarBrand");
+                    b.Property<string>("CarBrand")
+                        .IsRequired();
 
-                    b.Property<string>("CarModel");
+                    b.Property<string>("CarModel")
+                        .IsRequired();
 
-                    b.Property<string>("CarVersion");
+                    b.Property<string>("CarVersion")
+                        .IsRequired();
 
                     b.Property<double?>("Perimeter");
 
                     b.HasKey("ID");
 
                     b.HasIndex("CarBrand", "CarModel", "CarVersion")
-                        .IsUnique()
-                        .HasFilter("[CarBrand] IS NOT NULL AND [CarModel] IS NOT NULL AND [CarVersion] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("SteeringWheel");
                 });
@@ -161,9 +189,21 @@ namespace WebApplication1.Migrations
 
             modelBuilder.Entity("WebApplication1.Models.Car", b =>
                 {
+                    b.HasOne("WebApplication1.Models.CarRadio", "CarRadio")
+                        .WithMany()
+                        .HasForeignKey("CarRadioID");
+
                     b.HasOne("WebApplication1.Models.SteeringWheel", "SteeringWheel")
                         .WithMany()
                         .HasForeignKey("SteeringWheelID");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.CarRadio", b =>
+                {
+                    b.HasOne("WebApplication1.Models.Car", "Car")
+                        .WithOne()
+                        .HasForeignKey("WebApplication1.Models.CarRadio", "CarBrand", "CarModel", "CarVersion")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebApplication1.Models.FavouriteNumber", b =>

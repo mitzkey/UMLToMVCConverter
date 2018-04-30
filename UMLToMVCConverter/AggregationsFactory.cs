@@ -46,13 +46,13 @@
 
                     var principalType = typesList.Single(x => x.XmiID == principalTypeId);
                     
-                    var principalTypeMultiplicity = this.xmiWrapper.GetMultiplicity(principalTypeAssociationXAttribute);
+                    var principalTypeMultiplicity = this.xmiWrapper.GetMultiplicity(dependentTypeAssociationXAttribute);
 
                     var dependentTypeId = this.xmiWrapper.GetElementsId(dependentTypeAssociationXAttribute.Parent);
 
                     var dependentType = typesList.Single(x => x.XmiID == dependentTypeId);
 
-                    var dependentTypeMultiplicity = this.xmiWrapper.GetMultiplicity(dependentTypeAssociationXAttribute);
+                    var dependentTypeMultiplicity = this.xmiWrapper.GetMultiplicity(principalTypeAssociationXAttribute);
 
                     aggregations.Add(
                         new Aggregation

@@ -10,6 +10,9 @@
 namespace UMLToMVCConverter.CodeTemplates
 {
     using System.Linq;
+    using System.Text;
+    using System.Collections.Generic;
+    using System.CodeDom;
     using System;
     
     /// <summary>
@@ -124,39 +127,46 @@ if (this.onModelCreatingBlock) {
             this.Write("\r\n\r\n\t\t\tmodelBuilder.Entity<");
             
             #line 41 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceEntityName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.PrincipalTypeName));
             
             #line default
             #line hidden
-            this.Write(">()\r\n\t\t        .HasOne(typeof(");
+            this.Write(">()\r\n\t\t        .Has");
             
             #line 42 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetEntityName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DependentTypeMultiplicity.Name));
+            
+            #line default
+            #line hidden
+            this.Write("(typeof(");
+            
+            #line 42 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DependentTypeName));
             
             #line default
             #line hidden
             this.Write("))\r\n\t\t        .With");
             
             #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.Multiplicity.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.PrincipalTypeMultiplicity.Name));
             
             #line default
             #line hidden
             this.Write("(\"");
             
             #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceEntityName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.PrincipalTypeName));
             
             #line default
             #line hidden
-            this.Write("\")\r\n\t\t        .HasForeignKey(typeof(");
+            this.Write("\")\r\n\t\t        .HasForeignKey(\"");
             
             #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetEntityName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DependentTypeName));
             
             #line default
             #line hidden
-            this.Write("), ");
+            this.Write("\", ");
             
             #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relationship.ForeignKeysStringEnumeration));
@@ -166,7 +176,7 @@ if (this.onModelCreatingBlock) {
             this.Write(")\r\n                .IsRequired(");
             
             #line 45 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.Multiplicity.IsObligatoryString));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DependentTypeMultiplicity.IsObligatoryString));
             
             #line default
             #line hidden
