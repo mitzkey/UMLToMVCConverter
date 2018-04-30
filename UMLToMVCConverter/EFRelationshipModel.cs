@@ -30,5 +30,10 @@
         public string DeleteBehavior { get; set; }
 
         public RelationshipMultiplicity DependentTypeMultiplicity { get; set; }
+
+        public string HasForeignKeyMethodParametersString =>
+            this.DependentTypeMultiplicity.IsMultiple
+                ? this.ForeignKeysStringEnumeration
+                : $"\"{this.DependentTypeName}\", " + this.ForeignKeysStringEnumeration;
     }
 }

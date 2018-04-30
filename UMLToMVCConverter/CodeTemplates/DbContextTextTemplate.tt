@@ -41,7 +41,7 @@ if (this.onModelCreatingBlock) {
 			modelBuilder.Entity<<#=relationship.PrincipalTypeName#>>()
 		        .Has<#=relationship.DependentTypeMultiplicity.Name#>(typeof(<#=relationship.DependentTypeName#>))
 		        .With<#=relationship.PrincipalTypeMultiplicity.Name#>("<#=relationship.PrincipalTypeName#>")
-		        .HasForeignKey("<#=relationship.DependentTypeName#>", <#=relationship.ForeignKeysStringEnumeration#>)
+		        .HasForeignKey(<#=relationship.HasForeignKeyMethodParametersString#>)
                 .IsRequired(<#=relationship.PrincipalTypeMultiplicity.IsObligatoryString#>)
                 .OnDelete(DeleteBehavior.<#=relationship.DeleteBehavior#>);
 

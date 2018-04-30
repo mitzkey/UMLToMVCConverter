@@ -159,17 +159,10 @@ if (this.onModelCreatingBlock) {
             
             #line default
             #line hidden
-            this.Write("\")\r\n\t\t        .HasForeignKey(\"");
+            this.Write("\")\r\n\t\t        .HasForeignKey(");
             
             #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DependentTypeName));
-            
-            #line default
-            #line hidden
-            this.Write("\", ");
-            
-            #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.ForeignKeysStringEnumeration));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.HasForeignKeyMethodParametersString));
             
             #line default
             #line hidden

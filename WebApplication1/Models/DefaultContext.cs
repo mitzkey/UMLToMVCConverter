@@ -29,12 +29,17 @@ namespace WebApplication1.Models
 
 		public DbSet<CarRadio> CarRadio { get; set; }
 
+		public DbSet<Tire> Tire { get; set; }
+
+		public DbSet<Wheel> Wheel { get; set; }
+
+		public DbSet<Seat> Seat { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
 			modelBuilder.Entity<Car>()
 				.HasKey(c => new { c.Brand, c.Model, c.Version });
 
-            // to jest Car 1 - SteeringWheel 0..1
 			modelBuilder.Entity<Car>()
 		        .HasOne(typeof(SteeringWheel))
 		        .WithOne("Car")
@@ -42,14 +47,31 @@ namespace WebApplication1.Models
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // jak zrobic 1 - 1??
 
-            // to jest Car 0..1 - CarRadio 0..1
+
 			modelBuilder.Entity<Car>()
 		        .HasOne(typeof(CarRadio))
 		        .WithOne("Car")
 		        .HasForeignKey("CarRadio", "CarBrand", "CarModel", "CarVersion")
                 .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
+			modelBuilder.Entity<Car>()
+		        .HasMany(typeof(Tire))
+		        .WithOne("Car")
+		        .HasForeignKey("CarBrand", "CarModel", "CarVersion")
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
+			modelBuilder.Entity<Car>()
+		        .HasMany(typeof(Seat))
+		        .WithOne("Car")
+		        .HasForeignKey("CarBrand", "CarModel", "CarVersion")
+                .IsRequired(true)
                 .OnDelete(DeleteBehavior.Cascade);
 
 

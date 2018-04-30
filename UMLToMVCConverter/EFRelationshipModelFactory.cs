@@ -37,35 +37,9 @@
 
         private RelationshipMultiplicity GetRelationshipMultiplicity(Multiplicity multiplicity)
         {
-            string name;
-            bool isObligatory;
-
-            switch (multiplicity)
-            {
-                case Multiplicity.ExactlyOne:
-                    name = "One";
-                    isObligatory = true;
-                    break;
-                case Multiplicity.ZeroOrOne:
-                    name = "One";
-                    isObligatory = false;
-                    break;
-                case Multiplicity.ZeroOrMore:
-                    name = "Many";
-                    isObligatory = false;
-                    break;
-                case Multiplicity.OneOrMore:
-                    name = "Many";
-                    isObligatory = true;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(multiplicity), multiplicity, null);
-            }
-
             return new RelationshipMultiplicity
             {
-                Name = name,
-                IsObligatory = isObligatory
+                Multiplicity = multiplicity
             };
         }
     }

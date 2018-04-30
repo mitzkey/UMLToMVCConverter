@@ -129,6 +129,29 @@ namespace WebApplication1.Migrations
                     b.ToTable("Point");
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.Seat", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CarBrand")
+                        .IsRequired();
+
+                    b.Property<string>("CarModel")
+                        .IsRequired();
+
+                    b.Property<string>("CarVersion")
+                        .IsRequired();
+
+                    b.Property<bool?>("LeatherMade");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CarBrand", "CarModel", "CarVersion");
+
+                    b.ToTable("Seat");
+                });
+
             modelBuilder.Entity("WebApplication1.Models.SteeringWheel", b =>
                 {
                     b.Property<int>("ID")
@@ -151,6 +174,36 @@ namespace WebApplication1.Migrations
                         .IsUnique();
 
                     b.ToTable("SteeringWheel");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.Tire", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Brand");
+
+                    b.Property<string>("CarBrand");
+
+                    b.Property<string>("CarModel");
+
+                    b.Property<string>("CarVersion");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CarBrand", "CarModel", "CarVersion");
+
+                    b.ToTable("Tire");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.Wheel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Wheel");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.WithSingleIDProperty", b =>
@@ -220,11 +273,27 @@ namespace WebApplication1.Migrations
                         .HasForeignKey("BabyID");
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.Seat", b =>
+                {
+                    b.HasOne("WebApplication1.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarBrand", "CarModel", "CarVersion")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("WebApplication1.Models.SteeringWheel", b =>
                 {
                     b.HasOne("WebApplication1.Models.Car", "Car")
                         .WithOne()
                         .HasForeignKey("WebApplication1.Models.SteeringWheel", "CarBrand", "CarModel", "CarVersion")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.Tire", b =>
+                {
+                    b.HasOne("WebApplication1.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarBrand", "CarModel", "CarVersion")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -15,24 +15,20 @@
         {
             foreach (var aggregation in aggregations)
             {
+                var dependentTypeNavigationalProperty = this.propertyGenerator.Generate(aggregation.DependentType, aggregation.DependentTypeAssociationXAttribute);
+
+                dependentTypeNavigationalProperty.IsVirtual = true;
+
+                aggregation.DependentType.Members.Add(dependentTypeNavigationalProperty);
+
                 if (aggregation.DependentTypeMultiplicity == Multiplicity.ExactlyOne
                     || aggregation.DependentTypeMultiplicity == Multiplicity.ZeroOrOne)
                 {
-                    var navigationalProperty = this.propertyGenerator.Generate(aggregation.DependentType, aggregation.DependentTypeAssociationXAttribute);
+                    var principalTypeNavigationalProperty = this.propertyGenerator.Generate(aggregation.PrincipalType, aggregation.PrincipalTypeAssociationXAttribute);
 
-                    navigationalProperty.IsVirtual = true;
+                    principalTypeNavigationalProperty.IsVirtual = true;
 
-                    aggregation.DependentType.Members.Add(navigationalProperty);
-                }
-
-                if (aggregation.PrincipalTypeMultiplicity == Multiplicity.ExactlyOne
-                    || aggregation.PrincipalTypeMultiplicity== Multiplicity.ZeroOrOne)
-                {
-                    var navigationalProperty = this.propertyGenerator.Generate(aggregation.PrincipalType, aggregation.PrincipalTypeAssociationXAttribute);
-
-                    navigationalProperty.IsVirtual = true;
-
-                    aggregation.PrincipalType.Members.Add(navigationalProperty);
+                    aggregation.PrincipalType.Members.Add(principalTypeNavigationalProperty);
                 }
             }
         }
