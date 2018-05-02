@@ -35,6 +35,8 @@ namespace WebApplication1.Models
 
 		public DbSet<Seat> Seat { get; set; }
 
+		public DbSet<Enterprise> Enterprise { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
 			modelBuilder.Entity<Car>()
@@ -73,6 +75,15 @@ namespace WebApplication1.Models
 		        .HasForeignKey("CarBrand", "CarModel", "CarVersion")
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
+
+			modelBuilder.Entity<Enterprise>()
+		        .HasMany(typeof(Worker))
+		        .WithOne("Enterprise")
+		        .HasForeignKey("EnterpriseID")
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
 		}

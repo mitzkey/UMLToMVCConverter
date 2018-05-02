@@ -7,6 +7,7 @@ namespace WebApplication1.Models
 	using System.ComponentModel.DataAnnotations;
 
 	public class Worker : Person {
+		public Nullable<Int32> EnterpriseID { get; set; }
 
 		public String Company { get; set; }
 
@@ -17,5 +18,7 @@ namespace WebApplication1.Models
 		public virtual ICollection<Worker> Coworkers { get; set; }
 
 		public String NamesFirstCharacter { get { throw new NotImplementedException(); } }
+
+		public virtual Enterprise Enterprise { get; set; }
 	}
 }

@@ -12,30 +12,29 @@
 
             foreach (var aggregation in aggregations)
             {
-                switch (aggregation.AggregationKind)
+                var deleteBehavior = aggregation.AggregationKind == AggregationKinds.Composition
+                    ? "Cascade"
+                    : "Restrict";
+
+                var foreignKeyPropertyNames = aggregation.DependentType.ForeignKeys.Keys;
+
+                var principalTypeMultiplicity = GetRelationshipMultiplicity(aggregation.PrincipalTypeMultiplicity);
+                var dependentTypeMultiplicity = GetRelationshipMultiplicity(aggregation.DependentTypeMultiplicity);
+
+                models.Add(new EFRelationshipModel(foreignKeyPropertyNames)
                 {
-                    case AggregationKinds.Composition:
-                        var foreignKeyPropertyNames = aggregation.DependentType.ForeignKeys.Keys;
-
-                        var principalTypeMultiplicity = this.GetRelationshipMultiplicity(aggregation.PrincipalTypeMultiplicity);
-                        var dependentTypeMultiplicity = this.GetRelationshipMultiplicity(aggregation.DependentTypeMultiplicity);
-
-                        models.Add(new EFRelationshipModel(foreignKeyPropertyNames)
-                        {
-                            DeleteBehavior = "Cascade",
-                            PrincipalTypeMultiplicity = principalTypeMultiplicity,
-                            DependentTypeMultiplicity = dependentTypeMultiplicity,
-                            PrincipalTypeName = aggregation.PrincipalType.Name,
-                            DependentTypeName = aggregation.DependentType.Name
-                        });
-                        break;
-                }
+                    DeleteBehavior = deleteBehavior,
+                    PrincipalTypeMultiplicity = principalTypeMultiplicity,
+                    DependentTypeMultiplicity = dependentTypeMultiplicity,
+                    PrincipalTypeName = aggregation.PrincipalType.Name,
+                    DependentTypeName = aggregation.DependentType.Name
+                });
             }
 
             return models;
         }
 
-        private RelationshipMultiplicity GetRelationshipMultiplicity(Multiplicity multiplicity)
+        private static RelationshipMultiplicity GetRelationshipMultiplicity(Multiplicity multiplicity)
         {
             return new RelationshipMultiplicity
             {
