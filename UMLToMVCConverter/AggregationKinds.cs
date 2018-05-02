@@ -2,6 +2,7 @@
 {
     public enum AggregationKinds
     {
-        Composition
+        Composition,
+        Shared
     }
 }
