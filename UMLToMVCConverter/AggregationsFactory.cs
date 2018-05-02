@@ -1,5 +1,6 @@
 ﻿namespace UMLToMVCConverter
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
@@ -28,47 +29,59 @@
             {
                 var associationEnds = this.xmiWrapper.GetAssociationEnds(xAggregation);
 
-                var aggregationKind = associationEnds.Item1.OptionalAttributeValue("aggregation")
+                var aggregationKindString = associationEnds.Item1.OptionalAttributeValue("aggregation")
                                       ?? associationEnds.Item2.OptionalAttributeValue("aggregation");
-                
-                if (aggregationKind == "composite")
-                {
-                    var principalTypeAssociationXAttribute =
-                        string.IsNullOrWhiteSpace(associationEnds.Item1.OptionalAttributeValue("aggregation"))
-                            ? associationEnds.Item2
-                            : associationEnds.Item1;
 
-                    var dependentTypeAssociationXAttribute = associationEnds.Item1.Equals(principalTypeAssociationXAttribute)
+                var principalTypeAssociationXAttribute =
+                    string.IsNullOrWhiteSpace(associationEnds.Item1.OptionalAttributeValue("aggregation"))
                         ? associationEnds.Item2
                         : associationEnds.Item1;
 
-                    var principalTypeId = this.xmiWrapper.GetElementsId(principalTypeAssociationXAttribute.Parent);
+                var dependentTypeAssociationXAttribute = associationEnds.Item1.Equals(principalTypeAssociationXAttribute)
+                    ? associationEnds.Item2
+                    : associationEnds.Item1;
 
-                    var principalType = typesList.Single(x => x.XmiID == principalTypeId);
-                    
-                    var principalTypeMultiplicity = this.xmiWrapper.GetMultiplicity(dependentTypeAssociationXAttribute);
+                var principalTypeId = this.xmiWrapper.GetElementsId(principalTypeAssociationXAttribute.Parent);
 
-                    var dependentTypeId = this.xmiWrapper.GetElementsId(dependentTypeAssociationXAttribute.Parent);
+                var principalType = typesList.Single(x => x.XmiID == principalTypeId);
 
-                    var dependentType = typesList.Single(x => x.XmiID == dependentTypeId);
+                var principalTypeMultiplicity = this.xmiWrapper.GetMultiplicity(dependentTypeAssociationXAttribute);
 
-                    var dependentTypeMultiplicity = this.xmiWrapper.GetMultiplicity(principalTypeAssociationXAttribute);
+                var dependentTypeId = this.xmiWrapper.GetElementsId(dependentTypeAssociationXAttribute.Parent);
 
-                    aggregations.Add(
-                        new Aggregation
-                        {
-                            AggregationKind = AggregationKinds.Composition,
-                            PrincipalType = principalType,
-                            PrincipalTypeMultiplicity = principalTypeMultiplicity,
-                            PrincipalTypeAssociationXAttribute = principalTypeAssociationXAttribute,
-                            DependentType = dependentType,
-                            DependentTypeMultiplicity = dependentTypeMultiplicity,
-                            DependentTypeAssociationXAttribute = dependentTypeAssociationXAttribute
-                        });
-                }
+                var dependentType = typesList.Single(x => x.XmiID == dependentTypeId);
+
+                var dependentTypeMultiplicity = this.xmiWrapper.GetMultiplicity(principalTypeAssociationXAttribute);
+
+                var aggregationKind = this.GetAggregationKind(aggregationKindString);
+                
+                aggregations.Add(
+                    new Aggregation
+                    {
+                        AggregationKind = aggregationKind,
+                        PrincipalType = principalType,
+                        PrincipalTypeMultiplicity = principalTypeMultiplicity,
+                        PrincipalTypeAssociationXAttribute = principalTypeAssociationXAttribute,
+                        DependentType = dependentType,
+                        DependentTypeMultiplicity = dependentTypeMultiplicity,
+                        DependentTypeAssociationXAttribute = dependentTypeAssociationXAttribute
+                    });
             }
 
             return aggregations;
+        }
+
+        private AggregationKinds GetAggregationKind(string aggregationKindString)
+        {
+            switch (aggregationKindString)
+            {
+                case "composite":
+                    return AggregationKinds.Composition;
+                case "shared":
+                    return AggregationKinds.Shared;
+                default:
+                    throw new NotImplementedException($"No aggregation kind implemented for value: {aggregationKindString}");
+            }
         }
     }
 }
