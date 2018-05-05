@@ -47,6 +47,12 @@ if (this.onModelCreatingBlock) {
 
 <#
 	}
+	foreach (var command in this.customModelBuilderCommands)
+	{
+#>
+			<#=command#>
+<#                     
+	}
 }
 #>
 

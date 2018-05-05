@@ -12,6 +12,8 @@
 
         public bool HasDefaultValue { get; private set; }
 
+        public ExtendedCodeTypeReference ExtendedTypeReference => (ExtendedCodeTypeReference) this.Type;
+
         public string DefaultValueString
         {
             get

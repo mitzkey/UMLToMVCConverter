@@ -6,13 +6,7 @@
 <#@ import namespace="UMLToMVCConverter.ExtensionMethods"#>
 <#@ import namespace="Autofac"#>
 <#@ assembly name="System.Core"#>
-<#
-if(this.codeTypeDeclaration.IsStruct) {
-	#>	[ComplexType]
-<#
-}
-
-#>	public<#
+	public<#
 
 if(this.codeTypeDeclaration.IsAbstract) {
 	#> abstract<#
@@ -53,7 +47,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 	else if (cm is CodeMemberProperty) {
 		var cmp = (ExtendedCodeMemberProperty) cm;
 		string generics = "";
-		var type = (ExtendedCodeTypeReference)cmp.Type;
+		var type = cmp.ExtendedTypeReference;
 		#>
 
 

@@ -28,17 +28,17 @@ namespace UMLToMVCConverter.ExtendedTypes
             this.ExtType = type;
         }
 
-        private ExtendedCodeTypeReference(string typeName, bool isBaseType)
+        private ExtendedCodeTypeReference(string typeName, bool isBaseType, string referenceTypeXmiID)
             : base(typeName)
         {
-            this.ExtType = new ExtendedType(typeName, isBaseType);
+            this.ExtType = new ExtendedType(typeName, isBaseType, referenceTypeXmiID);
         }
 
         public static ExtendedCodeTypeReference CreateForType(ExtendedType type)
         {
             if (type.Type == null)
             {
-                return new ExtendedCodeTypeReference(type.Name, type.IsBaseType);
+                return new ExtendedCodeTypeReference(type.Name, type.IsBaseType, type.ReferenceTypeXmiID);
             }
             else
             {

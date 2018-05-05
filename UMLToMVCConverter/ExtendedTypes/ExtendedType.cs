@@ -19,8 +19,15 @@ namespace UMLToMVCConverter.ExtendedTypes
         public bool IsCollection { get; }
 
         public bool IsBaseType { get; }
+
+        public string ReferenceTypeXmiID { get; }
+
+        public bool IsReferencingXmiDeclaredType => !string.IsNullOrWhiteSpace(this.ReferenceTypeXmiID);
+
         public List<ExtendedType> Generics { get; set; }
+
         public bool IsGeneric { get; set; }
+
         public string Name
         {
             get
@@ -53,6 +60,14 @@ namespace UMLToMVCConverter.ExtendedTypes
             this.IsCollection = isCollection;
             this.IsBaseType = isBaseType;
             this.Generics = generics?.ToList() ?? new List<ExtendedType>();
+        }
+
+        public ExtendedType(string typeName, bool isBaseType, string referenceTypeXmiID)
+        {
+            this.IsNamedType = true;
+            this.IsBaseType = isBaseType;
+            this.ReferenceTypeXmiID = referenceTypeXmiID;
+            this.namedTypeName = typeName;
         }
 
         public ExtendedType(string typeName, bool isBaseType)

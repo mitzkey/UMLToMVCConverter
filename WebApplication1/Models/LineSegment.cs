@@ -6,10 +6,12 @@ namespace WebApplication1.Models
 	using System.Web;
 	using System.ComponentModel.DataAnnotations;
 
-	public class Point {
+	public class LineSegment {
 
-		public Nullable<Int32> X { get; set; }
+		public int ID {get; set;}
 
-		public Nullable<Int32> Y { get; set; }
+		public Point X { get; set; }
+
+		public Point Y { get; set; }
 	}
 }

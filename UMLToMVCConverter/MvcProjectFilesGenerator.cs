@@ -81,7 +81,9 @@
                            && !i.IsStruct)
                 .ToList();
 
-            var fileContent = this.dbContextClassTextTemplate.TransformText(standaloneEntityTypes, relationshipModels);
+            var structs = codeTypeDeclarations.Where(x => x.IsStruct);
+
+            var fileContent = this.dbContextClassTextTemplate.TransformText(standaloneEntityTypes, relationshipModels, structs);
             var fileOutputPath = Path.Combine(this.mvcProject.ModelsFolderPath, this.mvcProject.DbContextName + ".cs");
             File.WriteAllText(fileOutputPath, fileContent);
 

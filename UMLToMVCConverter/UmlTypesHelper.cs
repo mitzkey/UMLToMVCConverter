@@ -131,7 +131,7 @@
             var innerType = xElement.OptionalAttributeValue("type");
             var xInnerTypeElement = this.xmiWrapper.GetXElementById(innerType);
             var typeName = xInnerTypeElement.ObligatoryAttributeValue("name");
-            return new ExtendedType(typeName, false);
+            return new ExtendedType(typeName, false, innerType);
         }
         
         private ExtendedType GetNotNullableType(XElement xElement)

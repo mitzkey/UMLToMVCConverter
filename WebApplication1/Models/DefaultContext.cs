@@ -17,8 +17,6 @@ namespace WebApplication1.Models
 
 		public DbSet<Baby> Baby { get; set; }
 
-		public DbSet<Point> Point { get; set; }
-
 		public DbSet<CompanyInfo> CompanyInfo { get; set; }
 
 		public DbSet<Car> Car { get; set; }
@@ -36,6 +34,8 @@ namespace WebApplication1.Models
 		public DbSet<Seat> Seat { get; set; }
 
 		public DbSet<Enterprise> Enterprise { get; set; }
+
+		public DbSet<LineSegment> LineSegment { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
@@ -85,6 +85,8 @@ namespace WebApplication1.Models
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
+			modelBuilder.Entity<LineSegment>().OwnsOne(p => p.X);
+			modelBuilder.Entity<LineSegment>().OwnsOne(p => p.Y);
 
 		}
 	}

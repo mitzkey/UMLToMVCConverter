@@ -4,6 +4,7 @@ using System.Data.Entity.Design.PluralizationServices;
 
 namespace UMLToMVCConverter.CodeTemplates
 {
+    using System.CodeDom;
     using System.Linq;
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.Interfaces;
@@ -15,6 +16,7 @@ namespace UMLToMVCConverter.CodeTemplates
         private bool onModelCreatingBlock;
         private readonly Dictionary<string, IEnumerable<string>> complexKeys;
         private IEnumerable<EFRelationshipModel> relationships;
+        private List<string> customModelBuilderCommands;
 
         public DbContextTextTemplate(IMvcProject mvcProject)
         {
@@ -22,13 +24,16 @@ namespace UMLToMVCConverter.CodeTemplates
             this.typesNamesAndPlurals = new List<Tuple<string, string>>();
             this.onModelCreatingBlock = false;
             this.complexKeys = new Dictionary<string, IEnumerable<string>>();
+            this.customModelBuilderCommands = new List<string>();
         }
 
-        public string TransformText(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<EFRelationshipModel> relationshipModels)
+        public string TransformText(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<EFRelationshipModel> relationshipModels, IEnumerable<ExtendedCodeTypeDeclaration> structs)
         {
             this.relationships = relationshipModels;
 
-            foreach (var codeTypeDeclaration in codeTypeDeclarations)
+            var extendedCodeTypeDeclarations = codeTypeDeclarations.ToList();
+
+            foreach (var codeTypeDeclaration in extendedCodeTypeDeclarations)
             {
                 if (codeTypeDeclaration.HasComplexKey)
                 {
@@ -48,6 +53,31 @@ namespace UMLToMVCConverter.CodeTemplates
                     typeNamePlural = typeName;
                 }
                 this.typesNamesAndPlurals.Add(new Tuple<string, string>(typeName, typeNamePlural));
+            }
+
+            foreach (var typeDeclaration in extendedCodeTypeDeclarations)
+            {
+                foreach (CodeTypeMember typeMember in typeDeclaration.Members)
+                {
+                    if (typeMember is CodeMemberProperty)
+                    {
+                        var property = (ExtendedCodeMemberProperty) typeMember;
+
+                        var typeReference = property.ExtendedTypeReference;
+
+                        if (typeReference.ExtType.IsReferencingXmiDeclaredType)
+                        {
+                            var referencedType =
+                                structs.SingleOrDefault(x => typeReference.ExtType.ReferenceTypeXmiID.Equals(x.XmiID));
+
+                            if (referencedType != null)
+                            {
+                                this.customModelBuilderCommands
+                                    .Add($"modelBuilder.Entity<{typeDeclaration.Name}>().OwnsOne(p => p.{property.Name});");
+                            }
+                        }
+                    }
+                }
             }
 
             return this.TransformText();

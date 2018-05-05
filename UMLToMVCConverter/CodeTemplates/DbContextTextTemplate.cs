@@ -185,6 +185,24 @@ if (this.onModelCreatingBlock) {
             #line 48 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
 
 	}
+	foreach (var command in this.customModelBuilderCommands)
+	{
+
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\t");
+            
+            #line 53 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(command));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 54 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+                     
+	}
 }
 
             

@@ -84,14 +84,7 @@
             var type = typeDeclarations.Single(t => t.Name.Equals(xTypeName));
 
             type.IsClass = this.umlTypesHelper.IsClass(xType);
-            if (!type.IsClass)
-            {
-                type.IsStruct = this.umlTypesHelper.IsStruct(xType);
-                if (type.IsStruct)
-                {
-                    throw new Exception("Undandled type node:\n" + xType);
-                }
-            }
+            type.IsStruct = this.umlTypesHelper.IsStruct(xType);
 
             type.TypeAttributes = TypeAttributes.Public;
 
