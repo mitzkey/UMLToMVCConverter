@@ -22,7 +22,7 @@ if(this.codeTypeDeclaration.BaseClassName != null) {
 
 <#
 if(this.codeTypeDeclaration.IsEnum) {
-#>		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]<#
+#>		[DatabaseGenerated(DatabaseGeneratedOption.None)]<#
 }
 if((this.codeTypeDeclaration.IsClass 
 	|| this.codeTypeDeclaration.IsEnum)

@@ -96,6 +96,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="CodeTemplates\DatabaseSeedInitializerTextTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseSeedInitializerTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTemplates\DatabaseSeedInitializerTextTemplate.Data.cs" />
+    <Compile Include="CodeTemplates\IProgramCsTextTemplate.cs" />
+    <Compile Include="CodeTemplates\ProgramCsTextTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProgramCsTextTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CodeTemplates\ProgramCsTextTemplate.Data.cs" />
+    <Compile Include="EnumerationModel.cs" />
+    <Compile Include="CodeTemplates\IDatabaseSeedInitializerTextTemplate.cs" />
     <Compile Include="EFRelationshipModel.cs" />
     <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -144,15 +159,17 @@
     </Compile>
     <Compile Include="DataModel.cs" />
     <Compile Include="DataModelFactory.cs" />
+    <Compile Include="EnumerationModelsFactory.cs" />
     <Compile Include="ForeignKeysGenerator.cs" />
-    <Compile Include="IForeignKeysGenerator.cs" />
-    <Compile Include="INavigationalPropertiesGenerator.cs" />
+    <Compile Include="Interfaces\IEnumerationModelsFactory.cs" />
+    <Compile Include="Interfaces\IForeignKeysGenerator.cs" />
+    <Compile Include="Interfaces\INavigationalPropertiesGenerator.cs" />
     <Compile Include="Interfaces\IAggregationsFactory.cs" />
-    <Compile Include="IDataModelFactory.cs" />
-    <Compile Include="IMvcProjectFilesGenerator.cs" />
+    <Compile Include="Interfaces\IDataModelFactory.cs" />
+    <Compile Include="Interfaces\IMvcProjectFilesGenerator.cs" />
     <Compile Include="Interfaces\IEFRelationshipModelFactory.cs" />
-    <Compile Include="IPropertyGenerator.cs" />
-    <Compile Include="ITypesFactory.cs" />
+    <Compile Include="Interfaces\IPropertyGenerator.cs" />
+    <Compile Include="Interfaces\ITypesFactory.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
     <Compile Include="EFRelationshipModelFactory.cs" />
     <Compile Include="NavigationalPropertiesGenerator.cs" />
@@ -263,9 +280,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CodeTemplates\DatabaseSeedInitializerTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DatabaseSeedInitializerTextTemplate.cs</LastGenOutput>
+    </Content>
     <Content Include="CodeTemplates\DbContextFactoryClassTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>DbContextFactoryClassTextTemplate.cs</LastGenOutput>
+    </Content>
+    <Content Include="CodeTemplates\ProgramCsTextTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ProgramCsTextTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

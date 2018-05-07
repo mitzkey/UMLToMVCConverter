@@ -94,7 +94,7 @@ if(this.codeTypeDeclaration.IsEnum) {
             
             #line default
             #line hidden
-            this.Write("\t\t[DatabaseGenerated(DatabaseGeneratedOption.Identity)]");
+            this.Write("\t\t[DatabaseGenerated(DatabaseGeneratedOption.None)]");
             
             #line 25 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 

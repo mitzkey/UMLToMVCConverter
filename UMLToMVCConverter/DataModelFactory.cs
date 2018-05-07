@@ -11,14 +11,16 @@
         private readonly IForeignKeysGenerator foreignKeysGenerator;
         private readonly IEFRelationshipModelFactory efRelationshipModelFactory;
         private readonly INavigationalPropertiesGenerator nagivationalPropertiesGenerator;
+        private readonly IEnumerationModelsFactory enumerationModelsFactory;
 
-        public DataModelFactory(ITypesFactory typesFactory, IAggregationsFactory aggregationsFactory, IForeignKeysGenerator foreignKeysGenerator, IEFRelationshipModelFactory efRelationshipModelFactory, INavigationalPropertiesGenerator nagivationalPropertiesGenerator)
+        public DataModelFactory(ITypesFactory typesFactory, IAggregationsFactory aggregationsFactory, IForeignKeysGenerator foreignKeysGenerator, IEFRelationshipModelFactory efRelationshipModelFactory, INavigationalPropertiesGenerator nagivationalPropertiesGenerator, IEnumerationModelsFactory enumerationModelsFactory)
         {
             this.typesFactory = typesFactory;
             this.aggregationsFactory = aggregationsFactory;
             this.foreignKeysGenerator = foreignKeysGenerator;
             this.efRelationshipModelFactory = efRelationshipModelFactory;
             this.nagivationalPropertiesGenerator = nagivationalPropertiesGenerator;
+            this.enumerationModelsFactory = enumerationModelsFactory;
         }
 
         public DataModel Create(XElement xUmlModel)
@@ -33,7 +35,14 @@
 
             var efRelationshipModels = this.efRelationshipModelFactory.Create(aggregations);
 
-            return new DataModel(types, efRelationshipModels);
+            var enumerationModels = this.enumerationModelsFactory.Create(types);
+
+            return new DataModel
+            {
+                Types = types,
+                EFRelationshipModels = efRelationshipModels,
+                EnumerationModels = enumerationModels
+            };
         }
     }
 }

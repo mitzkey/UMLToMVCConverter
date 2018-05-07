@@ -21,8 +21,10 @@
         private readonly IDbContextClassTextTemplate dbContextClassTextTemplate;
         private readonly IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate;
         private readonly IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate;
+        private readonly IDatabaseSeedInitializerTextTemplate databaseSeedInitializerTextTemplate;
+        private readonly IProgramCsTextTemplate programCsTextTemplate;
 
-        public MvcProjectFilesGenerator(ILogger logger, IStartupCsConfigurator startupCsConfigurator, IMvcProject mvcProject, IComponentContext componentContext, IDbContextClassTextTemplate dbContextClassTextTemplate, IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate, IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate)
+        public MvcProjectFilesGenerator(ILogger logger, IStartupCsConfigurator startupCsConfigurator, IMvcProject mvcProject, IComponentContext componentContext, IDbContextClassTextTemplate dbContextClassTextTemplate, IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate, IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate, IDatabaseSeedInitializerTextTemplate databaseSeedInitializerTextTemplate, IProgramCsTextTemplate programCsTextTemplate)
         {
             this.logger = logger;
             this.startupCsConfigurator = startupCsConfigurator;
@@ -31,6 +33,8 @@
             this.dbContextClassTextTemplate = dbContextClassTextTemplate;
             this.migrationsManagerClassTextTemplate = migrationsManagerClassTextTemplate;
             this.dbContextFactoryClassTextTemplate = dbContextFactoryClassTextTemplate;
+            this.databaseSeedInitializerTextTemplate = databaseSeedInitializerTextTemplate;
+            this.programCsTextTemplate = programCsTextTemplate;
         }
 
         public void GenerateFiles(DataModel dataModel)
@@ -46,7 +50,31 @@
             this.GenerateDbContextClass(dataModel.Types, dataModel.EFRelationshipModels);
             this.GenerateMigrationsManager();
             this.GenerateDbContextFactoryClass();
+            this.GenerateDatabaseSeedInitializer(dataModel.EnumerationModels);
+            this.GenerateProgramCs();
             Directory.CreateDirectory(this.mvcProject.MigrationsFolderPath);
+        }
+
+        private void GenerateProgramCs()
+        {
+            this.logger.LogInfo("Generating Program.cs");
+
+            var fileContent = this.programCsTextTemplate.TransformText();
+            var fileOutputPath = Path.Combine(this.mvcProject.ProjectFolderPath, "Program.cs");
+            File.WriteAllText(fileOutputPath, fileContent);
+
+            this.logger.LogInfo($"Generated {fileOutputPath}");
+        }
+
+        private void GenerateDatabaseSeedInitializer(IEnumerable<EnumerationModel> enumerationModels)
+        {
+            this.logger.LogInfo("Generating DatabaseSeedInitializer.cs");
+
+            var fileContent = this.databaseSeedInitializerTextTemplate.TransformText(enumerationModels);
+            var fileOutputPath = Path.Combine(this.mvcProject.ProjectFolderPath, "DatabaseSeedInitializer.cs");
+            File.WriteAllText(fileOutputPath, fileContent);
+
+            this.logger.LogInfo($"Generated {fileOutputPath}");
         }
 
         private void GenerateDbContextFactoryClass()

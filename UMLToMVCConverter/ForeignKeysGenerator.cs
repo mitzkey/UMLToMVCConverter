@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using UMLToMVCConverter.ExtendedTypes;
+    using UMLToMVCConverter.Interfaces;
 
     public class ForeignKeysGenerator : IForeignKeysGenerator
     {
