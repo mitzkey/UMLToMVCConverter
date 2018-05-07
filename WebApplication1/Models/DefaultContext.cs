@@ -37,6 +37,8 @@ namespace WebApplication1.Models
 
 		public DbSet<LineSegment> LineSegment { get; set; }
 
+		public DbSet<StatusWniosku> StatusWniosku { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
 			modelBuilder.Entity<Car>()

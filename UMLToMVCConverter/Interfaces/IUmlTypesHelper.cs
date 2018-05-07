@@ -11,5 +11,6 @@
         bool IsAbstract(XElement type);
         bool IsClass(XElement type);
         bool IsStruct(XElement type);
+        bool IsEnum(XElement type);
     }
 }

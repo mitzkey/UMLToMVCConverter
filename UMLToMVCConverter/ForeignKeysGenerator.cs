@@ -6,6 +6,13 @@
 
     public class ForeignKeysGenerator : IForeignKeysGenerator
     {
+        private readonly IPropertyGenerator propertyGenerator;
+
+        public ForeignKeysGenerator(IPropertyGenerator propertyGenerator)
+        {
+            this.propertyGenerator = propertyGenerator;
+        }
+
         public void Generate(IEnumerable<Aggregation> aggregations)
         {
             foreach (var aggregation in aggregations)
@@ -26,15 +33,7 @@
                 {
                     var foreignKeyName = compositeType.Name + "ID";
 
-                    var generic = new ExtendedType(typeof(int), true);
-                    var cSharpType = new ExtendedType(typeof(Nullable), true, true, new List<ExtendedType> { generic });
-                    var foreignKeyType = ExtendedCodeTypeReference.CreateForType(cSharpType);
-                    var foreignKeyProperty = new ExtendedCodeMemberProperty
-                    {
-                        Type = foreignKeyType,
-                        Name = foreignKeyName,
-                        HasSet = true
-                    };
+                    var foreignKeyProperty = this.propertyGenerator.GenerateBasicProperty(foreignKeyName, typeof(Nullable), typeof(int));
 
                     composedType.ForeignKeys.Add(foreignKeyName, foreignKeyProperty);
                 }

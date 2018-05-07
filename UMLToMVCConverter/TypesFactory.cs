@@ -85,6 +85,7 @@
 
             type.IsClass = this.umlTypesHelper.IsClass(xType);
             type.IsStruct = this.umlTypesHelper.IsStruct(xType);
+            type.IsEnum = this.umlTypesHelper.IsEnum(xType);
 
             type.TypeAttributes = TypeAttributes.Public;
 
@@ -115,6 +116,17 @@
             foreach (var xAttribute in xAttributes)
             {
                 var property = this.propertyGenerator.Generate(type, xAttribute);
+                type.Members.Add(property);
+            }
+
+            if (type.IsEnum)
+            {
+                var counter = 0;
+                foreach (var literal in this.xmiWrapper.GetLiterals(xType))
+                {
+                    type.Literals.Add(++counter, literal.ObligatoryAttributeValue("name"));
+                }
+                var property = this.propertyGenerator.GenerateBasicProperty("Name", typeof(string));
                 type.Members.Add(property);
             }
         }

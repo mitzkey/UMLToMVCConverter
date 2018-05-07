@@ -5,8 +5,10 @@ namespace WebApplication1.Models
 	using System.Linq;
 	using System.Web;
 	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 	public abstract class Person {
+
 
 		public int ID {get; set;}
 

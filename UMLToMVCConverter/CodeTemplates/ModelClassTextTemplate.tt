@@ -12,6 +12,7 @@ namespace <#= this.mvcProject.Name #>.Models
 	using System.Linq;
 	using System.Web;
 	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 <#
 var code = this.basicTypeTextTemplate.TransformText(codeTypeDeclaration);

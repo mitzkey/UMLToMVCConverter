@@ -60,6 +60,13 @@
             return "uml:DataType".Equals(sType);
         }
 
+        public bool IsEnum(XElement type)
+        {
+            var sType = this.xmiWrapper.ObligatoryAttributeValueWithNamespace(type, "type");
+
+            return "uml:Enumeration".Equals(sType);
+        }
+
         public bool IsAbstract(XElement type)
         {
             return Convert.ToBoolean(type.OptionalAttributeValue("isAbstract"));

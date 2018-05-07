@@ -32,7 +32,8 @@
             return umlModel.Descendants()
                 .Where(i => i.Attributes().
                                 Contains(new XAttribute(this.xmiNamespace + "type", "uml:Class"), this.attributeEqualityComparer)
-                            || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:DataType"), this.attributeEqualityComparer));
+                            || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:DataType"), this.attributeEqualityComparer)
+                            || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:Enumeration"), this.attributeEqualityComparer));
         }
 
         public XElement GetXTypeGeneralization(XElement type)
@@ -99,6 +100,11 @@
             }
 
 
+        }
+
+        public IEnumerable<XElement> GetLiterals(XElement xType)
+        {
+            return xType.Descendants("ownedLiteral");
         }
 
         public IEnumerable<XElement> GetXAttributes(XElement type)

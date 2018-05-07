@@ -1,6 +1,7 @@
 ﻿namespace UMLToMVCConverter.Interfaces
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Xml.Linq;
 
@@ -23,5 +24,6 @@
         Tuple<XElement, XElement> GetAssociationEnds(XElement xAssociation);
         string GetElementsId(XElement xElement);
         IEnumerable<XElement> GetXAggregations(XElement xUmlModel);
+        IEnumerable<XElement> GetLiterals(XElement xType);
     }
 }

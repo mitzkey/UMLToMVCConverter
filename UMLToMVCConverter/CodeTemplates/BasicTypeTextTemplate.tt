@@ -18,13 +18,17 @@ if(this.codeTypeDeclaration.BaseClassName != null) {
 	#>: <#= this.codeTypeDeclaration.BaseClassName#> <#
 }
 
-#>{<#
+#>{
 
-if(this.codeTypeDeclaration.IsClass 
+<#
+if(this.codeTypeDeclaration.IsEnum) {
+#>		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]<#
+}
+if((this.codeTypeDeclaration.IsClass 
+	|| this.codeTypeDeclaration.IsEnum)
 	&& string.IsNullOrWhiteSpace(this.codeTypeDeclaration.BaseClassName)
 	&& !this.codeTypeDeclaration.HasKey) {
 	#>
-
 
 		public int ID {get; set;}<#
 }

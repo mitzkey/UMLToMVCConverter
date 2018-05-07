@@ -5,10 +5,14 @@ namespace WebApplication1.Models
 	using System.Linq;
 	using System.Web;
 	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 	public class Baby : Person {
+
+
 		
 			public class Nested {
+		
 		
 				public int ID {get; set;}
 		

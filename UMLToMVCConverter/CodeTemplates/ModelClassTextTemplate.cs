@@ -37,9 +37,10 @@ namespace UMLToMVCConverter.CodeTemplates
             #line default
             #line hidden
             this.Write(".Models\r\n{\r\n\tusing System;\r\n\tusing System.Collections.Generic;\r\n\tusing System.Lin" +
-                    "q;\r\n\tusing System.Web;\r\n\tusing System.ComponentModel.DataAnnotations;\r\n\r\n");
+                    "q;\r\n\tusing System.Web;\r\n\tusing System.ComponentModel.DataAnnotations;\r\n\tusing Sy" +
+                    "stem.ComponentModel.DataAnnotations.Schema;\r\n\r\n");
             
-            #line 16 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+            #line 17 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
 
 var code = this.basicTypeTextTemplate.TransformText(codeTypeDeclaration);
 
@@ -47,7 +48,7 @@ var code = this.basicTypeTextTemplate.TransformText(codeTypeDeclaration);
             #line default
             #line hidden
             
-            #line 18 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+            #line 19 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(code));
             
             #line default

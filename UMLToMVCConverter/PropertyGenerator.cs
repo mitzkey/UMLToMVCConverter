@@ -2,6 +2,7 @@
 {
     using System;
     using System.CodeDom;
+    using System.Collections.Generic;
     using System.Xml.Linq;
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
@@ -76,6 +77,32 @@
                 property.IsID = true;
                 type.PrimaryKeyAttributes.Add(property);
             }
+
+            return property;
+        }
+
+        public ExtendedCodeMemberProperty GenerateBasicProperty(string name, Type type, Type genericType = null)
+        {
+            var isGeneric = genericType != null;
+
+            ExtendedType cSharpType;
+            if (isGeneric)
+            {
+                var generic = new ExtendedType(genericType, true);
+                cSharpType = new ExtendedType(type, true, true, new List<ExtendedType> {generic});
+            }
+            else
+            {
+                cSharpType = new ExtendedType(type, true);
+            }
+
+            var propertyType = ExtendedCodeTypeReference.CreateForType(cSharpType);
+            var property = new ExtendedCodeMemberProperty
+            {
+                Type = propertyType,
+                Name = name,
+                HasSet = true
+            };
 
             return property;
         }
