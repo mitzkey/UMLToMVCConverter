@@ -9,6 +9,8 @@ namespace WebApplication1.Models
 		{
 		}
 
+		public DbSet<StatusWniosku> StatusWniosku { get; set; }
+
 		public DbSet<FavouriteNumber> FavouriteNumber { get; set; }
 
 		public DbSet<Worker> Worker { get; set; }
@@ -36,8 +38,6 @@ namespace WebApplication1.Models
 		public DbSet<Enterprise> Enterprise { get; set; }
 
 		public DbSet<LineSegment> LineSegment { get; set; }
-
-		public DbSet<StatusWniosku> StatusWniosku { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 

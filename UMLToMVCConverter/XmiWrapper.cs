@@ -107,6 +107,27 @@
             return xType.Descendants("ownedLiteral");
         }
 
+        public XElementType GetXElementType(XElement xElement)
+        {
+            var typeString = xElement.Attribute(this.xmiNamespace + "type").Value;
+
+            switch (typeString)
+            {
+                case "uml:InstanceValue":
+                    return XElementType.InstanceValue;
+                case "uml:LiteralString":
+                    return XElementType.LiteralString;
+                case "uml:Enumeration":
+                    return XElementType.Enumeration;
+                case "uml:Class":
+                    return XElementType.Class;
+                case "uml:DataType":
+                    return XElementType.DataType;
+                default:
+                    throw new NotImplementedException($"Uknown xElement type: {typeString}");
+            }
+        }
+
         public IEnumerable<XElement> GetXAttributes(XElement type)
         {
             return type.Descendants("ownedAttribute")

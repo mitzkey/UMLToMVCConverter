@@ -169,7 +169,10 @@
     <Compile Include="Interfaces\IMvcProjectFilesGenerator.cs" />
     <Compile Include="Interfaces\IEFRelationshipModelFactory.cs" />
     <Compile Include="Interfaces\IPropertyGenerator.cs" />
-    <Compile Include="Interfaces\ITypesFactory.cs" />
+    <Compile Include="Interfaces\ITypesGenerator.cs" />
+    <Compile Include="ITypesRepository.cs" />
+    <Compile Include="TypesRepository.cs" />
+    <Compile Include="XElementType.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
     <Compile Include="EFRelationshipModelFactory.cs" />
     <Compile Include="NavigationalPropertiesGenerator.cs" />
@@ -216,7 +219,7 @@
     <Compile Include="ProjectPublisher.cs" />
     <Compile Include="ScriptRunner.cs" />
     <Compile Include="StartupCsConfigurator.cs" />
-    <Compile Include="TypesFactory.cs" />
+    <Compile Include="TypesGenerator.cs" />
     <Compile Include="UmlTypesHelper.cs" />
     <Compile Include="XmiWrapper.cs" />
     <Compile Include="XAttributeEqualityComparer.cs" />

@@ -15,5 +15,7 @@ namespace WebApplication1.Models
 		public String MyIdentifier { get; set; }
 
 		public Nullable<Int32> Another { get; set; }
+
+		public StatusWniosku Status { get; set; } = StatusWniosku.nierozpatrzony;
 	}
 }

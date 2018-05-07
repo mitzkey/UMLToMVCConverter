@@ -1,15 +1,20 @@
 ﻿namespace UMLToMVCConverter
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.Interfaces;
 
     public class EnumerationModelsFactory : IEnumerationModelsFactory
     {
-        public IEnumerable<EnumerationModel> Create(List<ExtendedCodeTypeDeclaration> types)
+        private readonly ITypesRepository typesRepository;
+
+        public EnumerationModelsFactory(ITypesRepository typesRepository)
         {
-            foreach (var type in types.Where(t => t.IsEnum))
+            this.typesRepository = typesRepository;
+        }
+
+        public IEnumerable<EnumerationModel> Create()
+        {
+            foreach (var type in this.typesRepository.GetEnums())
             {
                 yield return new EnumerationModel
                 {

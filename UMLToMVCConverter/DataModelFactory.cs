@@ -6,28 +6,30 @@
 
     public class DataModelFactory : IDataModelFactory
     {
-        private readonly ITypesFactory typesFactory;
+        private readonly ITypesGenerator typesGenerator;
         private readonly IAggregationsFactory aggregationsFactory;
         private readonly IForeignKeysGenerator foreignKeysGenerator;
         private readonly IEFRelationshipModelFactory efRelationshipModelFactory;
         private readonly INavigationalPropertiesGenerator nagivationalPropertiesGenerator;
         private readonly IEnumerationModelsFactory enumerationModelsFactory;
+        private readonly ITypesRepository typesRepository;
 
-        public DataModelFactory(ITypesFactory typesFactory, IAggregationsFactory aggregationsFactory, IForeignKeysGenerator foreignKeysGenerator, IEFRelationshipModelFactory efRelationshipModelFactory, INavigationalPropertiesGenerator nagivationalPropertiesGenerator, IEnumerationModelsFactory enumerationModelsFactory)
+        public DataModelFactory(ITypesGenerator typesGenerator, IAggregationsFactory aggregationsFactory, IForeignKeysGenerator foreignKeysGenerator, IEFRelationshipModelFactory efRelationshipModelFactory, INavigationalPropertiesGenerator nagivationalPropertiesGenerator, IEnumerationModelsFactory enumerationModelsFactory, ITypesRepository typesRepository)
         {
-            this.typesFactory = typesFactory;
+            this.typesGenerator = typesGenerator;
             this.aggregationsFactory = aggregationsFactory;
             this.foreignKeysGenerator = foreignKeysGenerator;
             this.efRelationshipModelFactory = efRelationshipModelFactory;
             this.nagivationalPropertiesGenerator = nagivationalPropertiesGenerator;
             this.enumerationModelsFactory = enumerationModelsFactory;
+            this.typesRepository = typesRepository;
         }
 
         public DataModel Create(XElement xUmlModel)
         {
-            var types = this.typesFactory.Create(xUmlModel).ToList();
+            this.typesGenerator.Generate(xUmlModel);
 
-            var aggregations = this.aggregationsFactory.Create(xUmlModel, types).ToList();
+            var aggregations = this.aggregationsFactory.Create(xUmlModel).ToList();
 
             this.nagivationalPropertiesGenerator.Generate(aggregations);
 
@@ -35,11 +37,11 @@
 
             var efRelationshipModels = this.efRelationshipModelFactory.Create(aggregations);
 
-            var enumerationModels = this.enumerationModelsFactory.Create(types);
+            var enumerationModels = this.enumerationModelsFactory.Create();
 
             return new DataModel
             {
-                Types = types,
+                Types = this.typesRepository.GetAllTypes(),
                 EFRelationshipModels = efRelationshipModels,
                 EnumerationModels = enumerationModels
             };

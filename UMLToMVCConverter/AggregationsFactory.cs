@@ -2,28 +2,26 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Xml.Linq;
-    using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
     using UMLToMVCConverter.Interfaces;
 
     public class AggregationsFactory : IAggregationsFactory
     {
         private readonly IXmiWrapper xmiWrapper;
+        private readonly ITypesRepository typesRepository;
 
-        public AggregationsFactory(IXmiWrapper xmiWrapper)
+        public AggregationsFactory(IXmiWrapper xmiWrapper, ITypesRepository typesRepository)
         {
             this.xmiWrapper = xmiWrapper;
+            this.typesRepository = typesRepository;
         }
 
-        public IEnumerable<Aggregation> Create(XElement xUmlModel, IEnumerable<ExtendedCodeTypeDeclaration> types)
+        public IEnumerable<Aggregation> Create(XElement xUmlModel)
         {
             var aggregations = new List<Aggregation>();
 
             var xAggregations = this.xmiWrapper.GetXAggregations(xUmlModel);
-
-            var typesList = types.ToList();
 
             foreach (var xAggregation in xAggregations)
             {
@@ -43,13 +41,13 @@
 
                 var principalTypeId = this.xmiWrapper.GetElementsId(principalTypeAssociationXAttribute.Parent);
 
-                var principalType = typesList.Single(x => x.XmiID == principalTypeId);
+                var principalType = this.typesRepository.GetTypeByXmiId(principalTypeId);
 
                 var principalTypeMultiplicity = this.xmiWrapper.GetMultiplicity(dependentTypeAssociationXAttribute);
 
                 var dependentTypeId = this.xmiWrapper.GetElementsId(dependentTypeAssociationXAttribute.Parent);
 
-                var dependentType = typesList.Single(x => x.XmiID == dependentTypeId);
+                var dependentType = this.typesRepository.GetTypeByXmiId(dependentTypeId);
 
                 var dependentTypeMultiplicity = this.xmiWrapper.GetMultiplicity(principalTypeAssociationXAttribute);
 

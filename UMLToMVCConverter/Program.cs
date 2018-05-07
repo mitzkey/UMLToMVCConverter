@@ -61,7 +61,7 @@
             builder.RegisterType<ScriptRunner>().As<IScriptRunner>().SingleInstance();
             builder.RegisterType<DbContextTextTemplate>().As<IDbContextClassTextTemplate>().SingleInstance();
             builder.RegisterType<AttributeNameResolver>().As<IAttributeNameResolver>().SingleInstance();
-            builder.RegisterType<TypesFactory>().As<ITypesFactory>().SingleInstance();
+            builder.RegisterType<TypesGenerator>().As<ITypesGenerator>().SingleInstance();
             builder.RegisterType<MvcProjectFilesGenerator>().As<IMvcProjectFilesGenerator>().SingleInstance();
             builder.RegisterType<DataModelFactory>().As<IDataModelFactory>().SingleInstance();
             builder.RegisterType<AggregationsFactory>().As<IAggregationsFactory>().SingleInstance();
@@ -72,6 +72,7 @@
             builder.RegisterType<DatabaseSeedInitializerTextTemplate>().As<IDatabaseSeedInitializerTextTemplate>().SingleInstance();
             builder.RegisterType<EnumerationModelsFactory>().As<IEnumerationModelsFactory>().SingleInstance();
             builder.RegisterType<ProgramCsTextTemplate>().As<IProgramCsTextTemplate>().SingleInstance();
+            builder.RegisterType<TypesRepository>().As<ITypesRepository>().SingleInstance();
 
             builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
             builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();

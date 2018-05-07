@@ -11,22 +11,24 @@
     using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.Mappers;
 
-    public class TypesFactory : ITypesFactory
+    public class TypesGenerator : ITypesGenerator
     {
         private readonly IXmiWrapper xmiWrapper;
         private readonly IUmlTypesHelper umlTypesHelper;
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
         private readonly IPropertyGenerator propertyGenerator;
+        private readonly ITypesRepository typesRepository;
 
-        public TypesFactory(IXmiWrapper xmiWrapper, IUmlTypesHelper umlTypesHelper, IUmlVisibilityMapper umlVisibilityMapper, IPropertyGenerator propertyGenerator)
+        public TypesGenerator(IXmiWrapper xmiWrapper, IUmlTypesHelper umlTypesHelper, IUmlVisibilityMapper umlVisibilityMapper, IPropertyGenerator propertyGenerator, ITypesRepository typesRepository)
         {
             this.xmiWrapper = xmiWrapper;
             this.umlTypesHelper = umlTypesHelper;
             this.umlVisibilityMapper = umlVisibilityMapper;
             this.propertyGenerator = propertyGenerator;
+            this.typesRepository = typesRepository;
         }
 
-        public IEnumerable<ExtendedCodeTypeDeclaration> Create(XElement xUmlModel)
+        public void Generate(XElement xUmlModel)
         {
             var xTypes = this.xmiWrapper.GetXTypes(xUmlModel)
                 .ToList();
@@ -36,11 +38,9 @@
             var xTypesToBuild = xTypes
                 .Where(t => !"nestedClassifier".Equals(t.Name.ToString()));
 
-            var types = this.BuildTypes(xTypesToBuild, typeDeclarations).ToList();
+            this.BuildTypes(xTypesToBuild, typeDeclarations);
 
-            this.GenerateInheritanceRelations(xTypes, types);
-
-            return types;
+            this.GenerateInheritanceRelations(xTypes);
         }
 
         private IEnumerable<ExtendedCodeTypeDeclaration> DeclareTypes(IEnumerable<XElement> xTypes)
@@ -60,20 +60,25 @@
             return typeDeclarations;
         }
 
-        private IEnumerable<ExtendedCodeTypeDeclaration> BuildTypes(
+        private void BuildTypes(
             IEnumerable<XElement> xTypesToBuild,
             List<ExtendedCodeTypeDeclaration> typeDeclarations)
         {
-            var types = new List<ExtendedCodeTypeDeclaration>();
+            var enumerations =
+                xTypesToBuild.Where(x => this.xmiWrapper.GetXElementType(x).Equals(XElementType.Enumeration));
 
-            this.umlTypesHelper.CodeTypeDeclarations = types;
+            var otherTypes =
+                xTypesToBuild.Where(x => !this.xmiWrapper.GetXElementType(x).Equals(XElementType.Enumeration));
 
-            foreach (var xType in xTypesToBuild)
+            foreach (var xEnumeration in enumerations)
             {
-                types.Add(this.BuildType(xType, typeDeclarations));
+                this.typesRepository.Add(this.BuildType(xEnumeration, typeDeclarations));
             }
 
-            return types;
+            foreach (var xType in otherTypes)
+            {
+                this.typesRepository.Add(this.BuildType(xType, typeDeclarations));
+            }
         }
 
         private ExtendedCodeTypeDeclaration BuildType(
@@ -169,8 +174,7 @@
         }
 
         private void GenerateInheritanceRelations(
-            IEnumerable<XElement> xTypes,
-            List<ExtendedCodeTypeDeclaration> types)
+            IEnumerable<XElement> xTypes)
         {
             foreach (var type in xTypes)
             {
@@ -184,13 +188,13 @@
 
                     var baseTypeName = xBaseType.ObligatoryAttributeValue("name");
 
-                    var baseType = types.FirstOrDefault(i => i.Name == baseTypeName);
+                    var baseType = this.typesRepository.GetTypeByName(baseTypeName);
 
                     Insist.IsNotNull(baseType, nameof(baseType));
                     var typeReference = new CodeTypeReference(baseType.Name);
 
                     var childTypeName = type.ObligatoryAttributeValue("name");
-                    var childType = types.FirstOrDefault(i => i.Name == childTypeName);
+                    var childType = this.typesRepository.GetTypeByName(childTypeName);
 
                     Insist.IsNotNull(childType, nameof(childType));
                     childType.BaseTypes.Add(typeReference);

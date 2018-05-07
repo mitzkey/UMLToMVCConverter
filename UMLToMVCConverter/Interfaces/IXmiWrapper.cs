@@ -25,5 +25,6 @@
         string GetElementsId(XElement xElement);
         IEnumerable<XElement> GetXAggregations(XElement xUmlModel);
         IEnumerable<XElement> GetLiterals(XElement xType);
+        XElementType GetXElementType(XElement xElement);
     }
 }

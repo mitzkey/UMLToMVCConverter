@@ -3,6 +3,7 @@
     using System;
     using System.CodeDom;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.ExtensionMethods;
@@ -14,12 +15,16 @@
         private readonly IUmlTypesHelper umlTypesHelper;
         private readonly IAttributeNameResolver attributeNameResolver;
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
+        private readonly IXmiWrapper xmiWrapper;
+        private readonly ITypesRepository typesRepository;
 
-        public PropertyGenerator(IUmlTypesHelper umlTypesHelper, IAttributeNameResolver attributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper)
+        public PropertyGenerator(IUmlTypesHelper umlTypesHelper, IAttributeNameResolver attributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper, IXmiWrapper xmiWrapper, ITypesRepository typesRepository)
         {
             this.umlTypesHelper = umlTypesHelper;
             this.attributeNameResolver = attributeNameResolver;
             this.umlVisibilityMapper = umlVisibilityMapper;
+            this.xmiWrapper = xmiWrapper;
+            this.typesRepository = typesRepository;
         }
 
         public ExtendedCodeMemberProperty Generate(ExtendedCodeTypeDeclaration type, XElement xAttribute)
@@ -56,12 +61,12 @@
             if (xDefaultValue != null)
             {
                 var extendedType = (ExtendedCodeTypeReference)property.Type;
-                if (extendedType.IsGeneric || extendedType.IsNamedType)
+                if (extendedType.IsGeneric)
                 {
-                    throw new NotSupportedException("No default value for generic or declared named types supported");
+                    throw new NotSupportedException("No default value for generic types supported");
                 }
 
-                property.DefaultValueString = xDefaultValue.ObligatoryAttributeValue("value");
+                property.DefaultValueString = this.GetDefaultValueString(xDefaultValue);
             }
 
             var xIsDerived = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isDerived"));
@@ -79,6 +84,26 @@
             }
 
             return property;
+        }
+
+        private string GetDefaultValueString(XElement xDefaultValue)
+        {
+            var defaultValueType = this.xmiWrapper.GetXElementType(xDefaultValue);
+
+            switch (defaultValueType)
+            {
+                case XElementType.LiteralString:
+                    return xDefaultValue.ObligatoryAttributeValue("value");
+                case XElementType.InstanceValue:
+                    var instance = this.xmiWrapper.GetXElementById(xDefaultValue.ObligatoryAttributeValue("instance"));
+                    var instanceValue = instance.ObligatoryAttributeValue("name");
+                    var instanceOwnerId = this.xmiWrapper.GetElementsId(instance.Parent);
+                    var instanceOwnerType = this.typesRepository.GetTypeByXmiId(instanceOwnerId);
+                    var literal = instanceOwnerType.Literals.Single(x => x.Value == instanceValue).Value;
+                    return $"{instanceOwnerType.Name}.{literal}";
+                default:
+                    throw new NotImplementedException($"Unhandled xElement type for default value: {xDefaultValue}");
+            }
         }
 
         public ExtendedCodeMemberProperty GenerateBasicProperty(string name, Type type, Type genericType = null)

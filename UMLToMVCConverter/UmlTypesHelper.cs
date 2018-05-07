@@ -12,8 +12,6 @@
 
     public class UmlTypesHelper : IUmlTypesHelper
     {
-        public List<ExtendedCodeTypeDeclaration> CodeTypeDeclarations { get; set; }
-
         private static readonly IReadOnlyDictionary<string, Type> PrimitiveTypesMap = new ReadOnlyDictionary<string, Type>(
             new Dictionary<string, Type>
             {
@@ -28,10 +26,12 @@
             });
 
         private readonly IXmiWrapper xmiWrapper;
+        private readonly ITypesRepository typesRepository;
 
-        public UmlTypesHelper(IXmiWrapper xmiWrapper)
+        public UmlTypesHelper(IXmiWrapper xmiWrapper, ITypesRepository typesRepository)
         {
             this.xmiWrapper = xmiWrapper;
+            this.typesRepository = typesRepository;
         }
 
         public static Type MapPrimitiveType(string umlType)
@@ -183,7 +183,7 @@
 
             codeTypeDeclaration.Members.Add(valueProperty);
 
-            this.CodeTypeDeclarations.Add(codeTypeDeclaration);
+            this.typesRepository.Add(codeTypeDeclaration);
 
             return entityType;
         }
