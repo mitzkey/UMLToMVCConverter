@@ -60,13 +60,16 @@
             var xDefaultValue = xAttribute.Element("defaultValue");
             if (xDefaultValue != null)
             {
-                var extendedType = (ExtendedCodeTypeReference)property.Type;
-                if (extendedType.IsGeneric)
+                if (!(cSharpType.IsReferencingXmiDeclaredType && this.typesRepository.GetTypeByXmiId(cSharpType.ReferenceTypeXmiID).IsEnum))
                 {
-                    throw new NotSupportedException("No default value for generic types supported");
-                }
+                    var extendedType = (ExtendedCodeTypeReference)property.Type;
+                    if (extendedType.IsGeneric)
+                    {
+                        throw new NotSupportedException("No default value for generic types supported");
+                    }
 
-                property.DefaultValueString = this.GetDefaultValueString(xDefaultValue);
+                    property.DefaultValueString = this.GetDefaultValueString(xDefaultValue);
+                }
             }
 
             var xIsDerived = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isDerived"));
