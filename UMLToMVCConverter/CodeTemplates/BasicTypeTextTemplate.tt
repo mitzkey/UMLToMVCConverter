@@ -78,8 +78,16 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 			#>set; <#
 		}
 		#>}<#
-		if (cmp.HasDefaultValue) {
+		if (cmp.HasDefaultValueString) {
 			#> = <#=cmp.DefaultValueString#>;<#
+		}
+		if (cmp.IsReferencingEnumType) {
+			#>
+		
+
+		[ForeignKey("<#=type.ExtTypeName#>")]
+        public int <#=cmp.Name#>ID { get; set; }
+		<#
 		}
 	}
 	else if (cm is CodeMemberMethod) {

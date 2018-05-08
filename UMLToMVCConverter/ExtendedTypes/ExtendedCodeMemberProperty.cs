@@ -10,7 +10,19 @@
 
         private IReadOnlyDictionary<Type, string> defaultValueFormats;
 
-        public bool HasDefaultValue { get; private set; }
+        public ExtendedCodeMemberProperty(string name, ExtendedCodeTypeReference codeTypeReference, ITypesRepository typesRepository)
+        {
+            this.Name = name;
+            this.Type = codeTypeReference;
+            if (codeTypeReference.ExtType.IsReferencingXmiDeclaredType)
+            {
+                this.ReferencingType = typesRepository.GetTypeByXmiId(codeTypeReference.ExtType.ReferenceTypeXmiID);
+            }
+        }
+
+        public ExtendedCodeTypeDeclaration ReferencingType { get; set; }
+
+        public bool HasDefaultValueString { get; private set; }
 
         public ExtendedCodeTypeReference ExtendedTypeReference => (ExtendedCodeTypeReference) this.Type;
 
@@ -39,7 +51,7 @@
                     { typeof(bool), this.defaultValueString.ToLower() }
                 };
 
-                this.HasDefaultValue = true;
+                this.HasDefaultValueString = true;
             }
         }
 
@@ -48,5 +60,13 @@
         public bool IsID { get; set; }
 
         public bool IsVirtual { get; set; }
+
+        public bool HasDefaultValueKey => this.DefaultValueKey != null;
+
+        public int? DefaultValueKey { get; set; }
+
+        public bool IsReferencingType => this.ReferencingType != null;
+
+        public bool IsReferencingEnumType => this.IsReferencingType && this.ReferencingType.IsEnum;
     }
 }

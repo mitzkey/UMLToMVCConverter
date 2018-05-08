@@ -254,7 +254,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             
             #line 80 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-		if (cmp.HasDefaultValue) {
+		if (cmp.HasDefaultValueString) {
 			
             
             #line default
@@ -271,6 +271,30 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             #line 82 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 		}
+		if (cmp.IsReferencingEnumType) {
+			
+            
+            #line default
+            #line hidden
+            this.Write("\t\t\r\n\r\n\t\t[ForeignKey(\"");
+            
+            #line 88 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(type.ExtTypeName));
+            
+            #line default
+            #line hidden
+            this.Write("\")]\r\n        public int ");
+            
+            #line 89 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(cmp.Name));
+            
+            #line default
+            #line hidden
+            this.Write("ID { get; set; }\r\n\t\t");
+            
+            #line 90 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+
+		}
 	}
 	else if (cm is CodeMemberMethod) {
 		var codeMemberMethod = (CodeMemberMethod) cm;
@@ -284,7 +308,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             #line hidden
             this.Write("\r\n\r\n\t\tpublic");
             
-            #line 94 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            #line 102 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 		if (codeMemberMethod.Attributes.HasFlag(MemberAttributes.Static)) {
 			
@@ -293,7 +317,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             #line hidden
             this.Write(" static");
             
-            #line 96 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            #line 104 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 		}
 		
@@ -302,21 +326,21 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             #line hidden
             this.Write(" ");
             
-            #line 98 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            #line 106 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(returnTypeName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 98 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            #line 106 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(codeMemberMethod.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 98 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            #line 106 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 		bool addComma = false;
 		foreach (ExtendedCodeParameterDeclarationExpression cp in codeMemberMethod.Parameters) {
@@ -327,7 +351,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             #line hidden
             this.Write(",");
             
-            #line 102 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            #line 110 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 			}
 			addComma = true;
@@ -336,13 +360,13 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             #line default
             #line hidden
             
-            #line 105 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            #line 113 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(cp.ExtTypeName + " " + cp.Name));
             
             #line default
             #line hidden
             
-            #line 105 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            #line 113 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 		}
 		
@@ -351,7 +375,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             #line hidden
             this.Write(") {\r\n\t\t\tthrow new NotImplementedException();\r\n\t\t}");
             
-            #line 109 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            #line 117 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 	}
 }

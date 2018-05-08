@@ -34,10 +34,8 @@
             var cSharpType = this.umlTypesHelper.GetXElementCsharpType(xAttribute);
             var typeReference = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
-            var property = new ExtendedCodeMemberProperty
+            var property = new ExtendedCodeMemberProperty(this.attributeNameResolver.GetName(xAttribute), typeReference, this.typesRepository)
             {
-                Type = typeReference,
-                Name = this.attributeNameResolver.GetName(xAttribute),
                 HasSet = true
             };
 
@@ -60,8 +58,19 @@
             var xDefaultValue = xAttribute.Element("defaultValue");
             if (xDefaultValue != null)
             {
-                if (!(cSharpType.IsReferencingXmiDeclaredType && this.typesRepository.GetTypeByXmiId(cSharpType.ReferenceTypeXmiID).IsEnum))
+                if (cSharpType.IsReferencingXmiDeclaredType &&
+                    this.typesRepository.GetTypeByXmiId(cSharpType.ReferenceTypeXmiID).IsEnum)
                 {
+                    var instance = this.xmiWrapper.GetXElementById(xDefaultValue.ObligatoryAttributeValue("instance"));
+                    var instanceValue = instance.ObligatoryAttributeValue("name");
+                    var instanceOwnerId = this.xmiWrapper.GetElementsId(instance.Parent);
+                    var instanceOwnerType = this.typesRepository.GetTypeByXmiId(instanceOwnerId);
+                    var literal = instanceOwnerType.Literals.Single(x => x.Value == instanceValue).Key;
+                    property.DefaultValueKey = literal;
+                }
+                else
+                {
+
                     var extendedType = (ExtendedCodeTypeReference)property.Type;
                     if (extendedType.IsGeneric)
                     {
@@ -125,10 +134,8 @@
             }
 
             var propertyType = ExtendedCodeTypeReference.CreateForType(cSharpType);
-            var property = new ExtendedCodeMemberProperty
+            var property = new ExtendedCodeMemberProperty (name, propertyType, this.typesRepository)
             {
-                Type = propertyType,
-                Name = name,
                 HasSet = true
             };
 

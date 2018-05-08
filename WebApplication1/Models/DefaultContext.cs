@@ -87,6 +87,7 @@ namespace WebApplication1.Models
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
+			modelBuilder.Entity<WithSingleIDProperty>().Property(b => b.StatusID).HasDefaultValueSql("1");
 			modelBuilder.Entity<LineSegment>().OwnsOne(p => p.X);
 			modelBuilder.Entity<LineSegment>().OwnsOne(p => p.Y);
 

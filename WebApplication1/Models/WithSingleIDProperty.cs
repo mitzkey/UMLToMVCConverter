@@ -16,6 +16,10 @@ namespace WebApplication1.Models
 
 		public Nullable<Int32> Another { get; set; }
 
-		public StatusWniosku Status { get; set; }
+		public StatusWniosku Status { get; set; }		
+
+		[ForeignKey("StatusWniosku")]
+        public int StatusID { get; set; }
+		
 	}
 }

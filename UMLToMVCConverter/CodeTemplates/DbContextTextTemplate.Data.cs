@@ -12,11 +12,11 @@ namespace UMLToMVCConverter.CodeTemplates
     public partial class DbContextTextTemplate : IDbContextClassTextTemplate
     {
         private readonly List<Tuple<string, string>> typesNamesAndPlurals;
-        private IMvcProject mvcProject;
+        private readonly IMvcProject mvcProject;
         private bool onModelCreatingBlock;
         private readonly Dictionary<string, IEnumerable<string>> complexKeys;
         private IEnumerable<EFRelationshipModel> relationships;
-        private List<string> customModelBuilderCommands;
+        private readonly List<string> customModelBuilderCommands;
 
         public DbContextTextTemplate(IMvcProject mvcProject)
         {
@@ -27,21 +27,24 @@ namespace UMLToMVCConverter.CodeTemplates
             this.customModelBuilderCommands = new List<string>();
         }
 
-        public string TransformText(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<EFRelationshipModel> relationshipModels, IEnumerable<ExtendedCodeTypeDeclaration> structs)
+        public string TransformText(
+            IEnumerable<ExtendedCodeTypeDeclaration> standaloneEntityTypes,
+            IEnumerable<EFRelationshipModel> relationshipModels,
+            IEnumerable<ExtendedCodeTypeDeclaration> structs)
         {
             this.relationships = relationshipModels;
 
-            var extendedCodeTypeDeclarations = codeTypeDeclarations.ToList();
+            var standaloneEntityTypesList = standaloneEntityTypes.ToList();
 
-            foreach (var codeTypeDeclaration in extendedCodeTypeDeclarations)
+            foreach (var type in standaloneEntityTypesList)
             {
-                if (codeTypeDeclaration.HasComplexKey)
+                if (type.HasComplexKey)
                 {
                     this.onModelCreatingBlock = true;
-                    this.complexKeys.Add(codeTypeDeclaration.Name, codeTypeDeclaration.PrimaryKeyAttributes.Select(x => x.Name));
+                    this.complexKeys.Add(type.Name, type.PrimaryKeyAttributes.Select(x => x.Name));
                 }
 
-                var typeName = codeTypeDeclaration.Name;
+                var typeName = type.Name;
                 string typeNamePlural;
                 if (System.Globalization.CultureInfo.CurrentCulture.Name.Substring(0, 1) == "en")
                 {
@@ -55,7 +58,7 @@ namespace UMLToMVCConverter.CodeTemplates
                 this.typesNamesAndPlurals.Add(new Tuple<string, string>(typeName, typeNamePlural));
             }
 
-            foreach (var typeDeclaration in extendedCodeTypeDeclarations)
+            foreach (var typeDeclaration in standaloneEntityTypesList)
             {
                 foreach (CodeTypeMember typeMember in typeDeclaration.Members)
                 {
@@ -75,6 +78,12 @@ namespace UMLToMVCConverter.CodeTemplates
                                 this.customModelBuilderCommands
                                     .Add($"modelBuilder.Entity<{typeDeclaration.Name}>().OwnsOne(p => p.{property.Name});");
                             }
+                        }
+
+                        if (property.HasDefaultValueKey)
+                        {
+                            this.customModelBuilderCommands
+                                .Add($"modelBuilder.Entity<{typeDeclaration.Name}>().Property(b => b.{property.Name}ID).HasDefaultValueSql(\"{property.DefaultValueKey}\");");
                         }
                     }
                 }
