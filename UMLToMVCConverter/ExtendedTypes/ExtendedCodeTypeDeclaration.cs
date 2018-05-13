@@ -21,6 +21,7 @@
         public string XmiID { get; set; }
 
         public Dictionary<string, ExtendedCodeMemberProperty> ForeignKeys { get; }
+
         public Dictionary<int, string> Literals { get; set; }
 
         public ExtendedCodeTypeDeclaration(string name)

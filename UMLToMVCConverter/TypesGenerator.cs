@@ -72,12 +72,22 @@
 
             foreach (var xEnumeration in enumerations)
             {
-                this.typesRepository.Add(this.BuildType(xEnumeration, typeDeclarations));
+                var type = this.BuildType(xEnumeration, typeDeclarations);
+                this.typesRepository.Add(type);
+
+                this.GenerateProperties(xEnumeration, type);
+
+                this.GenerateMethods(xEnumeration, type);
             }
 
             foreach (var xType in otherTypes)
             {
-                this.typesRepository.Add(this.BuildType(xType, typeDeclarations));
+                var type = this.BuildType(xType, typeDeclarations);
+                this.typesRepository.Add(type);
+
+                this.GenerateProperties(xType, type);
+
+                this.GenerateMethods(xType, type);
             }
         }
 
@@ -105,10 +115,6 @@
                 var ctdNested = this.BuildType(nestedClass, typeDeclarations);
                 type.Members.Add(ctdNested);
             }
-
-            this.GenerateProperties(xType, type);
-
-            this.GenerateMethods(xType, type);
 
             return type;
         }

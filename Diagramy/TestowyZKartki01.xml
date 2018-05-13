@@ -242,7 +242,6 @@
 				</ownedParameter>
 			</ownedOperation>
 		</packagedElement>
-		<packagedElement xmi:type='uml:Class' xmi:id='_18_5_3_43ff073a_1525526767500_590845_4738' name='StatusWniosku'/>
 		<packagedElement xmi:type='uml:Enumeration' xmi:id='_18_5_3_43ff073a_1525526798264_321447_4765' name='StatusWniosku'>
 			<ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:id='_18_5_3_43ff073a_1525526848510_466270_4789' name='nierozpatrzony'/>
 			<ownedLiteral xmi:type='uml:EnumerationLiteral' xmi:id='_18_5_3_43ff073a_1525526860321_117770_4791' name='wymagaWyjasnienia'/>
