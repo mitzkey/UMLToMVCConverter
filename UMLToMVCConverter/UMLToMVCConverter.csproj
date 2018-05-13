@@ -101,14 +101,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseSeedInitializerTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\DatabaseSeedInitializerTextTemplate.Data.cs" />
+	<Compile Include="CodeTemplates\DatabaseSeedInitializerTextTemplate.Data.cs">
+      <DependentUpon>DatabaseSeedInitializerTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="CodeTemplates\IProgramCsTextTemplate.cs" />
     <Compile Include="CodeTemplates\ProgramCsTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProgramCsTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\ProgramCsTextTemplate.Data.cs" />
+	<Compile Include="CodeTemplates\ProgramCsTextTemplate.Data.cs">
+      <DependentUpon>ProgramCsTextTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EnumerationModel.cs" />
     <Compile Include="CodeTemplates\IDatabaseSeedInitializerTextTemplate.cs" />
     <Compile Include="Models\EFRelationshipModel.cs" />
