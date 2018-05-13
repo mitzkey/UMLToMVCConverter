@@ -4,6 +4,8 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Xml.Linq;
+    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.XmiTools;
 
     public interface IXmiWrapper
     {

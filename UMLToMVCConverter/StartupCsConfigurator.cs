@@ -2,7 +2,7 @@
 {
     using System.IO;
     using System.Text;
-    using UMLToMVCConverter.ExtensionMethods;
+    using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Interfaces;
 
     public class StartupCsConfigurator : IStartupCsConfigurator

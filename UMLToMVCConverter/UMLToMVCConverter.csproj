@@ -86,11 +86,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aggregation.cs" />
-    <Compile Include="AggregationKinds.cs" />
+    <Compile Include="Models\Aggregation.cs" />
+    <Compile Include="Models\AggregationKinds.cs" />
     <Compile Include="Application.cs" />
-    <Compile Include="AggregationsFactory.cs" />
-    <Compile Include="AttributeNameResolver.cs" />
+    <Compile Include="Models\AggregationsFactory.cs" />
+    <Compile Include="XmiTools\XAttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,9 +109,9 @@
       <DependentUpon>ProgramCsTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeTemplates\ProgramCsTextTemplate.Data.cs" />
-    <Compile Include="EnumerationModel.cs" />
+    <Compile Include="Models\EnumerationModel.cs" />
     <Compile Include="CodeTemplates\IDatabaseSeedInitializerTextTemplate.cs" />
-    <Compile Include="EFRelationshipModel.cs" />
+    <Compile Include="Models\EFRelationshipModel.cs" />
     <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -157,9 +157,9 @@
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.Data.cs">
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel.cs" />
-    <Compile Include="DataModelFactory.cs" />
-    <Compile Include="EnumerationModelsFactory.cs" />
+    <Compile Include="Models\DataModel.cs" />
+    <Compile Include="Models\DataModelFactory.cs" />
+    <Compile Include="Models\EnumerationModelsFactory.cs" />
     <Compile Include="ForeignKeysGenerator.cs" />
     <Compile Include="Interfaces\IEnumerationModelsFactory.cs" />
     <Compile Include="Interfaces\IForeignKeysGenerator.cs" />
@@ -170,14 +170,14 @@
     <Compile Include="Interfaces\IEFRelationshipModelFactory.cs" />
     <Compile Include="Interfaces\IPropertyGenerator.cs" />
     <Compile Include="Interfaces\ITypesGenerator.cs" />
-    <Compile Include="ITypesRepository.cs" />
+    <Compile Include="Interfaces\ITypesRepository.cs" />
     <Compile Include="TypesRepository.cs" />
-    <Compile Include="XElementType.cs" />
+    <Compile Include="XmiTools\XElementType.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
-    <Compile Include="EFRelationshipModelFactory.cs" />
+    <Compile Include="Models\EFRelationshipModelFactory.cs" />
     <Compile Include="NavigationalPropertiesGenerator.cs" />
     <Compile Include="PropertyGenerator.cs" />
-    <Compile Include="RelationshipMultiplicity.cs" />
+    <Compile Include="Models\RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -186,11 +186,11 @@
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.Data.cs">
       <DependentUpon>ViewIndexTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="ExtendedTypes\ExtendedCodeTypeDeclaration.cs" />
-    <Compile Include="ExtensionMethods\JObjectExtensions.cs" />
-    <Compile Include="ExtensionMethods\StringExtensions.cs" />
-    <Compile Include="ExtensionMethods\XElementExtensions.cs" />
-    <Compile Include="Interfaces\IAttributeNameResolver.cs" />
+    <Compile Include="Models\ExtendedCodeTypeDeclaration.cs" />
+    <Compile Include="Common\JObjectExtensions.cs" />
+    <Compile Include="Common\StringExtensions.cs" />
+    <Compile Include="Common\XElementExtensions.cs" />
+    <Compile Include="Interfaces\IXAttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\IDbContextFactoryClassTextTemplate.cs" />
     <Compile Include="CodeTemplates\IDbContextClassTextTemplate.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
@@ -203,29 +203,28 @@
     <Compile Include="Interfaces\IUmlTypesHelper.cs" />
     <Compile Include="Interfaces\IXAttributeEqualityComparer.cs" />
     <Compile Include="Interfaces\IXmiWrapper.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="Mappers\IUmlVisibilityMapper.cs" />
+    <Compile Include="Common\Logger.cs" />
+    <Compile Include="Interfaces\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
-    <Compile Include="MvcProject.cs" />
-    <Compile Include="EnumHelper.cs" />
-    <Compile Include="ExtendedTypes\ExtendedCodeMemberMethod.cs" />
-    <Compile Include="ExtendedTypes\ExtendedCodeMemberProperty.cs" />
-    <Compile Include="ExtendedTypes\ExtendedCodeParameterDeclarationExpression.cs" />
-    <Compile Include="ExtendedTypes\ExtendedCodeTypeReference.cs" />
-    <Compile Include="ExtendedTypes\ExtendedType.cs" />
-    <Compile Include="Insist.cs" />
-    <Compile Include="Mappers\UMLVisibilityMapper.cs" />
+    <Compile Include="Models\MvcProject.cs" />
+    <Compile Include="Models\ExtendedCodeMemberMethod.cs" />
+    <Compile Include="Models\ExtendedCodeMemberProperty.cs" />
+    <Compile Include="Models\ExtendedCodeParameterDeclarationExpression.cs" />
+    <Compile Include="Models\ExtendedCodeTypeReference.cs" />
+    <Compile Include="Models\ExtendedType.cs" />
+    <Compile Include="Common\Insist.cs" />
+    <Compile Include="UMLHelpers\UMLVisibilityMapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectPublisher.cs" />
     <Compile Include="ScriptRunner.cs" />
     <Compile Include="StartupCsConfigurator.cs" />
     <Compile Include="TypesGenerator.cs" />
-    <Compile Include="UmlTypesHelper.cs" />
-    <Compile Include="XmiWrapper.cs" />
-    <Compile Include="XAttributeEqualityComparer.cs" />
+    <Compile Include="UMLHelpers\UmlTypesHelper.cs" />
+    <Compile Include="XmiTools\XmiWrapper.cs" />
+    <Compile Include="XmiTools\XAttributeEqualityComparer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Multiplicity.cs" />
+    <Compile Include="Models\Multiplicity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -296,6 +295,7 @@
       <LastGenOutput>ProgramCsTextTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

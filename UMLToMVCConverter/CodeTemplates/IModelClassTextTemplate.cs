@@ -1,6 +1,6 @@
 ﻿namespace UMLToMVCConverter.CodeTemplates
 {
-    using UMLToMVCConverter.ExtendedTypes;
+    using UMLToMVCConverter.Models;
 
     public interface IModelClassTextTemplate
     {

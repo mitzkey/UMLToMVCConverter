@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Models;
 
     public partial class DatabaseSeedInitializerTextTemplate : IDatabaseSeedInitializerTextTemplate
     {

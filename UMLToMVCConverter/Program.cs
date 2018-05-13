@@ -3,8 +3,11 @@
     using System.Xml.Linq;
     using Autofac;
     using UMLToMVCConverter.CodeTemplates;
+    using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Interfaces;
-    using UMLToMVCConverter.Mappers;
+    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.UMLHelpers;
+    using UMLToMVCConverter.XmiTools;
 
     public static class Program
     {
@@ -60,7 +63,7 @@
             builder.RegisterType<DbContextFactoryClassTextTemplate>().As<IDbContextFactoryClassTextTemplate>().SingleInstance();
             builder.RegisterType<ScriptRunner>().As<IScriptRunner>().SingleInstance();
             builder.RegisterType<DbContextTextTemplate>().As<IDbContextClassTextTemplate>().SingleInstance();
-            builder.RegisterType<AttributeNameResolver>().As<IAttributeNameResolver>().SingleInstance();
+            builder.RegisterType<XAttributeNameResolver>().As<IXAttributeNameResolver>().SingleInstance();
             builder.RegisterType<TypesGenerator>().As<ITypesGenerator>().SingleInstance();
             builder.RegisterType<MvcProjectFilesGenerator>().As<IMvcProjectFilesGenerator>().SingleInstance();
             builder.RegisterType<DataModelFactory>().As<IDataModelFactory>().SingleInstance();

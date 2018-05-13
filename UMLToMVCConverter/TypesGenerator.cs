@@ -6,10 +6,10 @@
     using System.Linq;
     using System.Reflection;
     using System.Xml.Linq;
-    using UMLToMVCConverter.ExtendedTypes;
-    using UMLToMVCConverter.ExtensionMethods;
+    using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Interfaces;
-    using UMLToMVCConverter.Mappers;
+    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.XmiTools;
 
     public class TypesGenerator : ITypesGenerator
     {

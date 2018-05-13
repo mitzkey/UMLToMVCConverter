@@ -1,7 +1,7 @@
 ﻿namespace UMLToMVCConverter.Interfaces
 {
     using System.Xml.Linq;
-    using UMLToMVCConverter.ExtendedTypes;
+    using UMLToMVCConverter.Models;
 
     public interface IUmlTypesHelper
     {

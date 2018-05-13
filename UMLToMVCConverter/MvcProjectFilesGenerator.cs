@@ -8,9 +8,9 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using UMLToMVCConverter.CodeTemplates;
-    using UMLToMVCConverter.ExtendedTypes;
-    using UMLToMVCConverter.ExtensionMethods;
+    using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Models;
 
     public class MvcProjectFilesGenerator : IMvcProjectFilesGenerator
     {

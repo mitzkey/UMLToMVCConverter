@@ -2,7 +2,7 @@
 {
     using System;
     using System.Xml.Linq;
-    using UMLToMVCConverter.ExtendedTypes;
+    using UMLToMVCConverter.Models;
 
     public interface IPropertyGenerator
     {

@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using UMLToMVCConverter.ExtendedTypes;
     using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Models;
 
     public class ForeignKeysGenerator : IForeignKeysGenerator
     {

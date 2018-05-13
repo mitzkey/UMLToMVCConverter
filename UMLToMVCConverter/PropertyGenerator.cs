@@ -5,23 +5,23 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
-    using UMLToMVCConverter.ExtendedTypes;
-    using UMLToMVCConverter.ExtensionMethods;
+    using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Interfaces;
-    using UMLToMVCConverter.Mappers;
+    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.XmiTools;
 
     public class PropertyGenerator : IPropertyGenerator
     {
         private readonly IUmlTypesHelper umlTypesHelper;
-        private readonly IAttributeNameResolver attributeNameResolver;
+        private readonly IXAttributeNameResolver xAttributeNameResolver;
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
         private readonly IXmiWrapper xmiWrapper;
         private readonly ITypesRepository typesRepository;
 
-        public PropertyGenerator(IUmlTypesHelper umlTypesHelper, IAttributeNameResolver attributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper, IXmiWrapper xmiWrapper, ITypesRepository typesRepository)
+        public PropertyGenerator(IUmlTypesHelper umlTypesHelper, IXAttributeNameResolver xAttributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper, IXmiWrapper xmiWrapper, ITypesRepository typesRepository)
         {
             this.umlTypesHelper = umlTypesHelper;
-            this.attributeNameResolver = attributeNameResolver;
+            this.xAttributeNameResolver = xAttributeNameResolver;
             this.umlVisibilityMapper = umlVisibilityMapper;
             this.xmiWrapper = xmiWrapper;
             this.typesRepository = typesRepository;
@@ -34,7 +34,7 @@
             var cSharpType = this.umlTypesHelper.GetXElementCsharpType(xAttribute);
             var typeReference = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
-            var property = new ExtendedCodeMemberProperty(this.attributeNameResolver.GetName(xAttribute), typeReference, this.typesRepository)
+            var property = new ExtendedCodeMemberProperty(this.xAttributeNameResolver.GetName(xAttribute), typeReference, this.typesRepository)
             {
                 HasSet = true
             };
