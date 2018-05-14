@@ -1,7 +1,6 @@
 ﻿namespace UMLToMVCConverter.Models
 {
     using System.IO;
-    using UMLToMVCConverter.Interfaces;
 
     public class MvcProject : IMvcProject
     {

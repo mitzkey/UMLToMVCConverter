@@ -1,0 +1,719 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UMLToMVCConverter.StartupCsConfigurator" BaseTypeListCollapsed="true">
+    <Position X="1" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAgAAAAAAAgAAAAAAAAAAAAAAAAAABAAIAAA=</HashCode>
+      <FileName>StartupCsConfigurator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="mvcProject" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.Common.Insist">
+    <Position X="24.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAABAAAAAQAAAAAAAEAAAEgA=</HashCode>
+      <FileName>Common\Insist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Common.JObjectExtensions">
+    <Position X="22.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\JObjectExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Common.Logger" BaseTypeListCollapsed="true">
+    <Position X="27.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Logger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.Common.StringExtensions">
+    <Position X="26" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAQAAAAAAAAoAAAQAAAAAA=</HashCode>
+      <FileName>Common\StringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Common.XElementExtensions">
+    <Position X="29.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\XElementExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.Aggregation">
+    <Position X="22.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAABgAAAABAAAAAAAAAEAAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\Aggregation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.AggregationsFactory" BaseTypeListCollapsed="true">
+    <Position X="17" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAABAAAIAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AggregationsFactory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="typesRepository" />
+      <Field Name="xmiWrapper" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.DataModel">
+    <Position X="24.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DataModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.DataModelFactory" BaseTypeListCollapsed="true">
+    <Position X="14" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAQAAAQAAAAAAAAAAICAAEAQAAEAAAAAAAA=</HashCode>
+      <FileName>Models\DataModelFactory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="aggregationsFactory" />
+      <Field Name="efRelationshipModelFactory" />
+      <Field Name="enumerationModelsFactory" />
+      <Field Name="foreignKeysGenerator" />
+      <Field Name="nagivationalPropertiesGenerator" />
+      <Field Name="typesGenerator" />
+      <Field Name="typesRepository" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.EFRelationshipModel">
+    <Position X="26" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAABKAAACAAEAAAAAAAAAAAAAIAAAAAAQ=</HashCode>
+      <FileName>Models\EFRelationshipModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.EFRelationshipModelFactory" BaseTypeListCollapsed="true">
+    <Position X="27.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\EFRelationshipModelFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.EnumerationModel">
+    <Position X="29.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAIAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\EnumerationModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.EnumerationModelsFactory" BaseTypeListCollapsed="true">
+    <Position X="11" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\EnumerationModelsFactory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="typesRepository" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.ExtendedCodeMemberMethod">
+    <Position X="22.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ExtendedCodeMemberMethod.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.ExtendedCodeMemberProperty">
+    <Position X="24.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAgACAUACSCAAEAMAAAAAAEA=</HashCode>
+      <FileName>Models\ExtendedCodeMemberProperty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.ExtendedCodeParameterDeclarationExpression">
+    <Position X="26" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgACAAAAAAAAAAAAAAAAAQAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Models\ExtendedCodeParameterDeclarationExpression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.ExtendedCodeTypeDeclaration">
+    <Position X="27.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAIAKBgAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Models\ExtendedCodeTypeDeclaration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.ExtendedCodeTypeReference">
+    <Position X="29.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAgACAAAAAAAAAAAAAAAAAQAAAAAAAAAAACAAIAA=</HashCode>
+      <FileName>Models\ExtendedCodeTypeReference.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.ExtendedType">
+    <Position X="31.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQACAABAAAAAAAAAAAQAAQAIAAKAAQAAAAACIAA=</HashCode>
+      <FileName>Models\ExtendedType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.MvcProject" BaseTypeListCollapsed="true">
+    <Position X="33" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIABAAAAIACAAogBAIAAAAQAAAAAAEAAQAEAQQAACAA=</HashCode>
+      <FileName>Models\MvcProject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.Models.RelationshipMultiplicity">
+    <Position X="31.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAACQACAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Models\RelationshipMultiplicity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.UMLHelpers.UmlTypesHelper" BaseTypeListCollapsed="true">
+    <Position X="20" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgAAAAAAABAAAAAAQKAAACAACKAAAAAICAgAQkABAAA=</HashCode>
+      <FileName>UMLHelpers\UmlTypesHelper.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="typesRepository" />
+      <Field Name="xmiWrapper" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.UMLHelpers.UmlVisibilityMapper" BaseTypeListCollapsed="true">
+    <Position X="26" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UMLHelpers\UMLVisibilityMapper.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.XmiTools.XAttributeEqualityComparer" BaseTypeListCollapsed="true">
+    <Position X="27.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>XmiTools\XAttributeEqualityComparer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.XmiTools.XAttributeNameResolver" BaseTypeListCollapsed="true">
+    <Position X="19.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAEAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>XmiTools\XAttributeNameResolver.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="xmiWrapper" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.XmiTools.XmiWrapper" BaseTypeListCollapsed="true">
+    <Position X="3.25" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoAAQAABBgAAgAKBAAAAgABAAAQAAgQAALAAIAgAABA=</HashCode>
+      <FileName>XmiTools\XmiWrapper.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="attributeEqualityComparer" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.Application">
+    <Position X="16.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAQABAAEAAAAAAAIAAAAAAAAAAAAI=</HashCode>
+      <FileName>Application.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="dataModelFactory" />
+      <Field Name="migrationServiceClient" />
+      <Field Name="mvcProjectFilesGenerator" />
+      <Field Name="projectPublisher" />
+      <Field Name="xmiWrapper" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="UMLToMVCConverter.ForeignKeysGenerator" BaseTypeListCollapsed="true">
+    <Position X="7" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>ForeignKeysGenerator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="propertyGenerator" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.MigrationServiceClient" BaseTypeListCollapsed="true">
+    <Position X="1" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAQAAAAACAAAAEAAAEAAAAAAAAAAABgAAAAA=</HashCode>
+      <FileName>MigrationServiceClient.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logger" />
+      <Field Name="mvcProject" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.MvcProjectFilesGenerator" BaseTypeListCollapsed="true">
+    <Position X="7" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBAAAEoAAAAAACAGAAgAAAQAAAACAAAAIIABBABAAwA=</HashCode>
+      <FileName>MvcProjectFilesGenerator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="databaseSeedInitializerTextTemplate" />
+      <Field Name="dbContextClassTextTemplate" />
+      <Field Name="dbContextFactoryClassTextTemplate" />
+      <Field Name="logger" />
+      <Field Name="migrationsManagerClassTextTemplate" />
+      <Field Name="mvcProject" />
+      <Field Name="programCsTextTemplate" />
+      <Field Name="startupCsConfigurator" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.NavigationalPropertiesGenerator" BaseTypeListCollapsed="true">
+    <Position X="5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>NavigationalPropertiesGenerator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="propertyGenerator" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.Program">
+    <Position X="1.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.ProjectPublisher" BaseTypeListCollapsed="true">
+    <Position X="4" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAACAAAACAAAAAAAAAAAAAAAAAAABBAAAAAA=</HashCode>
+      <FileName>ProjectPublisher.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logger" />
+      <Field Name="mvcProject" />
+      <Field Name="scriptRunner" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.PropertyGenerator" BaseTypeListCollapsed="true">
+    <Position X="14" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAgAQAAAAgAAAIAAQAAAAAAAEEAAAAA=</HashCode>
+      <FileName>PropertyGenerator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="typesRepository" />
+      <Field Name="umlTypesHelper" />
+      <Field Name="umlVisibilityMapper" />
+      <Field Name="xAttributeNameResolver" />
+      <Field Name="xmiWrapper" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.ScriptRunner" BaseTypeListCollapsed="true">
+    <Position X="1" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>ScriptRunner.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="logger" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.TypesGenerator" BaseTypeListCollapsed="true">
+    <Position X="8" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAAAAAAQAggBQAAAAAAAIIAAAAAEAAAAAEABAAA=</HashCode>
+      <FileName>TypesGenerator.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="propertyGenerator" />
+      <Field Name="typesRepository" />
+      <Field Name="umlTypesHelper" />
+      <Field Name="umlVisibilityMapper" />
+      <Field Name="xmiWrapper" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.TypesRepository" BaseTypeListCollapsed="true">
+    <Position X="22.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAABQAAAAIAAAAAAAAAAAAAAAAAAAAAIAAQA=</HashCode>
+      <FileName>TypesRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.BasicTypeTextTemplate" Collapsed="true">
+    <Position X="21.75" Y="27.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAgAAACAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>CodeTemplates\BasicTypeTextTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.BasicTypeTextTemplateBase" Collapsed="true">
+    <Position X="21.75" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAQAIAGSAMAAAIABAAAAAIAAAAAAAAQAEgAAA=</HashCode>
+      <FileName>CodeTemplates\BasicTypeTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.ControllerTextTemplate" Collapsed="true">
+    <Position X="30.75" Y="26.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAACAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>CodeTemplates\ControllerTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.ControllerTextTemplateBase" Collapsed="true">
+    <Position X="30.75" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAQAIAGSAMAAAIABAAAAAIAAAAAAAAQAEgAAA=</HashCode>
+      <FileName>CodeTemplates\ControllerTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.DatabaseSeedInitializerTextTemplate" Collapsed="true">
+    <Position X="27.75" Y="26.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAIAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>CodeTemplates\DatabaseSeedInitializerTextTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.DatabaseSeedInitializerTextTemplateBase" Collapsed="true">
+    <Position X="27.75" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAQAIAGSAMAAAIABAAAAAIAAAAAAAAQAEgAAA=</HashCode>
+      <FileName>CodeTemplates\DatabaseSeedInitializerTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.DbContextFactoryClassTextTemplate" Collapsed="true">
+    <Position X="24.75" Y="26.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>CodeTemplates\DbContextFactoryClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.DbContextFactoryClassTextTemplateBase" Collapsed="true">
+    <Position X="24.75" Y="25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAQAIAGSAMAAAIABAAAAAIAAAAAAAAQAEgAAA=</HashCode>
+      <FileName>CodeTemplates\DbContextFactoryClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.DbContextTextTemplate" Collapsed="true">
+    <Position X="30.75" Y="23.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEgAAAAAAAAAAAAAAAAAACAAAAAIAAABgAABAAAAAA=</HashCode>
+      <FileName>CodeTemplates\DbContextTextTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.DbContextTextTemplateBase" Collapsed="true">
+    <Position X="30.75" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAQAIAGSAMAAAIABAAAAAIAAAAAAAAQAEgAAA=</HashCode>
+      <FileName>CodeTemplates\DbContextTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.MigrationsManagerClassTextTemplate" Collapsed="true">
+    <Position X="21.75" Y="24.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>CodeTemplates\MigrationsManagerClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.MigrationsManagerClassTextTemplateBase" Collapsed="true">
+    <Position X="21.75" Y="23" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAQAIAGSAMAAAIABAAAAAIAAAAAAAAQAEgAAA=</HashCode>
+      <FileName>CodeTemplates\MigrationsManagerClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.ModelClassTextTemplate" Collapsed="true">
+    <Position X="27.75" Y="23.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAYAAAAAACAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>CodeTemplates\ModelClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.ModelClassTextTemplateBase" Collapsed="true">
+    <Position X="27.75" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAQAIAGSAMAAAIABAAAAAIAAAAAAAAQAEgAAA=</HashCode>
+      <FileName>CodeTemplates\ModelClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.ProgramCsTextTemplate" Collapsed="true">
+    <Position X="24.75" Y="23.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>CodeTemplates\ProgramCsTextTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.ProgramCsTextTemplateBase" Collapsed="true">
+    <Position X="24.75" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAQAIAGSAMAAAIABAAAAAIAAAAAAAAQAEgAAA=</HashCode>
+      <FileName>CodeTemplates\ProgramCsTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.ViewIndexTextTemplate" Collapsed="true">
+    <Position X="21" Y="21.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAACAAAAAAAAAAgAABAAAAAA=</HashCode>
+      <FileName>CodeTemplates\ViewIndexTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UMLToMVCConverter.CodeTemplates.ViewIndexTextTemplateBase" Collapsed="true">
+    <Position X="21.25" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAQAIAGSAMAAAIABAAAAAIAAAAAAAAQAEgAAA=</HashCode>
+      <FileName>CodeTemplates\ViewIndexTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="UMLToMVCConverter.Common.ILogger" Collapsed="true">
+    <Position X="4" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\ILogger.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.Models.IAggregationsFactory" Collapsed="true">
+    <Position X="14" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\IAggregationsFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.Models.IDataModelFactory" Collapsed="true">
+    <Position X="19.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\IDataModelFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.Models.IEFRelationshipModelFactory" Collapsed="true">
+    <Position X="11" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\IEFRelationshipModelFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.Models.IEnumerationModelsFactory" Collapsed="true">
+    <Position X="17" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\IEnumerationModelsFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.Models.IMvcProject" Collapsed="true">
+    <Position X="4" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIABAAAAIACAAogBAIAAAAQAAAAAAEAAQAEAQQAACAA=</HashCode>
+      <FileName>Models\IMvcProject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.UMLHelpers.IUmlTypesHelper" Collapsed="true">
+    <Position X="11" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAKAAAAAAAAAAAAAAAAgAAEAAAAA=</HashCode>
+      <FileName>UMLHelpers\IUmlTypesHelper.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.UMLHelpers.IUmlVisibilityMapper" Collapsed="true">
+    <Position X="11" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UMLHelpers\IUmlVisibilityMapper.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.XmiTools.IXAttributeEqualityComparer" Collapsed="true">
+    <Position X="6.5" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>XmiTools\IXAttributeEqualityComparer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.XmiTools.IXAttributeNameResolver" Collapsed="true">
+    <Position X="14" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>XmiTools\IXAttributeNameResolver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.XmiTools.IXmiWrapper" Collapsed="true">
+    <Position X="16.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAABgAAgAKBAAAAgABAAAQAAAQAAKAAIAgAABA=</HashCode>
+      <FileName>XmiTools\IXmiWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.IForeignKeysGenerator" Collapsed="true">
+    <Position X="17" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>IForeignKeysGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.IMigrationServiceClient" Collapsed="true">
+    <Position X="13.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IMigrationServiceClient.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.IMvcProjectFilesGenerator" Collapsed="true">
+    <Position X="19.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>IMvcProjectFilesGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.INavigationalPropertiesGenerator" Collapsed="true">
+    <Position X="17" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>INavigationalPropertiesGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.IProjectPublisher" Collapsed="true">
+    <Position X="16.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>IProjectPublisher.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.IPropertyGenerator" Collapsed="true">
+    <Position X="5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAA=</HashCode>
+      <FileName>IPropertyGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.IScriptRunner" Collapsed="true">
+    <Position X="2" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>IScriptRunner.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.IStartupCsConfigurator" Collapsed="true">
+    <Position X="7" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IStartupCsConfigurator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.ITypesGenerator" Collapsed="true">
+    <Position X="14" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>ITypesGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.ITypesRepository" Collapsed="true">
+    <Position X="14" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAABQAAAAIAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>ITypesRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.CodeTemplates.IDatabaseSeedInitializerTextTemplate" Collapsed="true">
+    <Position X="6.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CodeTemplates\IDatabaseSeedInitializerTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.CodeTemplates.IDbContextClassTextTemplate" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CodeTemplates\IDbContextClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.CodeTemplates.IDbContextFactoryClassTextTemplate" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CodeTemplates\IDbContextFactoryClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.CodeTemplates.IMigrationsManagerClassTextTemplate" Collapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CodeTemplates\IMigrationsManagerClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.CodeTemplates.IProgramCsTextTemplate" Collapsed="true">
+    <Position X="3.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CodeTemplates\IProgramCsTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.CodeTemplates.IBasicTypeTextTemplate" Collapsed="true">
+    <Position X="24.5" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CodeTemplates\IBasicTypeTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="UMLToMVCConverter.CodeTemplates.IModelClassTextTemplate" Collapsed="true">
+    <Position X="26.25" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CodeTemplates\IModelClassTextTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="UMLToMVCConverter.Models.AggregationKinds" Collapsed="true">
+    <Position X="22.5" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AggregationKinds.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="UMLToMVCConverter.Models.Multiplicity" Collapsed="true">
+    <Position X="24.25" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAgAAAAAAACE=</HashCode>
+      <FileName>Models\Multiplicity.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="UMLToMVCConverter.XmiTools.XElementType" Collapsed="true">
+    <Position X="26" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAIAAAACAAAAAAACAAAAAABAAAA=</HashCode>
+      <FileName>XmiTools\XElementType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

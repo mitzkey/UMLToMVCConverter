@@ -1,4 +1,4 @@
-﻿namespace UMLToMVCConverter.Interfaces
+﻿namespace UMLToMVCConverter
 {
     public interface IStartupCsConfigurator
     {

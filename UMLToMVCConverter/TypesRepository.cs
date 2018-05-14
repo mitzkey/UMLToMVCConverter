@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.Models;
 
     public class TypesRepository : ITypesRepository

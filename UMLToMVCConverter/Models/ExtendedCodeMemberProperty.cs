@@ -3,7 +3,6 @@
     using System;
     using System.CodeDom;
     using System.Collections.Generic;
-    using UMLToMVCConverter.Interfaces;
 
     public class ExtendedCodeMemberProperty : CodeMemberProperty
     {

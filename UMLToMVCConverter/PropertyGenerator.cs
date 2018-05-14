@@ -6,8 +6,8 @@
     using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.XmiTools;
 
     public class PropertyGenerator : IPropertyGenerator

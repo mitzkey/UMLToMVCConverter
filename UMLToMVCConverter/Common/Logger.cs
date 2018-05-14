@@ -1,7 +1,6 @@
 ﻿namespace UMLToMVCConverter.Common
 {
     using System;
-    using UMLToMVCConverter.Interfaces;
 
     public class Logger : ILogger
     {

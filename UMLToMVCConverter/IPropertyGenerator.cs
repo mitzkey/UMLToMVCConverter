@@ -1,4 +1,4 @@
-﻿namespace UMLToMVCConverter.Interfaces
+﻿namespace UMLToMVCConverter
 {
     using System;
     using System.Xml.Linq;

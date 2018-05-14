@@ -1,7 +1,6 @@
-﻿namespace UMLToMVCConverter.Interfaces
+﻿namespace UMLToMVCConverter.Models
 {
     using System.Xml.Linq;
-    using UMLToMVCConverter.Models;
 
     public interface IDataModelFactory
     {

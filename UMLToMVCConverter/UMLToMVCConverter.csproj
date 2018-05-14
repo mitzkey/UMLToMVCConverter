@@ -101,7 +101,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseSeedInitializerTextTemplate.tt</DependentUpon>
     </Compile>
-	<Compile Include="CodeTemplates\DatabaseSeedInitializerTextTemplate.Data.cs">
+    <Compile Include="CodeTemplates\DatabaseSeedInitializerTextTemplate.Data.cs">
       <DependentUpon>DatabaseSeedInitializerTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="CodeTemplates\IProgramCsTextTemplate.cs" />
@@ -110,7 +110,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProgramCsTextTemplate.tt</DependentUpon>
     </Compile>
-	<Compile Include="CodeTemplates\ProgramCsTextTemplate.Data.cs">
+    <Compile Include="CodeTemplates\ProgramCsTextTemplate.Data.cs">
       <DependentUpon>ProgramCsTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EnumerationModel.cs" />
@@ -165,16 +165,16 @@
     <Compile Include="Models\DataModelFactory.cs" />
     <Compile Include="Models\EnumerationModelsFactory.cs" />
     <Compile Include="ForeignKeysGenerator.cs" />
-    <Compile Include="Interfaces\IEnumerationModelsFactory.cs" />
-    <Compile Include="Interfaces\IForeignKeysGenerator.cs" />
-    <Compile Include="Interfaces\INavigationalPropertiesGenerator.cs" />
-    <Compile Include="Interfaces\IAggregationsFactory.cs" />
-    <Compile Include="Interfaces\IDataModelFactory.cs" />
-    <Compile Include="Interfaces\IMvcProjectFilesGenerator.cs" />
-    <Compile Include="Interfaces\IEFRelationshipModelFactory.cs" />
-    <Compile Include="Interfaces\IPropertyGenerator.cs" />
-    <Compile Include="Interfaces\ITypesGenerator.cs" />
-    <Compile Include="Interfaces\ITypesRepository.cs" />
+    <Compile Include="Models\IEnumerationModelsFactory.cs" />
+    <Compile Include="IForeignKeysGenerator.cs" />
+    <Compile Include="INavigationalPropertiesGenerator.cs" />
+    <Compile Include="Models\IAggregationsFactory.cs" />
+    <Compile Include="Models\IDataModelFactory.cs" />
+    <Compile Include="IMvcProjectFilesGenerator.cs" />
+    <Compile Include="Models\IEFRelationshipModelFactory.cs" />
+    <Compile Include="IPropertyGenerator.cs" />
+    <Compile Include="ITypesGenerator.cs" />
+    <Compile Include="ITypesRepository.cs" />
     <Compile Include="TypesRepository.cs" />
     <Compile Include="XmiTools\XElementType.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
@@ -194,21 +194,21 @@
     <Compile Include="Common\JObjectExtensions.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Common\XElementExtensions.cs" />
-    <Compile Include="Interfaces\IXAttributeNameResolver.cs" />
+    <Compile Include="XmiTools\IXAttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\IDbContextFactoryClassTextTemplate.cs" />
     <Compile Include="CodeTemplates\IDbContextClassTextTemplate.cs" />
-    <Compile Include="Interfaces\ILogger.cs" />
-    <Compile Include="Interfaces\IMigrationServiceClient.cs" />
+    <Compile Include="Common\ILogger.cs" />
+    <Compile Include="IMigrationServiceClient.cs" />
     <Compile Include="CodeTemplates\IModelClassTextTemplate.cs" />
-    <Compile Include="Interfaces\IMvcProject.cs" />
-    <Compile Include="Interfaces\IProjectPublisher.cs" />
-    <Compile Include="Interfaces\IScriptRunner.cs" />
-    <Compile Include="Interfaces\IStartupCsConfigurator.cs" />
-    <Compile Include="Interfaces\IUmlTypesHelper.cs" />
-    <Compile Include="Interfaces\IXAttributeEqualityComparer.cs" />
-    <Compile Include="Interfaces\IXmiWrapper.cs" />
+    <Compile Include="Models\IMvcProject.cs" />
+    <Compile Include="IProjectPublisher.cs" />
+    <Compile Include="IScriptRunner.cs" />
+    <Compile Include="IStartupCsConfigurator.cs" />
+    <Compile Include="UMLHelpers\IUmlTypesHelper.cs" />
+    <Compile Include="XmiTools\IXAttributeEqualityComparer.cs" />
+    <Compile Include="XmiTools\IXmiWrapper.cs" />
     <Compile Include="Common\Logger.cs" />
-    <Compile Include="Interfaces\IUmlVisibilityMapper.cs" />
+    <Compile Include="UMLHelpers\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
     <Compile Include="Models\MvcProject.cs" />
     <Compile Include="Models\ExtendedCodeMemberMethod.cs" />
@@ -246,6 +246,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagrams\EverythingClassDiagram.cd" />
     <None Include="CodeTemplates\ControllerTextTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ControllerTextTemplate.cs</LastGenOutput>

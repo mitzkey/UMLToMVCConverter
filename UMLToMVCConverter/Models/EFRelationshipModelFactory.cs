@@ -1,7 +1,6 @@
 ﻿namespace UMLToMVCConverter.Models
 {
     using System.Collections.Generic;
-    using UMLToMVCConverter.Interfaces;
 
     public class EFRelationshipModelFactory : IEFRelationshipModelFactory
     {

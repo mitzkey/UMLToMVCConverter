@@ -2,7 +2,8 @@
 {
     using System.Diagnostics;
     using System.IO;
-    using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Common;
+    using UMLToMVCConverter.Models;
 
     public class MigrationServiceClient : IMigrationServiceClient
     {

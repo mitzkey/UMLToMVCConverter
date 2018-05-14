@@ -1,7 +1,6 @@
 ﻿namespace UMLToMVCConverter
 {
     using System.Collections.Generic;
-    using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.Models;
 
     public class NavigationalPropertiesGenerator : INavigationalPropertiesGenerator

@@ -2,7 +2,7 @@
 {
     using System.Diagnostics;
     using System.IO;
-    using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Common;
 
     public class ScriptRunner : IScriptRunner
     {

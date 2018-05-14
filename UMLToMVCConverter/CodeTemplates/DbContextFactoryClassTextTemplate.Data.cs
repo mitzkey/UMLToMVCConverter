@@ -1,6 +1,6 @@
 ﻿namespace UMLToMVCConverter.CodeTemplates
 {
-    using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Models;
 
     public partial class DbContextFactoryClassTextTemplate : IDbContextFactoryClassTextTemplate
     {

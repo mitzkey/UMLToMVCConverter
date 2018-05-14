@@ -3,7 +3,7 @@
     using System.IO;
     using System.Text;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Models;
 
     public class StartupCsConfigurator : IStartupCsConfigurator
     {

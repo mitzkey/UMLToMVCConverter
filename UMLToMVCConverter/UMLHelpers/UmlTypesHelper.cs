@@ -7,7 +7,6 @@
     using System.Reflection;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.Models;
     using UMLToMVCConverter.XmiTools;
 
