@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Xml.Linq;
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
 
     public interface IXmiWrapper
     {

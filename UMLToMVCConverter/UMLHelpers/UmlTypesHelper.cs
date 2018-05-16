@@ -7,7 +7,7 @@
     using System.Reflection;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
     using UMLToMVCConverter.XmiTools;
 
     public class UmlTypesHelper : IUmlTypesHelper

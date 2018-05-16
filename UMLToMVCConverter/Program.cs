@@ -4,7 +4,7 @@
     using Autofac;
     using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
     using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.XmiTools;
 

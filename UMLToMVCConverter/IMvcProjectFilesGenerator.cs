@@ -1,6 +1,6 @@
 ﻿namespace UMLToMVCConverter
 {
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
 
     public interface IMvcProjectFilesGenerator
     {

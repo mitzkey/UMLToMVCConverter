@@ -3,7 +3,7 @@
     using System.Diagnostics;
     using System.IO;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
 
     public class MigrationServiceClient : IMigrationServiceClient
     {

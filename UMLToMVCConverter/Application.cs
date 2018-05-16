@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
     using UMLToMVCConverter.XmiTools;
 
     public class Application

@@ -1,7 +1,7 @@
 namespace UMLToMVCConverter.CodeTemplates
 {
     using System.Collections.Generic;
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
 
     public interface IDbContextClassTextTemplate
     {

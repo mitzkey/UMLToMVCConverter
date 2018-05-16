@@ -1,6 +1,6 @@
 ﻿namespace UMLToMVCConverter.CodeTemplates
 {
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
 
     public partial class ProgramCsTextTemplate : IProgramCsTextTemplate
     {

@@ -6,9 +6,6 @@
       <HashCode>AAAAABAAAgAAAAAAAgAAAAAAAAAAAAAAAAAABAAIAAA=</HashCode>
       <FileName>StartupCsConfigurator.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="mvcProject" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="UMLToMVCConverter.Common.Insist">
@@ -47,137 +44,137 @@
       <FileName>Common\XElementExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.Aggregation">
+  <Class Name="UMLToMVCConverter.Domain.Aggregation">
     <Position X="22.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAABgAAAABAAAAAAAAAEAAAAAAIAAAAAA=</HashCode>
-      <FileName>Models\Aggregation.cs</FileName>
+      <FileName>Domain\Aggregation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.AggregationsFactory" BaseTypeListCollapsed="true">
+  <Class Name="UMLToMVCConverter.Domain.AggregationsFactory" BaseTypeListCollapsed="true">
     <Position X="17" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAQAAAABAAAIAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\AggregationsFactory.cs</FileName>
+      <FileName>Domain\AggregationsFactory.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="typesRepository" />
       <Field Name="xmiWrapper" />
+      <Field Name="typesRepository" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="UMLToMVCConverter.Models.DataModel">
+  <Class Name="UMLToMVCConverter.Domain.DataModel">
     <Position X="24.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgACAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\DataModel.cs</FileName>
+      <FileName>Domain\DataModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.DataModelFactory" BaseTypeListCollapsed="true">
+  <Class Name="UMLToMVCConverter.Domain.DataModelFactory" BaseTypeListCollapsed="true">
     <Position X="14" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAQAAAQAAAAAAAAAAICAAEAQAAEAAAAAAAA=</HashCode>
-      <FileName>Models\DataModelFactory.cs</FileName>
+      <FileName>Domain\DataModelFactory.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="aggregationsFactory" />
-      <Field Name="efRelationshipModelFactory" />
-      <Field Name="enumerationModelsFactory" />
-      <Field Name="foreignKeysGenerator" />
-      <Field Name="nagivationalPropertiesGenerator" />
       <Field Name="typesGenerator" />
+      <Field Name="aggregationsFactory" />
+      <Field Name="foreignKeysGenerator" />
+      <Field Name="efRelationshipModelFactory" />
+      <Field Name="nagivationalPropertiesGenerator" />
+      <Field Name="enumerationModelsFactory" />
       <Field Name="typesRepository" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="UMLToMVCConverter.Models.EFRelationshipModel">
+  <Class Name="UMLToMVCConverter.Domain.EFRelationshipModel">
     <Position X="26" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAABKAAACAAEAAAAAAAAAAAAAIAAAAAAQ=</HashCode>
-      <FileName>Models\EFRelationshipModel.cs</FileName>
+      <FileName>Domain\EFRelationshipModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.EFRelationshipModelFactory" BaseTypeListCollapsed="true">
+  <Class Name="UMLToMVCConverter.Domain.EFRelationshipModelFactory" BaseTypeListCollapsed="true">
     <Position X="27.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\EFRelationshipModelFactory.cs</FileName>
+      <FileName>Domain\EFRelationshipModelFactory.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="UMLToMVCConverter.Models.EnumerationModel">
+  <Class Name="UMLToMVCConverter.Domain.EnumerationModel">
     <Position X="29.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAIAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\EnumerationModel.cs</FileName>
+      <FileName>Domain\EnumerationModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.EnumerationModelsFactory" BaseTypeListCollapsed="true">
+  <Class Name="UMLToMVCConverter.Domain.EnumerationModelsFactory" BaseTypeListCollapsed="true">
     <Position X="11" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\EnumerationModelsFactory.cs</FileName>
+      <FileName>Domain\EnumerationModelsFactory.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="typesRepository" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="UMLToMVCConverter.Models.ExtendedCodeMemberMethod">
+  <Class Name="UMLToMVCConverter.Domain.ExtendedCodeMemberMethod">
     <Position X="22.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\ExtendedCodeMemberMethod.cs</FileName>
+      <FileName>Domain\ExtendedCodeMemberMethod.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.ExtendedCodeMemberProperty">
+  <Class Name="UMLToMVCConverter.Domain.ExtendedCodeMemberProperty">
     <Position X="24.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAQAAgACAUACSCAAEAMAAAAAAEA=</HashCode>
-      <FileName>Models\ExtendedCodeMemberProperty.cs</FileName>
+      <FileName>Domain\ExtendedCodeMemberProperty.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.ExtendedCodeParameterDeclarationExpression">
+  <Class Name="UMLToMVCConverter.Domain.ExtendedCodeParameterDeclarationExpression">
     <Position X="26" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgACAAAAAAAAAAAAAAAAAQAAAAAAAAAAACAAAAA=</HashCode>
-      <FileName>Models\ExtendedCodeParameterDeclarationExpression.cs</FileName>
+      <FileName>Domain\ExtendedCodeParameterDeclarationExpression.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.ExtendedCodeTypeDeclaration">
+  <Class Name="UMLToMVCConverter.Domain.ExtendedCodeTypeDeclaration">
     <Position X="27.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAIAKBgAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
-      <FileName>Models\ExtendedCodeTypeDeclaration.cs</FileName>
+      <FileName>Domain\ExtendedCodeTypeDeclaration.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.ExtendedCodeTypeReference">
+  <Class Name="UMLToMVCConverter.Domain.ExtendedCodeTypeReference">
     <Position X="29.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAgACAAAAAAAAAAAAAAAAAQAAAAAAAAAAACAAIAA=</HashCode>
-      <FileName>Models\ExtendedCodeTypeReference.cs</FileName>
+      <FileName>Domain\ExtendedCodeTypeReference.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.ExtendedType">
+  <Class Name="UMLToMVCConverter.Domain.ExtendedType">
     <Position X="31.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQACAABAAAAAAAAAAAQAAQAIAAKAAQAAAAACIAA=</HashCode>
-      <FileName>Models\ExtendedType.cs</FileName>
+      <FileName>Domain\ExtendedType.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UMLToMVCConverter.Models.MvcProject" BaseTypeListCollapsed="true">
+  <Class Name="UMLToMVCConverter.Domain.MvcProject" BaseTypeListCollapsed="true">
     <Position X="33" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIABAAAAIACAAogBAIAAAAQAAAAAAEAAQAEAQQAACAA=</HashCode>
-      <FileName>Models\MvcProject.cs</FileName>
+      <FileName>Domain\MvcProject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="UMLToMVCConverter.Models.RelationshipMultiplicity">
+  <Class Name="UMLToMVCConverter.Domain.RelationshipMultiplicity">
     <Position X="31.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAAACQACAAAAAAAAAAAAAAACAA=</HashCode>
-      <FileName>Models\RelationshipMultiplicity.cs</FileName>
+      <FileName>Domain\RelationshipMultiplicity.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UMLToMVCConverter.UMLHelpers.UmlTypesHelper" BaseTypeListCollapsed="true">
@@ -187,8 +184,8 @@
       <FileName>UMLHelpers\UmlTypesHelper.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="typesRepository" />
       <Field Name="xmiWrapper" />
+      <Field Name="typesRepository" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -231,24 +228,56 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="UMLToMVCConverter.Application">
-    <Position X="16.75" Y="4.5" Width="1.5" />
+    <Position X="3.5" Y="2" Width="1.5" />
+    <AssociationLine Name="mvcProjectFilesGenerator" Type="UMLToMVCConverter.IMvcProjectFilesGenerator" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="2.25" />
+        <Point X="9.5" Y="2.25" />
+        <Point X="9.5" Y="1.603" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.06" Y="0.359" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="migrationServiceClient" Type="UMLToMVCConverter.IMigrationServiceClient" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="2.125" />
+        <Point X="6.917" Y="2.125" />
+        <Point X="6.917" Y="1.796" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="xmiWrapper" Type="UMLToMVCConverter.XmiTools.IXmiWrapper" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="3.062" />
+        <Point X="9.25" Y="3.062" />
+        <Point X="9.25" Y="2.5" />
+        <Point X="16.25" Y="2.5" />
+        <Point X="16.25" Y="3.25" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="projectPublisher" Type="UMLToMVCConverter.IProjectPublisher" FixedFromPoint="true">
+      <Path>
+        <Point X="4.25" Y="2" />
+        <Point X="4.25" Y="1.603" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAQABAAEAAAAAAAIAAAAAAAAAAAAI=</HashCode>
       <FileName>Application.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="dataModelFactory" />
-      <Field Name="migrationServiceClient" />
       <Field Name="mvcProjectFilesGenerator" />
-      <Field Name="projectPublisher" />
+      <Field Name="migrationServiceClient" />
       <Field Name="xmiWrapper" />
+      <Field Name="projectPublisher" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="UMLToMVCConverter.ForeignKeysGenerator" BaseTypeListCollapsed="true">
-    <Position X="7" Y="3.25" Width="1.5" />
+  <Class Name="UMLToMVCConverter.Domain.ForeignKeysGenerator" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
-      <FileName>ForeignKeysGenerator.cs</FileName>
+      <FileName>Domain\ForeignKeysGenerator.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="propertyGenerator" />
@@ -263,33 +292,32 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="logger" />
-      <Field Name="mvcProject" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="UMLToMVCConverter.MvcProjectFilesGenerator" BaseTypeListCollapsed="true">
-    <Position X="7" Y="12.75" Width="1.5" />
+    <Position X="7.25" Y="13.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BBAAAEoAAAAAACAGAAgAAAQAAAACAAAAIIABBABAAwA=</HashCode>
       <FileName>MvcProjectFilesGenerator.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="databaseSeedInitializerTextTemplate" />
-      <Field Name="dbContextClassTextTemplate" />
-      <Field Name="dbContextFactoryClassTextTemplate" />
       <Field Name="logger" />
-      <Field Name="migrationsManagerClassTextTemplate" />
-      <Field Name="mvcProject" />
-      <Field Name="programCsTextTemplate" />
       <Field Name="startupCsConfigurator" />
+      <Field Name="mvcProject" />
+      <Field Name="dbContextClassTextTemplate" />
+      <Field Name="migrationsManagerClassTextTemplate" />
+      <Field Name="dbContextFactoryClassTextTemplate" />
+      <Field Name="databaseSeedInitializerTextTemplate" />
+      <Field Name="programCsTextTemplate" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="UMLToMVCConverter.NavigationalPropertiesGenerator" BaseTypeListCollapsed="true">
-    <Position X="5" Y="5.25" Width="1.5" />
+  <Class Name="UMLToMVCConverter.Domain.NavigationalPropertiesGenerator" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
-      <FileName>NavigationalPropertiesGenerator.cs</FileName>
+      <FileName>Domain\NavigationalPropertiesGenerator.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="propertyGenerator" />
@@ -297,37 +325,37 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="UMLToMVCConverter.Program">
-    <Position X="1.75" Y="3" Width="1.5" />
+    <Position X="0.75" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UMLToMVCConverter.ProjectPublisher" BaseTypeListCollapsed="true">
-    <Position X="4" Y="9.5" Width="1.5" />
+    <Position X="3.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAACAAAACAAAAAAAAAAAAAAAAAAABBAAAAAA=</HashCode>
       <FileName>ProjectPublisher.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="logger" />
-      <Field Name="mvcProject" />
       <Field Name="scriptRunner" />
+      <Field Name="mvcProject" />
     </ShowAsAssociation>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="UMLToMVCConverter.PropertyGenerator" BaseTypeListCollapsed="true">
+  <Class Name="UMLToMVCConverter.Domain.PropertyGenerator" BaseTypeListCollapsed="true">
     <Position X="14" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAAAAAAAAAgAQAAAAgAAAIAAQAAAAAAAEEAAAAA=</HashCode>
-      <FileName>PropertyGenerator.cs</FileName>
+      <FileName>Domain\PropertyGenerator.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="typesRepository" />
       <Field Name="umlTypesHelper" />
-      <Field Name="umlVisibilityMapper" />
       <Field Name="xAttributeNameResolver" />
+      <Field Name="umlVisibilityMapper" />
       <Field Name="xmiWrapper" />
+      <Field Name="typesRepository" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -342,26 +370,26 @@
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="UMLToMVCConverter.TypesGenerator" BaseTypeListCollapsed="true">
+  <Class Name="UMLToMVCConverter.Domain.TypesGenerator" BaseTypeListCollapsed="true">
     <Position X="8" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAgAAAAAAAQAggBQAAAAAAAIIAAAAAEAAAAAEABAAA=</HashCode>
-      <FileName>TypesGenerator.cs</FileName>
+      <FileName>Domain\TypesGenerator.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="propertyGenerator" />
-      <Field Name="typesRepository" />
+      <Field Name="xmiWrapper" />
       <Field Name="umlTypesHelper" />
       <Field Name="umlVisibilityMapper" />
-      <Field Name="xmiWrapper" />
+      <Field Name="propertyGenerator" />
+      <Field Name="typesRepository" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="UMLToMVCConverter.TypesRepository" BaseTypeListCollapsed="true">
+  <Class Name="UMLToMVCConverter.Domain.TypesRepository" BaseTypeListCollapsed="true">
     <Position X="22.5" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAABQAAAAIAAAAAAAAAAAAAAAAAAAAAIAAQA=</HashCode>
-      <FileName>TypesRepository.cs</FileName>
+      <FileName>Domain\TypesRepository.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -499,45 +527,45 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="UMLToMVCConverter.Common.ILogger" Collapsed="true">
-    <Position X="4" Y="12" Width="1.5" />
+    <Position X="7.5" Y="18.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\ILogger.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.Models.IAggregationsFactory" Collapsed="true">
+  <Interface Name="UMLToMVCConverter.Domain.IAggregationsFactory" Collapsed="true">
     <Position X="14" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\IAggregationsFactory.cs</FileName>
+      <FileName>Domain\IAggregationsFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.Models.IDataModelFactory" Collapsed="true">
-    <Position X="19.75" Y="2.75" Width="1.5" />
+  <Interface Name="UMLToMVCConverter.Domain.IDataModelFactory" Collapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\IDataModelFactory.cs</FileName>
+      <FileName>Domain\IDataModelFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.Models.IEFRelationshipModelFactory" Collapsed="true">
+  <Interface Name="UMLToMVCConverter.Domain.IEFRelationshipModelFactory" Collapsed="true">
     <Position X="11" Y="10" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\IEFRelationshipModelFactory.cs</FileName>
+      <FileName>Domain\IEFRelationshipModelFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.Models.IEnumerationModelsFactory" Collapsed="true">
+  <Interface Name="UMLToMVCConverter.Domain.IEnumerationModelsFactory" Collapsed="true">
     <Position X="17" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\IEnumerationModelsFactory.cs</FileName>
+      <FileName>Domain\IEnumerationModelsFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.Models.IMvcProject" Collapsed="true">
-    <Position X="4" Y="14" Width="1.5" />
+  <Interface Name="UMLToMVCConverter.Domain.IMvcProject" Collapsed="true">
+    <Position X="4" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIABAAAAIACAAogBAIAAAAQAAAAAAEAAQAEAQQAACAA=</HashCode>
-      <FileName>Models\IMvcProject.cs</FileName>
+      <FileName>Domain\IMvcProject.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UMLToMVCConverter.UMLHelpers.IUmlTypesHelper" Collapsed="true">
@@ -569,56 +597,56 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="UMLToMVCConverter.XmiTools.IXmiWrapper" Collapsed="true">
-    <Position X="16.75" Y="6.75" Width="1.5" />
+    <Position X="15.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAABgAAgAKBAAAAgABAAAQAAAQAAKAAIAgAABA=</HashCode>
       <FileName>XmiTools\IXmiWrapper.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.IForeignKeysGenerator" Collapsed="true">
+  <Interface Name="UMLToMVCConverter.Domain.IForeignKeysGenerator" Collapsed="true">
     <Position X="17" Y="11" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
-      <FileName>IForeignKeysGenerator.cs</FileName>
+      <FileName>Domain\IForeignKeysGenerator.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.IMigrationServiceClient" Collapsed="true">
-    <Position X="13.75" Y="2.75" Width="1.5" />
+  <Interface Name="UMLToMVCConverter.IMigrationServiceClient">
+    <Position X="5.75" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IMigrationServiceClient.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.IMvcProjectFilesGenerator" Collapsed="true">
-    <Position X="19.75" Y="4.75" Width="1.5" />
+  <Interface Name="UMLToMVCConverter.IMvcProjectFilesGenerator">
+    <Position X="8.5" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
       <FileName>IMvcProjectFilesGenerator.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.INavigationalPropertiesGenerator" Collapsed="true">
+  <Interface Name="UMLToMVCConverter.Domain.INavigationalPropertiesGenerator" Collapsed="true">
     <Position X="17" Y="13" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
-      <FileName>INavigationalPropertiesGenerator.cs</FileName>
+      <FileName>Domain\INavigationalPropertiesGenerator.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.IProjectPublisher" Collapsed="true">
-    <Position X="16.75" Y="2.75" Width="1.5" />
+  <Interface Name="UMLToMVCConverter.IProjectPublisher">
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>IProjectPublisher.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.IPropertyGenerator" Collapsed="true">
+  <Interface Name="UMLToMVCConverter.Domain.IPropertyGenerator" Collapsed="true">
     <Position X="5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAA=</HashCode>
-      <FileName>IPropertyGenerator.cs</FileName>
+      <FileName>Domain\IPropertyGenerator.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UMLToMVCConverter.IScriptRunner" Collapsed="true">
-    <Position X="2" Y="8" Width="1.5" />
+    <Position X="0.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>IScriptRunner.cs</FileName>
@@ -631,50 +659,50 @@
       <FileName>IStartupCsConfigurator.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.ITypesGenerator" Collapsed="true">
+  <Interface Name="UMLToMVCConverter.Domain.ITypesGenerator" Collapsed="true">
     <Position X="14" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
-      <FileName>ITypesGenerator.cs</FileName>
+      <FileName>Domain\ITypesGenerator.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="UMLToMVCConverter.ITypesRepository" Collapsed="true">
+  <Interface Name="UMLToMVCConverter.Domain.ITypesRepository" Collapsed="true">
     <Position X="14" Y="11" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAABQAAAAIAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
-      <FileName>ITypesRepository.cs</FileName>
+      <FileName>Domain\ITypesRepository.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UMLToMVCConverter.CodeTemplates.IDatabaseSeedInitializerTextTemplate" Collapsed="true">
-    <Position X="6.5" Y="4.5" Width="1.5" />
+    <Position X="6.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CodeTemplates\IDatabaseSeedInitializerTextTemplate.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UMLToMVCConverter.CodeTemplates.IDbContextClassTextTemplate" Collapsed="true">
-    <Position X="6.5" Y="0.5" Width="1.5" />
+    <Position X="9.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CodeTemplates\IDbContextClassTextTemplate.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UMLToMVCConverter.CodeTemplates.IDbContextFactoryClassTextTemplate" Collapsed="true">
-    <Position X="0.5" Y="4.5" Width="1.5" />
+    <Position X="0.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CodeTemplates\IDbContextFactoryClassTextTemplate.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UMLToMVCConverter.CodeTemplates.IMigrationsManagerClassTextTemplate" Collapsed="true">
-    <Position X="6.5" Y="2.5" Width="1.5" />
+    <Position X="11.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CodeTemplates\IMigrationsManagerClassTextTemplate.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="UMLToMVCConverter.CodeTemplates.IProgramCsTextTemplate" Collapsed="true">
-    <Position X="3.5" Y="5.5" Width="1.5" />
+    <Position X="3.75" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CodeTemplates\IProgramCsTextTemplate.cs</FileName>
@@ -694,18 +722,18 @@
       <FileName>CodeTemplates\IModelClassTextTemplate.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="UMLToMVCConverter.Models.AggregationKinds" Collapsed="true">
+  <Enum Name="UMLToMVCConverter.Domain.AggregationKinds" Collapsed="true">
     <Position X="22.5" Y="13.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\AggregationKinds.cs</FileName>
+      <FileName>Domain\AggregationKinds.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="UMLToMVCConverter.Models.Multiplicity" Collapsed="true">
+  <Enum Name="UMLToMVCConverter.Domain.Multiplicity" Collapsed="true">
     <Position X="24.25" Y="13.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAgAAAAAAACE=</HashCode>
-      <FileName>Models\Multiplicity.cs</FileName>
+      <FileName>Domain\Multiplicity.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="UMLToMVCConverter.XmiTools.XElementType" Collapsed="true">

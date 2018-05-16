@@ -1,7 +1,7 @@
 ﻿namespace UMLToMVCConverter
 {
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
 
     public class ProjectPublisher : IProjectPublisher
     {

@@ -15,7 +15,7 @@ namespace UMLToMVCConverter.CodeTemplates
     using Autofac;
     using System;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Domain;
 
     /// <summary>
     /// Class to produce the template output
