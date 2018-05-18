@@ -182,7 +182,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             
             #line 63 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-		if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {
+		if (cmp.IsStatic) {
 			
             
             #line default

@@ -10,19 +10,40 @@
 
         private IReadOnlyDictionary<Type, string> defaultValueFormats;
 
-        public ExtendedCodeMemberProperty(string name, ExtendedCodeTypeReference codeTypeReference, ITypesRepository typesRepository)
+        public ExtendedCodeMemberProperty(
+            string name,
+            ExtendedCodeTypeReference codeTypeReference,
+            ITypesRepository typesRepository,
+            bool hasSet,
+            string visibility,
+            bool isStatic,
+            int? defaultValueKey = null,
+            string defaultValueString = null,
+            bool isDerived = false,
+            bool isID = false)
         {
+            this.DefaultValueString = defaultValueString ?? string.Empty;
             this.Name = name;
             this.Type = codeTypeReference;
+            this.HasSet = hasSet;
+            this.Visibility = visibility;
+            this.IsStatic = isStatic;
+            this.DefaultValueKey = defaultValueKey;
+            this.IsDerived = isDerived;
+            this.IsID = isID;
             if (codeTypeReference.ExtType.IsReferencingXmiDeclaredType)
             {
                 this.ReferencingType = typesRepository.GetTypeByXmiId(codeTypeReference.ExtType.ReferenceTypeXmiID);
             }
         }
 
+        public string Name { get; }
+
+        public ExtendedCodeTypeReference Type { get; }
+
         public ExtendedCodeTypeDeclaration ReferencingType { get; set; }
 
-        public bool HasDefaultValueString { get; private set; }
+        public bool HasDefaultValueString => !string.IsNullOrWhiteSpace(this.defaultValueString);
 
         public ExtendedCodeTypeReference ExtendedTypeReference => (ExtendedCodeTypeReference) this.Type;
 
@@ -30,7 +51,7 @@
         {
             get
             {
-                var codeTypeReference = (ExtendedCodeTypeReference)base.Type;
+                var codeTypeReference = this.Type;
                 var type = codeTypeReference.ExtType.Type;
                 var result = this.defaultValueFormats[type];
                 if (result == null)
@@ -50,8 +71,6 @@
                     { typeof(double), this.defaultValueString + "d" },
                     { typeof(bool), this.defaultValueString.ToLower() }
                 };
-
-                this.HasDefaultValueString = true;
             }
         }
 
@@ -68,5 +87,11 @@
         public bool IsReferencingType => this.ReferencingType != null;
 
         public bool IsReferencingEnumType => this.IsReferencingType && this.ReferencingType.IsEnum;
+
+        public bool HasSet { get; set; }
+
+        public string Visibility { get; }
+
+        public bool IsStatic { get; }
     }
 }

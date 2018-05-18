@@ -61,7 +61,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 		<#						
 		}
 		#>public <#
-		if (cmp.Attributes.HasFlag(MemberAttributes.Static)) {
+		if (cmp.IsStatic) {
 			#>static <#
 		}
         if (type.ExtType.IsCollection || cmp.IsVirtual) {

@@ -31,30 +31,28 @@
         {
             Insist.IsNotNull(xAttribute, nameof(xAttribute));
 
+            var propertyName = this.xAttributeNameResolver.GetName(xAttribute);
+
             var cSharpType = this.umlTypesHelper.GetXElementCsharpType(xAttribute);
             var typeReference = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
-            var property = new ExtendedCodeMemberProperty(this.xAttributeNameResolver.GetName(xAttribute), typeReference, this.typesRepository)
-            {
-                HasSet = true
-            };
+            
 
             var umlVisibility = xAttribute.ObligatoryAttributeValue("visibility");
-            var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharp(umlVisibility);
-            property.Attributes = property.Attributes | cSharpVisibility;
+            var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharpString(umlVisibility);
+            var visibility = cSharpVisibility;
 
             var isStatic = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isStatic"));
-            if (isStatic)
-            {
-                property.Attributes = property.Attributes | MemberAttributes.Static;
-            }
 
+            bool hasSet = true;
             var xIsReadonly = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isReadOnly"));
             if (xIsReadonly)
             {
-                property.HasSet = false;
+                hasSet = false;
             }
 
+            int? defaultValueKey = null;
+            string defaultValueString = null;
             var xDefaultValue = xAttribute.Element("defaultValue");
             if (xDefaultValue != null)
             {
@@ -66,32 +64,43 @@
                     var instanceOwnerId = this.xmiWrapper.GetElementsId(instance.Parent);
                     var instanceOwnerType = this.typesRepository.GetTypeByXmiId(instanceOwnerId);
                     var literal = instanceOwnerType.Literals.Single(x => x.Value == instanceValue).Key;
-                    property.DefaultValueKey = literal;
+                    defaultValueKey = literal;
                 }
                 else
                 {
 
-                    var extendedType = (ExtendedCodeTypeReference)property.Type;
+                    var extendedType = typeReference;
                     if (extendedType.IsGeneric)
                     {
                         throw new NotSupportedException("No default value for generic types supported");
                     }
 
-                    property.DefaultValueString = this.GetDefaultValueString(xDefaultValue);
+                    defaultValueString = this.GetDefaultValueString(xDefaultValue);
                 }
             }
 
-            var xIsDerived = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isDerived"));
-            if (xIsDerived)
+            var isDerived = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isDerived"));
+            if (isDerived)
             {
-                property.HasSet = false;
-                property.IsDerived = true;
+                hasSet = false;
             }
 
-            var xIsID = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isID"));
-            if (xIsID)
+            var isID = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isID"));
+
+            var property = new ExtendedCodeMemberProperty(
+                propertyName,
+                typeReference,
+                this.typesRepository,
+                hasSet,
+                visibility,
+                isStatic,
+                defaultValueKey,
+                defaultValueString,
+                isDerived,
+                isID);
+
+            if (isID)
             {
-                property.IsID = true;
                 type.PrimaryKeyAttributes.Add(property);
             }
 
@@ -134,10 +143,13 @@
             }
 
             var propertyType = ExtendedCodeTypeReference.CreateForType(cSharpType);
-            var property = new ExtendedCodeMemberProperty (name, propertyType, this.typesRepository)
-            {
-                HasSet = true
-            };
+            var property = new ExtendedCodeMemberProperty(
+                name,
+                propertyType,
+                this.typesRepository,
+                true,
+                "public",
+                false);
 
             return property;
         }

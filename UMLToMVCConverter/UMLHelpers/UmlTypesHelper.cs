@@ -175,11 +175,13 @@
 
             var valueType = this.GetPrimitiveNonNullableType(xElement);
             var valueCodeTypeReference = new ExtendedCodeTypeReference(valueType);
-            var valueProperty = new ExtendedCodeMemberProperty ("Value", valueCodeTypeReference, this.typesRepository)
-            {
-                Attributes = MemberAttributes.Public,
-                HasSet = true
-            };
+            var valueProperty = new ExtendedCodeMemberProperty(
+                "Value",
+                valueCodeTypeReference,
+                this.typesRepository,
+                true,
+                "public",
+                false);
 
             codeTypeDeclaration.Members.Add(valueProperty);
 
