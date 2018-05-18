@@ -7,7 +7,7 @@
     {
         private readonly MvcProject mvcProject;
         private readonly IComponentContext componentContext;
-        ExtendedCodeTypeDeclaration codeTypeDeclaration;
+        private TypeModel type;
 
         public BasicTypeTextTemplate(MvcProject mvcProject, IComponentContext componentContext)
         {
@@ -15,9 +15,9 @@
             this.componentContext = componentContext;
         }
 
-        public string TransformText(ExtendedCodeTypeDeclaration codeTypeDeclaration)
+        public string TransformText(TypeModel type)
         {
-            this.codeTypeDeclaration = codeTypeDeclaration;
+            this.type = type;
 
             return this.TransformText();
         }

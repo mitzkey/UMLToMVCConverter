@@ -26,9 +26,9 @@ namespace UMLToMVCConverter.CodeTemplates
         }
 
         public string TransformText(
-            IEnumerable<ExtendedCodeTypeDeclaration> standaloneEntityTypes,
+            IEnumerable<TypeModel> standaloneEntityTypes,
             IEnumerable<EFRelationship> relationshipModels,
-            IEnumerable<ExtendedCodeTypeDeclaration> structs)
+            IEnumerable<TypeModel> structs)
         {
             this.relationships = relationshipModels;
 

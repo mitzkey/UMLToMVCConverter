@@ -8,56 +8,52 @@
 <#@ assembly name="System.Core"#>
 	public<#
 
-if(this.codeTypeDeclaration.IsAbstract) {
+if(this.type.IsAbstract) {
 	#> abstract<#
 }
 
-#> class <#=this.codeTypeDeclaration.Name#> <#
+#> class <#=this.type.Name#> <#
 
-if(this.codeTypeDeclaration.BaseClassName != null) {
-	#>: <#= this.codeTypeDeclaration.BaseClassName#> <#
+if(this.type.BaseClassName != null) {
+	#>: <#= this.type.BaseClassName#> <#
 }
 
 #>{
 
 <#
-if(this.codeTypeDeclaration.IsEnum) {
+if(this.type.IsEnum) {
 #>		[DatabaseGenerated(DatabaseGeneratedOption.None)]<#
 }
-if((this.codeTypeDeclaration.IsClass 
-	|| this.codeTypeDeclaration.IsEnum)
-	&& string.IsNullOrWhiteSpace(this.codeTypeDeclaration.BaseClassName)
-	&& !this.codeTypeDeclaration.HasKey) {
+if((this.type.IsClass 
+	|| this.type.IsEnum)
+	&& string.IsNullOrWhiteSpace(this.type.BaseClassName)
+	&& !this.type.HasKey) {
 	#>
 
 		public int ID {get; set;}<#
 }
 
-foreach (var foreignKey in this.codeTypeDeclaration.ForeignKeys) {
+foreach (var foreignKey in this.type.ForeignKeys) {
 	var type = (ExtendedCodeTypeReference)foreignKey.Value.Type;
 	#>
 
 		public <#= type.ExtTypeName + " " + foreignKey.Key #> { get; set; }<#
 }
 
-foreach (var cm in this.codeTypeDeclaration.Members) {
-
-	if (cm is CodeTypeDeclaration) {
-		var ctd = (ExtendedCodeTypeDeclaration) cm;
-		var tmpl = this.componentContext.Resolve<IBasicTypeTextTemplate>();
-		string innerClass = tmpl.TransformText(ctd);
-		#><#=innerClass.AddNewLines(2).NewSection().NewSection()#><#
-	}
+foreach (var nestedClass in this.type.NestedClasses) {
+	var tmpl = this.componentContext.Resolve<IBasicTypeTextTemplate>();
+	string innerClassCode = tmpl.TransformText(nestedClass);
+	#><#=innerClassCode.AddNewLines(2).NewSection().NewSection()#><#
 }
 
-foreach (var property in this.codeTypeDeclaration.Properties) {
+foreach (var property in this.type.Properties) {
 		string generics = "";
 		var type = property.ExtendedTypeReference;
 		#>
 
 
 		<#
-		if (!this.codeTypeDeclaration.HasComplexKey && property.IsID) {
+		if (!this.type.HasComplexKey && property.IsID) {
 			#>[Key]
 		<#						
 		}
@@ -92,7 +88,7 @@ foreach (var property in this.codeTypeDeclaration.Properties) {
 		}
 }
 
-foreach (var method in this.codeTypeDeclaration.Methods) {
+foreach (var method in this.type.Methods) {
 	string returnTypeName = "void";
 	if (method.ReturnType.BaseType != "System.Void") {
 		returnTypeName = ((ExtendedCodeTypeReference)method.ReturnType).ExtTypeName;

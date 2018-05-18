@@ -6,34 +6,34 @@
 
     public class TypesRepository : ITypesRepository
     {
-        private readonly List<ExtendedCodeTypeDeclaration> types;
+        private readonly List<TypeModel> types;
 
         public TypesRepository()
         {
-            this.types = new List<ExtendedCodeTypeDeclaration>();
+            this.types = new List<TypeModel>();
         }
 
-        public ExtendedCodeTypeDeclaration GetTypeByXmiId(string xmiId)
+        public TypeModel GetTypeByXmiId(string xmiId)
         {
             return this.types.Single(x => x.XmiID == xmiId);
         }
 
-        public void Add(ExtendedCodeTypeDeclaration type)
+        public void Add(TypeModel type)
         {
             this.types.Add(type);
         }
 
-        public ExtendedCodeTypeDeclaration GetTypeByName(string name)
+        public TypeModel GetTypeByName(string name)
         {
             return this.types.FirstOrDefault(i => i.Name == name);
         }
 
-        public IEnumerable<ExtendedCodeTypeDeclaration> GetEnums()
+        public IEnumerable<TypeModel> GetEnums()
         {
             return this.types.Where(t => t.IsEnum);
         }
 
-        public IEnumerable<ExtendedCodeTypeDeclaration> GetAllTypes()
+        public IEnumerable<TypeModel> GetAllTypes()
         {
             return this.types;
         }

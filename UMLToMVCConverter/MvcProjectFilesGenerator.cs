@@ -99,12 +99,12 @@
         }
 
 
-        private void GenerateDbContextClass(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<EFRelationship> relationshipModels)
+        private void GenerateDbContextClass(IEnumerable<TypeModel> codeTypeDeclarations, IEnumerable<EFRelationship> relationshipModels)
         {
             this.logger.LogInfo("Generating db context class...");
 
             var standaloneEntityTypes = codeTypeDeclarations.
-                Where(i => !i.TypeAttributes.HasFlag(TypeAttributes.Abstract)
+                Where(i => !i.IsAbstract
                            && !i.IsStruct)
                 .ToList();
 
@@ -117,7 +117,7 @@
             this.logger.LogInfo($"Generated {fileOutputPath}");
         }
 
-        private void GenerateModels(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations)
+        private void GenerateModels(IEnumerable<TypeModel> codeTypeDeclarations)
         {
             this.logger.LogInfo("Generating models...");
 

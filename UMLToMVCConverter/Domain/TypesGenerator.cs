@@ -43,13 +43,14 @@
             this.GenerateInheritanceRelations(xTypes);
         }
 
-        private IEnumerable<ExtendedCodeTypeDeclaration> DeclareTypes(IEnumerable<XElement> xTypes)
+        private IEnumerable<TypeModel> DeclareTypes(IEnumerable<XElement> xTypes)
         {
-            var typeDeclarations = new List<ExtendedCodeTypeDeclaration>();
+            var typeDeclarations = new List<TypeModel>();
 
             foreach (var type in xTypes)
             {
-                var typeDeclaration = new ExtendedCodeTypeDeclaration(type.ObligatoryAttributeValue("name"))
+                var name = type.ObligatoryAttributeValue("name");
+                var typeDeclaration = new TypeModel(name)
                 {
                     XmiID = this.xmiWrapper.GetElementsId(type)
                 };
@@ -62,7 +63,7 @@
 
         private void BuildTypes(
             IEnumerable<XElement> xTypesToBuild,
-            List<ExtendedCodeTypeDeclaration> typeDeclarations)
+            List<TypeModel> typeDeclarations)
         {
             var enumerations =
                 xTypesToBuild.Where(x => this.xmiWrapper.GetXElementType(x).Equals(XElementType.Enumeration));
@@ -91,9 +92,9 @@
             }
         }
 
-        private ExtendedCodeTypeDeclaration BuildType(
+        private TypeModel BuildType(
             XElement xType,
-            List<ExtendedCodeTypeDeclaration> typeDeclarations)
+            List<TypeModel> typeDeclarations)
         {
             var xTypeName = xType.ObligatoryAttributeValue("name");
             var type = typeDeclarations.Single(t => t.Name.Equals(xTypeName));
@@ -102,24 +103,24 @@
             type.IsStruct = this.umlTypesHelper.IsStruct(xType);
             type.IsEnum = this.umlTypesHelper.IsEnum(xType);
 
-            type.TypeAttributes = TypeAttributes.Public;
+            type.Visibility = "public";
 
             if (this.umlTypesHelper.IsAbstract(xType))
             {
-                type.TypeAttributes = type.TypeAttributes | TypeAttributes.Abstract;
+                type.IsAbstract = true;
             }
 
             var nestedClasses = xType.Descendants("nestedClassifier").ToList();
             foreach (var nestedClass in nestedClasses)
             {
                 var ctdNested = this.BuildType(nestedClass, typeDeclarations);
-                type.Members.Add(ctdNested);
+                type.NestedClasses.Add(ctdNested);
             }
 
             return type;
         }
 
-        private void GenerateProperties(XElement xType, ExtendedCodeTypeDeclaration type)
+        private void GenerateProperties(XElement xType, TypeModel type)
         {
             var xAttributes = this.xmiWrapper
                 .GetXAttributes(xType)
@@ -142,7 +143,7 @@
             }
         }
 
-        private void GenerateMethods(XElement xType, ExtendedCodeTypeDeclaration type)
+        private void GenerateMethods(XElement xType, TypeModel type)
         {
             var xOperations = this.xmiWrapper.GetXOperations(xType);
             foreach (var xOperation in xOperations)
@@ -196,12 +197,14 @@
                     var baseType = this.typesRepository.GetTypeByName(baseTypeName);
 
                     Insist.IsNotNull(baseType, nameof(baseType));
+
                     var typeReference = new CodeTypeReference(baseType.Name);
 
                     var childTypeName = type.ObligatoryAttributeValue("name");
                     var childType = this.typesRepository.GetTypeByName(childTypeName);
 
                     Insist.IsNotNull(childType, nameof(childType));
+
                     childType.BaseTypes.Add(typeReference);
                 }
             }

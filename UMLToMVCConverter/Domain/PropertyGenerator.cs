@@ -27,7 +27,7 @@
             this.typesRepository = typesRepository;
         }
 
-        public Property Generate(ExtendedCodeTypeDeclaration type, XElement xAttribute)
+        public Property Generate(TypeModel type, XElement xAttribute)
         {
             Insist.IsNotNull(xAttribute, nameof(xAttribute));
 

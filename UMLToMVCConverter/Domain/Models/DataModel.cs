@@ -4,7 +4,7 @@
 
     public class DataModel
     {
-        public IEnumerable<ExtendedCodeTypeDeclaration> Types { get; set; }
+        public IEnumerable<TypeModel> Types { get; set; }
 
         public IEnumerable<EFRelationship> EFRelationshipModels { get; set; }
 

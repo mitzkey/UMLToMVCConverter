@@ -40,7 +40,7 @@
 
         public ExtendedCodeTypeReference Type { get; }
 
-        public ExtendedCodeTypeDeclaration ReferencingType { get; set; }
+        public TypeModel ReferencingType { get; set; }
 
         public bool HasDefaultValueString => !string.IsNullOrWhiteSpace(this.defaultValueString);
 

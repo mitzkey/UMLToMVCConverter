@@ -4,9 +4,9 @@
 
     public class Aggregation
     {
-        public ExtendedCodeTypeDeclaration PrincipalType { get; set; }
+        public TypeModel PrincipalType { get; set; }
 
-        public ExtendedCodeTypeDeclaration DependentType { get; set; }
+        public TypeModel DependentType { get; set; }
 
         public AggregationKinds AggregationKind { get; set; }
 

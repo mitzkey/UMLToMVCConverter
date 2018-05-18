@@ -191,7 +191,7 @@
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.Data.cs">
       <DependentUpon>ViewIndexTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Models\ExtendedCodeTypeDeclaration.cs" />
+    <Compile Include="Domain\Models\TypeModel.cs" />
     <Compile Include="Common\JObjectExtensions.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Common\XElementExtensions.cs" />

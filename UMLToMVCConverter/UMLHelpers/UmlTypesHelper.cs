@@ -165,11 +165,9 @@
             var name = xElement.ObligatoryAttributeValue("name");
             name = name.FirstCharToUpper();
 
-            var codeTypeDeclaration = new ExtendedCodeTypeDeclaration(name)
-            {
-                IsStruct = false,
-                TypeAttributes = TypeAttributes.Public
-            };
+            var isClass = true;
+            var visibility = "public";
+            var codeTypeDeclaration = new TypeModel(name, isClass, visibility);
             
             var entityType = new ExtendedType(name, true);
 

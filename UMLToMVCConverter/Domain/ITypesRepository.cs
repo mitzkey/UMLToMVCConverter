@@ -5,10 +5,10 @@
 
     public interface ITypesRepository
     {
-        ExtendedCodeTypeDeclaration GetTypeByXmiId(string xmiId);
-        void Add(ExtendedCodeTypeDeclaration type);
-        ExtendedCodeTypeDeclaration GetTypeByName(string name);
-        IEnumerable<ExtendedCodeTypeDeclaration> GetEnums();
-        IEnumerable<ExtendedCodeTypeDeclaration> GetAllTypes();
+        TypeModel GetTypeByXmiId(string xmiId);
+        void Add(TypeModel type);
+        TypeModel GetTypeByName(string name);
+        IEnumerable<TypeModel> GetEnums();
+        IEnumerable<TypeModel> GetAllTypes();
     }
 }

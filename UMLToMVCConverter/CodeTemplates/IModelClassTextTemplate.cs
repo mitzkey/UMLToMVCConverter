@@ -5,6 +5,6 @@
 
     public interface IModelClassTextTemplate
     {
-        string TransformText(ExtendedCodeTypeDeclaration extendedCodeTypeDeclaration);
+        string TransformText(TypeModel typeModel);
     }
 }

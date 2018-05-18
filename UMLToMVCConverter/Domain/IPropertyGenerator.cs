@@ -6,7 +6,7 @@
 
     public interface IPropertyGenerator
     {
-        Property Generate(ExtendedCodeTypeDeclaration type, XElement xAttribute);
+        Property Generate(TypeModel type, XElement xAttribute);
 
         Property GenerateBasicProperty(string name, Type type, Type genericType = null);
     }
