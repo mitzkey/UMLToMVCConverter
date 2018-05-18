@@ -212,7 +212,7 @@
     <Compile Include="MigrationServiceClient.cs" />
     <Compile Include="Domain\Models\MvcProject.cs" />
     <Compile Include="Domain\Models\ExtendedCodeMemberProperty.cs" />
-    <Compile Include="Domain\Models\ExtendedCodeParameterDeclarationExpression.cs" />
+    <Compile Include="Domain\Models\MethodParameter.cs" />
     <Compile Include="Domain\Models\ExtendedCodeTypeReference.cs" />
     <Compile Include="Domain\Models\ExtendedType.cs" />
     <Compile Include="Common\Insist.cs" />

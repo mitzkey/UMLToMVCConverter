@@ -8,7 +8,7 @@
 
         public ExtendedCodeTypeReference ReturnType { get; }
 
-        public List<ExtendedCodeParameterDeclarationExpression> Parameters { get; }
+        public List<MethodParameter> Parameters { get; }
 
         public string Visibility { get; }
 
@@ -18,7 +18,7 @@
         public Method(
             string name,
             ExtendedCodeTypeReference returnType,
-            List<ExtendedCodeParameterDeclarationExpression> parameters,
+            List<MethodParameter> parameters,
             string visibility,
             bool isStatic)
         {

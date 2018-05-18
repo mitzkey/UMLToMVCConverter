@@ -91,26 +91,26 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 		}
 	}
 }
-foreach (var codeMemberMethod in this.codeTypeDeclaration.Methods) {
+foreach (var method in this.codeTypeDeclaration.Methods) {
 	string returnTypeName = "void";
-	if (codeMemberMethod.ReturnType.BaseType != "System.Void") {
-		returnTypeName = ((ExtendedCodeTypeReference)codeMemberMethod.ReturnType).ExtTypeName;
+	if (method.ReturnType.BaseType != "System.Void") {
+		returnTypeName = ((ExtendedCodeTypeReference)method.ReturnType).ExtTypeName;
 	}
 	#>
 
 
 		public<#
-	if (codeMemberMethod.IsStatic) {
+	if (method.IsStatic) {
 		#> static<#
 	}
-	#> <#=returnTypeName#> <#=codeMemberMethod.Name#>(<#
+	#> <#=returnTypeName#> <#=method.Name#>(<#
 	bool addComma = false;
-	foreach (ExtendedCodeParameterDeclarationExpression cp in codeMemberMethod.Parameters) {
+	foreach (var parameter in method.Parameters) {
 		if (addComma) {
 		#>,<#
 		}
 		addComma = true;
-		#><#= cp.ExtTypeName + " " + cp.Name#><#
+		#><#= parameter.ExtTypeName + " " + parameter.Name#><#
 	}
 		#>) {
 			throw new NotImplementedException();

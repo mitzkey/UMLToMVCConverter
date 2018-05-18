@@ -297,10 +297,10 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 		}
 	}
 }
-foreach (var codeMemberMethod in this.codeTypeDeclaration.Methods) {
+foreach (var method in this.codeTypeDeclaration.Methods) {
 	string returnTypeName = "void";
-	if (codeMemberMethod.ReturnType.BaseType != "System.Void") {
-		returnTypeName = ((ExtendedCodeTypeReference)codeMemberMethod.ReturnType).ExtTypeName;
+	if (method.ReturnType.BaseType != "System.Void") {
+		returnTypeName = ((ExtendedCodeTypeReference)method.ReturnType).ExtTypeName;
 	}
 	
             
@@ -310,7 +310,7 @@ foreach (var codeMemberMethod in this.codeTypeDeclaration.Methods) {
             
             #line 102 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-	if (codeMemberMethod.IsStatic) {
+	if (method.IsStatic) {
 		
             
             #line default
@@ -334,7 +334,7 @@ foreach (var codeMemberMethod in this.codeTypeDeclaration.Methods) {
             this.Write(" ");
             
             #line 106 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(codeMemberMethod.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Name));
             
             #line default
             #line hidden
@@ -343,7 +343,7 @@ foreach (var codeMemberMethod in this.codeTypeDeclaration.Methods) {
             #line 106 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 	bool addComma = false;
-	foreach (ExtendedCodeParameterDeclarationExpression cp in codeMemberMethod.Parameters) {
+	foreach (var parameter in method.Parameters) {
 		if (addComma) {
 		
             
@@ -361,7 +361,7 @@ foreach (var codeMemberMethod in this.codeTypeDeclaration.Methods) {
             #line hidden
             
             #line 113 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(cp.ExtTypeName + " " + cp.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(parameter.ExtTypeName + " " + parameter.Name));
             
             #line default
             #line hidden

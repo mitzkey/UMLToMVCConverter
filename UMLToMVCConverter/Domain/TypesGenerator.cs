@@ -154,14 +154,14 @@
                 var typeReference = ExtendedCodeTypeReference.CreateForType(xReturnType);
                 var returnType = typeReference;
 
-                var parameters = new List<ExtendedCodeParameterDeclarationExpression>();
+                var parameters = new List<MethodParameter>();
                 var xParameters = this.xmiWrapper.GetXParameters(xOperation);
                 foreach (var xParameter in xParameters)
                 {
                     var parameterType = this.umlTypesHelper.GetXElementCsharpType(xParameter);
                     var parameterName = xParameter.ObligatoryAttributeValue("name");
                     var parameter =
-                        new ExtendedCodeParameterDeclarationExpression(parameterType, parameterName);
+                        new MethodParameter(parameterType, parameterName);
                     parameters.Add(parameter);
                 }
 
