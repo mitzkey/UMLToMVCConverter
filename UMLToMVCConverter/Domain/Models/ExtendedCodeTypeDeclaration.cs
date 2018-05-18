@@ -24,9 +24,12 @@
 
         public Dictionary<int, string> Literals { get; set; }
 
+        public List<Method> Methods { get; }
+
         public ExtendedCodeTypeDeclaration(string name)
             : base(name)
         {
+            this.Methods = new List<Method>();
             this.ForeignKeys = new Dictionary<string, ExtendedCodeMemberProperty>();
             this.PrimaryKeyAttributes = new List<ExtendedCodeMemberProperty>();
             this.Literals = new Dictionary<int, string>();

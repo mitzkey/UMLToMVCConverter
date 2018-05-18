@@ -142,7 +142,7 @@
             }
         }
 
-        private void GenerateMethods(XElement xType, CodeTypeDeclaration type)
+        private void GenerateMethods(XElement xType, ExtendedCodeTypeDeclaration type)
         {
             var xOperations = this.xmiWrapper.GetXOperations(xType);
             foreach (var xOperation in xOperations)
@@ -174,7 +174,7 @@
 
                 var method = new Method(name, returnType, parameters, visibility, isStatic);
 
-                type.Members.Add(method);
+                type.Methods.Add(method);
             }
         }
 

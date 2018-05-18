@@ -90,32 +90,31 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 		<#
 		}
 	}
-	else if (cm is Method) {
-		var codeMemberMethod = (Method) cm;
-		string returnTypeName = "void";
-		if (codeMemberMethod.ReturnType.BaseType != "System.Void") {
-			returnTypeName = ((ExtendedCodeTypeReference)codeMemberMethod.ReturnType).ExtTypeName;
-		}
-		#>
+}
+foreach (var codeMemberMethod in this.codeTypeDeclaration.Methods) {
+	string returnTypeName = "void";
+	if (codeMemberMethod.ReturnType.BaseType != "System.Void") {
+		returnTypeName = ((ExtendedCodeTypeReference)codeMemberMethod.ReturnType).ExtTypeName;
+	}
+	#>
 
 
 		public<#
-		if (codeMemberMethod.IsStatic) {
-			#> static<#
+	if (codeMemberMethod.IsStatic) {
+		#> static<#
+	}
+	#> <#=returnTypeName#> <#=codeMemberMethod.Name#>(<#
+	bool addComma = false;
+	foreach (ExtendedCodeParameterDeclarationExpression cp in codeMemberMethod.Parameters) {
+		if (addComma) {
+		#>,<#
 		}
-		#> <#=returnTypeName#> <#=codeMemberMethod.Name#>(<#
-		bool addComma = false;
-		foreach (ExtendedCodeParameterDeclarationExpression cp in codeMemberMethod.Parameters) {
-			if (addComma) {
-			#>,<#
-			}
-			addComma = true;
-			#><#= cp.ExtTypeName + " " + cp.Name#><#
-		}
+		addComma = true;
+		#><#= cp.ExtTypeName + " " + cp.Name#><#
+	}
 		#>) {
 			throw new NotImplementedException();
 		}<#
-	}
 }
 #>
 

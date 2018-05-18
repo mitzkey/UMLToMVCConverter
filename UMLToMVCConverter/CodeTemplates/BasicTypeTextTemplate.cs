@@ -296,13 +296,13 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 
 		}
 	}
-	else if (cm is Method) {
-		var codeMemberMethod = (Method) cm;
-		string returnTypeName = "void";
-		if (codeMemberMethod.ReturnType.BaseType != "System.Void") {
-			returnTypeName = ((ExtendedCodeTypeReference)codeMemberMethod.ReturnType).ExtTypeName;
-		}
-		
+}
+foreach (var codeMemberMethod in this.codeTypeDeclaration.Methods) {
+	string returnTypeName = "void";
+	if (codeMemberMethod.ReturnType.BaseType != "System.Void") {
+		returnTypeName = ((ExtendedCodeTypeReference)codeMemberMethod.ReturnType).ExtTypeName;
+	}
+	
             
             #line default
             #line hidden
@@ -310,8 +310,8 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             
             #line 102 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-		if (codeMemberMethod.IsStatic) {
-			
+	if (codeMemberMethod.IsStatic) {
+		
             
             #line default
             #line hidden
@@ -319,8 +319,8 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             
             #line 104 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-		}
-		
+	}
+	
             
             #line default
             #line hidden
@@ -342,10 +342,10 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             
             #line 106 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-		bool addComma = false;
-		foreach (ExtendedCodeParameterDeclarationExpression cp in codeMemberMethod.Parameters) {
-			if (addComma) {
-			
+	bool addComma = false;
+	foreach (ExtendedCodeParameterDeclarationExpression cp in codeMemberMethod.Parameters) {
+		if (addComma) {
+		
             
             #line default
             #line hidden
@@ -353,9 +353,9 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             
             #line 110 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-			}
-			addComma = true;
-			
+		}
+		addComma = true;
+		
             
             #line default
             #line hidden
@@ -368,7 +368,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             
             #line 113 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-		}
+	}
 		
             
             #line default
@@ -377,7 +377,6 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             
             #line 117 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-	}
 }
 
             
