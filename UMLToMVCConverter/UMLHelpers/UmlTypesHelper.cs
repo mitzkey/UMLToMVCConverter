@@ -176,7 +176,8 @@
             var valueCodeTypeReference = new ExtendedCodeTypeReference(valueType);
             var valueProperty = new ExtendedCodeMemberProperty ("Value", valueCodeTypeReference, this.typesRepository)
             {
-                Attributes = MemberAttributes.Public
+                Attributes = MemberAttributes.Public,
+                HasSet = true
             };
 
             codeTypeDeclaration.Members.Add(valueProperty);
