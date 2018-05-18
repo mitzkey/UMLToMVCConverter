@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using UMLToMVCConverter.Domain.Models;
 
     public class ForeignKeysGenerator : IForeignKeysGenerator
     {

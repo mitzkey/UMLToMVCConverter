@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
+    using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.XmiTools;
 
     public class AggregationsFactory : IAggregationsFactory

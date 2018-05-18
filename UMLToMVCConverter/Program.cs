@@ -5,6 +5,7 @@
     using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain;
+    using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.XmiTools;
 

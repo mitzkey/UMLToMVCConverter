@@ -1,4 +1,4 @@
-﻿namespace UMLToMVCConverter.Domain
+﻿namespace UMLToMVCConverter.Domain.Models
 {
     using System;
     using System.CodeDom;

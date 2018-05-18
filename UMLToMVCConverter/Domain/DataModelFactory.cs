@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Xml.Linq;
+    using UMLToMVCConverter.Domain.Models;
 
     public class DataModelFactory : IDataModelFactory
     {

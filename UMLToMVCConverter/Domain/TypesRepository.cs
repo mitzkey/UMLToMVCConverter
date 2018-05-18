@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using UMLToMVCConverter.Domain.Models;
 
     public class TypesRepository : ITypesRepository
     {

@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
+    using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.XmiTools;
 

@@ -86,8 +86,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Aggregation.cs" />
-    <Compile Include="Domain\AggregationKinds.cs" />
+    <Compile Include="Domain\Models\Aggregation.cs" />
+    <Compile Include="Domain\Models\AggregationKinds.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Domain\AggregationsFactory.cs" />
     <Compile Include="XmiTools\XAttributeNameResolver.cs" />
@@ -113,9 +113,9 @@
     <Compile Include="CodeTemplates\ProgramCsTextTemplate.Data.cs">
       <DependentUpon>ProgramCsTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\EnumerationModel.cs" />
+    <Compile Include="Domain\Models\EnumerationModel.cs" />
     <Compile Include="CodeTemplates\IDatabaseSeedInitializerTextTemplate.cs" />
-    <Compile Include="Domain\EFRelationshipModel.cs" />
+    <Compile Include="Domain\Models\EFRelationshipModel.cs" />
     <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,7 +161,7 @@
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.Data.cs">
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\DataModel.cs" />
+    <Compile Include="Domain\Models\DataModel.cs" />
     <Compile Include="Domain\DataModelFactory.cs" />
     <Compile Include="Domain\EnumerationModelsFactory.cs" />
     <Compile Include="Domain\ForeignKeysGenerator.cs" />
@@ -181,7 +181,7 @@
     <Compile Include="Domain\EFRelationshipModelFactory.cs" />
     <Compile Include="Domain\NavigationalPropertiesGenerator.cs" />
     <Compile Include="Domain\PropertyGenerator.cs" />
-    <Compile Include="Domain\RelationshipMultiplicity.cs" />
+    <Compile Include="Domain\Models\RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -190,7 +190,7 @@
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.Data.cs">
       <DependentUpon>ViewIndexTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\ExtendedCodeTypeDeclaration.cs" />
+    <Compile Include="Domain\Models\ExtendedCodeTypeDeclaration.cs" />
     <Compile Include="Common\JObjectExtensions.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Common\XElementExtensions.cs" />
@@ -210,12 +210,12 @@
     <Compile Include="Common\Logger.cs" />
     <Compile Include="UMLHelpers\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
-    <Compile Include="Domain\MvcProject.cs" />
-    <Compile Include="Domain\ExtendedCodeMemberMethod.cs" />
-    <Compile Include="Domain\ExtendedCodeMemberProperty.cs" />
-    <Compile Include="Domain\ExtendedCodeParameterDeclarationExpression.cs" />
-    <Compile Include="Domain\ExtendedCodeTypeReference.cs" />
-    <Compile Include="Domain\ExtendedType.cs" />
+    <Compile Include="Domain\Models\MvcProject.cs" />
+    <Compile Include="Domain\Models\ExtendedCodeMemberMethod.cs" />
+    <Compile Include="Domain\Models\ExtendedCodeMemberProperty.cs" />
+    <Compile Include="Domain\Models\ExtendedCodeParameterDeclarationExpression.cs" />
+    <Compile Include="Domain\Models\ExtendedCodeTypeReference.cs" />
+    <Compile Include="Domain\Models\ExtendedType.cs" />
     <Compile Include="Common\Insist.cs" />
     <Compile Include="UMLHelpers\UMLVisibilityMapper.cs" />
     <Compile Include="Program.cs" />

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Xml.Linq;
+    using UMLToMVCConverter.Domain.Models;
 
     public interface IPropertyGenerator
     {

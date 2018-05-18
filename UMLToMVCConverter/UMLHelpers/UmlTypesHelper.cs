@@ -8,6 +8,7 @@
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain;
+    using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.XmiTools;
 
     public class UmlTypesHelper : IUmlTypesHelper

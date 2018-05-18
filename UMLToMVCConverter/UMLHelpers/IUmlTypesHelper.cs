@@ -2,6 +2,7 @@
 {
     using System.Xml.Linq;
     using UMLToMVCConverter.Domain;
+    using UMLToMVCConverter.Domain.Models;
 
     public interface IUmlTypesHelper
     {
