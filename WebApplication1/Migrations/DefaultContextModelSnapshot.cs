@@ -104,6 +104,8 @@ namespace WebApplication1.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Value");
+
                     b.Property<int?>("WorkerID");
 
                     b.HasKey("ID");
@@ -119,6 +121,8 @@ namespace WebApplication1.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int?>("BabyID");
+
+                    b.Property<string>("Value");
 
                     b.HasKey("ID");
 

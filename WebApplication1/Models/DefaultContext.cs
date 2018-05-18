@@ -11,13 +11,13 @@ namespace WebApplication1.Models
 
 		public DbSet<StatusWniosku> StatusWniosku { get; set; }
 
-		public DbSet<FavouriteNumber> FavouriteNumber { get; set; }
-
 		public DbSet<Worker> Worker { get; set; }
 
-		public DbSet<KnownWords> KnownWords { get; set; }
+		public DbSet<FavouriteNumber> FavouriteNumber { get; set; }
 
 		public DbSet<Baby> Baby { get; set; }
+
+		public DbSet<KnownWords> KnownWords { get; set; }
 
 		public DbSet<CompanyInfo> CompanyInfo { get; set; }
 
