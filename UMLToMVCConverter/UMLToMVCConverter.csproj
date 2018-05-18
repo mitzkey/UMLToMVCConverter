@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Models\Aggregation.cs" />
-    <Compile Include="Domain\Models\AggregationKinds.cs" />
+    <Compile Include="Domain\AggregationKinds.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Domain\AggregationsFactory.cs" />
     <Compile Include="XmiTools\XAttributeNameResolver.cs" />
@@ -113,9 +113,9 @@
     <Compile Include="CodeTemplates\ProgramCsTextTemplate.Data.cs">
       <DependentUpon>ProgramCsTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="Domain\Models\EnumerationModel.cs" />
+    <Compile Include="Domain\Models\Enumeration.cs" />
     <Compile Include="CodeTemplates\IDatabaseSeedInitializerTextTemplate.cs" />
-    <Compile Include="Domain\Models\EFRelationshipModel.cs" />
+    <Compile Include="Domain\Models\EFRelationship.cs" />
     <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -181,7 +181,7 @@
     <Compile Include="Domain\EFRelationshipModelFactory.cs" />
     <Compile Include="Domain\NavigationalPropertiesGenerator.cs" />
     <Compile Include="Domain\PropertyGenerator.cs" />
-    <Compile Include="Domain\Models\RelationshipMultiplicity.cs" />
+    <Compile Include="Domain\RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

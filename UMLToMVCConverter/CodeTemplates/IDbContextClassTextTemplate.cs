@@ -6,6 +6,6 @@ namespace UMLToMVCConverter.CodeTemplates
 
     public interface IDbContextClassTextTemplate
     {
-        string TransformText(IEnumerable<ExtendedCodeTypeDeclaration> standaloneEntityTypes, IEnumerable<EFRelationshipModel> relationshipModels, IEnumerable<ExtendedCodeTypeDeclaration> structs);
+        string TransformText(IEnumerable<ExtendedCodeTypeDeclaration> standaloneEntityTypes, IEnumerable<EFRelationship> relationshipModels, IEnumerable<ExtendedCodeTypeDeclaration> structs);
     }
 }

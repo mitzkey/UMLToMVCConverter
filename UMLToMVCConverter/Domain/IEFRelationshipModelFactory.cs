@@ -5,6 +5,6 @@
 
     public interface IEFRelationshipModelFactory
     {
-        IEnumerable<EFRelationshipModel> Create(IEnumerable<Aggregation> aggregations);
+        IEnumerable<EFRelationship> Create(IEnumerable<Aggregation> aggregations);
     }
 }

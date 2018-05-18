@@ -5,7 +5,7 @@
 
     public partial class DatabaseSeedInitializerTextTemplate : IDatabaseSeedInitializerTextTemplate
     {
-        private IEnumerable<EnumerationModel> enumerations;
+        private IEnumerable<Enumeration> enumerations;
         private readonly MvcProject mvcProject;
 
         public DatabaseSeedInitializerTextTemplate(MvcProject mvcProject)
@@ -13,7 +13,7 @@
             this.mvcProject = mvcProject;
         }
 
-        public string TransformText(IEnumerable<EnumerationModel> enumerations)
+        public string TransformText(IEnumerable<Enumeration> enumerations)
         {
             this.enumerations = enumerations;
 

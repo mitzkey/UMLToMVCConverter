@@ -14,7 +14,7 @@ namespace UMLToMVCConverter.CodeTemplates
         private readonly MvcProject mvcProject;
         private bool onModelCreatingBlock;
         private readonly Dictionary<string, IEnumerable<string>> complexKeys;
-        private IEnumerable<EFRelationshipModel> relationships;
+        private IEnumerable<EFRelationship> relationships;
         private readonly List<string> customModelBuilderCommands;
 
         public DbContextTextTemplate(MvcProject mvcProject)
@@ -28,7 +28,7 @@ namespace UMLToMVCConverter.CodeTemplates
 
         public string TransformText(
             IEnumerable<ExtendedCodeTypeDeclaration> standaloneEntityTypes,
-            IEnumerable<EFRelationshipModel> relationshipModels,
+            IEnumerable<EFRelationship> relationshipModels,
             IEnumerable<ExtendedCodeTypeDeclaration> structs)
         {
             this.relationships = relationshipModels;

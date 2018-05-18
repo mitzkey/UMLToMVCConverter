@@ -6,8 +6,8 @@
     {
         public IEnumerable<ExtendedCodeTypeDeclaration> Types { get; set; }
 
-        public IEnumerable<EFRelationshipModel> EFRelationshipModels { get; set; }
+        public IEnumerable<EFRelationship> EFRelationshipModels { get; set; }
 
-        public IEnumerable<EnumerationModel> EnumerationModels { get; set; }
+        public IEnumerable<Enumeration> EnumerationModels { get; set; }
     }
 }

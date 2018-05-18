@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class EFRelationshipModel
+    public class EFRelationship
     {
         private readonly IEnumerable<string> foreignKeyPropertyNames;
 
-        public EFRelationshipModel(IEnumerable<string> foreignKeyPropertyNames)
+        public EFRelationship(IEnumerable<string> foreignKeyPropertyNames)
         {
             this.foreignKeyPropertyNames = foreignKeyPropertyNames;
         }

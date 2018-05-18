@@ -5,6 +5,6 @@
 
     public interface IEnumerationModelsFactory
     {
-        IEnumerable<EnumerationModel> Create();
+        IEnumerable<Enumeration> Create();
     }
 }

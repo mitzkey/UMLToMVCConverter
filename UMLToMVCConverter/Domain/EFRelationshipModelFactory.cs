@@ -5,9 +5,9 @@
 
     public class EFRelationshipModelFactory : IEFRelationshipModelFactory
     {
-        public IEnumerable<EFRelationshipModel> Create(IEnumerable<Aggregation> aggregations)
+        public IEnumerable<EFRelationship> Create(IEnumerable<Aggregation> aggregations)
         {
-            var models = new List<EFRelationshipModel>();
+            var models = new List<EFRelationship>();
 
             foreach (var aggregation in aggregations)
             {
@@ -20,7 +20,7 @@
                 var principalTypeMultiplicity = GetRelationshipMultiplicity(aggregation.PrincipalTypeMultiplicity);
                 var dependentTypeMultiplicity = GetRelationshipMultiplicity(aggregation.DependentTypeMultiplicity);
 
-                models.Add(new EFRelationshipModel(foreignKeyPropertyNames)
+                models.Add(new EFRelationship(foreignKeyPropertyNames)
                 {
                     DeleteBehavior = deleteBehavior,
                     PrincipalTypeMultiplicity = principalTypeMultiplicity,

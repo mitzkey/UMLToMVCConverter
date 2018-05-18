@@ -65,7 +65,7 @@
             this.logger.LogInfo($"Generated {fileOutputPath}");
         }
 
-        private void GenerateDatabaseSeedInitializer(IEnumerable<EnumerationModel> enumerationModels)
+        private void GenerateDatabaseSeedInitializer(IEnumerable<Enumeration> enumerationModels)
         {
             this.logger.LogInfo("Generating DatabaseSeedInitializer.cs");
 
@@ -99,7 +99,7 @@
         }
 
 
-        private void GenerateDbContextClass(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<EFRelationshipModel> relationshipModels)
+        private void GenerateDbContextClass(IEnumerable<ExtendedCodeTypeDeclaration> codeTypeDeclarations, IEnumerable<EFRelationship> relationshipModels)
         {
             this.logger.LogInfo("Generating db context class...");
 

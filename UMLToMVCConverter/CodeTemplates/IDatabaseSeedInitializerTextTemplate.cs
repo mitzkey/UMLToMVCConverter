@@ -6,6 +6,6 @@
 
     public interface IDatabaseSeedInitializerTextTemplate
     {
-        string TransformText(IEnumerable<EnumerationModel> enumerations);
+        string TransformText(IEnumerable<Enumeration> enumerations);
     }
 }

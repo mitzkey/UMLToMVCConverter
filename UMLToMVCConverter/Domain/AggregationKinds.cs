@@ -1,4 +1,4 @@
-﻿namespace UMLToMVCConverter.Domain.Models
+﻿namespace UMLToMVCConverter.Domain
 {
     public enum AggregationKinds
     {

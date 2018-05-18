@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class EnumerationModel
+    public class Enumeration
     {
         public string Name { get; set; }
 

@@ -12,11 +12,11 @@
             this.typesRepository = typesRepository;
         }
 
-        public IEnumerable<EnumerationModel> Create()
+        public IEnumerable<Enumeration> Create()
         {
             foreach (var type in this.typesRepository.GetEnums())
             {
-                yield return new EnumerationModel
+                yield return new Enumeration
                 {
                     Name = type.Name,
                     Literals = type.Literals
