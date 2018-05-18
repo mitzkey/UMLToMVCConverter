@@ -147,33 +147,32 @@
             var xOperations = this.xmiWrapper.GetXOperations(xType);
             foreach (var xOperation in xOperations)
             {
-                var method = new CodeMemberMethod { Name = xOperation.ObligatoryAttributeValue("name") };
+                var name = xOperation.ObligatoryAttributeValue("name");
 
-                var returnParameter = this.xmiWrapper.GetXReturnParameter(xOperation);
-                var returnType = this.umlTypesHelper.GetXElementCsharpType(returnParameter);
-                var typeReference = ExtendedCodeTypeReference.CreateForType(returnType);
-                method.ReturnType = typeReference;
+                var xReturnParameter = this.xmiWrapper.GetXReturnParameter(xOperation);
+                var xReturnType = this.umlTypesHelper.GetXElementCsharpType(xReturnParameter);
+                var typeReference = ExtendedCodeTypeReference.CreateForType(xReturnType);
+                var returnType = typeReference;
 
-                var parameters = this.xmiWrapper.GetXParameters(xOperation);
-                foreach (var xParameter in parameters)
+                var parameters = new List<ExtendedCodeParameterDeclarationExpression>();
+                var xParameters = this.xmiWrapper.GetXParameters(xOperation);
+                foreach (var xParameter in xParameters)
                 {
                     var parameterType = this.umlTypesHelper.GetXElementCsharpType(xParameter);
                     var parameterName = xParameter.ObligatoryAttributeValue("name");
                     var parameter =
                         new ExtendedCodeParameterDeclarationExpression(parameterType, parameterName);
-                    method.Parameters.Add(parameter);
+                    parameters.Add(parameter);
                 }
 
                 //visibility
                 var umlVisibility = xOperation.ObligatoryAttributeValue("visibility");
-                var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharp(umlVisibility);
-                method.Attributes = method.Attributes | cSharpVisibility;
+                var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharpString(umlVisibility);
+                var visibility =  cSharpVisibility;
 
                 var isStatic = Convert.ToBoolean(xOperation.OptionalAttributeValue("isStatic"));
-                if (isStatic)
-                {
-                    method.Attributes = method.Attributes | MemberAttributes.Static;
-                }
+
+                var method = new Method(name, returnType, parameters, visibility, isStatic);
 
                 type.Members.Add(method);
             }

@@ -12,12 +12,11 @@ namespace UMLToMVCConverter.CodeTemplates
     using System.CodeDom;
     using System.Collections.Generic;
     using UMLToMVCConverter;
+    using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Common;
     using Autofac;
     using System;
-    using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain;
-    using UMLToMVCConverter.Domain.Models;
-
+    
     /// <summary>
     /// Class to produce the template output
     /// </summary>
@@ -297,8 +296,8 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 
 		}
 	}
-	else if (cm is CodeMemberMethod) {
-		var codeMemberMethod = (CodeMemberMethod) cm;
+	else if (cm is Method) {
+		var codeMemberMethod = (Method) cm;
 		string returnTypeName = "void";
 		if (codeMemberMethod.ReturnType.BaseType != "System.Void") {
 			returnTypeName = ((ExtendedCodeTypeReference)codeMemberMethod.ReturnType).ExtTypeName;
@@ -311,7 +310,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
             
             #line 102 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
-		if (codeMemberMethod.Attributes.HasFlag(MemberAttributes.Static)) {
+		if (codeMemberMethod.IsStatic) {
 			
             
             #line default

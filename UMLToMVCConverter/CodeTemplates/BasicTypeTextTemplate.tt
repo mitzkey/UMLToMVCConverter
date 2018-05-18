@@ -2,8 +2,8 @@
 <#@ import namespace="System.CodeDom"#>
 <#@ import namespace="System.Collections.Generic"#>
 <#@ import namespace="UMLToMVCConverter"#>
-<#@ import namespace="UMLToMVCConverter.ExtendedTypes"#>
-<#@ import namespace="UMLToMVCConverter.ExtensionMethods"#>
+<#@ import namespace="UMLToMVCConverter.Domain.Models"#>
+<#@ import namespace="UMLToMVCConverter.Common"#>
 <#@ import namespace="Autofac"#>
 <#@ assembly name="System.Core"#>
 	public<#
@@ -90,8 +90,8 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 		<#
 		}
 	}
-	else if (cm is CodeMemberMethod) {
-		var codeMemberMethod = (CodeMemberMethod) cm;
+	else if (cm is Method) {
+		var codeMemberMethod = (Method) cm;
 		string returnTypeName = "void";
 		if (codeMemberMethod.ReturnType.BaseType != "System.Void") {
 			returnTypeName = ((ExtendedCodeTypeReference)codeMemberMethod.ReturnType).ExtTypeName;
@@ -100,7 +100,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 
 
 		public<#
-		if (codeMemberMethod.Attributes.HasFlag(MemberAttributes.Static)) {
+		if (codeMemberMethod.IsStatic) {
 			#> static<#
 		}
 		#> <#=returnTypeName#> <#=codeMemberMethod.Name#>(<#

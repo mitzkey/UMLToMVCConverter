@@ -17,5 +17,18 @@
                     throw new NotImplementedException("UML visibility: " + umlVisibility + " mapping not implemented.");
             }
         }
+
+        public string UmlToCsharpString(string umlVisibility)
+        {
+            switch (umlVisibility.ToLower())
+            {
+                case "public":
+                    return "public";
+                case "private":
+                    return "private";
+                default:
+                    throw new NotImplementedException("UML visibility: " + umlVisibility + " mapping not implemented.");
+            }
+        }
     }
 }
