@@ -200,7 +200,6 @@
     <Compile Include="Common\ILogger.cs" />
     <Compile Include="IMigrationServiceClient.cs" />
     <Compile Include="CodeTemplates\IModelClassTextTemplate.cs" />
-    <Compile Include="Domain\IMvcProject.cs" />
     <Compile Include="IProjectPublisher.cs" />
     <Compile Include="IScriptRunner.cs" />
     <Compile Include="IStartupCsConfigurator.cs" />

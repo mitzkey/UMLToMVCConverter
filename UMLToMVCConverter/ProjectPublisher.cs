@@ -1,15 +1,15 @@
 ﻿namespace UMLToMVCConverter
 {
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain;
+    using UMLToMVCConverter.Domain.Models;
 
     public class ProjectPublisher : IProjectPublisher
     {
         private readonly ILogger logger;
         private readonly IScriptRunner scriptRunner;
-        private readonly IMvcProject mvcProject;
+        private readonly MvcProject mvcProject;
 
-        public ProjectPublisher(ILogger logger, IScriptRunner scriptRunner, IMvcProject mvcProject)
+        public ProjectPublisher(ILogger logger, IScriptRunner scriptRunner, MvcProject mvcProject)
         {
             this.logger = logger;
             this.scriptRunner = scriptRunner;

@@ -1,12 +1,12 @@
 ﻿namespace UMLToMVCConverter.CodeTemplates
 {
-    using UMLToMVCConverter.Domain;
+    using UMLToMVCConverter.Domain.Models;
 
     public partial class MigrationsManagerClassTextTemplate : IMigrationsManagerClassTextTemplate
     {
-        private readonly IMvcProject mvcProject;
+        private readonly MvcProject mvcProject;
 
-        public MigrationsManagerClassTextTemplate(IMvcProject mvcProject)
+        public MigrationsManagerClassTextTemplate(MvcProject mvcProject)
         {
             this.mvcProject = mvcProject;
         }

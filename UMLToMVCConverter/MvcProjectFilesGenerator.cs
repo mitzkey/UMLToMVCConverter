@@ -9,14 +9,13 @@
     using Newtonsoft.Json.Linq;
     using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain;
     using UMLToMVCConverter.Domain.Models;
 
     public class MvcProjectFilesGenerator : IMvcProjectFilesGenerator
     {
         private readonly ILogger logger;
         private readonly IStartupCsConfigurator startupCsConfigurator;
-        private readonly IMvcProject mvcProject;
+        private readonly MvcProject mvcProject;
         private readonly IComponentContext componentContext;
         private readonly IDbContextClassTextTemplate dbContextClassTextTemplate;
         private readonly IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate;
@@ -24,7 +23,7 @@
         private readonly IDatabaseSeedInitializerTextTemplate databaseSeedInitializerTextTemplate;
         private readonly IProgramCsTextTemplate programCsTextTemplate;
 
-        public MvcProjectFilesGenerator(ILogger logger, IStartupCsConfigurator startupCsConfigurator, IMvcProject mvcProject, IComponentContext componentContext, IDbContextClassTextTemplate dbContextClassTextTemplate, IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate, IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate, IDatabaseSeedInitializerTextTemplate databaseSeedInitializerTextTemplate, IProgramCsTextTemplate programCsTextTemplate)
+        public MvcProjectFilesGenerator(ILogger logger, IStartupCsConfigurator startupCsConfigurator, MvcProject mvcProject, IComponentContext componentContext, IDbContextClassTextTemplate dbContextClassTextTemplate, IMigrationsManagerClassTextTemplate migrationsManagerClassTextTemplate, IDbContextFactoryClassTextTemplate dbContextFactoryClassTextTemplate, IDatabaseSeedInitializerTextTemplate databaseSeedInitializerTextTemplate, IProgramCsTextTemplate programCsTextTemplate)
         {
             this.logger = logger;
             this.startupCsConfigurator = startupCsConfigurator;

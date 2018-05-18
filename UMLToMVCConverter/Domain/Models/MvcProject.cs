@@ -2,7 +2,7 @@
 {
     using System.IO;
 
-    public class MvcProject : IMvcProject
+    public class MvcProject
     {
         public string ProjectFolderPath { get; }
         

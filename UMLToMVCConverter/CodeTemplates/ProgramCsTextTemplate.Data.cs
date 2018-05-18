@@ -1,12 +1,12 @@
 ﻿namespace UMLToMVCConverter.CodeTemplates
 {
-    using UMLToMVCConverter.Domain;
+    using UMLToMVCConverter.Domain.Models;
 
     public partial class ProgramCsTextTemplate : IProgramCsTextTemplate
     {
-        private readonly IMvcProject mvcProject;
+        private readonly MvcProject mvcProject;
 
-        public ProgramCsTextTemplate(IMvcProject mvcProject)
+        public ProgramCsTextTemplate(MvcProject mvcProject)
         {
             this.mvcProject = mvcProject;
         }

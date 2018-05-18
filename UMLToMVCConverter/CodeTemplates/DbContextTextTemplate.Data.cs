@@ -6,19 +6,18 @@ namespace UMLToMVCConverter.CodeTemplates
 {
     using System.CodeDom;
     using System.Linq;
-    using UMLToMVCConverter.Domain;
     using UMLToMVCConverter.Domain.Models;
 
     public partial class DbContextTextTemplate : IDbContextClassTextTemplate
     {
         private readonly List<Tuple<string, string>> typesNamesAndPlurals;
-        private readonly IMvcProject mvcProject;
+        private readonly MvcProject mvcProject;
         private bool onModelCreatingBlock;
         private readonly Dictionary<string, IEnumerable<string>> complexKeys;
         private IEnumerable<EFRelationshipModel> relationships;
         private readonly List<string> customModelBuilderCommands;
 
-        public DbContextTextTemplate(IMvcProject mvcProject)
+        public DbContextTextTemplate(MvcProject mvcProject)
         {
             this.mvcProject = mvcProject;
             this.typesNamesAndPlurals = new List<Tuple<string, string>>();

@@ -3,17 +3,17 @@
     using System.Diagnostics;
     using System.IO;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain;
+    using UMLToMVCConverter.Domain.Models;
 
     public class MigrationServiceClient : IMigrationServiceClient
     {
         private const string AddMigrationScriptName = "add_migration.bat";
         private const string RunMigrationScriptName = "run_migration.bat";
         private const string MigrationsServiceAssemblyPath = @"netcoreapp2.0\MigrationsService.dll";
-        private readonly IMvcProject mvcProject;
+        private readonly MvcProject mvcProject;
         private readonly ILogger logger;
 
-        public MigrationServiceClient(IMvcProject mvcProject, ILogger logger)
+        public MigrationServiceClient(MvcProject mvcProject, ILogger logger)
         {
             this.mvcProject = mvcProject;
             this.logger = logger;

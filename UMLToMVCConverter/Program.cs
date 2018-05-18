@@ -45,7 +45,7 @@
                 defaultNamespaceName,
                 workspaceFolderPath,
                 dbConnectionString);
-            builder.RegisterInstance(mvcProject).As<IMvcProject>().SingleInstance();
+            builder.RegisterInstance(mvcProject).AsSelf().SingleInstance();
 
             var xmiDocument = XDocument.Load(xmiPath);
             builder.RegisterInstance(xmiDocument).As<XDocument>().SingleInstance();
