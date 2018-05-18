@@ -26,10 +26,13 @@
 
         public List<Method> Methods { get; }
 
+        public List<Property> Properties { get; }
+
         public ExtendedCodeTypeDeclaration(string name)
             : base(name)
         {
             this.Methods = new List<Method>();
+            this.Properties = new List<Property>();
             this.ForeignKeys = new Dictionary<string, Property>();
             this.PrimaryKeyAttributes = new List<Property>();
             this.Literals = new Dictionary<int, string>();

@@ -20,7 +20,7 @@
 
                 dependentTypeNavigationalProperty.IsVirtual = true;
 
-                aggregation.DependentType.Members.Add(dependentTypeNavigationalProperty);
+                aggregation.DependentType.Properties.Add(dependentTypeNavigationalProperty);
 
                 if (aggregation.DependentTypeMultiplicity == Multiplicity.ExactlyOne
                     || aggregation.DependentTypeMultiplicity == Multiplicity.ZeroOrOne)
@@ -29,7 +29,7 @@
 
                     principalTypeNavigationalProperty.IsVirtual = true;
 
-                    aggregation.PrincipalType.Members.Add(principalTypeNavigationalProperty);
+                    aggregation.PrincipalType.Properties.Add(principalTypeNavigationalProperty);
                 }
             }
         }

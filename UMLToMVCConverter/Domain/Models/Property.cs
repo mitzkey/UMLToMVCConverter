@@ -1,10 +1,9 @@
 ﻿namespace UMLToMVCConverter.Domain.Models
 {
     using System;
-    using System.CodeDom;
     using System.Collections.Generic;
 
-    public class Property : CodeMemberProperty
+    public class Property
     {
         private string defaultValueString;
 

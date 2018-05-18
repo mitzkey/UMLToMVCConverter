@@ -4,7 +4,6 @@ using System.Data.Entity.Design.PluralizationServices;
 
 namespace UMLToMVCConverter.CodeTemplates
 {
-    using System.CodeDom;
     using System.Linq;
     using UMLToMVCConverter.Domain.Models;
 
@@ -59,31 +58,26 @@ namespace UMLToMVCConverter.CodeTemplates
 
             foreach (var typeDeclaration in standaloneEntityTypesList)
             {
-                foreach (CodeTypeMember typeMember in typeDeclaration.Members)
+                foreach (var property in typeDeclaration.Properties)
                 {
-                    if (typeMember is CodeMemberProperty)
+                    var typeReference = property.ExtendedTypeReference;
+
+                    if (typeReference.ExtType.IsReferencingXmiDeclaredType)
                     {
-                        var property = (Property) typeMember;
+                        var referencedType =
+                            structs.SingleOrDefault(x => typeReference.ExtType.ReferenceTypeXmiID.Equals(x.XmiID));
 
-                        var typeReference = property.ExtendedTypeReference;
-
-                        if (typeReference.ExtType.IsReferencingXmiDeclaredType)
-                        {
-                            var referencedType =
-                                structs.SingleOrDefault(x => typeReference.ExtType.ReferenceTypeXmiID.Equals(x.XmiID));
-
-                            if (referencedType != null)
-                            {
-                                this.customModelBuilderCommands
-                                    .Add($"modelBuilder.Entity<{typeDeclaration.Name}>().OwnsOne(p => p.{property.Name});");
-                            }
-                        }
-
-                        if (property.HasDefaultValueKey)
+                        if (referencedType != null)
                         {
                             this.customModelBuilderCommands
-                                .Add($"modelBuilder.Entity<{typeDeclaration.Name}>().Property(b => b.{property.Name}ID).HasDefaultValueSql(\"{property.DefaultValueKey}\");");
+                                .Add($"modelBuilder.Entity<{typeDeclaration.Name}>().OwnsOne(p => p.{property.Name});");
                         }
+                    }
+
+                    if (property.HasDefaultValueKey)
+                    {
+                        this.customModelBuilderCommands
+                            .Add($"modelBuilder.Entity<{typeDeclaration.Name}>().Property(b => b.{property.Name}ID).HasDefaultValueSql(\"{property.DefaultValueKey}\");");
                     }
                 }
             }

@@ -48,49 +48,50 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 		string innerClass = tmpl.TransformText(ctd);
 		#><#=innerClass.AddNewLines(2).NewSection().NewSection()#><#
 	}
-	else if (cm is CodeMemberProperty) {
-		var cmp = (Property) cm;
+}
+
+foreach (var property in this.codeTypeDeclaration.Properties) {
 		string generics = "";
-		var type = cmp.ExtendedTypeReference;
+		var type = property.ExtendedTypeReference;
 		#>
 
 
 		<#
-		if (!this.codeTypeDeclaration.HasComplexKey && cmp.IsID) {
+		if (!this.codeTypeDeclaration.HasComplexKey && property.IsID) {
 			#>[Key]
 		<#						
 		}
 		#>public <#
-		if (cmp.IsStatic) {
+		if (property.IsStatic) {
 			#>static <#
 		}
-        if (type.ExtType.IsCollection || cmp.IsVirtual) {
+        if (type.ExtType.IsCollection || property.IsVirtual) {
 			#>virtual <#
 		}
-		#><#= type.ExtTypeName + " " + cmp.Name #> { get<#
-		if (cmp.IsDerived) {
+		#><#= type.ExtTypeName + " " + property.Name #> { get<#
+		if (property.IsDerived) {
 			#> { throw new NotImplementedException(); } <#
 		}
 		else {
 			#>; <#
 		}
-		if (cmp.HasSet) {
+		if (property.HasSet) {
 			#>set; <#
 		}
 		#>}<#
-		if (cmp.HasDefaultValueString) {
-			#> = <#=cmp.DefaultValueString#>;<#
+		if (property.HasDefaultValueString) {
+			#> = <#=property.DefaultValueString#>;<#
 		}
-		if (cmp.IsReferencingEnumType) {
+		if (property.IsReferencingEnumType) {
 			#>
 		
 
 		[ForeignKey("<#=type.ExtTypeName#>")]
-        public int <#=cmp.Name#>ID { get; set; }
+        public int <#=property.Name#>ID { get; set; }
 		<#
 		}
-	}
 }
+
 foreach (var method in this.codeTypeDeclaration.Methods) {
 	string returnTypeName = "void";
 	if (method.ReturnType.BaseType != "System.Void") {

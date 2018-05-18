@@ -127,7 +127,7 @@
             foreach (var xAttribute in xAttributes)
             {
                 var property = this.propertyGenerator.Generate(type, xAttribute);
-                type.Members.Add(property);
+                type.Properties.Add(property);
             }
 
             if (type.IsEnum)
@@ -138,7 +138,7 @@
                     type.Literals.Add(++counter, literal.ObligatoryAttributeValue("name"));
                 }
                 var property = this.propertyGenerator.GenerateBasicProperty("Name", typeof(string));
-                type.Members.Add(property);
+                type.Properties.Add(property);
             }
         }
 

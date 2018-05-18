@@ -183,7 +183,7 @@
                 "public",
                 false);
 
-            codeTypeDeclaration.Members.Add(valueProperty);
+            codeTypeDeclaration.Properties.Add(valueProperty);
 
             this.typesRepository.Add(codeTypeDeclaration);
 
