@@ -175,7 +175,7 @@
 
             var valueType = this.GetPrimitiveNonNullableType(xElement);
             var valueCodeTypeReference = new ExtendedCodeTypeReference(valueType);
-            var valueProperty = new ExtendedCodeMemberProperty(
+            var valueProperty = new Property(
                 "Value",
                 valueCodeTypeReference,
                 this.typesRepository,

@@ -4,13 +4,13 @@
     using System.CodeDom;
     using System.Collections.Generic;
 
-    public class ExtendedCodeMemberProperty : CodeMemberProperty
+    public class Property : CodeMemberProperty
     {
         private string defaultValueString;
 
         private IReadOnlyDictionary<Type, string> defaultValueFormats;
 
-        public ExtendedCodeMemberProperty(
+        public Property(
             string name,
             ExtendedCodeTypeReference codeTypeReference,
             ITypesRepository typesRepository,

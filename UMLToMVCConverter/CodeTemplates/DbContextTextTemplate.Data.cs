@@ -63,7 +63,7 @@ namespace UMLToMVCConverter.CodeTemplates
                 {
                     if (typeMember is CodeMemberProperty)
                     {
-                        var property = (ExtendedCodeMemberProperty) typeMember;
+                        var property = (Property) typeMember;
 
                         var typeReference = property.ExtendedTypeReference;
 

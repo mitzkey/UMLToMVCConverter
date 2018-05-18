@@ -153,7 +153,7 @@ foreach (var cm in this.codeTypeDeclaration.Members) {
 
 	}
 	else if (cm is CodeMemberProperty) {
-		var cmp = (ExtendedCodeMemberProperty) cm;
+		var cmp = (Property) cm;
 		string generics = "";
 		var type = cmp.ExtendedTypeReference;
 		

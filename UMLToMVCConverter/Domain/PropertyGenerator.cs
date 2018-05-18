@@ -27,7 +27,7 @@
             this.typesRepository = typesRepository;
         }
 
-        public ExtendedCodeMemberProperty Generate(ExtendedCodeTypeDeclaration type, XElement xAttribute)
+        public Property Generate(ExtendedCodeTypeDeclaration type, XElement xAttribute)
         {
             Insist.IsNotNull(xAttribute, nameof(xAttribute));
 
@@ -87,7 +87,7 @@
 
             var isID = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isID"));
 
-            var property = new ExtendedCodeMemberProperty(
+            var property = new Property(
                 propertyName,
                 typeReference,
                 this.typesRepository,
@@ -127,7 +127,7 @@
             }
         }
 
-        public ExtendedCodeMemberProperty GenerateBasicProperty(string name, Type type, Type genericType = null)
+        public Property GenerateBasicProperty(string name, Type type, Type genericType = null)
         {
             var isGeneric = genericType != null;
 
@@ -143,7 +143,7 @@
             }
 
             var propertyType = ExtendedCodeTypeReference.CreateForType(cSharpType);
-            var property = new ExtendedCodeMemberProperty(
+            var property = new Property(
                 name,
                 propertyType,
                 this.typesRepository,

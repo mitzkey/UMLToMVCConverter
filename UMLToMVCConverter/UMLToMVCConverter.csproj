@@ -211,7 +211,7 @@
     <Compile Include="UMLHelpers\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
     <Compile Include="Domain\Models\MvcProject.cs" />
-    <Compile Include="Domain\Models\ExtendedCodeMemberProperty.cs" />
+    <Compile Include="Domain\Models\Property.cs" />
     <Compile Include="Domain\Models\MethodParameter.cs" />
     <Compile Include="Domain\Models\ExtendedCodeTypeReference.cs" />
     <Compile Include="Domain\Models\ExtendedType.cs" />
