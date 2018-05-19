@@ -16,12 +16,6 @@
 
         public bool IsNamedType => this.ExtType.IsNamedType;
 
-        private ExtendedCodeTypeReference(Type type, bool isBaseType, bool isGeneric = false, IEnumerable<ExtendedType> generics = null)
-            : base(type)
-        {
-            this.ExtType = new ExtendedType(type, isBaseType, isGeneric, generics);
-        }
-
         public ExtendedCodeTypeReference(ExtendedType type)
             : base(type.Type)
         {

@@ -1,10 +1,8 @@
 ﻿namespace UMLToMVCConverter.UMLHelpers
 {
     using System;
-    using System.CodeDom;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Reflection;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain;

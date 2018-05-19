@@ -12,9 +12,9 @@ namespace WebApplication1.Models
 
 
 		[Key]
-		public String MyIdentifier { get; set; }
+		public System.String MyIdentifier { get; set; }
 
-		public Nullable<Int32> Another { get; set; }
+		public Nullable<System.Int32> Another { get; set; }
 
 		public StatusWniosku Status { get; set; }		
 

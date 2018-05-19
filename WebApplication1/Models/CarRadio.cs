@@ -11,11 +11,11 @@ namespace WebApplication1.Models
 
 
 		public int ID {get; set;}
-		public String CarBrand { get; set; }
-		public String CarModel { get; set; }
-		public String CarVersion { get; set; }
+		public System.String CarBrand { get; set; }
+		public System.String CarModel { get; set; }
+		public System.String CarVersion { get; set; }
 
-		public String Producer { get; set; }
+		public System.String Producer { get; set; }
 
 		public virtual Car Car { get; set; }
 	}

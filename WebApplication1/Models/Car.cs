@@ -11,11 +11,11 @@ namespace WebApplication1.Models
 
 
 
-		public String Brand { get; set; }
+		public System.String Brand { get; set; }
 
-		public String Model { get; set; }
+		public System.String Model { get; set; }
 
-		public String Version { get; set; }
+		public System.String Version { get; set; }
 
 		public virtual SteeringWheel SteeringWheel { get; set; }
 

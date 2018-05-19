@@ -90,8 +90,8 @@ foreach (var property in this.type.Properties) {
 
 foreach (var method in this.type.Methods) {
 	string returnTypeName = "void";
-	if (method.ReturnType.BaseType != "System.Void") {
-		returnTypeName = ((ExtendedCodeTypeReference)method.ReturnType).ExtTypeName;
+	if (method.ExtendedReturnType.Name != "System.Void") {
+		returnTypeName = method.ExtendedReturnType.Name;
 	}
 	#>
 

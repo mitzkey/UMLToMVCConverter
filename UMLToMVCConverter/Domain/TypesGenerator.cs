@@ -151,8 +151,8 @@
                 var name = xOperation.ObligatoryAttributeValue("name");
 
                 var xReturnParameter = this.xmiWrapper.GetXReturnParameter(xOperation);
-                var xReturnType = this.umlTypesHelper.GetXElementCsharpType(xReturnParameter);
-                var typeReference = ExtendedCodeTypeReference.CreateForType(xReturnType);
+                var extendedReturnType = this.umlTypesHelper.GetXElementCsharpType(xReturnParameter);
+                var typeReference = ExtendedCodeTypeReference.CreateForType(extendedReturnType);
                 var returnType = typeReference;
 
                 var parameters = new List<MethodParameter>();

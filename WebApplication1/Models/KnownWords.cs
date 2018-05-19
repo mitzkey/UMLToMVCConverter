@@ -12,6 +12,6 @@ namespace WebApplication1.Models
 
 		public int ID {get; set;}
 
-		public String Value { get; set; }
+		public System.String Value { get; set; }
 	}
 }

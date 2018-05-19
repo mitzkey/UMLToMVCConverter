@@ -12,11 +12,11 @@ namespace WebApplication1.Models
 
 		public int ID {get; set;}
 
-		public Nullable<DateTime> DateOfBirth { get; set; }
+		public Nullable<System.DateTime> DateOfBirth { get; set; }
 
-		public String Name { get; set; }
+		public System.String Name { get; set; }
 
-		public void DoSomething(Nullable<Int32> x,Nullable<Int32> y) {
+		public void DoSomething(Nullable<System.Int32> x,Nullable<System.Int32> y) {
 			throw new NotImplementedException();
 		}
 	}

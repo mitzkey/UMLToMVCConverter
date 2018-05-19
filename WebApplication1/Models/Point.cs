@@ -11,8 +11,8 @@ namespace WebApplication1.Models
 
 
 
-		public Nullable<Int32> X { get; set; }
+		public Nullable<System.Int32> X { get; set; }
 
-		public Nullable<Int32> Y { get; set; }
+		public Nullable<System.Int32> Y { get; set; }
 	}
 }

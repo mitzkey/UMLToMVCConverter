@@ -14,6 +14,7 @@
 
         public bool IsStatic { get; }
 
+        public ExtendedType ExtendedReturnType { get; set; }
 
         public Method(
             string name,
@@ -27,6 +28,7 @@
             this.Parameters = parameters;
             this.Visibility = visibility;
             this.IsStatic = isStatic;
+            this.ExtendedReturnType = returnType.ExtType;
         }
     }
 }

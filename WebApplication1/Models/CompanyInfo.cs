@@ -12,9 +12,9 @@ namespace WebApplication1.Models
 
 		public int ID {get; set;}
 
-		public static String CompanyName { get; } = "ACME";
+		public static System.String CompanyName { get; } = "ACME";
 
-		public static Nullable<Boolean> ExampleStaticMethod(String inputString) {
+		public static Nullable<System.Boolean> ExampleStaticMethod(System.String inputString) {
 			throw new NotImplementedException();
 		}
 	}

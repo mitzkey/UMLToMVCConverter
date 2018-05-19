@@ -11,8 +11,8 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20180430161028_UMLToMVCConverterMigration_17be98ee-ab2b-47b4-a44f-745e2e039553")]
-    partial class UMLToMVCConverterMigration_17be98eeab2b47b4a44f745e2e039553
+    [Migration("20180519075114_UMLToMVCConverterMigration_5f03638c-3b7f-491b-8f0e-f974060952c7")]
+    partial class UMLToMVCConverterMigration_5f03638c3b7f491b8f0ef974060952c7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,10 +88,24 @@ namespace WebApplication1.Migrations
                     b.ToTable("CompanyInfo");
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.Enterprise", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Enterprise");
+                });
+
             modelBuilder.Entity("WebApplication1.Models.FavouriteNumber", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Value");
 
                     b.Property<int?>("WorkerID");
 
@@ -109,6 +123,8 @@ namespace WebApplication1.Migrations
 
                     b.Property<int?>("BabyID");
 
+                    b.Property<string>("Value");
+
                     b.HasKey("ID");
 
                     b.HasIndex("BabyID");
@@ -116,18 +132,14 @@ namespace WebApplication1.Migrations
                     b.ToTable("KnownWords");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Point", b =>
+            modelBuilder.Entity("WebApplication1.Models.LineSegment", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("X");
-
-                    b.Property<int?>("Y");
-
                     b.HasKey("ID");
 
-                    b.ToTable("Point");
+                    b.ToTable("LineSegment");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Seat", b =>
@@ -151,6 +163,17 @@ namespace WebApplication1.Migrations
                     b.HasIndex("CarBrand", "CarModel", "CarVersion");
 
                     b.ToTable("Seat");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.StatusWniosku", b =>
+                {
+                    b.Property<int>("ID");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("StatusWniosku");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.SteeringWheel", b =>
@@ -214,7 +237,13 @@ namespace WebApplication1.Migrations
 
                     b.Property<int?>("Another");
 
+                    b.Property<int>("StatusID")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("1");
+
                     b.HasKey("MyIdentifier");
+
+                    b.HasIndex("StatusID");
 
                     b.ToTable("WithSingleIDProperty");
                 });
@@ -228,6 +257,8 @@ namespace WebApplication1.Migrations
 
                     b.Property<DateTime?>("DateOfBirth");
 
+                    b.Property<int?>("EnterpriseID");
+
                     b.Property<string>("Name");
 
                     b.Property<double?>("Wage");
@@ -235,6 +266,8 @@ namespace WebApplication1.Migrations
                     b.Property<int?>("WorkerID");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("EnterpriseID");
 
                     b.HasIndex("WorkerID");
 
@@ -274,6 +307,41 @@ namespace WebApplication1.Migrations
                         .HasForeignKey("BabyID");
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.LineSegment", b =>
+                {
+                    b.OwnsOne("WebApplication1.Models.Point", "X", b1 =>
+                        {
+                            b1.Property<int>("LineSegmentID");
+
+                            b1.Property<int?>("X");
+
+                            b1.Property<int?>("Y");
+
+                            b1.ToTable("LineSegment");
+
+                            b1.HasOne("WebApplication1.Models.LineSegment")
+                                .WithOne("X")
+                                .HasForeignKey("WebApplication1.Models.Point", "LineSegmentID")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+
+                    b.OwnsOne("WebApplication1.Models.Point", "Y", b1 =>
+                        {
+                            b1.Property<int?>("LineSegmentID");
+
+                            b1.Property<int?>("X");
+
+                            b1.Property<int?>("Y");
+
+                            b1.ToTable("LineSegment");
+
+                            b1.HasOne("WebApplication1.Models.LineSegment")
+                                .WithOne("Y")
+                                .HasForeignKey("WebApplication1.Models.Point", "LineSegmentID")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+                });
+
             modelBuilder.Entity("WebApplication1.Models.Seat", b =>
                 {
                     b.HasOne("WebApplication1.Models.Car", "Car")
@@ -298,8 +366,21 @@ namespace WebApplication1.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.WithSingleIDProperty", b =>
+                {
+                    b.HasOne("WebApplication1.Models.StatusWniosku", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("WebApplication1.Models.Worker", b =>
                 {
+                    b.HasOne("WebApplication1.Models.Enterprise", "Enterprise")
+                        .WithMany()
+                        .HasForeignKey("EnterpriseID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("WebApplication1.Models.Worker")
                         .WithMany("Coworkers")
                         .HasForeignKey("WorkerID");

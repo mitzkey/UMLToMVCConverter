@@ -19,7 +19,7 @@ namespace WebApplication1.Models
 
 		public virtual ICollection<KnownWords> KnownWords { get; set; }
 
-		public String Name { get; set; }
+		public System.String Name { get; set; }
 
 		public static Worker MakeWorker() {
 			throw new NotImplementedException();

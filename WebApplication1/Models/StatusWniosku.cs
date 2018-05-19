@@ -12,6 +12,6 @@ namespace WebApplication1.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int ID {get; set;}
 
-		public String Name { get; set; }
+		public System.String Name { get; set; }
 	}
 }

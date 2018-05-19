@@ -48,7 +48,7 @@
                     return sb.ToString();
                 }
 
-                return this.Type.Name;
+                return this.Type.FullName;
             }
         }
 
