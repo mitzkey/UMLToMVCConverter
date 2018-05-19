@@ -99,7 +99,7 @@ foreach (var method in this.type.Methods) {
 	#>
 
 
-		public<#
+		<#=method.Visibility#><#
 	if (method.IsStatic) {
 		#> static<#
 	}

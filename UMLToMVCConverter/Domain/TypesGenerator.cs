@@ -144,7 +144,19 @@
                 var name = xOperation.ObligatoryAttributeValue("name");
 
                 var xReturnParameter = this.xmiWrapper.GetXReturnParameter(xOperation);
-                var returnType = this.umlTypesHelper.GetXElementCsharpType(xReturnParameter);
+
+                TypeReference returnType;
+                if (xReturnParameter == null)
+                {
+                    returnType = TypeReference.Builder()
+                        .SetType(typeof(void))
+                        .IsBaseType(true)
+                        .Build();
+                }
+                else
+                {
+                    returnType = this.umlTypesHelper.GetXElementCsharpType(xReturnParameter);
+                }
 
                 var parameters = new List<MethodParameter>();
                 var xParameters = this.xmiWrapper.GetXParameters(xOperation);
@@ -159,8 +171,8 @@
 
                 //visibility
                 var umlVisibility = xOperation.ObligatoryAttributeValue("visibility");
-                var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharpString(umlVisibility);
-                var visibility =  cSharpVisibility;
+                var cSharpVisibilityString = this.umlVisibilityMapper.UmlToCsharpString(umlVisibility);
+                var visibility =  cSharpVisibilityString;
 
                 var isStatic = Convert.ToBoolean(xOperation.OptionalAttributeValue("isStatic"));
 
@@ -175,7 +187,6 @@
         {
             foreach (var type in xTypes)
             {
-                //klasa bazowa
                 var xCurrentTypeGeneralization = this.xmiWrapper.GetXTypeGeneralization(type);
                 if (xCurrentTypeGeneralization != null)
                 {

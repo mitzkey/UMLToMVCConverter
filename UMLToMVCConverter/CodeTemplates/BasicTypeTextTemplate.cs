@@ -319,7 +319,13 @@ foreach (var method in this.type.Methods) {
             
             #line default
             #line hidden
-            this.Write("\r\n\r\n\t\tpublic");
+            this.Write("\r\n\r\n\t\t");
+            
+            #line 102 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(method.Visibility));
+            
+            #line default
+            #line hidden
             
             #line 102 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
