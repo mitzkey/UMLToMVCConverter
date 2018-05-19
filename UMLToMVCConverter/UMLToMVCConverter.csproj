@@ -213,7 +213,7 @@
     <Compile Include="Domain\Models\MvcProject.cs" />
     <Compile Include="Domain\Models\Property.cs" />
     <Compile Include="Domain\Models\MethodParameter.cs" />
-    <Compile Include="Domain\Models\ExtendedType.cs" />
+    <Compile Include="Domain\Models\TypeReference.cs" />
     <Compile Include="Common\Insist.cs" />
     <Compile Include="UMLHelpers\UMLVisibilityMapper.cs" />
     <Compile Include="Program.cs" />

@@ -12,11 +12,11 @@
 
         public bool IsStatic { get; }
 
-        public ExtendedType ReturnType { get; }
+        public TypeReference ReturnType { get; }
 
         public Method(
             string name,
-            ExtendedType returnType,
+            TypeReference returnType,
             List<MethodParameter> parameters,
             string visibility,
             bool isStatic)

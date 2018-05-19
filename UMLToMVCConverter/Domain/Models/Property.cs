@@ -11,7 +11,7 @@
 
         public Property(
             string name,
-            ExtendedType extendedType,
+            TypeReference typeReference,
             ITypesRepository typesRepository,
             bool hasSet,
             string visibility,
@@ -23,22 +23,22 @@
         {
             this.DefaultValueString = defaultValueString ?? string.Empty;
             this.Name = name;
-            this.ExtendedType = extendedType;
+            this.TypeReference = typeReference;
             this.HasSet = hasSet;
             this.Visibility = visibility;
             this.IsStatic = isStatic;
             this.DefaultValueKey = defaultValueKey;
             this.IsDerived = isDerived;
             this.IsID = isID;
-            if (extendedType.IsReferencingXmiDeclaredType)
+            if (typeReference.IsReferencingXmiDeclaredType)
             {
-                this.ReferencingType = typesRepository.GetTypeByXmiId(extendedType.ReferenceTypeXmiID);
+                this.ReferencingType = typesRepository.GetTypeByXmiId(typeReference.ReferenceTypeXmiID);
             }
         }
 
         public string Name { get; }
 
-        public ExtendedType ExtendedType { get; }
+        public TypeReference TypeReference { get; }
 
         public TypeModel ReferencingType { get; set; }
 
@@ -48,7 +48,7 @@
         {
             get
             {
-                var type = this.ExtendedType.Type;
+                var type = this.TypeReference.Type;
                 var result = this.defaultValueFormats[type];
                 if (result == null)
                 {

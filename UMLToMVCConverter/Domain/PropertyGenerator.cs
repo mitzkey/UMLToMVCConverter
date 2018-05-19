@@ -129,15 +129,15 @@
         {
             var isGeneric = genericType != null;
 
-            ExtendedType cSharpType;
+            TypeReference cSharpType;
             if (isGeneric)
             {
-                var generic = new ExtendedType(genericType, true);
-                cSharpType = new ExtendedType(type, true, true, new List<ExtendedType> {generic});
+                var generic = new TypeReference(genericType, true);
+                cSharpType = new TypeReference(type, true, true, new List<TypeReference> {generic});
             }
             else
             {
-                cSharpType = new ExtendedType(type, true);
+                cSharpType = new TypeReference(type, true);
             }
 
             var property = new Property(

@@ -5,11 +5,11 @@
     using System.Linq;
     using System.Text;
 
-    public class ExtendedType
+    public class TypeReference
     {
         private readonly string namedTypeName;
 
-        public static ExtendedType Void => new ExtendedType(typeof(void), true);
+        public static TypeReference Void => new TypeReference(typeof(void), true);
 
         public Type Type { get; }
 
@@ -23,7 +23,7 @@
 
         public bool IsReferencingXmiDeclaredType => !string.IsNullOrWhiteSpace(this.ReferenceTypeXmiID);
 
-        public List<ExtendedType> Generics { get; set; }
+        public List<TypeReference> Generics { get; set; }
 
         public bool IsGeneric { get; set; }
 
@@ -52,16 +52,16 @@
             }
         }
 
-        public ExtendedType(Type t, bool isBaseType, bool isGeneric = false, IEnumerable<ExtendedType> generics = null, bool isCollection = false)
+        public TypeReference(Type t, bool isBaseType, bool isGeneric = false, IEnumerable<TypeReference> generics = null, bool isCollection = false)
         {
             this.Type = t;
             this.IsGeneric = isGeneric;
             this.IsCollection = isCollection;
             this.IsBaseType = isBaseType;
-            this.Generics = generics?.ToList() ?? new List<ExtendedType>();
+            this.Generics = generics?.ToList() ?? new List<TypeReference>();
         }
 
-        public ExtendedType(string typeName, bool isBaseType, string referenceTypeXmiID)
+        public TypeReference(string typeName, bool isBaseType, string referenceTypeXmiID)
         {
             this.IsNamedType = true;
             this.IsBaseType = isBaseType;
@@ -69,7 +69,7 @@
             this.namedTypeName = typeName;
         }
 
-        public ExtendedType(string typeName, bool isBaseType)
+        public TypeReference(string typeName, bool isBaseType)
         {
             this.IsNamedType = true;
             this.IsBaseType = isBaseType;

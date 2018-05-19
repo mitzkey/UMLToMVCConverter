@@ -71,7 +71,7 @@
             return Convert.ToBoolean(type.OptionalAttributeValue("isAbstract"));
         }
 
-        public ExtendedType GetXElementCsharpType(XElement xElement)
+        public TypeReference GetXElementCsharpType(XElement xElement)
         {
             Insist.IsNotNull(xElement, nameof(xElement));
 
@@ -97,7 +97,7 @@
             }
         }
 
-        private ExtendedType GetNullableType(XElement xElement)
+        private TypeReference GetNullableType(XElement xElement)
         {
             if (this.xmiWrapper.IsOfPrimitiveType(xElement))
             {
@@ -107,40 +107,40 @@
             return this.GetComplexType(xElement);
         }
 
-        private ExtendedType GetPrimitiveNullableType(XElement xElement)
+        private TypeReference GetPrimitiveNullableType(XElement xElement)
         {
             var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
             var type = MapPrimitiveType(umlType);
 
             if (type == typeof(void))
             {
-                return ExtendedType.Void;
+                return TypeReference.Void;
             }
 
             var returnType = Nullable.GetUnderlyingType(type);
             if (returnType != null)
             {
-                return new ExtendedType(type, true);
+                return new TypeReference(type, true);
             }
 
             if (type.IsValueType)
             {
-                var generic = new ExtendedType(type, true);
-                return new ExtendedType(typeof(Nullable), true, true, new List<ExtendedType> { generic });
+                var generic = new TypeReference(type, true);
+                return new TypeReference(typeof(Nullable), true, true, new List<TypeReference> { generic });
             }
 
-            return new ExtendedType(type, true);
+            return new TypeReference(type, true);
         }
 
-        private ExtendedType GetComplexType(XElement xElement)
+        private TypeReference GetComplexType(XElement xElement)
         {
             var innerType = xElement.OptionalAttributeValue("type");
             var xInnerTypeElement = this.xmiWrapper.GetXElementById(innerType);
             var typeName = xInnerTypeElement.ObligatoryAttributeValue("name");
-            return new ExtendedType(typeName, false, innerType);
+            return new TypeReference(typeName, false, innerType);
         }
         
-        private ExtendedType GetNotNullableType(XElement xElement)
+        private TypeReference GetNotNullableType(XElement xElement)
         {
             if (this.xmiWrapper.IsOfPrimitiveType(xElement))
             {
@@ -151,14 +151,14 @@
             return this.GetComplexType(xElement);
         }
 
-        private ExtendedType GetPrimitiveNonNullableType(XElement xElement)
+        private TypeReference GetPrimitiveNonNullableType(XElement xElement)
         {
             var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
             var type = MapPrimitiveType(umlType);
-            return new ExtendedType(type, true);
+            return new TypeReference(type, true);
         }
 
-        private ExtendedType CreateAndGetPrimitiveTypeEntity(XElement xElement)
+        private TypeReference CreateAndGetPrimitiveTypeEntity(XElement xElement)
         {
             var name = xElement.ObligatoryAttributeValue("name");
             name = name.FirstCharToUpper();
@@ -167,7 +167,7 @@
             var visibility = "public";
             var codeTypeDeclaration = new TypeModel(name, isClass, visibility);
             
-            var entityType = new ExtendedType(name, true);
+            var entityType = new TypeReference(name, true);
 
             var valueType = this.GetPrimitiveNonNullableType(xElement);
             var valueProperty = new Property(
@@ -185,7 +185,7 @@
             return entityType;
         }
 
-        private ExtendedType GetMultipleType(XElement xElement)
+        private TypeReference GetMultipleType(XElement xElement)
         {
             if (this.xmiWrapper.IsOfPrimitiveType(xElement))
             {
@@ -198,9 +198,9 @@
             return this.GetCollectionTypeFor(complexType, false);
         }
 
-        private ExtendedType GetCollectionTypeFor(ExtendedType extType, bool isPrimitive)
+        private TypeReference GetCollectionTypeFor(TypeReference typeReference, bool isPrimitive)
         {
-            return new ExtendedType(typeof(ICollection<>), isPrimitive, true, new List<ExtendedType> { extType }, true);
+            return new TypeReference(typeof(ICollection<>), isPrimitive, true, new List<TypeReference> { typeReference }, true);
         }
     }
 }

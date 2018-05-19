@@ -34,10 +34,10 @@ if((this.type.IsClass
 }
 
 foreach (var foreignKey in this.type.ForeignKeys) {
-	var type = foreignKey.Value.ExtendedType;
+	var foreignKeyType = foreignKey.Value.TypeReference;
 	#>
 
-		public <#= type.Name + " " + foreignKey.Key #> { get; set; }<#
+		public <#= foreignKeyType.Name + " " + foreignKey.Key #> { get; set; }<#
 }
 
 foreach (var nestedClass in this.type.NestedClasses) {
@@ -48,7 +48,7 @@ foreach (var nestedClass in this.type.NestedClasses) {
 
 foreach (var property in this.type.Properties) {
 		string generics = "";
-		var type = property.ExtendedType;
+		var propertyType = property.TypeReference;
 		#>
 
 
@@ -61,10 +61,10 @@ foreach (var property in this.type.Properties) {
 		if (property.IsStatic) {
 			#>static <#
 		}
-        if (type.IsCollection || property.IsVirtual) {
+        if (propertyType.IsCollection || property.IsVirtual) {
 			#>virtual <#
 		}
-		#><#= type.Name + " " + property.Name #> { get<#
+		#><#= propertyType.Name + " " + property.Name #> { get<#
 		if (property.IsDerived) {
 			#> { throw new NotImplementedException(); } <#
 		}
@@ -82,7 +82,7 @@ foreach (var property in this.type.Properties) {
 			#>
 		
 
-		[ForeignKey("<#=type.Name#>")]
+		[ForeignKey("<#=propertyType.Name#>")]
         public int <#=property.Name#>ID { get; set; }
 		<#
 		}

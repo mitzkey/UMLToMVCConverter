@@ -5,30 +5,30 @@
 
     public class MethodParameter
     {
-        public ExtendedType ExtType { get; set; }
+        public TypeReference TypeReference { get; set; }
 
         public string Name { get; }
 
-        public string ExtTypeName => this.ExtType.Name;
+        public string ExtTypeName => this.TypeReference.Name;
 
-        public bool IsGeneric => this.ExtType.IsGeneric;
+        public bool IsGeneric => this.TypeReference.IsGeneric;
 
-        public List<ExtendedType> Generics => this.ExtType.Generics;
+        public List<TypeReference> Generics => this.TypeReference.Generics;
 
         public MethodParameter(
             Type type,
             string name,
             bool isBasic,
             bool isGeneric = false,
-            IEnumerable<ExtendedType> generics = null)
+            IEnumerable<TypeReference> generics = null)
         {
             this.Name = name;
-            this.ExtType = new ExtendedType(type, isBasic, isGeneric, generics);
+            this.TypeReference = new TypeReference(type, isBasic, isGeneric, generics);
         }
 
-        public MethodParameter(ExtendedType parType, string name)
+        public MethodParameter(TypeReference parameterType, string name)
         {
-            this.ExtType = parType;
+            this.TypeReference = parameterType;
             this.Name = name;
         }
     }

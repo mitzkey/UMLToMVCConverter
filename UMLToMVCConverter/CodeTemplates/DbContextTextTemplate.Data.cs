@@ -60,7 +60,7 @@ namespace UMLToMVCConverter.CodeTemplates
             {
                 foreach (var property in typeDeclaration.Properties)
                 {
-                    var typeReference = property.ExtendedType;
+                    var typeReference = property.TypeReference;
 
                     if (typeReference.IsReferencingXmiDeclaredType)
                     {
