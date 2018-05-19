@@ -64,5 +64,11 @@
             this.referenceTypeXmiId = xmiId;
             return this;
         }
+
+        public TypeReferenceBuilder IsCollection(bool isCollection)
+        {
+            this.isCollection = isCollection;
+            return this;
+        }
     }
 }

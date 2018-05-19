@@ -143,12 +143,16 @@
 
             if (cSharpType.IsValueType)
             {
-                var generic = new TypeReference(cSharpType, true);
+                var genericTypeReferenceBuilder = TypeReference.Builder();
+                var genericTypeReference = genericTypeReferenceBuilder
+                    .SetType(cSharpType)
+                    .IsBaseType(true)
+                    .Build();
                 return typeReferenceBuilder
                     .SetType(typeof(Nullable))
                     .IsBaseType(true)
                     .IsGeneric(true)
-                    .SetGenerics(generic)
+                    .SetGenerics(genericTypeReference)
                     .Build();
             }
 
@@ -185,21 +189,27 @@
 
         private TypeReference GetPrimitiveNonNullableType(XElement xElement)
         {
+            var typeReferenceBuilder = TypeReference.Builder();
+
             var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
             var type = MapPrimitiveType(umlType);
-            return new TypeReference(type, true);
+
+            return typeReferenceBuilder
+                .SetType(type)
+                .IsBaseType(true)
+                .Build();
         }
 
         private TypeReference CreateAndGetPrimitiveTypeEntity(XElement xElement)
         {
+            var typeReferenceBuilder = TypeReference.Builder();
+
             var name = xElement.ObligatoryAttributeValue("name");
             name = name.FirstCharToUpper();
 
             var isClass = true;
             var visibility = "public";
             var codeTypeDeclaration = new TypeModel(name, isClass, visibility);
-            
-            var entityType = new TypeReference(name, true);
 
             var valueType = this.GetPrimitiveNonNullableType(xElement);
             var valueProperty = new Property(
@@ -214,7 +224,10 @@
 
             this.typesRepository.Add(codeTypeDeclaration);
 
-            return entityType;
+            return typeReferenceBuilder
+                .SetName(name)
+                .IsBaseType(true)
+                .Build();
         }
 
         private TypeReference GetMultipleType(XElement xElement)
@@ -232,7 +245,15 @@
 
         private TypeReference GetCollectionTypeFor(TypeReference typeReference, bool isPrimitive)
         {
-            return new TypeReference(typeof(ICollection<>), isPrimitive, true, new List<TypeReference> { typeReference }, true);
+            var typeReferenceBuilder = TypeReference.Builder();
+
+            return typeReferenceBuilder
+                .SetType(typeof(ICollection<>))
+                .IsBaseType(isPrimitive)
+                .IsGeneric(true)
+                .SetGenerics(typeReference)
+                .IsCollection(true)
+                .Build();
         }
     }
 }

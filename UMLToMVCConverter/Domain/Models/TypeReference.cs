@@ -53,27 +53,6 @@
         public bool IsNullable { get; private set; }
 
         public TypeReference(
-            Type type, 
-            bool isBaseType, 
-            bool isGeneric = false, 
-            IEnumerable<TypeReference> generics = null, 
-            bool isCollection = false)
-        {
-            this.Type = type;
-            this.IsGeneric = isGeneric;
-            this.IsCollection = isCollection;
-            this.IsBaseType = isBaseType;
-            this.Generics = generics?.ToList() ?? new List<TypeReference>();
-        }
-
-        public TypeReference(string typeName, bool isBaseType)
-        {
-            this.IsNamedType = true;
-            this.IsBaseType = isBaseType;
-            this.namedTypeName = typeName;
-        }
-
-        public TypeReference(
             Type type,
             string name,
             bool isBaseType,

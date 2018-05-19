@@ -117,20 +117,25 @@
         {
             var isGeneric = genericType != null;
 
-            TypeReference cSharpType;
+            var cSharpTypeReferenceBuilder = TypeReference.Builder();
+            cSharpTypeReferenceBuilder
+                .SetType(type)
+                .IsBaseType(true);
+
             if (isGeneric)
             {
-                var generic = new TypeReference(genericType, true);
-                cSharpType = new TypeReference(type, true, true, new List<TypeReference> { generic });
-            }
-            else
-            {
-                cSharpType = new TypeReference(type, true);
+                var genericTypeReference = TypeReference.Builder()
+                    .SetType(genericType)
+                    .IsBaseType(true)
+                    .Build();
+                cSharpTypeReferenceBuilder
+                    .IsGeneric(true)
+                    .SetGenerics(genericTypeReference);
             }
 
             var property = new Property(
                 name,
-                cSharpType,
+                cSharpTypeReferenceBuilder.Build(),
                 this.typesRepository,
                 true,
                 "public",
