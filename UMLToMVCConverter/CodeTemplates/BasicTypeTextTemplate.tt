@@ -1,5 +1,4 @@
 ﻿<#@ template language="C#"#>
-<#@ import namespace="System.CodeDom"#>
 <#@ import namespace="System.Collections.Generic"#>
 <#@ import namespace="UMLToMVCConverter"#>
 <#@ import namespace="UMLToMVCConverter.Domain.Models"#>

@@ -12,7 +12,6 @@ namespace UMLToMVCConverter.CodeTemplates
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
-    using System.CodeDom;
     using System;
     
     /// <summary>
@@ -31,7 +30,7 @@ namespace UMLToMVCConverter.CodeTemplates
         {
             this.Write("namespace ");
             
-            #line 8 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+            #line 7 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.mvcProject.Name));
             
             #line default
@@ -40,15 +39,15 @@ namespace UMLToMVCConverter.CodeTemplates
                     "q;\r\n\tusing System.Web;\r\n\tusing System.ComponentModel.DataAnnotations;\r\n\tusing Sy" +
                     "stem.ComponentModel.DataAnnotations.Schema;\r\n\r\n");
             
-            #line 17 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+            #line 16 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
 
-var code = this.basicTypeTextTemplate.TransformText(codeTypeDeclaration);
+var code = this.basicTypeTextTemplate.TransformText(type);
 
             
             #line default
             #line hidden
             
-            #line 19 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
+            #line 18 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\ModelClassTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(code));
             
             #line default

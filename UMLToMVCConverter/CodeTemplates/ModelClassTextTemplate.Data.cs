@@ -6,7 +6,7 @@
     {
         private readonly MvcProject mvcProject;
         private readonly IBasicTypeTextTemplate basicTypeTextTemplate;
-        TypeModel codeTypeDeclaration;
+        TypeModel type;
 
         public ModelClassTextTemplate(MvcProject mvcProject, IBasicTypeTextTemplate basicTypeTextTemplate)
         {
@@ -16,7 +16,7 @@
 
         public string TransformText(TypeModel typeModel)
         {
-            this.codeTypeDeclaration = typeModel;
+            this.type = typeModel;
             return this.TransformText();
         }
     }
