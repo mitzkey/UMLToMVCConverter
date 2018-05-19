@@ -6,19 +6,17 @@
     {
         public string Name { get; }
 
-        public ExtendedCodeTypeReference ReturnType { get; }
-
         public List<MethodParameter> Parameters { get; }
 
         public string Visibility { get; }
 
         public bool IsStatic { get; }
 
-        public ExtendedType ExtendedReturnType { get; set; }
+        public ExtendedType ReturnType { get; }
 
         public Method(
             string name,
-            ExtendedCodeTypeReference returnType,
+            ExtendedType returnType,
             List<MethodParameter> parameters,
             string visibility,
             bool isStatic)
@@ -28,7 +26,6 @@
             this.Parameters = parameters;
             this.Visibility = visibility;
             this.IsStatic = isStatic;
-            this.ExtendedReturnType = returnType.ExtType;
         }
     }
 }
