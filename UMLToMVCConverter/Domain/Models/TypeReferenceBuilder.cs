@@ -14,6 +14,9 @@
         private string referenceTypeXmiId;
         private bool isCollection;
         private bool isNamedType;
+        private bool isNullable;
+        private bool isComplexType;
+        private bool isPrimitive;
 
         public TypeReference Build()
         {
@@ -25,7 +28,10 @@
                 this.generics,
                 this.isCollection,
                 this.referenceTypeXmiId,
-                this.isNamedType);
+                this.isNamedType,
+                this.isNullable,
+                this.isComplexType,
+                this.isPrimitive);
         }
 
         public TypeReferenceBuilder SetType(Type type)
@@ -68,6 +74,24 @@
         public TypeReferenceBuilder IsCollection(bool isCollection)
         {
             this.isCollection = isCollection;
+            return this;
+        }
+
+        public TypeReferenceBuilder IsNullable(bool isNullable)
+        {
+            this.isNullable = isNullable;
+            return this;
+        }
+
+        public TypeReferenceBuilder IsComplexType(bool isComplexType)
+        {
+            this.isComplexType = isComplexType;
+            return this;
+        }
+
+        public TypeReferenceBuilder IsPrimitive(bool isPrimitive)
+        {
+            this.isPrimitive = isPrimitive;
             return this;
         }
     }

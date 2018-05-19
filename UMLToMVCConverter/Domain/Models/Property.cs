@@ -75,6 +75,7 @@
         public bool IsDerived { get; set; }
 
         public bool IsID { get; set; }
+
         public List<Attribute> Attributes { get; }
 
         public bool IsVirtual { get; set; }

@@ -92,7 +92,7 @@
                 case Multiplicity.ZeroOrOne:
                     return this.GetNullableType(xElement);
                 case Multiplicity.ExactlyOne:
-                    return this.GetNotNullableType(xElement);
+                    return this.GetForNotNullableType(xElement);
                 case Multiplicity.ZeroOrMore:
                     return this.GetMultipleType(xElement);
                 case Multiplicity.OneOrMore:
@@ -131,15 +131,20 @@
                 return this.GetPrimitiveNullableType(xElement);
             }
 
-            return this.GetComplexType(xElement);
+            return this.GetComplexType(xElement, true);
         }
 
         private TypeReference GetPrimitiveNullableType(XElement xElement)
         {
             var typeReferenceBuilder = TypeReference.Builder();
+            typeReferenceBuilder.IsBaseType(true);
+            typeReferenceBuilder.IsNullable(true);
 
             var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
             var cSharpType = MapPrimitiveType(umlType);
+
+            var isPrimitive = !(cSharpType == typeof(string));
+            typeReferenceBuilder.IsPrimitive(isPrimitive);
 
             if (cSharpType.IsValueType)
             {
@@ -150,18 +155,16 @@
                     .Build();
                 return typeReferenceBuilder
                     .SetType(typeof(Nullable))
-                    .IsBaseType(true)
                     .IsGeneric(true)
                     .SetGenerics(genericTypeReference)
                     .Build();
             }
 
             typeReferenceBuilder.SetType(cSharpType);
-            typeReferenceBuilder.IsBaseType(true);
             return typeReferenceBuilder.Build();
         }
 
-        private TypeReference GetComplexType(XElement xElement)
+        private TypeReference GetComplexType(XElement xElement, bool isNullable)
         {
             var typeReferenceBuilder = TypeReference.Builder();
 
@@ -173,10 +176,12 @@
                 .SetName(typeName)
                 .IsBaseType(false)
                 .SetReferenceTypeXmiId(innerType)
+                .IsComplexType(true)
+                .IsNullable(isNullable)
                 .Build();
         }
         
-        private TypeReference GetNotNullableType(XElement xElement)
+        private TypeReference GetForNotNullableType(XElement xElement)
         {
             if (this.xmiWrapper.IsOfPrimitiveType(xElement))
             {
@@ -184,7 +189,8 @@
                 
             }
 
-            return this.GetComplexType(xElement);
+            var isNullable = false;
+            return this.GetComplexType(xElement, isNullable);
         }
 
         private TypeReference GetPrimitiveNonNullableType(XElement xElement)
@@ -192,11 +198,15 @@
             var typeReferenceBuilder = TypeReference.Builder();
 
             var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
-            var type = MapPrimitiveType(umlType);
+            var cSharpType = MapPrimitiveType(umlType);
+
+            var isPrimitive = !(cSharpType == typeof(string));
+            typeReferenceBuilder.IsPrimitive(isPrimitive);
 
             return typeReferenceBuilder
-                .SetType(type)
+                .SetType(cSharpType)
                 .IsBaseType(true)
+                .IsPrimitive(isPrimitive)
                 .Build();
         }
 
@@ -238,7 +248,7 @@
                 return this.GetCollectionTypeFor(newPrimitiveTypeEntity, true);
             }
 
-            var complexType = this.GetComplexType(xElement);
+            var complexType = this.GetComplexType(xElement, true);
 
             return this.GetCollectionTypeFor(complexType, false);
         }

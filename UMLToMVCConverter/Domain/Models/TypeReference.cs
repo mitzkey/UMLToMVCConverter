@@ -25,6 +25,11 @@
 
         public bool IsGeneric { get; set; }
 
+        public bool IsComplexType { get; }
+        public bool IsPrimitive { get; }
+
+        public bool IsNullable { get; }
+
         public string Name
         {
             get
@@ -50,8 +55,6 @@
             }
         }
 
-        public bool IsNullable { get; private set; }
-
         public TypeReference(
             Type type,
             string name,
@@ -60,7 +63,10 @@
             IEnumerable<TypeReference> generics,
             bool isCollection,
             string referenceTypeXmiID,
-            bool isNamedType)
+            bool isNamedType,
+            bool isNullable,
+            bool isComplexType,
+            bool isPrimitive)
         {
             this.Type = type;
             this.IsBaseType = isBaseType;
@@ -68,8 +74,11 @@
             this.IsCollection = isCollection;
             this.ReferenceTypeXmiID = referenceTypeXmiID;
             this.IsNamedType = isNamedType;
+            this.IsNullable = isNullable;
             this.Generics = generics.ToList();
             this.namedTypeName = name;
+            this.IsComplexType = isComplexType;
+            this.IsPrimitive = isPrimitive;
         }
 
         public static TypeReferenceBuilder Builder()

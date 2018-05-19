@@ -33,7 +33,7 @@
 
             var propertyName = this.xAttributeNameResolver.GetName(xProperty);
 
-            var cSharpType = this.umlTypesHelper.GetXElementCsharpType(xProperty);
+            var cSharpTypeReference = this.umlTypesHelper.GetXElementCsharpType(xProperty);
             
             var umlVisibility = xProperty.ObligatoryAttributeValue("visibility");
             var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharpString(umlVisibility);
@@ -53,8 +53,8 @@
             var xDefaultValue = xProperty.Element("defaultValue");
             if (xDefaultValue != null)
             {
-                if (cSharpType.IsReferencingXmiDeclaredType &&
-                    this.typesRepository.GetTypeByXmiId(cSharpType.ReferenceTypeXmiID).IsEnum)
+                if (cSharpTypeReference.IsReferencingXmiDeclaredType &&
+                    this.typesRepository.GetTypeByXmiId(cSharpTypeReference.ReferenceTypeXmiID).IsEnum)
                 {
                     var instance = this.xmiWrapper.GetXElementById(xDefaultValue.ObligatoryAttributeValue("instance"));
                     var instanceValue = instance.ObligatoryAttributeValue("name");
@@ -66,7 +66,7 @@
                 else
                 {
 
-                    var extendedType = cSharpType;
+                    var extendedType = cSharpTypeReference;
                     if (extendedType.IsGeneric)
                     {
                         throw new NotSupportedException("No default value for generic types supported");
@@ -86,7 +86,7 @@
 
             var multiplicity = this.xmiWrapper.GetMultiplicity(xProperty);
             var attributes = new List<Attribute>();
-            if (multiplicity == Multiplicity.ExactlyOne && cSharpType.IsNullable)
+            if (multiplicity == Multiplicity.ExactlyOne && !cSharpTypeReference.IsPrimitive)
             {
                 var attribute = new Attribute("Required");
                 attributes.Add(attribute);
@@ -94,7 +94,7 @@
 
             var property = new Property(
                 propertyName,
-                cSharpType,
+                cSharpTypeReference,
                 this.typesRepository,
                 hasSet,
                 visibility,
