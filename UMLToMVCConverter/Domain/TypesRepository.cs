@@ -7,15 +7,18 @@
     public class TypesRepository : ITypesRepository
     {
         private readonly List<TypeModel> types;
+        private readonly List<TypeModel> typeDeclarations;
 
         public TypesRepository()
         {
             this.types = new List<TypeModel>();
+            this.typeDeclarations = new List<TypeModel>();
         }
 
         public TypeModel GetTypeByXmiId(string xmiId)
         {
-            return this.types.Single(x => x.XmiID == xmiId);
+            return this.types.SingleOrDefault(x => x.XmiID == xmiId)
+                ?? this.typeDeclarations.Single(x => x.XmiID == xmiId);
         }
 
         public void Add(TypeModel type)
@@ -36,6 +39,16 @@
         public IEnumerable<TypeModel> GetAllTypes()
         {
             return this.types;
+        }
+
+        public void DeclareType(TypeModel typeDeclaration)
+        {
+            this.typeDeclarations.Add(typeDeclaration);
+        }
+
+        public TypeModel GetTypeDeclaration(string xTypeName)
+        {
+            return this.typeDeclarations.Single(t => t.Name.Equals(xTypeName));
         }
     }
 }

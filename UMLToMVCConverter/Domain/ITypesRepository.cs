@@ -10,5 +10,7 @@
         TypeModel GetTypeByName(string name);
         IEnumerable<TypeModel> GetEnums();
         IEnumerable<TypeModel> GetAllTypes();
+        void DeclareType(TypeModel typeDeclaration);
+        TypeModel GetTypeDeclaration(string xTypeName);
     }
 }

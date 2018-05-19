@@ -4,7 +4,6 @@
     using System.CodeDom;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Models;
@@ -33,20 +32,18 @@
             var xTypes = this.xmiWrapper.GetXTypes(xUmlModel)
                 .ToList();
 
-            var typeDeclarations = this.DeclareTypes(xTypes).ToList();
+            this.DeclareTypes(xTypes);
 
             var xTypesToBuild = xTypes
                 .Where(t => !"nestedClassifier".Equals(t.Name.ToString()));
 
-            this.BuildTypes(xTypesToBuild, typeDeclarations);
+            this.BuildTypes(xTypesToBuild);
 
             this.GenerateInheritanceRelations(xTypes);
         }
 
-        private IEnumerable<TypeModel> DeclareTypes(IEnumerable<XElement> xTypes)
+        private void DeclareTypes(IEnumerable<XElement> xTypes)
         {
-            var typeDeclarations = new List<TypeModel>();
-
             foreach (var type in xTypes)
             {
                 var name = type.ObligatoryAttributeValue("name");
@@ -55,15 +52,12 @@
                     XmiID = this.xmiWrapper.GetElementsId(type)
                 };
 
-                typeDeclarations.Add(typeDeclaration);
+                this.typesRepository.DeclareType(typeDeclaration);
             }
-
-            return typeDeclarations;
         }
 
         private void BuildTypes(
-            IEnumerable<XElement> xTypesToBuild,
-            List<TypeModel> typeDeclarations)
+            IEnumerable<XElement> xTypesToBuild)
         {
             var enumerations =
                 xTypesToBuild.Where(x => this.xmiWrapper.GetXElementType(x).Equals(XElementType.Enumeration));
@@ -73,7 +67,7 @@
 
             foreach (var xEnumeration in enumerations)
             {
-                var type = this.BuildType(xEnumeration, typeDeclarations);
+                var type = this.BuildType(xEnumeration);
                 this.typesRepository.Add(type);
 
                 this.GenerateProperties(xEnumeration, type);
@@ -83,7 +77,7 @@
 
             foreach (var xType in otherTypes)
             {
-                var type = this.BuildType(xType, typeDeclarations);
+                var type = this.BuildType(xType);
                 this.typesRepository.Add(type);
 
                 this.GenerateProperties(xType, type);
@@ -93,11 +87,10 @@
         }
 
         private TypeModel BuildType(
-            XElement xType,
-            List<TypeModel> typeDeclarations)
+            XElement xType)
         {
             var xTypeName = xType.ObligatoryAttributeValue("name");
-            var type = typeDeclarations.Single(t => t.Name.Equals(xTypeName));
+            var type = this.typesRepository.GetTypeDeclaration(xTypeName);
 
             type.IsClass = this.umlTypesHelper.IsClass(xType);
             type.IsStruct = this.umlTypesHelper.IsStruct(xType);
@@ -113,7 +106,7 @@
             var nestedClasses = xType.Descendants("nestedClassifier").ToList();
             foreach (var nestedClass in nestedClasses)
             {
-                var ctdNested = this.BuildType(nestedClass, typeDeclarations);
+                var ctdNested = this.BuildType(nestedClass);
                 type.NestedClasses.Add(ctdNested);
             }
 
