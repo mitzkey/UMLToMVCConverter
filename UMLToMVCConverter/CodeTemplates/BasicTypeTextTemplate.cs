@@ -114,7 +114,7 @@ if((this.type.IsClass
 }
 
 foreach (var foreignKey in this.type.ForeignKeys) {
-	var type = (ExtendedCodeTypeReference)foreignKey.Value.Type;
+	var type = foreignKey.Value.ExtendedType;
 	
             
             #line default
@@ -122,7 +122,7 @@ foreach (var foreignKey in this.type.ForeignKeys) {
             this.Write("\r\n\t\tpublic ");
             
             #line 40 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(type.ExtTypeName + " " + foreignKey.Key));
+            this.Write(this.ToStringHelper.ToStringWithCulture(type.Name + " " + foreignKey.Key));
             
             #line default
             #line hidden
@@ -152,7 +152,7 @@ foreach (var nestedClass in this.type.NestedClasses) {
 
 foreach (var property in this.type.Properties) {
 		string generics = "";
-		var type = property.ExtendedTypeReference;
+		var type = property.ExtendedType;
 		
             
             #line default
@@ -189,7 +189,7 @@ foreach (var property in this.type.Properties) {
             #line 62 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 
 		}
-        if (type.ExtType.IsCollection || property.IsVirtual) {
+        if (type.IsCollection || property.IsVirtual) {
 			
             
             #line default
@@ -205,7 +205,7 @@ foreach (var property in this.type.Properties) {
             #line hidden
             
             #line 67 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(type.ExtTypeName + " " + property.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(type.Name + " " + property.Name));
             
             #line default
             #line hidden
@@ -276,7 +276,7 @@ foreach (var property in this.type.Properties) {
             this.Write("\t\t\r\n\r\n\t\t[ForeignKey(\"");
             
             #line 85 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(type.ExtTypeName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(type.Name));
             
             #line default
             #line hidden

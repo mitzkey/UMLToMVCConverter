@@ -170,10 +170,9 @@
             var entityType = new ExtendedType(name, true);
 
             var valueType = this.GetPrimitiveNonNullableType(xElement);
-            var valueCodeTypeReference = new ExtendedCodeTypeReference(valueType);
             var valueProperty = new Property(
                 "Value",
-                valueCodeTypeReference,
+                valueType,
                 this.typesRepository,
                 true,
                 "public",

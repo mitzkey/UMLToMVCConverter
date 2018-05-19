@@ -60,12 +60,12 @@ namespace UMLToMVCConverter.CodeTemplates
             {
                 foreach (var property in typeDeclaration.Properties)
                 {
-                    var typeReference = property.ExtendedTypeReference;
+                    var typeReference = property.ExtendedType;
 
-                    if (typeReference.ExtType.IsReferencingXmiDeclaredType)
+                    if (typeReference.IsReferencingXmiDeclaredType)
                     {
                         var referencedType =
-                            structs.SingleOrDefault(x => typeReference.ExtType.ReferenceTypeXmiID.Equals(x.XmiID));
+                            structs.SingleOrDefault(x => typeReference.ReferenceTypeXmiID.Equals(x.XmiID));
 
                         if (referencedType != null)
                         {

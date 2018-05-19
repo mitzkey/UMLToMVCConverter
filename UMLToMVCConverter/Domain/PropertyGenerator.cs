@@ -1,7 +1,6 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
     using System;
-    using System.CodeDom;
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
@@ -34,7 +33,6 @@
             var propertyName = this.xAttributeNameResolver.GetName(xAttribute);
 
             var cSharpType = this.umlTypesHelper.GetXElementCsharpType(xAttribute);
-            var typeReference = ExtendedCodeTypeReference.CreateForType(cSharpType);
 
             
 
@@ -69,7 +67,7 @@
                 else
                 {
 
-                    var extendedType = typeReference;
+                    var extendedType = cSharpType;
                     if (extendedType.IsGeneric)
                     {
                         throw new NotSupportedException("No default value for generic types supported");
@@ -89,7 +87,7 @@
 
             var property = new Property(
                 propertyName,
-                typeReference,
+                cSharpType,
                 this.typesRepository,
                 hasSet,
                 visibility,
@@ -142,10 +140,9 @@
                 cSharpType = new ExtendedType(type, true);
             }
 
-            var propertyType = ExtendedCodeTypeReference.CreateForType(cSharpType);
             var property = new Property(
                 name,
-                propertyType,
+                cSharpType,
                 this.typesRepository,
                 true,
                 "public",
