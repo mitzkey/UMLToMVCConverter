@@ -50,11 +50,13 @@
         {
             get
             {
-                var type = this.TypeReference.Type;
+                var type = this.TypeReference.Type == typeof(Nullable)
+                    ? this.TypeReference.Generic.Type
+                    : this.TypeReference.Type;
                 var result = this.defaultValueFormats[type];
                 if (result == null)
                 {
-                    throw new NotSupportedException("Default value for type: " + type + " not supported.");
+                    throw new NotSupportedException($"Default value for type: { type } not supported.");
                 }
                 return result;
             }

@@ -6,6 +6,7 @@
         LiteralString,
         Enumeration,
         Class,
-        DataType
+        DataType,
+        LiteralInteger
     }
 }

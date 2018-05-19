@@ -67,7 +67,7 @@
                 {
 
                     var extendedType = cSharpTypeReference;
-                    if (extendedType.IsGeneric)
+                    if (extendedType.IsGeneric && !extendedType.IsPrimitive)
                     {
                         throw new NotSupportedException("No default value for generic types supported");
                     }
@@ -151,6 +151,8 @@
             switch (defaultValueType)
             {
                 case XElementType.LiteralString:
+                    return xDefaultValue.ObligatoryAttributeValue("value");
+                case XElementType.LiteralInteger:
                     return xDefaultValue.ObligatoryAttributeValue("value");
                 case XElementType.InstanceValue:
                     var instance = this.xmiWrapper.GetXElementById(xDefaultValue.ObligatoryAttributeValue("instance"));

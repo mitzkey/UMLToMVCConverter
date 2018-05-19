@@ -9,7 +9,7 @@
         private Type type;
         private bool isBaseType;
         private bool isGeneric;
-        private List<TypeReference> generics = new List<TypeReference>();
+        private TypeReference generic;
         private string name;
         private string referenceTypeXmiId;
         private bool isCollection;
@@ -25,7 +25,7 @@
                 this.name,
                 this.isBaseType,
                 this.isGeneric,
-                this.generics,
+                this.generic,
                 this.isCollection,
                 this.referenceTypeXmiId,
                 this.isNamedType,
@@ -52,9 +52,9 @@
             return this;
         }
 
-        public TypeReferenceBuilder SetGenerics(params TypeReference[] generics)
+        public TypeReferenceBuilder SetGenerics(TypeReference generic)
         {
-            this.generics = generics.ToList();
+            this.generic = generic;
             return this;
         }
 

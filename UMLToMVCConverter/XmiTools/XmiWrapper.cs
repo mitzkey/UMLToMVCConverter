@@ -123,6 +123,8 @@
                     return XElementType.Class;
                 case "uml:DataType":
                     return XElementType.DataType;
+                case "uml:LiteralInteger":
+                    return XElementType.LiteralInteger;
                 default:
                     throw new NotImplementedException($"Uknown xElement type: {typeString}");
             }
