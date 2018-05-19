@@ -92,6 +92,7 @@
     <Compile Include="Domain\AggregationKinds.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Domain\AggregationsFactory.cs" />
+    <Compile Include="Domain\Models\TypeReferenceBuilder.cs" />
     <Compile Include="XmiTools\XAttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
       <AutoGen>True</AutoGen>

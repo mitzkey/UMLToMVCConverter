@@ -9,8 +9,6 @@
     {
         private readonly string namedTypeName;
 
-        public static TypeReference Void => new TypeReference(typeof(void), true);
-
         public Type Type { get; }
 
         public bool IsNamedType { get; }
@@ -54,21 +52,18 @@
 
         public bool IsNullable { get; private set; }
 
-        public TypeReference(Type t, bool isBaseType, bool isGeneric = false, IEnumerable<TypeReference> generics = null, bool isCollection = false)
+        public TypeReference(
+            Type type, 
+            bool isBaseType, 
+            bool isGeneric = false, 
+            IEnumerable<TypeReference> generics = null, 
+            bool isCollection = false)
         {
-            this.Type = t;
+            this.Type = type;
             this.IsGeneric = isGeneric;
             this.IsCollection = isCollection;
             this.IsBaseType = isBaseType;
             this.Generics = generics?.ToList() ?? new List<TypeReference>();
-        }
-
-        public TypeReference(string typeName, bool isBaseType, string referenceTypeXmiID)
-        {
-            this.IsNamedType = true;
-            this.IsBaseType = isBaseType;
-            this.ReferenceTypeXmiID = referenceTypeXmiID;
-            this.namedTypeName = typeName;
         }
 
         public TypeReference(string typeName, bool isBaseType)
@@ -76,6 +71,31 @@
             this.IsNamedType = true;
             this.IsBaseType = isBaseType;
             this.namedTypeName = typeName;
+        }
+
+        public TypeReference(
+            Type type,
+            string name,
+            bool isBaseType,
+            bool isGeneric,
+            IEnumerable<TypeReference> generics,
+            bool isCollection,
+            string referenceTypeXmiID,
+            bool isNamedType)
+        {
+            this.Type = type;
+            this.IsBaseType = isBaseType;
+            this.IsGeneric = isGeneric;
+            this.IsCollection = isCollection;
+            this.ReferenceTypeXmiID = referenceTypeXmiID;
+            this.IsNamedType = isNamedType;
+            this.Generics = generics.ToList();
+            this.namedTypeName = name;
+        }
+
+        public static TypeReferenceBuilder Builder()
+        {
+            return new TypeReferenceBuilder();
         }
     }
 }

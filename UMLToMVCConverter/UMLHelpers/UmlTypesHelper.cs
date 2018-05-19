@@ -80,6 +80,11 @@
                 throw new Exception("No type matching strategy for XElement:\n" + xElement);
             }
 
+            if (this.IsVoidType(xElement))
+            {
+                return GetVoidType();
+            }
+
             var multiplicity = this.xmiWrapper.GetMultiplicity(xElement);
 
             switch (multiplicity)
@@ -97,6 +102,28 @@
             }
         }
 
+        private TypeReference GetVoidType()
+        {
+            var typeReferenceBuilder = TypeReference.Builder();
+            return typeReferenceBuilder
+                .SetType(typeof(void))
+                .IsBaseType(true)
+                .Build();
+        }
+
+        private bool IsVoidType(XElement xElement)
+        {
+            if (!this.xmiWrapper.IsOfPrimitiveType(xElement))
+            {
+                return false;
+            }
+
+            var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
+            var cSharpType = MapPrimitiveType(umlType);
+
+            return cSharpType == typeof(void);
+        }
+
         private TypeReference GetNullableType(XElement xElement)
         {
             if (this.xmiWrapper.IsOfPrimitiveType(xElement))
@@ -109,35 +136,40 @@
 
         private TypeReference GetPrimitiveNullableType(XElement xElement)
         {
+            var typeReferenceBuilder = TypeReference.Builder();
+
             var umlType = this.xmiWrapper.GetPrimitiveUmlType(xElement);
-            var type = MapPrimitiveType(umlType);
+            var cSharpType = MapPrimitiveType(umlType);
 
-            if (type == typeof(void))
+            if (cSharpType.IsValueType)
             {
-                return TypeReference.Void;
+                var generic = new TypeReference(cSharpType, true);
+                return typeReferenceBuilder
+                    .SetType(typeof(Nullable))
+                    .IsBaseType(true)
+                    .IsGeneric(true)
+                    .SetGenerics(generic)
+                    .Build();
             }
 
-            var returnType = Nullable.GetUnderlyingType(type);
-            if (returnType != null)
-            {
-                return new TypeReference(type, true);
-            }
-
-            if (type.IsValueType)
-            {
-                var generic = new TypeReference(type, true);
-                return new TypeReference(typeof(Nullable), true, true, new List<TypeReference> { generic });
-            }
-
-            return new TypeReference(type, true);
+            typeReferenceBuilder.SetType(cSharpType);
+            typeReferenceBuilder.IsBaseType(true);
+            return typeReferenceBuilder.Build();
         }
 
         private TypeReference GetComplexType(XElement xElement)
         {
+            var typeReferenceBuilder = TypeReference.Builder();
+
             var innerType = xElement.OptionalAttributeValue("type");
             var xInnerTypeElement = this.xmiWrapper.GetXElementById(innerType);
             var typeName = xInnerTypeElement.ObligatoryAttributeValue("name");
-            return new TypeReference(typeName, false, innerType);
+
+            return typeReferenceBuilder
+                .SetName(typeName)
+                .IsBaseType(false)
+                .SetReferenceTypeXmiId(innerType)
+                .Build();
         }
         
         private TypeReference GetNotNullableType(XElement xElement)
