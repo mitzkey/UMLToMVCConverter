@@ -56,6 +56,10 @@ foreach (var property in this.type.Properties) {
 			#>[Key]
 		<#						
 		}
+		foreach (var attribute in property.Attributes) {
+			#>[<#=attribute.Name#>]
+		<#						
+		}
 		#>public <#
 		if (property.IsStatic) {
 			#>static <#

@@ -16,15 +16,15 @@
         private readonly IXmiWrapper xmiWrapper;
         private readonly IUmlTypesHelper umlTypesHelper;
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
-        private readonly IPropertyGenerator propertyGenerator;
+        private readonly IPropertyFactory propertyFactory;
         private readonly ITypesRepository typesRepository;
 
-        public TypesGenerator(IXmiWrapper xmiWrapper, IUmlTypesHelper umlTypesHelper, IUmlVisibilityMapper umlVisibilityMapper, IPropertyGenerator propertyGenerator, ITypesRepository typesRepository)
+        public TypesGenerator(IXmiWrapper xmiWrapper, IUmlTypesHelper umlTypesHelper, IUmlVisibilityMapper umlVisibilityMapper, IPropertyFactory propertyFactory, ITypesRepository typesRepository)
         {
             this.xmiWrapper = xmiWrapper;
             this.umlTypesHelper = umlTypesHelper;
             this.umlVisibilityMapper = umlVisibilityMapper;
-            this.propertyGenerator = propertyGenerator;
+            this.propertyFactory = propertyFactory;
             this.typesRepository = typesRepository;
         }
 
@@ -127,7 +127,7 @@
                 .Where(a => string.IsNullOrWhiteSpace(a.OptionalAttributeValue("association")));
             foreach (var xAttribute in xAttributes)
             {
-                var property = this.propertyGenerator.Generate(type, xAttribute);
+                var property = this.propertyFactory.Create(type, xAttribute);
                 type.Properties.Add(property);
             }
 
@@ -138,7 +138,7 @@
                 {
                     type.Literals.Add(++counter, literal.ObligatoryAttributeValue("name"));
                 }
-                var property = this.propertyGenerator.GenerateBasicProperty("Name", typeof(string));
+                var property = this.propertyFactory.CreateBasicProperty("Name", typeof(string));
                 type.Properties.Add(property);
             }
         }

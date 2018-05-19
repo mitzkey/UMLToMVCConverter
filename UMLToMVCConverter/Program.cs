@@ -71,7 +71,7 @@
             builder.RegisterType<EFRelationshipModelFactory>().As<IEFRelationshipModelFactory>().SingleInstance();
             builder.RegisterType<ForeignKeysGenerator>().As<IForeignKeysGenerator>().SingleInstance();
             builder.RegisterType<NavigationalPropertiesGenerator>().As<INavigationalPropertiesGenerator>().SingleInstance();
-            builder.RegisterType<PropertyGenerator>().As<IPropertyGenerator>().SingleInstance();
+            builder.RegisterType<PropertyFactory>().As<IPropertyFactory>().SingleInstance();
             builder.RegisterType<DatabaseSeedInitializerTextTemplate>().As<IDatabaseSeedInitializerTextTemplate>().SingleInstance();
             builder.RegisterType<EnumerationModelsFactory>().As<IEnumerationModelsFactory>().SingleInstance();
             builder.RegisterType<ProgramCsTextTemplate>().As<IProgramCsTextTemplate>().SingleInstance();

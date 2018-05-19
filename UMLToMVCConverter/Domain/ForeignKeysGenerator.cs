@@ -6,11 +6,11 @@
 
     public class ForeignKeysGenerator : IForeignKeysGenerator
     {
-        private readonly IPropertyGenerator propertyGenerator;
+        private readonly IPropertyFactory propertyFactory;
 
-        public ForeignKeysGenerator(IPropertyGenerator propertyGenerator)
+        public ForeignKeysGenerator(IPropertyFactory propertyFactory)
         {
-            this.propertyGenerator = propertyGenerator;
+            this.propertyFactory = propertyFactory;
         }
 
         public void Generate(IEnumerable<Aggregation> aggregations)
@@ -33,7 +33,7 @@
                 {
                     var foreignKeyName = compositeType.Name + "ID";
 
-                    var foreignKeyProperty = this.propertyGenerator.GenerateBasicProperty(foreignKeyName, typeof(Nullable), typeof(int));
+                    var foreignKeyProperty = this.propertyFactory.CreateBasicProperty(foreignKeyName, typeof(Nullable), typeof(int));
 
                     composedType.ForeignKeys.Add(foreignKeyName, foreignKeyProperty);
                 }

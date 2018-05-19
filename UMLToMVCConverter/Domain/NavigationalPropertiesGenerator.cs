@@ -5,18 +5,18 @@
 
     public class NavigationalPropertiesGenerator : INavigationalPropertiesGenerator
     {
-        private readonly IPropertyGenerator propertyGenerator;
+        private readonly IPropertyFactory propertyFactory;
 
-        public NavigationalPropertiesGenerator(IPropertyGenerator propertyGenerator)
+        public NavigationalPropertiesGenerator(IPropertyFactory propertyFactory)
         {
-            this.propertyGenerator = propertyGenerator;
+            this.propertyFactory = propertyFactory;
         }
 
         public void Generate(List<Aggregation> aggregations)
         {
             foreach (var aggregation in aggregations)
             {
-                var dependentTypeNavigationalProperty = this.propertyGenerator.Generate(aggregation.DependentType, aggregation.DependentTypeAssociationXAttribute);
+                var dependentTypeNavigationalProperty = this.propertyFactory.Create(aggregation.DependentType, aggregation.DependentTypeAssociationXAttribute);
 
                 dependentTypeNavigationalProperty.IsVirtual = true;
 
@@ -25,7 +25,7 @@
                 if (aggregation.DependentTypeMultiplicity == Multiplicity.ExactlyOne
                     || aggregation.DependentTypeMultiplicity == Multiplicity.ZeroOrOne)
                 {
-                    var principalTypeNavigationalProperty = this.propertyGenerator.Generate(aggregation.PrincipalType, aggregation.PrincipalTypeAssociationXAttribute);
+                    var principalTypeNavigationalProperty = this.propertyFactory.Create(aggregation.PrincipalType, aggregation.PrincipalTypeAssociationXAttribute);
 
                     principalTypeNavigationalProperty.IsVirtual = true;
 

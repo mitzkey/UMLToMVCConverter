@@ -19,7 +19,8 @@
             int? defaultValueKey = null,
             string defaultValueString = null,
             bool isDerived = false,
-            bool isID = false)
+            bool isID = false,
+            List<Attribute> attributes = null)
         {
             this.DefaultValueString = defaultValueString ?? string.Empty;
             this.Name = name;
@@ -30,6 +31,7 @@
             this.DefaultValueKey = defaultValueKey;
             this.IsDerived = isDerived;
             this.IsID = isID;
+            this.Attributes = attributes ?? new List<Attribute>();
             if (typeReference.IsReferencingXmiDeclaredType)
             {
                 this.ReferencingType = typesRepository.GetTypeByXmiId(typeReference.ReferenceTypeXmiID);
@@ -73,6 +75,7 @@
         public bool IsDerived { get; set; }
 
         public bool IsID { get; set; }
+        public List<Attribute> Attributes { get; }
 
         public bool IsVirtual { get; set; }
 

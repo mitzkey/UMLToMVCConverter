@@ -8,8 +8,9 @@
     using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.XmiTools;
+    using Attribute = UMLToMVCConverter.Domain.Models.Attribute;
 
-    public class PropertyGenerator : IPropertyGenerator
+    public class PropertyFactory : IPropertyFactory
     {
         private readonly IUmlTypesHelper umlTypesHelper;
         private readonly IXAttributeNameResolver xAttributeNameResolver;
@@ -17,7 +18,7 @@
         private readonly IXmiWrapper xmiWrapper;
         private readonly ITypesRepository typesRepository;
 
-        public PropertyGenerator(IUmlTypesHelper umlTypesHelper, IXAttributeNameResolver xAttributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper, IXmiWrapper xmiWrapper, ITypesRepository typesRepository)
+        public PropertyFactory(IUmlTypesHelper umlTypesHelper, IXAttributeNameResolver xAttributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper, IXmiWrapper xmiWrapper, ITypesRepository typesRepository)
         {
             this.umlTypesHelper = umlTypesHelper;
             this.xAttributeNameResolver = xAttributeNameResolver;
@@ -26,24 +27,22 @@
             this.typesRepository = typesRepository;
         }
 
-        public Property Generate(TypeModel type, XElement xAttribute)
+        public Property Create(TypeModel type, XElement xProperty)
         {
-            Insist.IsNotNull(xAttribute, nameof(xAttribute));
+            Insist.IsNotNull(xProperty, nameof(xProperty));
 
-            var propertyName = this.xAttributeNameResolver.GetName(xAttribute);
+            var propertyName = this.xAttributeNameResolver.GetName(xProperty);
 
-            var cSharpType = this.umlTypesHelper.GetXElementCsharpType(xAttribute);
-
+            var cSharpType = this.umlTypesHelper.GetXElementCsharpType(xProperty);
             
-
-            var umlVisibility = xAttribute.ObligatoryAttributeValue("visibility");
+            var umlVisibility = xProperty.ObligatoryAttributeValue("visibility");
             var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharpString(umlVisibility);
             var visibility = cSharpVisibility;
 
-            var isStatic = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isStatic"));
+            var isStatic = Convert.ToBoolean(xProperty.OptionalAttributeValue("isStatic"));
 
             bool hasSet = true;
-            var xIsReadonly = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isReadOnly"));
+            var xIsReadonly = Convert.ToBoolean(xProperty.OptionalAttributeValue("isReadOnly"));
             if (xIsReadonly)
             {
                 hasSet = false;
@@ -51,7 +50,7 @@
 
             int? defaultValueKey = null;
             string defaultValueString = null;
-            var xDefaultValue = xAttribute.Element("defaultValue");
+            var xDefaultValue = xProperty.Element("defaultValue");
             if (xDefaultValue != null)
             {
                 if (cSharpType.IsReferencingXmiDeclaredType &&
@@ -77,13 +76,21 @@
                 }
             }
 
-            var isDerived = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isDerived"));
+            var isDerived = Convert.ToBoolean(xProperty.OptionalAttributeValue("isDerived"));
             if (isDerived)
             {
                 hasSet = false;
             }
 
-            var isID = Convert.ToBoolean(xAttribute.OptionalAttributeValue("isID"));
+            var isID = Convert.ToBoolean(xProperty.OptionalAttributeValue("isID"));
+
+            var multiplicity = this.xmiWrapper.GetMultiplicity(xProperty);
+            var attributes = new List<Attribute>();
+            if (multiplicity == Multiplicity.ExactlyOne && cSharpType.IsNullable)
+            {
+                var attribute = new Attribute("Required");
+                attributes.Add(attribute);
+            }
 
             var property = new Property(
                 propertyName,
@@ -95,12 +102,39 @@
                 defaultValueKey,
                 defaultValueString,
                 isDerived,
-                isID);
+                isID,
+                attributes);
 
             if (isID)
             {
                 type.PrimaryKeyAttributes.Add(property);
             }
+
+            return property;
+        }
+
+        public Property CreateBasicProperty(string name, Type type, Type genericType = null)
+        {
+            var isGeneric = genericType != null;
+
+            TypeReference cSharpType;
+            if (isGeneric)
+            {
+                var generic = new TypeReference(genericType, true);
+                cSharpType = new TypeReference(type, true, true, new List<TypeReference> { generic });
+            }
+            else
+            {
+                cSharpType = new TypeReference(type, true);
+            }
+
+            var property = new Property(
+                name,
+                cSharpType,
+                this.typesRepository,
+                true,
+                "public",
+                false);
 
             return property;
         }
@@ -123,32 +157,6 @@
                 default:
                     throw new NotImplementedException($"Unhandled xElement type for default value: {xDefaultValue}");
             }
-        }
-
-        public Property GenerateBasicProperty(string name, Type type, Type genericType = null)
-        {
-            var isGeneric = genericType != null;
-
-            TypeReference cSharpType;
-            if (isGeneric)
-            {
-                var generic = new TypeReference(genericType, true);
-                cSharpType = new TypeReference(type, true, true, new List<TypeReference> {generic});
-            }
-            else
-            {
-                cSharpType = new TypeReference(type, true);
-            }
-
-            var property = new Property(
-                name,
-                cSharpType,
-                this.typesRepository,
-                true,
-                "public",
-                false);
-
-            return property;
         }
     }
 }

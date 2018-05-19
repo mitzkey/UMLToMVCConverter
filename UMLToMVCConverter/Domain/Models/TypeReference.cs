@@ -52,6 +52,8 @@
             }
         }
 
+        public bool IsNullable { get; private set; }
+
         public TypeReference(Type t, bool isBaseType, bool isGeneric = false, IEnumerable<TypeReference> generics = null, bool isCollection = false)
         {
             this.Type = t;

@@ -86,6 +86,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Models\Attribute.cs" />
     <Compile Include="Domain\Models\Method.cs" />
     <Compile Include="Domain\Models\Aggregation.cs" />
     <Compile Include="Domain\AggregationKinds.cs" />
@@ -173,7 +174,7 @@
     <Compile Include="Domain\IDataModelFactory.cs" />
     <Compile Include="IMvcProjectFilesGenerator.cs" />
     <Compile Include="Domain\IEFRelationshipModelFactory.cs" />
-    <Compile Include="Domain\IPropertyGenerator.cs" />
+    <Compile Include="Domain\IPropertyFactory.cs" />
     <Compile Include="Domain\ITypesGenerator.cs" />
     <Compile Include="Domain\ITypesRepository.cs" />
     <Compile Include="Domain\TypesRepository.cs" />
@@ -181,7 +182,7 @@
     <Compile Include="MvcProjectFilesGenerator.cs" />
     <Compile Include="Domain\EFRelationshipModelFactory.cs" />
     <Compile Include="Domain\NavigationalPropertiesGenerator.cs" />
-    <Compile Include="Domain\PropertyGenerator.cs" />
+    <Compile Include="Domain\PropertyFactory.cs" />
     <Compile Include="Domain\RelationshipMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
