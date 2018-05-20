@@ -13,7 +13,7 @@
             {
                 var deleteBehavior = aggregation.AggregationKind == AggregationKinds.Composition
                     ? "Cascade"
-                    : "Restrict";
+                    : "SetNull";
 
                 var foreignKeyPropertyNames = aggregation.DependentType.ForeignKeys.Keys;
 
