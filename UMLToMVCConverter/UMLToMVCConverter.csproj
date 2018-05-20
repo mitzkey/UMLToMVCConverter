@@ -89,11 +89,15 @@
     <Compile Include="Domain\Association.cs" />
     <Compile Include="Domain\AssociationEndMember.cs" />
     <Compile Include="Domain\AssociationFactory.cs" />
+    <Compile Include="Domain\AssociationsForeignKeyGenerator.cs" />
+    <Compile Include="Domain\AssociationsRepository.cs" />
     <Compile Include="Domain\IAssociationFactory.cs" />
+    <Compile Include="Domain\IAssociationsForeignKeyGenerator.cs" />
+    <Compile Include="Domain\IAssociationsRepository.cs" />
     <Compile Include="Domain\Models\Attribute.cs" />
     <Compile Include="Domain\Models\Method.cs" />
     <Compile Include="Domain\Models\Aggregation.cs" />
-    <Compile Include="Domain\AggregationKinds.cs" />
+    <Compile Include="Domain\AggregationKind.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Domain\AggregationsFactory.cs" />
     <Compile Include="Domain\Models\TypeReferenceBuilder.cs" />

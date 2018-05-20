@@ -5,12 +5,15 @@
 
     public class Association
     {
+        public string XmiID { get; }
+
         public List<AssociationEndMember> Members { get; }
 
         public RelationshipMultiplicity Multiplicity { get; set; }    
 
-        public Association(IEnumerable<AssociationEndMember> associationEndMembers)
+        public Association(IEnumerable<AssociationEndMember> associationEndMembers, string xmiID)
         {
+            this.XmiID = xmiID;
             this.Members = associationEndMembers.ToList();
             this.Multiplicity = CalculateRelationshipMultiplicityFromMembers(this.Members);
         }

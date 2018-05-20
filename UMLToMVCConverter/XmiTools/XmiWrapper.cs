@@ -138,6 +138,24 @@
             return associationEndsXElements.Single(x => !xElementId.Equals(this.GetElementsId(x)));
         }
 
+        public AggregationKind GetAggregationKind(string aggregationKindString)
+        {
+            if (string.IsNullOrWhiteSpace(aggregationKindString))
+            {
+                return AggregationKind.None;
+            }
+
+            switch (aggregationKindString)
+            {
+                case "composite":
+                    return AggregationKind.Composition;
+                case "shared":
+                    return AggregationKind.Shared;
+                default:
+                    throw new NotImplementedException($"No aggregation kind implemented for value: {aggregationKindString}");
+            }
+        }
+
         public IEnumerable<XElement> GetXAttributes(XElement type)
         {
             return type.Descendants("ownedAttribute")

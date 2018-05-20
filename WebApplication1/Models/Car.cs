@@ -20,8 +20,8 @@ namespace WebApplication1.Models
 		[InverseProperty("Car")]
 		public SteeringWheel SteeringWheel { get; set; }
 
-		[InverseProperty("Car")]
-		public CarRadio CarRadio { get; set; }
+		[InverseProperty("RadiosCar")]
+		public CarRadio SuperRadio { get; set; }
 
 		[InverseProperty("Car")]
 		public virtual ICollection<Tire> Tire { get; set; }

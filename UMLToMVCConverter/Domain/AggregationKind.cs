@@ -1,8 +1,9 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
-    public enum AggregationKinds
+    public enum AggregationKind
     {
         Composition,
-        Shared
+        Shared,
+        None
     }
 }

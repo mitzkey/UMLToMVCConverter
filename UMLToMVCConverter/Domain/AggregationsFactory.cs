@@ -51,7 +51,7 @@
 
                 var dependentTypeMultiplicity = this.xmiWrapper.GetMultiplicity(principalTypeAssociationXAttribute);
 
-                var aggregationKind = this.GetAggregationKind(aggregationKindString);
+                var aggregationKind = this.xmiWrapper.GetAggregationKind(aggregationKindString);
                 
                 aggregations.Add(
                     new Aggregation
@@ -67,19 +67,6 @@
             }
 
             return aggregations;
-        }
-
-        private AggregationKinds GetAggregationKind(string aggregationKindString)
-        {
-            switch (aggregationKindString)
-            {
-                case "composite":
-                    return AggregationKinds.Composition;
-                case "shared":
-                    return AggregationKinds.Shared;
-                default:
-                    throw new NotImplementedException($"No aggregation kind implemented for value: {aggregationKindString}");
-            }
         }
     }
 }

@@ -11,20 +11,23 @@
     {
         private readonly IXmiWrapper xmiWrapper;
         private readonly IXAttributeNameResolver xAttributeNameResolver;
+        private readonly ITypesRepository typesRepository;
 
-        public AssociationFactory(IXmiWrapper xmiWrapper, IXAttributeNameResolver xAttributeNameResolver)
+        public AssociationFactory(IXmiWrapper xmiWrapper, IXAttributeNameResolver xAttributeNameResolver, ITypesRepository typesRepository)
         {
             this.xmiWrapper = xmiWrapper;
             this.xAttributeNameResolver = xAttributeNameResolver;
+            this.typesRepository = typesRepository;
         }
 
         public Association Create(XElement xAssociation)
         {
             var associationEndsXElements = this.xmiWrapper.GetAssociationEndsXElements(xAssociation).ToList();
+            var xmiID = this.xmiWrapper.GetElementsId(xAssociation);
 
             var associationMebers = this.CreateAssociationMembers(associationEndsXElements);
 
-            return new Association(associationMebers);
+            return new Association(associationMebers, xmiID);
         }
 
         private IEnumerable<AssociationEndMember> CreateAssociationMembers(List<XElement> associationEndsXElements)
@@ -34,8 +37,12 @@
                 var xmiId = this.xmiWrapper.GetElementsId(associationEndsXElement);
                 var multiplicity = this.xmiWrapper.GetMultiplicity(associationEndsXElement);
                 var name = this.xAttributeNameResolver.GetName(associationEndsXElement);
+                var aggregationKindString = associationEndsXElement.OptionalAttributeValue("aggregation");
+                var aggregationKind = this.xmiWrapper.GetAggregationKind(aggregationKindString);
+
+                var owningType = this.typesRepository.GetOwner(associationEndsXElement);
                 
-                yield return new AssociationEndMember(xmiId, name, multiplicity);
+                yield return new AssociationEndMember(xmiId, name, multiplicity, aggregationKind, owningType);
             }
         }
     }

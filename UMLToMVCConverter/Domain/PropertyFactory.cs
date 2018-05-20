@@ -18,8 +18,9 @@
         private readonly IXmiWrapper xmiWrapper;
         private readonly ITypesRepository typesRepository;
         private readonly IAssociationFactory associationFactory;
+        private readonly IAssociationsRepository associationsRepository;
 
-        public PropertyFactory(IUmlTypesHelper umlTypesHelper, IXAttributeNameResolver xAttributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper, IXmiWrapper xmiWrapper, ITypesRepository typesRepository, IAssociationFactory associationFactory)
+        public PropertyFactory(IUmlTypesHelper umlTypesHelper, IXAttributeNameResolver xAttributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper, IXmiWrapper xmiWrapper, ITypesRepository typesRepository, IAssociationFactory associationFactory, IAssociationsRepository associationsRepository)
         {
             this.umlTypesHelper = umlTypesHelper;
             this.xAttributeNameResolver = xAttributeNameResolver;
@@ -27,6 +28,7 @@
             this.xmiWrapper = xmiWrapper;
             this.typesRepository = typesRepository;
             this.associationFactory = associationFactory;
+            this.associationsRepository = associationsRepository;
         }
 
         public Property Create(TypeModel type, XElement xProperty)
@@ -100,6 +102,8 @@
                 var xAssociation = this.xmiWrapper.GetXElementById(associationId);
                 var association = this.associationFactory.Create(xAssociation);
 
+                this.associationsRepository.Add(association);
+
                 var currentXPropertyId = this.xmiWrapper.GetElementsId(xProperty);
 
                 var oppositeAssociationEnd = association.Members.Single(x => !currentXPropertyId.Equals(x.XmiId));
@@ -107,11 +111,6 @@
                 var oppositePropertyName = oppositeAssociationEnd.Name;
                 var attribute = new Attribute("InverseProperty", oppositePropertyName);
                 attributes.Add(attribute);
-
-                if (association.Multiplicity == RelationshipMultiplicity.OneToOne)
-                {
-                    
-                }
             }
 
             var property = new Property(

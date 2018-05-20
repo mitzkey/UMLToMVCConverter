@@ -11,7 +11,7 @@
 
             foreach (var aggregation in aggregations)
             {
-                var deleteBehavior = aggregation.AggregationKind == AggregationKinds.Composition
+                var deleteBehavior = aggregation.AggregationKind == AggregationKind.Composition
                     ? "Cascade"
                     : "SetNull";
 

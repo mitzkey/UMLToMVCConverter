@@ -1,6 +1,7 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
     using System.Collections.Generic;
+    using System.Xml.Linq;
     using UMLToMVCConverter.Domain.Models;
 
     public interface ITypesRepository
@@ -12,5 +13,6 @@
         IEnumerable<TypeModel> GetAllTypes();
         void DeclareType(TypeModel typeDeclaration);
         TypeModel GetTypeDeclaration(string xTypeName);
+        TypeModel GetOwner(XElement xElement);
     }
 }
