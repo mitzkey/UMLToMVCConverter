@@ -17,8 +17,16 @@ namespace WebApplication1.Models
 
 		public System.String Version { get; set; }
 
-		public virtual SteeringWheel SteeringWheel { get; set; }
+		[InverseProperty("Car")]
+		public SteeringWheel SteeringWheel { get; set; }
 
-		public virtual CarRadio CarRadio { get; set; }
+		[InverseProperty("Car")]
+		public CarRadio CarRadio { get; set; }
+
+		[InverseProperty("Car")]
+		public virtual ICollection<Tire> Tire { get; set; }
+
+		[InverseProperty("Car")]
+		public virtual ICollection<Seat> Seat { get; set; }
 	}
 }

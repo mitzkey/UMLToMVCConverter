@@ -17,14 +17,16 @@
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
         private readonly IXmiWrapper xmiWrapper;
         private readonly ITypesRepository typesRepository;
+        private readonly IAssociationFactory associationFactory;
 
-        public PropertyFactory(IUmlTypesHelper umlTypesHelper, IXAttributeNameResolver xAttributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper, IXmiWrapper xmiWrapper, ITypesRepository typesRepository)
+        public PropertyFactory(IUmlTypesHelper umlTypesHelper, IXAttributeNameResolver xAttributeNameResolver, IUmlVisibilityMapper umlVisibilityMapper, IXmiWrapper xmiWrapper, ITypesRepository typesRepository, IAssociationFactory associationFactory)
         {
             this.umlTypesHelper = umlTypesHelper;
             this.xAttributeNameResolver = xAttributeNameResolver;
             this.umlVisibilityMapper = umlVisibilityMapper;
             this.xmiWrapper = xmiWrapper;
             this.typesRepository = typesRepository;
+            this.associationFactory = associationFactory;
         }
 
         public Property Create(TypeModel type, XElement xProperty)
@@ -88,7 +90,21 @@
             var attributes = new List<Attribute>();
             if (multiplicity == Multiplicity.ExactlyOne && !cSharpTypeReference.IsPrimitive)
             {
-                var attribute = new Attribute("Required");
+                var attribute = new Attribute("Required", null);
+                attributes.Add(attribute);
+            }
+
+            var associationId = xProperty.OptionalAttributeValue("association");
+            if (!string.IsNullOrWhiteSpace(associationId))
+            {
+                var xAssociation = this.xmiWrapper.GetXElementById(associationId);
+                var association = this.associationFactory.Create(xAssociation);
+                var currentXPropertyId = this.xmiWrapper.GetElementsId(xProperty);
+
+                var oppositeAssociationEnd = association.EndsXElements.Single(x => !currentXPropertyId.Equals(this.xmiWrapper.GetElementsId(x)));
+                
+                var oppositePropertyName = this.xAttributeNameResolver.GetName(oppositeAssociationEnd);
+                var attribute = new Attribute("InverseProperty", oppositePropertyName);
                 attributes.Add(attribute);
             }
 

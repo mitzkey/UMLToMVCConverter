@@ -76,6 +76,7 @@
             builder.RegisterType<EnumerationModelsFactory>().As<IEnumerationModelsFactory>().SingleInstance();
             builder.RegisterType<ProgramCsTextTemplate>().As<IProgramCsTextTemplate>().SingleInstance();
             builder.RegisterType<TypesRepository>().As<ITypesRepository>().SingleInstance();
+            builder.RegisterType<AssociationFactory>().As<IAssociationFactory>().SingleInstance();
 
             builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
             builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();

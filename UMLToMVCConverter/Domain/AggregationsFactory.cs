@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Models;
@@ -26,19 +27,17 @@
 
             foreach (var xAggregation in xAggregations)
             {
-                var associationEnds = this.xmiWrapper.GetAssociationEnds(xAggregation);
+                var associationEnds = this.xmiWrapper.GetAssociationEndsXElements(xAggregation).ToList();
 
-                var aggregationKindString = associationEnds.Item1.OptionalAttributeValue("aggregation")
-                                      ?? associationEnds.Item2.OptionalAttributeValue("aggregation");
+                var aggregationKindString = associationEnds
+                    .Select(x => x.OptionalAttributeValue("aggregation"))
+                    .Single(x => !string.IsNullOrWhiteSpace(x));
 
-                var principalTypeAssociationXAttribute =
-                    string.IsNullOrWhiteSpace(associationEnds.Item1.OptionalAttributeValue("aggregation"))
-                        ? associationEnds.Item2
-                        : associationEnds.Item1;
+                var principalTypeAssociationXAttribute = associationEnds
+                    .Single(x => !string.IsNullOrWhiteSpace(x.OptionalAttributeValue("aggregation")));
 
-                var dependentTypeAssociationXAttribute = associationEnds.Item1.Equals(principalTypeAssociationXAttribute)
-                    ? associationEnds.Item2
-                    : associationEnds.Item1;
+                var dependentTypeAssociationXAttribute = associationEnds
+                    .Single(x => !x.Equals(principalTypeAssociationXAttribute));
 
                 var principalTypeId = this.xmiWrapper.GetElementsId(principalTypeAssociationXAttribute.Parent);
 

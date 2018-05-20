@@ -116,8 +116,7 @@
         private void GenerateProperties(XElement xType, TypeModel type)
         {
             var xAttributes = this.xmiWrapper
-                .GetXAttributes(xType)
-                .Where(a => string.IsNullOrWhiteSpace(a.OptionalAttributeValue("association")));
+                .GetXAttributes(xType);
             foreach (var xAttribute in xAttributes)
             {
                 var property = this.propertyFactory.Create(type, xAttribute);

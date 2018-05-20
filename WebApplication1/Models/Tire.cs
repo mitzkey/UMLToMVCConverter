@@ -11,12 +11,10 @@ namespace WebApplication1.Models
 
 
 		public int ID {get; set;}
-		public System.String CarBrand { get; set; }
-		public System.String CarModel { get; set; }
-		public System.String CarVersion { get; set; }
 
 		public System.String Brand { get; set; }
 
-		public virtual Car Car { get; set; }
+		[InverseProperty("Tire")]
+		public Car Car { get; set; }
 	}
 }

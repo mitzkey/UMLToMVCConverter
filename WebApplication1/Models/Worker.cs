@@ -10,7 +10,6 @@ namespace WebApplication1.Models
 	public class Worker : Person {
 
 
-		public Nullable<System.Int32> EnterpriseID { get; set; }
 
 		public System.String Company { get; set; }
 
@@ -22,6 +21,7 @@ namespace WebApplication1.Models
 
 		public System.String NamesFirstCharacter { get { throw new NotImplementedException(); } }
 
-		public virtual Enterprise Enterprise { get; set; }
+		[InverseProperty("Worker")]
+		public Enterprise Enterprise { get; set; }
 	}
 }

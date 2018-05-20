@@ -7,17 +7,15 @@ namespace WebApplication1.Models
 	using System.ComponentModel.DataAnnotations;
 	using System.ComponentModel.DataAnnotations.Schema;
 
-	public class Enterprise {
+	public class Book {
 
 
 		public int ID {get; set;}
 
-		[InverseProperty("Enterprise")]
-		public virtual ICollection<Worker> Worker { get; set; }
+		[InverseProperty("TextBook")]
+		public Professor Author { get; set; }
 
-		public System.String Name { get; set; }
-
-		[Required]
-		public CompanyInfo CompanyInfo { get; set; }
+		[InverseProperty("FavouriteBook")]
+		public virtual ICollection<Professor> Fans { get; set; }
 	}
 }

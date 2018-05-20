@@ -86,6 +86,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Association.cs" />
+    <Compile Include="Domain\AssociationFactory.cs" />
+    <Compile Include="Domain\IAssociationFactory.cs" />
     <Compile Include="Domain\Models\Attribute.cs" />
     <Compile Include="Domain\Models\Method.cs" />
     <Compile Include="Domain\Models\Aggregation.cs" />

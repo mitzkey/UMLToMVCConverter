@@ -1,5 +1,6 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Domain.Models;
@@ -14,7 +15,14 @@
         private readonly IEnumerationModelsFactory enumerationModelsFactory;
         private readonly ITypesRepository typesRepository;
 
-        public DataModelFactory(ITypesGenerator typesGenerator, IAggregationsFactory aggregationsFactory, IForeignKeysGenerator foreignKeysGenerator, IEFRelationshipModelFactory efRelationshipModelFactory, INavigationalPropertiesGenerator nagivationalPropertiesGenerator, IEnumerationModelsFactory enumerationModelsFactory, ITypesRepository typesRepository)
+        public DataModelFactory(
+            ITypesGenerator typesGenerator,
+            IAggregationsFactory aggregationsFactory,
+            IForeignKeysGenerator foreignKeysGenerator,
+            IEFRelationshipModelFactory efRelationshipModelFactory,
+            INavigationalPropertiesGenerator nagivationalPropertiesGenerator,
+            IEnumerationModelsFactory enumerationModelsFactory,
+            ITypesRepository typesRepository)
         {
             this.typesGenerator = typesGenerator;
             this.aggregationsFactory = aggregationsFactory;
@@ -29,22 +37,20 @@
         {
             this.typesGenerator.Generate(xUmlModel);
 
-            var aggregations = this.aggregationsFactory.Create(xUmlModel).ToList();
+            // var aggregations = this.aggregationsFactory.Create(xUmlModel).ToList();
 
-            this.nagivationalPropertiesGenerator.Generate(aggregations);
+            // this.nagivationalPropertiesGenerator.Generate(aggregations);
 
-            this.foreignKeysGenerator.Generate(aggregations);
+            // this.foreignKeysGenerator.Generate(aggregations);
 
-            var efRelationshipModels = this.efRelationshipModelFactory.Create(aggregations);
+            // var efRelationshipModels = this.efRelationshipModelFactory.Create(aggregations);
 
             var enumerationModels = this.enumerationModelsFactory.Create();
 
-            return new DataModel
-            {
-                Types = this.typesRepository.GetAllTypes(),
-                EFRelationshipModels = efRelationshipModels,
-                EnumerationModels = enumerationModels
-            };
+            return new DataModel(
+                this.typesRepository.GetAllTypes(),
+                new List<EFRelationship>(), 
+                enumerationModels);
         }
     }
 }

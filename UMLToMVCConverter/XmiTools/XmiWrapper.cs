@@ -62,7 +62,7 @@
                                 Contains(new XAttribute(this.xmiNamespace + "type", "uml:Association"), this.attributeEqualityComparer));
         }
 
-        public Tuple<XElement, XElement> GetAssociationEnds(XElement xAssociation)
+        public IEnumerable<XElement> GetAssociationEndsXElements(XElement xAssociation)
         {
             var firstEndId = xAssociation
                 .Descendants("memberEnd")
@@ -76,7 +76,7 @@
             var firstEnd = this.GetXElementById(firstEndId);
             var secondEnd = this.GetXElementById(secondEndId);
 
-            return new Tuple<XElement, XElement>(firstEnd, secondEnd);
+            return new List<XElement> { firstEnd, secondEnd };
         }
 
         public string GetElementsId(XElement xElement)
@@ -86,20 +86,21 @@
 
         public IEnumerable<XElement> GetXAggregations(XElement xUmlModel)
         {
+            var xAggregations = new List<XElement>();
+
             var xAssociations = this.GetXAssociations(xUmlModel);
 
             foreach (var xAssociation in xAssociations)
             {
-                var associationEnds = this.GetAssociationEnds(xAssociation);
+                var associationEnds = this.GetAssociationEndsXElements(xAssociation).ToList();
 
-                if (!string.IsNullOrWhiteSpace(associationEnds.Item1.OptionalAttributeValue("aggregation"))
-                    || !string.IsNullOrWhiteSpace(associationEnds.Item2.OptionalAttributeValue("aggregation")))
+                if (associationEnds.Any(x => !string.IsNullOrWhiteSpace(x.OptionalAttributeValue("aggregation"))))
                 {
-                    yield return xAssociation;
+                    xAggregations.Add(xAssociation);
                 }
             }
 
-
+            return xAggregations;
         }
 
         public IEnumerable<XElement> GetLiterals(XElement xType)
@@ -128,6 +129,13 @@
                 default:
                     throw new NotImplementedException($"Uknown xElement type: {typeString}");
             }
+        }
+
+        public XElement GetOppositeAssociationEnd(string associationId, string xElementId)
+        {
+            var association = this.GetXElementById(associationId);
+            var associationEndsXElements = this.GetAssociationEndsXElements(association);
+            return associationEndsXElements.Single(x => !xElementId.Equals(this.GetElementsId(x)));
         }
 
         public IEnumerable<XElement> GetXAttributes(XElement type)

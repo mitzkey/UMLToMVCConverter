@@ -178,7 +178,7 @@ foreach (var property in this.type.Properties) {
             this.Write("[");
             
             #line 60 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(attribute.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(attribute.ToString()));
             
             #line default
             #line hidden

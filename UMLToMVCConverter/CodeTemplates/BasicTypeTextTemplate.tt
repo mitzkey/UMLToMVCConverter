@@ -57,7 +57,7 @@ foreach (var property in this.type.Properties) {
 		<#						
 		}
 		foreach (var attribute in property.Attributes) {
-			#>[<#=attribute.Name#>]
+			#>[<#=attribute.ToString()#>]
 		<#						
 		}
 		#>public <#

@@ -39,55 +39,14 @@ namespace WebApplication1.Models
 
 		public DbSet<LineSegment> LineSegment { get; set; }
 
+		public DbSet<Book> Book { get; set; }
+
+		public DbSet<Professor> Professor { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
 			modelBuilder.Entity<Car>()
-				.HasKey(c => new { c.Brand, c.Model, c.Version });
-
-			modelBuilder.Entity<Car>()
-		        .HasOne(typeof(SteeringWheel))
-		        .WithOne("Car")
-		        .HasForeignKey("SteeringWheel", "CarBrand", "CarModel", "CarVersion")
-                .IsRequired(true)
-                .OnDelete(DeleteBehavior.Cascade);
-
-
-
-			modelBuilder.Entity<Car>()
-		        .HasOne(typeof(CarRadio))
-		        .WithOne("Car")
-		        .HasForeignKey("CarRadio", "CarBrand", "CarModel", "CarVersion")
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
-
-
-
-			modelBuilder.Entity<Car>()
-		        .HasMany(typeof(Tire))
-		        .WithOne("Car")
-		        .HasForeignKey("CarBrand", "CarModel", "CarVersion")
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
-
-
-
-			modelBuilder.Entity<Car>()
-		        .HasMany(typeof(Seat))
-		        .WithOne("Car")
-		        .HasForeignKey("CarBrand", "CarModel", "CarVersion")
-                .IsRequired(true)
-                .OnDelete(DeleteBehavior.Cascade);
-
-
-
-			modelBuilder.Entity<Enterprise>()
-		        .HasMany(typeof(Worker))
-		        .WithOne("Enterprise")
-		        .HasForeignKey("EnterpriseID")
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
-
-			modelBuilder.Entity<WithSingleIDProperty>().Property(b => b.StatusID).HasDefaultValueSql("1");
+				.HasKey(c => new { c.Brand, c.Model, c.Version });			modelBuilder.Entity<WithSingleIDProperty>().Property(b => b.StatusID).HasDefaultValueSql("1");
 			modelBuilder.Entity<LineSegment>().OwnsOne(p => p.X);
 			modelBuilder.Entity<LineSegment>().OwnsOne(p => p.Y);
 

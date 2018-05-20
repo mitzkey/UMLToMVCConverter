@@ -1,5 +1,6 @@
 ﻿namespace UMLToMVCConverter.XmiTools
 {
+    using System;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
 
@@ -14,13 +15,18 @@
 
         public string GetName(XElement attribute)
         {
-            var associationId = attribute.OptionalAttributeValue("association");
-            if (string.IsNullOrWhiteSpace(associationId))
+            if (string.IsNullOrWhiteSpace(attribute.OptionalAttributeValue("name")))
             {
-                return attribute.ObligatoryAttributeValue("name").FirstCharToUpper();
+                var associationId = attribute.OptionalAttributeValue("association");
+                if (!string.IsNullOrWhiteSpace(associationId))
+                {
+                    return this.GetNameForAggregation(attribute);
+                }
+
+                throw new NotImplementedException("Can't obtain attribute's name");
             }
 
-            return this.GetNameForAggregation(attribute);
+            return attribute.ObligatoryAttributeValue("name").FirstCharToUpper();
         }
 
         private string GetNameForAggregation(XElement attribute)
