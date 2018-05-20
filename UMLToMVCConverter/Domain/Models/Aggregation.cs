@@ -8,7 +8,7 @@
 
         public TypeModel DependentType { get; set; }
 
-        public AggregationKinds AggregationKind { get; set; }
+        public AggregationKind AggregationKind { get; set; }
 
         public Multiplicity DependentTypeMultiplicity { get; set; }
 

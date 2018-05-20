@@ -11,8 +11,8 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20180519075114_UMLToMVCConverterMigration_5f03638c-3b7f-491b-8f0e-f974060952c7")]
-    partial class UMLToMVCConverterMigration_5f03638c3b7f491b8f0ef974060952c7
+    [Migration("20180520175254_UMLToMVCConverterMigration_2d4c918c-b8bb-4400-b1e8-dba6c6f62aeb")]
+    partial class UMLToMVCConverterMigration_2d4c918cb8bb4400b1e8dba6c6f62aeb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,20 @@ namespace WebApplication1.Migrations
                     b.ToTable("Baby");
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.Book", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AuthorID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("AuthorID");
+
+                    b.ToTable("Book");
+                });
+
             modelBuilder.Entity("WebApplication1.Models.Car", b =>
                 {
                     b.Property<string>("Brand");
@@ -43,15 +57,7 @@ namespace WebApplication1.Migrations
 
                     b.Property<string>("Version");
 
-                    b.Property<int?>("CarRadioID");
-
-                    b.Property<int?>("SteeringWheelID");
-
                     b.HasKey("Brand", "Model", "Version");
-
-                    b.HasIndex("CarRadioID");
-
-                    b.HasIndex("SteeringWheelID");
 
                     b.ToTable("Car");
                 });
@@ -61,19 +67,19 @@ namespace WebApplication1.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CarBrand");
-
-                    b.Property<string>("CarModel");
-
-                    b.Property<string>("CarVersion");
-
                     b.Property<string>("Producer");
+
+                    b.Property<string>("RadiosCarBrand");
+
+                    b.Property<string>("RadiosCarModel");
+
+                    b.Property<string>("RadiosCarVersion");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CarBrand", "CarModel", "CarVersion")
+                    b.HasIndex("RadiosCarBrand", "RadiosCarModel", "RadiosCarVersion")
                         .IsUnique()
-                        .HasFilter("[CarBrand] IS NOT NULL AND [CarModel] IS NOT NULL AND [CarVersion] IS NOT NULL");
+                        .HasFilter("[RadiosCarBrand] IS NOT NULL AND [RadiosCarModel] IS NOT NULL AND [RadiosCarVersion] IS NOT NULL");
 
                     b.ToTable("CarRadio");
                 });
@@ -93,9 +99,13 @@ namespace WebApplication1.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CompanyInfoID");
+
                     b.Property<string>("Name");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CompanyInfoID");
 
                     b.ToTable("Enterprise");
                 });
@@ -140,6 +150,20 @@ namespace WebApplication1.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("LineSegment");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.Professor", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("FavouriteBookID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("FavouriteBookID");
+
+                    b.ToTable("Professor");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Seat", b =>
@@ -274,22 +298,25 @@ namespace WebApplication1.Migrations
                     b.ToTable("Worker");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Car", b =>
+            modelBuilder.Entity("WebApplication1.Models.Book", b =>
                 {
-                    b.HasOne("WebApplication1.Models.CarRadio", "CarRadio")
-                        .WithMany()
-                        .HasForeignKey("CarRadioID");
-
-                    b.HasOne("WebApplication1.Models.SteeringWheel", "SteeringWheel")
-                        .WithMany()
-                        .HasForeignKey("SteeringWheelID");
+                    b.HasOne("WebApplication1.Models.Professor", "Author")
+                        .WithMany("TextBook")
+                        .HasForeignKey("AuthorID");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.CarRadio", b =>
                 {
-                    b.HasOne("WebApplication1.Models.Car", "Car")
-                        .WithOne()
-                        .HasForeignKey("WebApplication1.Models.CarRadio", "CarBrand", "CarModel", "CarVersion")
+                    b.HasOne("WebApplication1.Models.Car", "RadiosCar")
+                        .WithOne("SuperRadio")
+                        .HasForeignKey("WebApplication1.Models.CarRadio", "RadiosCarBrand", "RadiosCarModel", "RadiosCarVersion");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.Enterprise", b =>
+                {
+                    b.HasOne("WebApplication1.Models.CompanyInfo", "CompanyInfo")
+                        .WithMany()
+                        .HasForeignKey("CompanyInfoID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -342,10 +369,17 @@ namespace WebApplication1.Migrations
                         });
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.Professor", b =>
+                {
+                    b.HasOne("WebApplication1.Models.Book", "FavouriteBook")
+                        .WithMany("Fans")
+                        .HasForeignKey("FavouriteBookID");
+                });
+
             modelBuilder.Entity("WebApplication1.Models.Seat", b =>
                 {
                     b.HasOne("WebApplication1.Models.Car", "Car")
-                        .WithMany()
+                        .WithMany("Seat")
                         .HasForeignKey("CarBrand", "CarModel", "CarVersion")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -353,7 +387,7 @@ namespace WebApplication1.Migrations
             modelBuilder.Entity("WebApplication1.Models.SteeringWheel", b =>
                 {
                     b.HasOne("WebApplication1.Models.Car", "Car")
-                        .WithOne()
+                        .WithOne("SteeringWheel")
                         .HasForeignKey("WebApplication1.Models.SteeringWheel", "CarBrand", "CarModel", "CarVersion")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -361,9 +395,8 @@ namespace WebApplication1.Migrations
             modelBuilder.Entity("WebApplication1.Models.Tire", b =>
                 {
                     b.HasOne("WebApplication1.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarBrand", "CarModel", "CarVersion")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("Tire")
+                        .HasForeignKey("CarBrand", "CarModel", "CarVersion");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.WithSingleIDProperty", b =>
@@ -377,9 +410,8 @@ namespace WebApplication1.Migrations
             modelBuilder.Entity("WebApplication1.Models.Worker", b =>
                 {
                     b.HasOne("WebApplication1.Models.Enterprise", "Enterprise")
-                        .WithMany()
-                        .HasForeignKey("EnterpriseID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany("Worker")
+                        .HasForeignKey("EnterpriseID");
 
                     b.HasOne("WebApplication1.Models.Worker")
                         .WithMany("Coworkers")

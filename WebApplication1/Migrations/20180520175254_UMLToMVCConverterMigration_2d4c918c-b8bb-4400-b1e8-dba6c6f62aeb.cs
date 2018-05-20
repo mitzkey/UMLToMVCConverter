@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace WebApplication1.Migrations
 {
-    public partial class UMLToMVCConverterMigration_5f03638c3b7f491b8f0ef974060952c7 : Migration
+    public partial class UMLToMVCConverterMigration_2d4c918cb8bb4400b1e8dba6c6f62aeb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,6 +24,19 @@ namespace WebApplication1.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Car",
+                columns: table => new
+                {
+                    Brand = table.Column<string>(nullable: false),
+                    Model = table.Column<string>(nullable: false),
+                    Version = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Car", x => new { x.Brand, x.Model, x.Version });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CompanyInfo",
                 columns: table => new
                 {
@@ -33,19 +46,6 @@ namespace WebApplication1.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CompanyInfo", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Enterprise",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Enterprise", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,6 +109,133 @@ namespace WebApplication1.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CarRadio",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Producer = table.Column<string>(nullable: true),
+                    RadiosCarBrand = table.Column<string>(nullable: true),
+                    RadiosCarModel = table.Column<string>(nullable: true),
+                    RadiosCarVersion = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarRadio", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_CarRadio_Car_RadiosCarBrand_RadiosCarModel_RadiosCarVersion",
+                        columns: x => new { x.RadiosCarBrand, x.RadiosCarModel, x.RadiosCarVersion },
+                        principalTable: "Car",
+                        principalColumns: new[] { "Brand", "Model", "Version" },
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Seat",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CarBrand = table.Column<string>(nullable: false),
+                    CarModel = table.Column<string>(nullable: false),
+                    CarVersion = table.Column<string>(nullable: false),
+                    LeatherMade = table.Column<bool>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Seat", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Seat_Car_CarBrand_CarModel_CarVersion",
+                        columns: x => new { x.CarBrand, x.CarModel, x.CarVersion },
+                        principalTable: "Car",
+                        principalColumns: new[] { "Brand", "Model", "Version" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SteeringWheel",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CarBrand = table.Column<string>(nullable: false),
+                    CarModel = table.Column<string>(nullable: false),
+                    CarVersion = table.Column<string>(nullable: false),
+                    Perimeter = table.Column<double>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SteeringWheel", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_SteeringWheel_Car_CarBrand_CarModel_CarVersion",
+                        columns: x => new { x.CarBrand, x.CarModel, x.CarVersion },
+                        principalTable: "Car",
+                        principalColumns: new[] { "Brand", "Model", "Version" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tire",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Brand = table.Column<string>(nullable: true),
+                    CarBrand = table.Column<string>(nullable: true),
+                    CarModel = table.Column<string>(nullable: true),
+                    CarVersion = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tire", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Tire_Car_CarBrand_CarModel_CarVersion",
+                        columns: x => new { x.CarBrand, x.CarModel, x.CarVersion },
+                        principalTable: "Car",
+                        principalColumns: new[] { "Brand", "Model", "Version" },
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Enterprise",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CompanyInfoID = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enterprise", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Enterprise_CompanyInfo_CompanyInfoID",
+                        column: x => x.CompanyInfoID,
+                        principalTable: "CompanyInfo",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WithSingleIDProperty",
+                columns: table => new
+                {
+                    MyIdentifier = table.Column<string>(nullable: false),
+                    Another = table.Column<int>(nullable: true),
+                    StatusID = table.Column<int>(nullable: false, defaultValueSql: "1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WithSingleIDProperty", x => x.MyIdentifier);
+                    table.ForeignKey(
+                        name: "FK_WithSingleIDProperty_StatusWniosku_StatusID",
+                        column: x => x.StatusID,
+                        principalTable: "StatusWniosku",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Worker",
                 columns: table => new
                 {
@@ -139,25 +266,6 @@ namespace WebApplication1.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WithSingleIDProperty",
-                columns: table => new
-                {
-                    MyIdentifier = table.Column<string>(nullable: false),
-                    Another = table.Column<int>(nullable: true),
-                    StatusID = table.Column<int>(nullable: false, defaultValueSql: "1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WithSingleIDProperty", x => x.MyIdentifier);
-                    table.ForeignKey(
-                        name: "FK_WithSingleIDProperty_StatusWniosku_StatusID",
-                        column: x => x.StatusID,
-                        principalTable: "StatusWniosku",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "FavouriteNumber",
                 columns: table => new
                 {
@@ -178,118 +286,53 @@ namespace WebApplication1.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CarRadio",
+                name: "Professor",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CarBrand = table.Column<string>(nullable: true),
-                    CarModel = table.Column<string>(nullable: true),
-                    CarVersion = table.Column<string>(nullable: true),
-                    Producer = table.Column<string>(nullable: true)
+                    FavouriteBookID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CarRadio", x => x.ID);
+                    table.PrimaryKey("PK_Professor", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Seat",
+                name: "Book",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CarBrand = table.Column<string>(nullable: false),
-                    CarModel = table.Column<string>(nullable: false),
-                    CarVersion = table.Column<string>(nullable: false),
-                    LeatherMade = table.Column<bool>(nullable: true)
+                    AuthorID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Seat", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SteeringWheel",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CarBrand = table.Column<string>(nullable: false),
-                    CarModel = table.Column<string>(nullable: false),
-                    CarVersion = table.Column<string>(nullable: false),
-                    Perimeter = table.Column<double>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SteeringWheel", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Car",
-                columns: table => new
-                {
-                    Brand = table.Column<string>(nullable: false),
-                    Model = table.Column<string>(nullable: false),
-                    Version = table.Column<string>(nullable: false),
-                    CarRadioID = table.Column<int>(nullable: true),
-                    SteeringWheelID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Car", x => new { x.Brand, x.Model, x.Version });
+                    table.PrimaryKey("PK_Book", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Car_CarRadio_CarRadioID",
-                        column: x => x.CarRadioID,
-                        principalTable: "CarRadio",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Car_SteeringWheel_SteeringWheelID",
-                        column: x => x.SteeringWheelID,
-                        principalTable: "SteeringWheel",
+                        name: "FK_Book_Professor_AuthorID",
+                        column: x => x.AuthorID,
+                        principalTable: "Professor",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Tire",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Brand = table.Column<string>(nullable: true),
-                    CarBrand = table.Column<string>(nullable: true),
-                    CarModel = table.Column<string>(nullable: true),
-                    CarVersion = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tire", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Tire_Car_CarBrand_CarModel_CarVersion",
-                        columns: x => new { x.CarBrand, x.CarModel, x.CarVersion },
-                        principalTable: "Car",
-                        principalColumns: new[] { "Brand", "Model", "Version" },
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_Book_AuthorID",
+                table: "Book",
+                column: "AuthorID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Car_CarRadioID",
-                table: "Car",
-                column: "CarRadioID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Car_SteeringWheelID",
-                table: "Car",
-                column: "SteeringWheelID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CarRadio_CarBrand_CarModel_CarVersion",
+                name: "IX_CarRadio_RadiosCarBrand_RadiosCarModel_RadiosCarVersion",
                 table: "CarRadio",
-                columns: new[] { "CarBrand", "CarModel", "CarVersion" },
+                columns: new[] { "RadiosCarBrand", "RadiosCarModel", "RadiosCarVersion" },
                 unique: true,
-                filter: "[CarBrand] IS NOT NULL AND [CarModel] IS NOT NULL AND [CarVersion] IS NOT NULL");
+                filter: "[RadiosCarBrand] IS NOT NULL AND [RadiosCarModel] IS NOT NULL AND [RadiosCarVersion] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enterprise_CompanyInfoID",
+                table: "Enterprise",
+                column: "CompanyInfoID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FavouriteNumber_WorkerID",
@@ -300,6 +343,11 @@ namespace WebApplication1.Migrations
                 name: "IX_KnownWords_BabyID",
                 table: "KnownWords",
                 column: "BabyID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Professor_FavouriteBookID",
+                table: "Professor",
+                column: "FavouriteBookID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Seat_CarBrand_CarModel_CarVersion",
@@ -333,42 +381,22 @@ namespace WebApplication1.Migrations
                 column: "WorkerID");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_CarRadio_Car_CarBrand_CarModel_CarVersion",
-                table: "CarRadio",
-                columns: new[] { "CarBrand", "CarModel", "CarVersion" },
-                principalTable: "Car",
-                principalColumns: new[] { "Brand", "Model", "Version" },
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Seat_Car_CarBrand_CarModel_CarVersion",
-                table: "Seat",
-                columns: new[] { "CarBrand", "CarModel", "CarVersion" },
-                principalTable: "Car",
-                principalColumns: new[] { "Brand", "Model", "Version" },
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_SteeringWheel_Car_CarBrand_CarModel_CarVersion",
-                table: "SteeringWheel",
-                columns: new[] { "CarBrand", "CarModel", "CarVersion" },
-                principalTable: "Car",
-                principalColumns: new[] { "Brand", "Model", "Version" },
-                onDelete: ReferentialAction.Cascade);
+                name: "FK_Professor_Book_FavouriteBookID",
+                table: "Professor",
+                column: "FavouriteBookID",
+                principalTable: "Book",
+                principalColumn: "ID",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Car_CarRadio_CarRadioID",
-                table: "Car");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Car_SteeringWheel_SteeringWheelID",
-                table: "Car");
+                name: "FK_Book_Professor_AuthorID",
+                table: "Book");
 
             migrationBuilder.DropTable(
-                name: "CompanyInfo");
+                name: "CarRadio");
 
             migrationBuilder.DropTable(
                 name: "FavouriteNumber");
@@ -381,6 +409,9 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.DropTable(
                 name: "Seat");
+
+            migrationBuilder.DropTable(
+                name: "SteeringWheel");
 
             migrationBuilder.DropTable(
                 name: "Tire");
@@ -398,19 +429,22 @@ namespace WebApplication1.Migrations
                 name: "Baby");
 
             migrationBuilder.DropTable(
+                name: "Car");
+
+            migrationBuilder.DropTable(
                 name: "StatusWniosku");
 
             migrationBuilder.DropTable(
                 name: "Enterprise");
 
             migrationBuilder.DropTable(
-                name: "CarRadio");
+                name: "CompanyInfo");
 
             migrationBuilder.DropTable(
-                name: "SteeringWheel");
+                name: "Professor");
 
             migrationBuilder.DropTable(
-                name: "Car");
+                name: "Book");
         }
     }
 }

@@ -2,15 +2,19 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Xml.Linq;
     using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.XmiTools;
 
     public class TypesRepository : ITypesRepository
     {
         private readonly List<TypeModel> types;
         private readonly List<TypeModel> typeDeclarations;
+        private readonly IXmiWrapper xmiWrapper;
 
-        public TypesRepository()
+        public TypesRepository(IXmiWrapper xmiWrapper)
         {
+            this.xmiWrapper = xmiWrapper;
             this.types = new List<TypeModel>();
             this.typeDeclarations = new List<TypeModel>();
         }
@@ -49,6 +53,13 @@
         public TypeModel GetTypeDeclaration(string xTypeName)
         {
             return this.typeDeclarations.Single(t => t.Name.Equals(xTypeName));
+        }
+
+        public TypeModel GetOwner(XElement xElement)
+        {
+            var xOwner = xElement.Parent;
+            var xOwnerId = this.xmiWrapper.GetElementsId(xOwner);
+            return this.GetTypeByXmiId(xOwnerId);
         }
     }
 }

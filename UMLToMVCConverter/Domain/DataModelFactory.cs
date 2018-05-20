@@ -1,7 +1,6 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Domain.Models;
 
@@ -14,6 +13,7 @@
         private readonly INavigationalPropertiesGenerator nagivationalPropertiesGenerator;
         private readonly IEnumerationModelsFactory enumerationModelsFactory;
         private readonly ITypesRepository typesRepository;
+        private readonly IAssociationsForeignKeyGenerator associationsForeignKeyGenerator;
 
         public DataModelFactory(
             ITypesGenerator typesGenerator,
@@ -22,7 +22,8 @@
             IEFRelationshipModelFactory efRelationshipModelFactory,
             INavigationalPropertiesGenerator nagivationalPropertiesGenerator,
             IEnumerationModelsFactory enumerationModelsFactory,
-            ITypesRepository typesRepository)
+            ITypesRepository typesRepository,
+            IAssociationsForeignKeyGenerator associationsForeignKeyGenerator)
         {
             this.typesGenerator = typesGenerator;
             this.aggregationsFactory = aggregationsFactory;
@@ -31,6 +32,7 @@
             this.nagivationalPropertiesGenerator = nagivationalPropertiesGenerator;
             this.enumerationModelsFactory = enumerationModelsFactory;
             this.typesRepository = typesRepository;
+            this.associationsForeignKeyGenerator = associationsForeignKeyGenerator;
         }
 
         public DataModel Create(XElement xUmlModel)
@@ -46,6 +48,8 @@
             // var efRelationshipModels = this.efRelationshipModelFactory.Create(aggregations);
 
             var enumerationModels = this.enumerationModelsFactory.Create();
+
+            this.associationsForeignKeyGenerator.Generate();
 
             return new DataModel(
                 this.typesRepository.GetAllTypes(),
