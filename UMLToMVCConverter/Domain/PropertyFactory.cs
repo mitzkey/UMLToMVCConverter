@@ -99,13 +99,19 @@
             {
                 var xAssociation = this.xmiWrapper.GetXElementById(associationId);
                 var association = this.associationFactory.Create(xAssociation);
+
                 var currentXPropertyId = this.xmiWrapper.GetElementsId(xProperty);
 
-                var oppositeAssociationEnd = association.EndsXElements.Single(x => !currentXPropertyId.Equals(this.xmiWrapper.GetElementsId(x)));
-                
-                var oppositePropertyName = this.xAttributeNameResolver.GetName(oppositeAssociationEnd);
+                var oppositeAssociationEnd = association.Members.Single(x => !currentXPropertyId.Equals(x.XmiId));
+
+                var oppositePropertyName = oppositeAssociationEnd.Name;
                 var attribute = new Attribute("InverseProperty", oppositePropertyName);
                 attributes.Add(attribute);
+
+                if (association.Multiplicity == RelationshipMultiplicity.OneToOne)
+                {
+                    
+                }
             }
 
             var property = new Property(

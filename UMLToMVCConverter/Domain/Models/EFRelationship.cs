@@ -16,7 +16,7 @@
 
         public string DependentTypeName { get; set; }
 
-        public RelationshipMultiplicity PrincipalTypeMultiplicity { get; set; }
+        public EFRelationshipMemberMultiplicity PrincipalTypeMultiplicity { get; set; }
 
         public string ForeignKeysStringEnumeration
         {
@@ -29,7 +29,7 @@
 
         public string DeleteBehavior { get; set; }
 
-        public RelationshipMultiplicity DependentTypeMultiplicity { get; set; }
+        public EFRelationshipMemberMultiplicity DependentTypeMultiplicity { get; set; }
 
         public string HasForeignKeyMethodParametersString =>
             this.DependentTypeMultiplicity.IsMultiple

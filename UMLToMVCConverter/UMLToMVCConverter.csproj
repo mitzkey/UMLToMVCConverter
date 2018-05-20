@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Association.cs" />
+    <Compile Include="Domain\AssociationEndMember.cs" />
     <Compile Include="Domain\AssociationFactory.cs" />
     <Compile Include="Domain\IAssociationFactory.cs" />
     <Compile Include="Domain\Models\Attribute.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Application.cs" />
     <Compile Include="Domain\AggregationsFactory.cs" />
     <Compile Include="Domain\Models\TypeReferenceBuilder.cs" />
+    <Compile Include="Domain\RelationshipMultiplicity.cs" />
     <Compile Include="XmiTools\XAttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -187,7 +189,7 @@
     <Compile Include="Domain\EFRelationshipModelFactory.cs" />
     <Compile Include="Domain\NavigationalPropertiesGenerator.cs" />
     <Compile Include="Domain\PropertyFactory.cs" />
-    <Compile Include="Domain\RelationshipMultiplicity.cs" />
+    <Compile Include="Domain\EFRelationshipMemberMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

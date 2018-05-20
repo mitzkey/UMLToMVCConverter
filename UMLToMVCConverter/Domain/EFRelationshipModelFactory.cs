@@ -33,9 +33,9 @@
             return models;
         }
 
-        private static RelationshipMultiplicity GetRelationshipMultiplicity(Multiplicity multiplicity)
+        private static EFRelationshipMemberMultiplicity GetRelationshipMultiplicity(Multiplicity multiplicity)
         {
-            return new RelationshipMultiplicity
+            return new EFRelationshipMemberMultiplicity
             {
                 Multiplicity = multiplicity
             };
