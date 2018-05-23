@@ -59,9 +59,9 @@
                 .Where(x => x.Multiplicity == RelationshipMultiplicity.OneToOne);
             this.associationsForeignKeyGenerator.GenerateForOneToOneAssociations(oneToOneAssociations);
 
-            var manyToManyAssociations = this.associationsRepository.GetAllAssociations()
+            var oneToManyAssociations = this.associationsRepository.GetAllAssociations()
                 .Where(x => x.Multiplicity == RelationshipMultiplicity.OneToMany);
-            this.associationsForeignKeyGenerator.GenerateForOneToManyAssociations(manyToManyAssociations);
+            this.associationsForeignKeyGenerator.GenerateForOneToManyAssociations(oneToManyAssociations);
 
             return new DataModel(
                 this.typesRepository.GetAllTypes(),

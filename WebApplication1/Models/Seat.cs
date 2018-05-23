@@ -14,8 +14,8 @@ namespace WebApplication1.Models
 
 		public Nullable<System.Boolean> LeatherMade { get; set; }
 
-		[Required]
 		[InverseProperty("Seat")]
+		[Required]
 		public Car Car { get; set; }
 	}
 }

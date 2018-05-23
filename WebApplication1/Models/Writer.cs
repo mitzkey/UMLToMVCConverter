@@ -11,8 +11,5 @@ namespace WebApplication1.Models
 
 
 		public int ID {get; set;}
-
-		[InverseProperty("Writer")]
-		public virtual ICollection<Book> Book { get; set; }
 	}
 }

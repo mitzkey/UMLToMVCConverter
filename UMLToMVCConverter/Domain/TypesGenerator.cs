@@ -162,7 +162,10 @@
             foreach (var xAttribute in xAttributes)
             {
                 var property = this.propertyFactory.Create(type, xAttribute);
-                type.Properties.Add(property);
+                if (property != null)
+                {
+                    type.Properties.Add(property);
+                }
             }
 
             if (type.IsEnum)

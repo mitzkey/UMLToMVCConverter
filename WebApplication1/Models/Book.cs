@@ -17,8 +17,5 @@ namespace WebApplication1.Models
 
 		[InverseProperty("FavouriteBook")]
 		public virtual ICollection<Professor> Fans { get; set; }
-
-		[InverseProperty("Book")]
-		public virtual ICollection<Writer> Writer { get; set; }
 	}
 }
