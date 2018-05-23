@@ -42,34 +42,34 @@
             }
         }
 
-        public void Generate(AssociationEndMember dependentMember, AssociationEndMember principalMember)
+        public void Generate(AssociationEndMember sourceMember, AssociationEndMember destinationMember)
         {
-            var principalType = principalMember.Type;
-            var dependentType = dependentMember.Type;
+            var destinationType = destinationMember.Type;
+            var sourceType = sourceMember.Type;
 
-            if (principalType.PrimaryKeyAttributes.Count > 0)
+            if (destinationType.PrimaryKeyAttributes.Count > 0)
             {
-                foreach (var principalTypePrimaryKeyAttribute in principalType.PrimaryKeyAttributes)
+                foreach (var destinationTypePrimaryKeyAttribute in destinationType.PrimaryKeyAttributes)
                 {
-                    var foreignKeyName = dependentMember.Name + principalTypePrimaryKeyAttribute.Name;
-                    var foreignKeyProperty = principalTypePrimaryKeyAttribute;
-                    dependentType.ForeignKeys.Add(foreignKeyName, foreignKeyProperty);
+                    var foreignKeyName = sourceMember.Name + destinationTypePrimaryKeyAttribute.Name;
+                    var foreignKeyProperty = destinationTypePrimaryKeyAttribute;
+                    sourceType.ForeignKeys.Add(foreignKeyName, foreignKeyProperty);
                 }
 
-                var navigationalProperty = dependentType.Properties.Single(x => x.Name == dependentMember.Name);
-                var attribute = new Attribute("ForeignKey", $"{ string.Join(",", dependentType.ForeignKeys.Keys) }");
+                var navigationalProperty = sourceType.Properties.Single(x => x.Name == sourceMember.Name);
+                var attribute = new Attribute("ForeignKey", $"{ string.Join(",", sourceType.ForeignKeys.Keys) }");
                 navigationalProperty.Attributes.Add(attribute);
             }
             else
             {
-                var foreignKeyName = principalMember.Name + "ID";
+                var foreignKeyName = sourceMember.Name + "ID";
 
                 var foreignKeyProperty = this.propertyFactory.CreateBasicProperty(foreignKeyName, typeof(Nullable), typeof(int));
 
-                dependentType.ForeignKeys.Add(foreignKeyName, foreignKeyProperty);
+                sourceType.ForeignKeys.Add(foreignKeyName, foreignKeyProperty);
 
-                var navigationalProperty = dependentType.Properties.Single(x => x.Name == dependentMember.Name);
-                var attribute = new Attribute("ForeignKey", $"{ string.Join(",", dependentType.ForeignKeys.Keys) }");
+                var navigationalProperty = sourceType.Properties.Single(x => x.Name == sourceMember.Name);
+                var attribute = new Attribute("ForeignKey", $"{ foreignKeyName }");
                 navigationalProperty.Attributes.Add(attribute);
             }
         }

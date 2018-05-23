@@ -1,5 +1,6 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
+    using System.Collections.Generic;
     using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.UMLHelpers;
 
@@ -12,39 +13,41 @@
             this.propertyFactory = propertyFactory;
         }
 
-        public void Generate(AssociationEndMember dependentMember, AssociationEndMember principalMember)
+        public void Generate(AssociationEndMember sourceMember, AssociationEndMember destinationMember)
         {
-            var dependentMemberPropertyTypeRefernce = TypeReference.Builder()
-                .IsBaseType(true)
-                .SetName(principalMember.Type.Name)
-                .Build();
-            var dependentTypeNavigationalProperty = Property.Builder()
-                .SetName(dependentMember.Name)
-                .SetTypeReference(dependentMemberPropertyTypeRefernce)
+            var sourceMemberPropertyTypeReferenceBuilder = TypeReference.Builder()
+                .IsBaseType(true);
+
+            if (sourceMember.Multiplicity == Multiplicity.OneOrMore
+                || sourceMember.Multiplicity == Multiplicity.ZeroOrMore)
+            {
+                var innerType = TypeReference.Builder()
+                    .SetName(destinationMember.Type.Name)
+                    .Build();
+
+                sourceMemberPropertyTypeReferenceBuilder
+                    .SetType(typeof(ICollection<>))
+                    .IsCollection(true)
+                    .IsGeneric(true)
+                    .SetGeneric(innerType);
+            }
+            else
+            {
+                sourceMemberPropertyTypeReferenceBuilder
+                    .SetName(destinationMember.Type.Name);
+            }
+
+            var sourceMemberPropertyTypeRefernce = sourceMemberPropertyTypeReferenceBuilder.Build();
+
+            var sourceTypeNavigationalProperty = Property.Builder()
+                .SetName(sourceMember.Name)
+                .SetTypeReference(sourceMemberPropertyTypeRefernce)
                 .HasSet(true)
                 .SetVisibility(CSharpVisibilityString.Public)
                 .IsVirtual(true)
                 .Build();
 
-            dependentMember.Type.Properties.Add(dependentTypeNavigationalProperty);
-
-            if (dependentMember.Multiplicity == Multiplicity.ExactlyOne
-                || dependentMember.Multiplicity == Multiplicity.ZeroOrOne)
-            {
-                var principalMemberPropertyTypeRefernce = TypeReference.Builder()
-                    .IsBaseType(true)
-                    .SetName(dependentMember.Type.Name)
-                    .Build();
-                var principalTypeNavigationalProperty = Property.Builder()
-                    .SetName(principalMember.Name)
-                    .SetTypeReference(principalMemberPropertyTypeRefernce)
-                    .HasSet(true)
-                    .SetVisibility(CSharpVisibilityString.Public)
-                    .IsVirtual(true)
-                    .Build();
-
-                principalMember.Type.Properties.Add(principalTypeNavigationalProperty);
-            }
+            sourceMember.Type.Properties.Add(sourceTypeNavigationalProperty);
         }
     }
 }

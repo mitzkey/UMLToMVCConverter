@@ -11,13 +11,13 @@ namespace WebApplication1.Models
 
 
 		public int ID {get; set;}
-		public Nullable<System.Int32> BookID { get; set; }
 		public Nullable<System.Int32> WriterID { get; set; }
+		public Nullable<System.Int32> BookID { get; set; }
 
-		[ForeignKey("BookID")]
+		[ForeignKey("WriterID")]
 		public virtual Writer Writer { get; set; }
 
-		[ForeignKey("BookID,WriterID")]
+		[ForeignKey("BookID")]
 		public virtual Book Book { get; set; }
 	}
 }

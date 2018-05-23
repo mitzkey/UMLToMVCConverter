@@ -41,11 +41,31 @@ namespace WebApplication1.Migrations
 
                     b.Property<int?>("AuthorID");
 
+                    b.Property<int?>("WriterID");
+
                     b.HasKey("ID");
 
                     b.HasIndex("AuthorID");
 
                     b.ToTable("Book");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.BookWriter", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("BookID");
+
+                    b.Property<int?>("WriterID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BookID");
+
+                    b.HasIndex("WriterID");
+
+                    b.ToTable("BookWriter");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Car", b =>
@@ -297,11 +317,42 @@ namespace WebApplication1.Migrations
                     b.ToTable("Worker");
                 });
 
+            modelBuilder.Entity("WebApplication1.Models.Writer", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("BookID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Writer");
+                });
+
             modelBuilder.Entity("WebApplication1.Models.Book", b =>
                 {
                     b.HasOne("WebApplication1.Models.Professor", "Author")
                         .WithMany("TextBook")
                         .HasForeignKey("AuthorID");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.BookWriter", b =>
+                {
+                    b.HasOne("WebApplication1.Models.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookID");
+
+                    b.HasOne("WebApplication1.Models.Writer")
+                        .WithMany("Book")
+                        .HasForeignKey("BookID");
+
+                    b.HasOne("WebApplication1.Models.Book")
+                        .WithMany("Writer")
+                        .HasForeignKey("WriterID");
+
+                    b.HasOne("WebApplication1.Models.Writer", "Writer")
+                        .WithMany()
+                        .HasForeignKey("WriterID");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.CarRadio", b =>

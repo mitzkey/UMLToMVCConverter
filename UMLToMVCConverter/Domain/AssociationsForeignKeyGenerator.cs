@@ -40,11 +40,11 @@
 
                 if (association.IsGeneratedByConverter)
                 {
-                    var dependentMember = GetDistinguishedMembers(association, out var principalMember);
+                    this.navigationalPropertiesGenerator.Generate(association.Members.First(), association.Members.Last());
+                    this.navigationalPropertiesGenerator.Generate(association.Members.Last(), association.Members.First());
 
-                    this.navigationalPropertiesGenerator.Generate(dependentMember, principalMember);
-
-                    this.foreignKeyGenerator.Generate(dependentMember, principalMember);
+                    this.foreignKeyGenerator.Generate(association.Members.First(), association.Members.Last());
+                    this.foreignKeyGenerator.Generate(association.Members.Last(), association.Members.First());
                 }
             }
         }

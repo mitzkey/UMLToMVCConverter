@@ -2,6 +2,6 @@
 {
     public interface INavigationalPropertiesGenerator
     {
-        void Generate(AssociationEndMember dependentMember, AssociationEndMember principalMember);
+        void Generate(AssociationEndMember sourceMember, AssociationEndMember destinationMember);
     }
 }

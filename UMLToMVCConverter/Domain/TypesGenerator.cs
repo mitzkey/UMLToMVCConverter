@@ -61,9 +61,9 @@
                 {
                     //asocjacja x - * między typem membera a nowym typem
                     var oppositeMember = association.Members.Single(x => !x.Equals(member));
-                    var associationTypeMember = new AssociationEndMember(null, oppositeMember.Name, oppositeMember.Multiplicity, oppositeMember.AggregationKind, type);
                     var reducedMultiplicity = this.ReduceMultiplicity(member.Multiplicity);
-                    var parentAssociationMemberTypesNewMember = new AssociationEndMember(null, member.Name, reducedMultiplicity, member.AggregationKind, member.Type);
+                    var associationTypeMember = new AssociationEndMember(null, oppositeMember.Name, reducedMultiplicity, oppositeMember.AggregationKind, type);
+                    var parentAssociationMemberTypesNewMember = new AssociationEndMember(null, member.Name, oppositeMember.Multiplicity, member.AggregationKind, member.Type);
                     var childAssociationMembers = new List<AssociationEndMember> { associationTypeMember, parentAssociationMemberTypesNewMember };
                     var childAssociation = new Association(childAssociationMembers, null);
                     this.associationsRepository.Add(childAssociation);

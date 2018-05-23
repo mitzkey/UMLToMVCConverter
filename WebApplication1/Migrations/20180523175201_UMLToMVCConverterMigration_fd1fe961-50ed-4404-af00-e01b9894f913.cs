@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace WebApplication1.Migrations
 {
-    public partial class UMLToMVCConverterMigration_2d4c918cb8bb4400b1e8dba6c6f62aeb : Migration
+    public partial class UMLToMVCConverterMigration_fd1fe96150ed4404af00e01b9894f913 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -86,6 +86,19 @@ namespace WebApplication1.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Wheel", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Writer",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BookID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Writer", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -286,6 +299,32 @@ namespace WebApplication1.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookWriter",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    BookID = table.Column<int>(nullable: true),
+                    WriterID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookWriter", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_BookWriter_Writer_BookID",
+                        column: x => x.BookID,
+                        principalTable: "Writer",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BookWriter_Writer_WriterID",
+                        column: x => x.WriterID,
+                        principalTable: "Writer",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Professor",
                 columns: table => new
                 {
@@ -304,7 +343,8 @@ namespace WebApplication1.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AuthorID = table.Column<int>(nullable: true)
+                    AuthorID = table.Column<int>(nullable: true),
+                    WriterID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -321,6 +361,16 @@ namespace WebApplication1.Migrations
                 name: "IX_Book_AuthorID",
                 table: "Book",
                 column: "AuthorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookWriter_BookID",
+                table: "BookWriter",
+                column: "BookID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookWriter_WriterID",
+                table: "BookWriter",
+                column: "WriterID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CarRadio_RadiosCarBrand_RadiosCarModel_RadiosCarVersion",
@@ -381,6 +431,22 @@ namespace WebApplication1.Migrations
                 column: "WorkerID");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_BookWriter_Book_BookID",
+                table: "BookWriter",
+                column: "BookID",
+                principalTable: "Book",
+                principalColumn: "ID",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_BookWriter_Book_WriterID",
+                table: "BookWriter",
+                column: "WriterID",
+                principalTable: "Book",
+                principalColumn: "ID",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_Professor_Book_FavouriteBookID",
                 table: "Professor",
                 column: "FavouriteBookID",
@@ -394,6 +460,9 @@ namespace WebApplication1.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Book_Professor_AuthorID",
                 table: "Book");
+
+            migrationBuilder.DropTable(
+                name: "BookWriter");
 
             migrationBuilder.DropTable(
                 name: "CarRadio");
@@ -421,6 +490,9 @@ namespace WebApplication1.Migrations
 
             migrationBuilder.DropTable(
                 name: "WithSingleIDProperty");
+
+            migrationBuilder.DropTable(
+                name: "Writer");
 
             migrationBuilder.DropTable(
                 name: "Worker");

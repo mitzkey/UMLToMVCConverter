@@ -6,6 +6,6 @@
     public interface IForeignKeysGenerator
     {
         void Generate(IEnumerable<Aggregation> aggregations);
-        void Generate(AssociationEndMember dependentMember, AssociationEndMember principalMember);
+        void Generate(AssociationEndMember sourceMember, AssociationEndMember destinationMember);
     }
 }
