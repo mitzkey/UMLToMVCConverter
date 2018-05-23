@@ -1,7 +1,7 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
-    using System.Collections.Generic;
     using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.UMLHelpers;
 
     public class NavigationalPropertiesGenerator : INavigationalPropertiesGenerator
     {
@@ -12,25 +12,38 @@
             this.propertyFactory = propertyFactory;
         }
 
-        public void Generate(List<Aggregation> aggregations)
+        public void Generate(AssociationEndMember dependentMember, AssociationEndMember principalMember)
         {
-            foreach (var aggregation in aggregations)
+            var dependentMemberPropertyTypeRefernce = TypeReference.Builder()
+                .IsBaseType(true)
+                .SetName(principalMember.Type.Name)
+                .Build();
+            var dependentTypeNavigationalProperty = Property.Builder()
+                .SetName(dependentMember.Name)
+                .SetTypeReference(dependentMemberPropertyTypeRefernce)
+                .HasSet(true)
+                .SetVisibility(CSharpVisibilityString.Public)
+                .IsVirtual(true)
+                .Build();
+
+            dependentMember.Type.Properties.Add(dependentTypeNavigationalProperty);
+
+            if (dependentMember.Multiplicity == Multiplicity.ExactlyOne
+                || dependentMember.Multiplicity == Multiplicity.ZeroOrOne)
             {
-                var dependentTypeNavigationalProperty = this.propertyFactory.Create(aggregation.DependentType, aggregation.DependentTypeAssociationXAttribute);
+                var principalMemberPropertyTypeRefernce = TypeReference.Builder()
+                    .IsBaseType(true)
+                    .SetName(dependentMember.Type.Name)
+                    .Build();
+                var principalTypeNavigationalProperty = Property.Builder()
+                    .SetName(principalMember.Name)
+                    .SetTypeReference(principalMemberPropertyTypeRefernce)
+                    .HasSet(true)
+                    .SetVisibility(CSharpVisibilityString.Public)
+                    .IsVirtual(true)
+                    .Build();
 
-                dependentTypeNavigationalProperty.IsVirtual = true;
-
-                aggregation.DependentType.Properties.Add(dependentTypeNavigationalProperty);
-
-                if (aggregation.DependentTypeMultiplicity == Multiplicity.ExactlyOne
-                    || aggregation.DependentTypeMultiplicity == Multiplicity.ZeroOrOne)
-                {
-                    var principalTypeNavigationalProperty = this.propertyFactory.Create(aggregation.PrincipalType, aggregation.PrincipalTypeAssociationXAttribute);
-
-                    principalTypeNavigationalProperty.IsVirtual = true;
-
-                    aggregation.PrincipalType.Properties.Add(principalTypeNavigationalProperty);
-                }
+                principalMember.Type.Properties.Add(principalTypeNavigationalProperty);
             }
         }
     }

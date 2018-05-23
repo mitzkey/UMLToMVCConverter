@@ -23,9 +23,9 @@
             switch (umlVisibility.ToLower())
             {
                 case "public":
-                    return "public";
+                    return CSharpVisibilityString.Public;
                 case "private":
-                    return "private";
+                    return CSharpVisibilityString.Private;
                 default:
                     throw new NotImplementedException("UML visibility: " + umlVisibility + " mapping not implemented.");
             }

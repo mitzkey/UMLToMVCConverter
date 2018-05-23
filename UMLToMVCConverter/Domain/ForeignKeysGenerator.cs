@@ -68,7 +68,7 @@
 
                 dependentType.ForeignKeys.Add(foreignKeyName, foreignKeyProperty);
 
-                var navigationalProperty = dependentType.Properties.Single(x => x.Name == principalMember.Name);
+                var navigationalProperty = dependentType.Properties.Single(x => x.Name == dependentMember.Name);
                 var attribute = new Attribute("ForeignKey", $"{ string.Join(",", dependentType.ForeignKeys.Keys) }");
                 navigationalProperty.Attributes.Add(attribute);
             }

@@ -1,8 +1,6 @@
 ﻿namespace UMLToMVCConverter.Domain.Models
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class TypeReferenceBuilder
     {
@@ -52,7 +50,7 @@
             return this;
         }
 
-        public TypeReferenceBuilder SetGenerics(TypeReference generic)
+        public TypeReferenceBuilder SetGeneric(TypeReference generic)
         {
             this.generic = generic;
             return this;

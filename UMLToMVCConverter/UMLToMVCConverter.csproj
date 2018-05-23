@@ -100,8 +100,10 @@
     <Compile Include="Domain\AggregationKind.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Domain\AggregationsFactory.cs" />
+    <Compile Include="Domain\Models\PropertyBuilder.cs" />
     <Compile Include="Domain\Models\TypeReferenceBuilder.cs" />
     <Compile Include="Domain\RelationshipMultiplicity.cs" />
+    <Compile Include="UMLHelpers\CSharpVisibilityString.cs" />
     <Compile Include="XmiTools\XAttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
       <AutoGen>True</AutoGen>

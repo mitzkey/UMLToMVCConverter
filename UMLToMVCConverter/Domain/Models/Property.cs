@@ -16,11 +16,12 @@
             bool hasSet,
             string visibility,
             bool isStatic,
-            int? defaultValueKey = null,
-            string defaultValueString = null,
-            bool isDerived = false,
-            bool isID = false,
-            List<Attribute> attributes = null)
+            int? defaultValueKey,
+            string defaultValueString,
+            bool isDerived,
+            bool isID,
+            List<Attribute> attributes,
+            bool isVirtual)
         {
             this.DefaultValueString = defaultValueString ?? string.Empty;
             this.Name = name;
@@ -31,6 +32,7 @@
             this.DefaultValueKey = defaultValueKey;
             this.IsDerived = isDerived;
             this.IsID = isID;
+            this.IsVirtual = isVirtual;
             this.Attributes = attributes ?? new List<Attribute>();
             if (typeReference.IsReferencingXmiDeclaredType)
             {
@@ -95,5 +97,10 @@
         public string Visibility { get; }
 
         public bool IsStatic { get; }
+
+        public static PropertyBuilder Builder()
+        {
+            return new PropertyBuilder();
+        }
     }
 }

@@ -35,23 +35,32 @@
         {
             Insist.IsNotNull(xProperty, nameof(xProperty));
 
-            var propertyName = this.xAttributeNameResolver.GetName(xProperty);
+            var propertyBuilder = Property.Builder();
+            propertyBuilder.SetTypesRepository(this.typesRepository);
 
-            var cSharpTypeReference = this.umlTypesHelper.GetXElementCsharpType(xProperty);
-            
+            var propertyName = this.xAttributeNameResolver.GetName(xProperty);
+            propertyBuilder.SetName(propertyName);
+          
             var umlVisibility = xProperty.ObligatoryAttributeValue("visibility");
             var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharpString(umlVisibility);
             var visibility = cSharpVisibility;
+            propertyBuilder.SetVisibility(visibility);
 
             var isStatic = Convert.ToBoolean(xProperty.OptionalAttributeValue("isStatic"));
+            propertyBuilder.IsStatic(isStatic);
 
-            bool hasSet = true;
+            var hasSet = true;
             var xIsReadonly = Convert.ToBoolean(xProperty.OptionalAttributeValue("isReadOnly"));
-            if (xIsReadonly)
+            var isDerived = Convert.ToBoolean(xProperty.OptionalAttributeValue("isDerived"));
+            if (xIsReadonly || isDerived)
             {
                 hasSet = false;
             }
+            propertyBuilder.HasSet(hasSet);
+            propertyBuilder.IsDerived(isDerived);
 
+            var cSharpTypeReference = this.umlTypesHelper.GetXElementCsharpType(xProperty);
+            propertyBuilder.SetTypeReference(cSharpTypeReference);
             int? defaultValueKey = null;
             string defaultValueString = null;
             var xDefaultValue = xProperty.Element("defaultValue");
@@ -79,21 +88,17 @@
                     defaultValueString = this.GetDefaultValueString(xDefaultValue);
                 }
             }
-
-            var isDerived = Convert.ToBoolean(xProperty.OptionalAttributeValue("isDerived"));
-            if (isDerived)
-            {
-                hasSet = false;
-            }
+            propertyBuilder.SetDefaultValueKey(defaultValueKey);
+            propertyBuilder.SetDefaultValueString(defaultValueString);
 
             var isID = Convert.ToBoolean(xProperty.OptionalAttributeValue("isID"));
+            propertyBuilder.IsID(isID);
 
             var multiplicity = this.xmiWrapper.GetMultiplicity(xProperty);
-            var attributes = new List<Attribute>();
             if (multiplicity == Multiplicity.ExactlyOne && !cSharpTypeReference.IsPrimitive)
             {
                 var attribute = new Attribute("Required", null);
-                attributes.Add(attribute);
+                propertyBuilder.WithAttribute(attribute);
             }
 
             var associationId = xProperty.OptionalAttributeValue("association");
@@ -110,21 +115,10 @@
 
                 var oppositePropertyName = oppositeAssociationEnd.Name;
                 var attribute = new Attribute("InverseProperty", oppositePropertyName);
-                attributes.Add(attribute);
+                propertyBuilder.WithAttribute(attribute);
             }
 
-            var property = new Property(
-                propertyName,
-                cSharpTypeReference,
-                this.typesRepository,
-                hasSet,
-                visibility,
-                isStatic,
-                defaultValueKey,
-                defaultValueString,
-                isDerived,
-                isID,
-                attributes);
+            var property = propertyBuilder.Build();
 
             if (isID)
             {
@@ -136,6 +130,8 @@
 
         public Property CreateBasicProperty(string name, Type type, Type genericType = null)
         {
+            var propertyBuilder = Property.Builder();
+
             var isGeneric = genericType != null;
 
             var cSharpTypeReferenceBuilder = TypeReference.Builder();
@@ -151,16 +147,18 @@
                     .Build();
                 cSharpTypeReferenceBuilder
                     .IsGeneric(true)
-                    .SetGenerics(genericTypeReference);
+                    .SetGeneric(genericTypeReference);
             }
 
-            var property = new Property(
-                name,
-                cSharpTypeReferenceBuilder.Build(),
-                this.typesRepository,
-                true,
-                "public",
-                false);
+            var typeReference = cSharpTypeReferenceBuilder.Build();
+
+            var property = propertyBuilder
+                .SetName(name)
+                .SetTypeReference(typeReference)
+                .SetTypesRepository(this.typesRepository)
+                .HasSet(true)
+                .SetVisibility(CSharpVisibilityString.Public)
+                .Build();
 
             return property;
         }

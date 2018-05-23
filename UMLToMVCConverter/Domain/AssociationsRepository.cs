@@ -23,7 +23,7 @@
 
        public void Add(Association association)
        {
-           if (this.Associations.Any(x => x.XmiID == association.XmiID))
+           if (!string.IsNullOrWhiteSpace(association.XmiID) && this.Associations.Any(x => x.XmiID == association.XmiID))
            {
                this.logger.LogInfo($"Skipped adding association with ID:{association.XmiID}");
                return;

@@ -43,6 +43,10 @@ namespace WebApplication1.Models
 
 		public DbSet<Professor> Professor { get; set; }
 
+		public DbSet<Writer> Writer { get; set; }
+
+		public DbSet<BookWriter> BookWriter { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
 			modelBuilder.Entity<Car>()

@@ -1,28 +1,51 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class AssociationsForeignKeyGenerator : IAssociationsForeignKeyGenerator
     {
-        private readonly IAssociationsRepository associationsRepository;
         private readonly IForeignKeysGenerator foreignKeyGenerator;
+        private readonly INavigationalPropertiesGenerator navigationalPropertiesGenerator;
 
-        public AssociationsForeignKeyGenerator(IForeignKeysGenerator foreignKeyGenerator, IAssociationsRepository associationsRepository)
+        public AssociationsForeignKeyGenerator(IForeignKeysGenerator foreignKeyGenerator, INavigationalPropertiesGenerator navigationalPropertiesGenerator)
         {
             this.foreignKeyGenerator = foreignKeyGenerator;
-            this.associationsRepository = associationsRepository;
+            this.navigationalPropertiesGenerator = navigationalPropertiesGenerator;
         }
 
-        public void Generate()
+        public void GenerateForOneToOneAssociations(IEnumerable<Association> oneToOneAssociations)
         {
-            var oneToOneAssociations = this.associationsRepository.GetAllAssociations()
-                .Where(x => x.Multiplicity == RelationshipMultiplicity.OneToOne);
-
             foreach (var association in oneToOneAssociations)
             {
-                var dependentMember = this.GetDistinguishedMembers(association, out var principalMember);
+                if (association.Multiplicity != RelationshipMultiplicity.OneToOne)
+                {
+                    throw new ArgumentException("Incorrect association multiplicity");
+                }
+                var dependentMember = GetDistinguishedMembers(association, out var principalMember);
 
                 this.foreignKeyGenerator.Generate(dependentMember, principalMember);
+            }
+        }
+
+        public void GenerateForOneToManyAssociations(IEnumerable<Association> oneToManyAssociations)
+        {
+            foreach (var association in oneToManyAssociations)
+            {
+                if (association.Multiplicity != RelationshipMultiplicity.OneToMany)
+                {
+                    throw new ArgumentException("Incorrect association multiplicity");
+                }
+
+                if (association.IsGeneratedByConverter)
+                {
+                    var dependentMember = GetDistinguishedMembers(association, out var principalMember);
+
+                    this.navigationalPropertiesGenerator.Generate(dependentMember, principalMember);
+
+                    this.foreignKeyGenerator.Generate(dependentMember, principalMember);
+                }
             }
         }
 
@@ -40,11 +63,18 @@
             }
 
             var memberWithMultiplicityOne = members.FirstOrDefault(x => x.Multiplicity == Multiplicity.ExactlyOne);
-
             if (memberWithMultiplicityOne != null)
             {
                 principalMember = memberWithMultiplicityOne;
                 return members.Single(x => !x.Equals(memberWithMultiplicityOne));
+            }
+
+            var memberWithMultiplicityZeroOrOne =
+                members.FirstOrDefault(x => x.Multiplicity == Multiplicity.ZeroOrOne);
+            if (memberWithMultiplicityZeroOrOne != null)
+            {
+                principalMember = memberWithMultiplicityZeroOrOne;
+                return members.Single(x => !x.Equals(memberWithMultiplicityZeroOrOne));
             }
             
             principalMember = members.FirstOrDefault();

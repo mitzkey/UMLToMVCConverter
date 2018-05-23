@@ -4,6 +4,7 @@
     using System.CodeDom;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Models;
@@ -17,14 +18,16 @@
         private readonly IUmlVisibilityMapper umlVisibilityMapper;
         private readonly IPropertyFactory propertyFactory;
         private readonly ITypesRepository typesRepository;
+        private readonly IAssociationsRepository associationsRepository;
 
-        public TypesGenerator(IXmiWrapper xmiWrapper, IUmlTypesHelper umlTypesHelper, IUmlVisibilityMapper umlVisibilityMapper, IPropertyFactory propertyFactory, ITypesRepository typesRepository)
+        public TypesGenerator(IXmiWrapper xmiWrapper, IUmlTypesHelper umlTypesHelper, IUmlVisibilityMapper umlVisibilityMapper, IPropertyFactory propertyFactory, ITypesRepository typesRepository, IAssociationsRepository associationsRepository)
         {
             this.xmiWrapper = xmiWrapper;
             this.umlTypesHelper = umlTypesHelper;
             this.umlVisibilityMapper = umlVisibilityMapper;
             this.propertyFactory = propertyFactory;
             this.typesRepository = typesRepository;
+            this.associationsRepository = associationsRepository;
         }
 
         public void Generate(XElement xUmlModel)
@@ -40,6 +43,45 @@
             this.BuildTypes(xTypesToBuild);
 
             this.GenerateInheritanceRelations(xTypes);
+        }
+
+        public void GenerateManyToManyAssociationTypes()
+        {
+            foreach (var association in this.associationsRepository
+                .GetAllAssociations()
+                .Where(x => x.Multiplicity == RelationshipMultiplicity.ManyToMany).ToList())
+            {
+                var associationTypeNameBuilder = new StringBuilder();
+                association.Members.ForEach(x => associationTypeNameBuilder.Append(x.Name));
+                var associationTypeName = associationTypeNameBuilder.ToString();
+                var type = new TypeModel(associationTypeName, true, CSharpVisibilityString.Public);
+                this.typesRepository.Add(type);
+
+                foreach (var member in association.Members)
+                {
+                    //asocjacja x - * między typem membera a nowym typem
+                    var oppositeMember = association.Members.Single(x => !x.Equals(member));
+                    var associationTypeMember = new AssociationEndMember(null, oppositeMember.Name, oppositeMember.Multiplicity, oppositeMember.AggregationKind, type);
+                    var reducedMultiplicity = this.ReduceMultiplicity(member.Multiplicity);
+                    var parentAssociationMemberTypesNewMember = new AssociationEndMember(null, member.Name, reducedMultiplicity, member.AggregationKind, member.Type);
+                    var childAssociationMembers = new List<AssociationEndMember> { associationTypeMember, parentAssociationMemberTypesNewMember };
+                    var childAssociation = new Association(childAssociationMembers, null);
+                    this.associationsRepository.Add(childAssociation);
+                }
+            }
+        }
+
+        private Multiplicity ReduceMultiplicity(Multiplicity multiplicity)
+        {
+            if (multiplicity != Multiplicity.OneOrMore
+                && multiplicity != Multiplicity.ZeroOrMore)
+            {
+                throw new ArgumentException("Can't reduce provided multiplicity");
+            }
+
+            return multiplicity == Multiplicity.ZeroOrMore
+                ? Multiplicity.ZeroOrOne
+                : Multiplicity.ExactlyOne;
         }
 
         private void DeclareTypes(IEnumerable<XElement> xTypes)
@@ -96,7 +138,7 @@
             type.IsStruct = this.umlTypesHelper.IsStruct(xType);
             type.IsEnum = this.umlTypesHelper.IsEnum(xType);
 
-            type.Visibility = "public";
+            type.Visibility = CSharpVisibilityString.Public;
 
             if (this.umlTypesHelper.IsAbstract(xType))
             {

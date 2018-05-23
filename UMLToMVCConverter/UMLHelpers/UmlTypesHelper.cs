@@ -156,7 +156,7 @@
                 return typeReferenceBuilder
                     .SetType(typeof(Nullable))
                     .IsGeneric(true)
-                    .SetGenerics(genericTypeReference)
+                    .SetGeneric(genericTypeReference)
                     .Build();
             }
 
@@ -218,17 +218,19 @@
             name = name.FirstCharToUpper();
 
             var isClass = true;
-            var visibility = "public";
+            var visibility = CSharpVisibilityString.Public;
             var codeTypeDeclaration = new TypeModel(name, isClass, visibility);
 
             var valueType = this.GetPrimitiveNonNullableType(xElement);
-            var valueProperty = new Property(
-                "Value",
-                valueType,
-                this.typesRepository,
-                true,
-                "public",
-                false);
+
+            var valueProperty = Property.Builder()
+                .SetName("Value")
+                .SetTypeReference(valueType)
+                .SetTypesRepository(this.typesRepository)
+                .HasSet(true)
+                .SetVisibility(CSharpVisibilityString.Public)
+                .Build();
+
 
             codeTypeDeclaration.Properties.Add(valueProperty);
 
@@ -261,7 +263,7 @@
                 .SetType(typeof(ICollection<>))
                 .IsBaseType(isPrimitive)
                 .IsGeneric(true)
-                .SetGenerics(typeReference)
+                .SetGeneric(typeReference)
                 .IsCollection(true)
                 .Build();
         }

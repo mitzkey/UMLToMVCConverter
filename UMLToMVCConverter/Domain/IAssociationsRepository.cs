@@ -5,6 +5,7 @@
     public interface IAssociationsRepository
     {
         IEnumerable<Association> GetAllAssociations();
+
         void Add(Association association);
     }
 }

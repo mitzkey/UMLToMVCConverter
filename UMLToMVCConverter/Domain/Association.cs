@@ -9,16 +9,17 @@
 
         public List<AssociationEndMember> Members { get; }
 
-        public RelationshipMultiplicity Multiplicity { get; set; }    
+        public RelationshipMultiplicity Multiplicity => this.CalculateRelationshipMultiplicity(this.Members);
+
+        public bool IsGeneratedByConverter => this.XmiID == null;
 
         public Association(IEnumerable<AssociationEndMember> associationEndMembers, string xmiID)
         {
             this.XmiID = xmiID;
             this.Members = associationEndMembers.ToList();
-            this.Multiplicity = CalculateRelationshipMultiplicityFromMembers(this.Members);
         }
 
-        private RelationshipMultiplicity CalculateRelationshipMultiplicityFromMembers(List<AssociationEndMember> members)
+        private RelationshipMultiplicity CalculateRelationshipMultiplicity(List<AssociationEndMember> members)
         {
             var multiplicities = members.Select(x => x.Multiplicity).ToList();
 

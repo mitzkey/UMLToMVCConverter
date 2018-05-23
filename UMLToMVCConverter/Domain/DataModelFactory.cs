@@ -1,6 +1,7 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Domain.Models;
 
@@ -14,6 +15,7 @@
         private readonly IEnumerationModelsFactory enumerationModelsFactory;
         private readonly ITypesRepository typesRepository;
         private readonly IAssociationsForeignKeyGenerator associationsForeignKeyGenerator;
+        private readonly IAssociationsRepository associationsRepository;
 
         public DataModelFactory(
             ITypesGenerator typesGenerator,
@@ -23,7 +25,8 @@
             INavigationalPropertiesGenerator nagivationalPropertiesGenerator,
             IEnumerationModelsFactory enumerationModelsFactory,
             ITypesRepository typesRepository,
-            IAssociationsForeignKeyGenerator associationsForeignKeyGenerator)
+            IAssociationsForeignKeyGenerator associationsForeignKeyGenerator,
+            IAssociationsRepository associationsRepository)
         {
             this.typesGenerator = typesGenerator;
             this.aggregationsFactory = aggregationsFactory;
@@ -33,11 +36,14 @@
             this.enumerationModelsFactory = enumerationModelsFactory;
             this.typesRepository = typesRepository;
             this.associationsForeignKeyGenerator = associationsForeignKeyGenerator;
+            this.associationsRepository = associationsRepository;
         }
 
         public DataModel Create(XElement xUmlModel)
         {
             this.typesGenerator.Generate(xUmlModel);
+
+            this.typesGenerator.GenerateManyToManyAssociationTypes();
 
             // var aggregations = this.aggregationsFactory.Create(xUmlModel).ToList();
 
@@ -49,7 +55,13 @@
 
             var enumerationModels = this.enumerationModelsFactory.Create();
 
-            this.associationsForeignKeyGenerator.Generate();
+            var oneToOneAssociations = this.associationsRepository.GetAllAssociations()
+                .Where(x => x.Multiplicity == RelationshipMultiplicity.OneToOne);
+            this.associationsForeignKeyGenerator.GenerateForOneToOneAssociations(oneToOneAssociations);
+
+            var manyToManyAssociations = this.associationsRepository.GetAllAssociations()
+                .Where(x => x.Multiplicity == RelationshipMultiplicity.OneToMany);
+            this.associationsForeignKeyGenerator.GenerateForOneToManyAssociations(manyToManyAssociations);
 
             return new DataModel(
                 this.typesRepository.GetAllTypes(),

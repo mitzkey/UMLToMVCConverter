@@ -5,5 +5,7 @@
     public interface ITypesGenerator
     {
         void Generate(XElement xUmlModel);
+
+        void GenerateManyToManyAssociationTypes();
     }
 }
