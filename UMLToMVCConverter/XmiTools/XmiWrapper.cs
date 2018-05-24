@@ -126,6 +126,8 @@
                     return XElementType.DataType;
                 case "uml:LiteralInteger":
                     return XElementType.LiteralInteger;
+                case "uml:Association":
+                    return XElementType.Association;
                 default:
                     throw new NotImplementedException($"Uknown xElement type: {typeString}");
             }
@@ -154,6 +156,19 @@
                 default:
                     throw new NotImplementedException($"No aggregation kind implemented for value: {aggregationKindString}");
             }
+        }
+
+        public XElement GetXOwner(XElement xElement)
+        {
+            var xOwner = xElement.Parent;
+
+            if (this.GetXElementType(xOwner) == XElementType.Association
+                && xElement.Name == "ownedEnd")
+            {
+                xOwner = this.GetAssociationsEndOwner(xElement);
+            }
+
+            return xOwner;
         }
 
         public IEnumerable<XElement> GetXAttributes(XElement type)
@@ -239,6 +254,20 @@
             }
 
             return Multiplicity.ExactlyOne;
+        }
+
+        private XElement GetAssociationsEndOwner(XElement xAssociationEnd)
+        {
+            var associationEndTypeXmiId = xAssociationEnd.ObligatoryAttributeValue("type");
+            var associationXmiId = xAssociationEnd.ObligatoryAttributeValue("association");
+
+            var associationEndType = this.GetXElementById(associationEndTypeXmiId);
+            var property = this.GetXAttributes(associationEndType)
+                .Single(x => associationXmiId.Equals(x.OptionalAttributeValue("association")));
+
+            var typeXmiId = property.ObligatoryAttributeValue("type");
+
+            return this.GetXElementById(typeXmiId);
         }
     }
 }

@@ -40,7 +40,9 @@
                 var aggregationKindString = associationEndsXElement.OptionalAttributeValue("aggregation");
                 var aggregationKind = this.xmiWrapper.GetAggregationKind(aggregationKindString);
 
-                var owningType = this.typesRepository.GetOwner(associationEndsXElement);
+                var xOwningType = this.xmiWrapper.GetXOwner(associationEndsXElement);
+                var xOwningTypeXmiId = this.xmiWrapper.GetElementsId(xOwningType);
+                var owningType = this.typesRepository.GetTypeByXmiId(xOwningTypeXmiId);
                 
                 yield return new AssociationEndMember(xmiId, name, multiplicity, aggregationKind, owningType);
             }

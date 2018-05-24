@@ -28,5 +28,6 @@
         XElementType GetXElementType(XElement xElement);
         XElement GetOppositeAssociationEnd(string associationId, string xElementId);
         AggregationKind GetAggregationKind(string aggregationKindString);
+        XElement GetXOwner(XElement xElement);
     }
 }

@@ -7,6 +7,7 @@
         Enumeration,
         Class,
         DataType,
-        LiteralInteger
+        LiteralInteger,
+        Association
     }
 }

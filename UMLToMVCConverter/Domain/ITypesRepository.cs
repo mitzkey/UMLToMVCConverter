@@ -13,6 +13,5 @@
         IEnumerable<TypeModel> GetAllTypes();
         void DeclareType(TypeModel typeDeclaration);
         TypeModel GetTypeDeclaration(string xTypeName);
-        TypeModel GetOwner(XElement xElement);
     }
 }
