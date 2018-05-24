@@ -11,9 +11,7 @@ namespace WebApplication1.Models
 
 
 		public int ID {get; set;}
-		public Nullable<System.Int32> BookID { get; set; }
 
-		[ForeignKey("BookID")]
 		public virtual ICollection<BookWriter> Book { get; set; }
 	}
 }

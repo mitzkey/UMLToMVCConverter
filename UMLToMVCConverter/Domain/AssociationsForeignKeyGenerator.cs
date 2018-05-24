@@ -43,8 +43,12 @@
                     this.navigationalPropertiesGenerator.Generate(association.Members.First(), association.Members.Last());
                     this.navigationalPropertiesGenerator.Generate(association.Members.Last(), association.Members.First());
 
-                    this.foreignKeyGenerator.Generate(association.Members.First(), association.Members.Last());
-                    this.foreignKeyGenerator.Generate(association.Members.Last(), association.Members.First());
+                    var sourceMember = association.Members.Single(
+                        x => x.Multiplicity == Multiplicity.ExactlyOne || x.Multiplicity == Multiplicity.ZeroOrOne);
+                    var destinationMember = association.Members.Single(
+                        x => x.Multiplicity == Multiplicity.OneOrMore || x.Multiplicity == Multiplicity.ZeroOrMore);
+                    
+                    this.foreignKeyGenerator.Generate(sourceMember, destinationMember);
                 }
             }
         }
