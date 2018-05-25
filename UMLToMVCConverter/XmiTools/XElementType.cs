@@ -8,6 +8,7 @@
         Class,
         DataType,
         LiteralInteger,
-        Association
+        Association,
+        AssociationClass
     }
 }

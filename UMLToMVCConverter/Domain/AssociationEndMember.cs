@@ -11,13 +11,17 @@
         public string Name { get; }
 
         public string XmiId { get; }
+
         public TypeModel Type { get; }
 
-        public AssociationEndMember(string xmiId, string name, Multiplicity multiplicity, AggregationKind aggregationKind, TypeModel type)
+        public bool Navigable { get; }
+
+        public AssociationEndMember(string xmiId, string name, Multiplicity multiplicity, AggregationKind aggregationKind, TypeModel type, bool navigable)
         {
             this.Multiplicity = multiplicity;
             this.AggregationKind = aggregationKind;
             this.Type = type;
+            this.Navigable = navigable;
             this.Name = name;
             this.XmiId = xmiId;
         }

@@ -33,7 +33,8 @@
                 .Where(i => i.Attributes().
                                 Contains(new XAttribute(this.xmiNamespace + "type", "uml:Class"), this.attributeEqualityComparer)
                             || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:DataType"), this.attributeEqualityComparer)
-                            || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:Enumeration"), this.attributeEqualityComparer));
+                            || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:Enumeration"), this.attributeEqualityComparer)
+                            || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:AssociationClass"), this.attributeEqualityComparer));
         }
 
         public XElement GetXTypeGeneralization(XElement type)
@@ -128,6 +129,8 @@
                     return XElementType.LiteralInteger;
                 case "uml:Association":
                     return XElementType.Association;
+                case "uml:AssociationClass":
+                    return XElementType.AssociationClass;
                 default:
                     throw new NotImplementedException($"Uknown xElement type: {typeString}");
             }
@@ -162,10 +165,11 @@
         {
             var xOwner = xElement.Parent;
 
-            if (this.GetXElementType(xOwner) == XElementType.Association
-                && xElement.Name == "ownedEnd")
+            if (xElement.Name == "ownedEnd"
+                && (this.GetXElementType(xOwner) == XElementType.Association
+                    || this.GetXElementType(xOwner) == XElementType.AssociationClass))
             {
-                xOwner = this.GetAssociationsEndOwner(xElement);
+                xOwner = this.GetAssociationsEndOwningType(xElement);
             }
 
             return xOwner;
@@ -256,7 +260,7 @@
             return Multiplicity.ExactlyOne;
         }
 
-        private XElement GetAssociationsEndOwner(XElement xAssociationEnd)
+        public XElement GetAssociationsEndOwningType(XElement xAssociationEnd)
         {
             var associationEndTypeXmiId = xAssociationEnd.ObligatoryAttributeValue("type");
             var associationXmiId = xAssociationEnd.ObligatoryAttributeValue("association");

@@ -1,10 +1,10 @@
 ﻿namespace UMLToMVCConverter.Domain
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
+    using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.XmiTools;
 
     public class AssociationFactory : IAssociationFactory
@@ -32,20 +32,37 @@
 
         private IEnumerable<AssociationEndMember> CreateAssociationMembers(List<XElement> associationEndsXElements)
         {
-            foreach (var associationEndsXElement in associationEndsXElements)
+            var associationMembers = new List<AssociationEndMember>();
+            foreach (var associationEndXElement in associationEndsXElements)
             {
-                var xmiId = this.xmiWrapper.GetElementsId(associationEndsXElement);
-                var multiplicity = this.xmiWrapper.GetMultiplicity(associationEndsXElement);
-                var name = this.xAttributeNameResolver.GetName(associationEndsXElement);
-                var aggregationKindString = associationEndsXElement.OptionalAttributeValue("aggregation");
+                var xmiId = this.xmiWrapper.GetElementsId(associationEndXElement);
+                var multiplicity = this.xmiWrapper.GetMultiplicity(associationEndXElement);
+                var name = this.xAttributeNameResolver.GetName(associationEndXElement);
+                var aggregationKindString = associationEndXElement.OptionalAttributeValue("aggregation");
                 var aggregationKind = this.xmiWrapper.GetAggregationKind(aggregationKindString);
 
-                var xOwningType = this.xmiWrapper.GetXOwner(associationEndsXElement);
-                var xOwningTypeXmiId = this.xmiWrapper.GetElementsId(xOwningType);
-                var owningType = this.typesRepository.GetTypeByXmiId(xOwningTypeXmiId);
+                var navigable = true;
+                TypeModel owningType;
+                var xOwner = this.xmiWrapper.GetXOwner(associationEndXElement);
+                if (associationEndXElement.Name == "ownedEnd"
+                    && (this.xmiWrapper.GetXElementType(xOwner) == XElementType.Association
+                        || this.xmiWrapper.GetXElementType(xOwner) == XElementType.AssociationClass))
+                {
+                    navigable = false;
+                    var xOwningType = this.xmiWrapper.GetAssociationsEndOwningType(associationEndXElement);
+                    var xOwningTypeXmiId = this.xmiWrapper.GetElementsId(xOwningType);
+                    owningType = this.typesRepository.GetTypeByXmiId(xOwningTypeXmiId);
+                }
+                else
+                {
+                    var xOwningTypeXmiId = this.xmiWrapper.GetElementsId(xOwner);
+                    owningType = this.typesRepository.GetTypeByXmiId(xOwningTypeXmiId);
+                }
                 
-                yield return new AssociationEndMember(xmiId, name, multiplicity, aggregationKind, owningType);
+                associationMembers.Add(new AssociationEndMember(xmiId, name, multiplicity, aggregationKind, owningType, navigable));
             }
+
+            return associationMembers;
         }
     }
 }

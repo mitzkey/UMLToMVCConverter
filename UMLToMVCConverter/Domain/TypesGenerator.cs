@@ -59,11 +59,10 @@
 
                 foreach (var member in association.Members)
                 {
-                    //asocjacja x - * między typem membera a nowym typem
                     var oppositeMember = association.Members.Single(x => !x.Equals(member));
                     var reducedMultiplicity = this.ReduceMultiplicity(member.Multiplicity);
-                    var associationTypeMember = new AssociationEndMember(null, oppositeMember.Name, reducedMultiplicity, oppositeMember.AggregationKind, type);
-                    var parentAssociationMemberTypesNewMember = new AssociationEndMember(null, member.Name, oppositeMember.Multiplicity, member.AggregationKind, member.Type);
+                    var associationTypeMember = new AssociationEndMember(null, oppositeMember.Name, reducedMultiplicity, oppositeMember.AggregationKind, type, oppositeMember.Navigable);
+                    var parentAssociationMemberTypesNewMember = new AssociationEndMember(null, member.Name, oppositeMember.Multiplicity, member.AggregationKind, member.Type, member.Navigable);
                     var childAssociationMembers = new List<AssociationEndMember> { associationTypeMember, parentAssociationMemberTypesNewMember };
                     var childAssociation = new Association(childAssociationMembers, null);
                     this.associationsRepository.Add(childAssociation);
