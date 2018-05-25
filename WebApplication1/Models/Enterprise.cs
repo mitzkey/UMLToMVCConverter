@@ -11,13 +11,14 @@ namespace WebApplication1.Models
 
 
 		public int ID {get; set;}
-
-		[InverseProperty("Enterprise")]
-		public virtual ICollection<Worker> Worker { get; set; }
+		public Nullable<System.Int32> WorkerID { get; set; }
 
 		public System.String Name { get; set; }
 
 		[Required]
 		public CompanyInfo CompanyInfo { get; set; }
+
+		[ForeignKey("WorkerID")]
+		public virtual ICollection<Worker> Worker { get; set; }
 	}
 }

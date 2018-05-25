@@ -79,6 +79,7 @@
             builder.RegisterType<AssociationFactory>().As<IAssociationFactory>().SingleInstance();
             builder.RegisterType<AssociationsForeignKeyGenerator>().As<IAssociationsForeignKeyGenerator>().SingleInstance();
             builder.RegisterType<AssociationsRepository>().As<IAssociationsRepository>().SingleInstance();
+            builder.RegisterType<AssociationsGenerator>().As<IAssociationsGenerator>().SingleInstance();
 
             builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
             builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();

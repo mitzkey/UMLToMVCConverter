@@ -42,29 +42,6 @@
 
             var propertyName = this.xAttributeNameResolver.GetName(xProperty);
             propertyBuilder.SetName(propertyName);
-
-            var associationId = xProperty.OptionalAttributeValue("association");
-            if (!string.IsNullOrWhiteSpace(associationId))
-            {
-                var xAssociation = this.xmiWrapper.GetXElementById(associationId);
-                var association = this.associationFactory.Create(xAssociation);
-
-                this.associationsRepository.Add(association);
-
-                if (association.Multiplicity == RelationshipMultiplicity.ManyToMany)
-                {
-                    this.logger.LogInfo($"Skipped adding property: { propertyName } to type: { type.Name } because it's a part of many to many association.");
-                    return null;
-                }
-
-                var currentXPropertyId = this.xmiWrapper.GetElementsId(xProperty);
-
-                var oppositeAssociationEnd = association.Members.Single(x => !currentXPropertyId.Equals(x.XmiId));
-
-                var oppositePropertyName = oppositeAssociationEnd.Name;
-                var attribute = new Attribute("InverseProperty", oppositePropertyName);
-                propertyBuilder.WithAttribute(attribute);
-            }
           
             var umlVisibility = xProperty.ObligatoryAttributeValue("visibility");
             var cSharpVisibility = this.umlVisibilityMapper.UmlToCsharpString(umlVisibility);

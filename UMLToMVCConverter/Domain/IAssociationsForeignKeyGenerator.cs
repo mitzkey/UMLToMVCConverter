@@ -4,7 +4,6 @@
 
     public interface IAssociationsForeignKeyGenerator
     {
-        void GenerateForOneToOneAssociations(IEnumerable<Association> oneToOneAssociations);
-        void GenerateForOneToManyAssociations(IEnumerable<Association> oneToManyAssociations);
+        void Generate(IEnumerable<Association> associations);
     }
 }

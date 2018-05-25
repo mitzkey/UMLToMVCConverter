@@ -20,7 +20,12 @@
         private readonly ITypesRepository typesRepository;
         private readonly IAssociationsRepository associationsRepository;
 
-        public TypesGenerator(IXmiWrapper xmiWrapper, IUmlTypesHelper umlTypesHelper, IUmlVisibilityMapper umlVisibilityMapper, IPropertyFactory propertyFactory, ITypesRepository typesRepository, IAssociationsRepository associationsRepository)
+        public TypesGenerator(IXmiWrapper xmiWrapper,
+            IUmlTypesHelper umlTypesHelper,
+            IUmlVisibilityMapper umlVisibilityMapper,
+            IPropertyFactory propertyFactory,
+            ITypesRepository typesRepository,
+            IAssociationsRepository associationsRepository)
         {
             this.xmiWrapper = xmiWrapper;
             this.umlTypesHelper = umlTypesHelper;
@@ -157,7 +162,7 @@
         private void GenerateProperties(XElement xType, TypeModel type)
         {
             var xAttributes = this.xmiWrapper
-                .GetXAttributes(xType);
+                .GetXProperties(xType);
             foreach (var xAttribute in xAttributes)
             {
                 var property = this.propertyFactory.Create(type, xAttribute);

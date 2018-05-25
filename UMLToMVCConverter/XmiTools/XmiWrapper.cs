@@ -273,5 +273,11 @@
 
             return this.GetXElementById(typeXmiId);
         }
+
+        public IEnumerable<XElement> GetXProperties(XElement xType)
+        {
+            return this.GetXAttributes(xType)
+                .Where(x => string.IsNullOrWhiteSpace(x.OptionalAttributeValue("association")));
+        }
     }
 }

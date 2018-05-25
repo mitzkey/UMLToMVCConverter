@@ -17,9 +17,7 @@ namespace WebApplication1.Models
 
 		public Nullable<System.Double> Perimeter { get; set; }
 
-		[InverseProperty("SteeringWheel")]
-		[Required]
 		[ForeignKey("CarBrand,CarModel,CarVersion")]
-		public Car Car { get; set; }
+		public virtual Car Car { get; set; }
 	}
 }

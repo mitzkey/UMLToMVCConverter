@@ -11,10 +11,17 @@ namespace WebApplication1.Models
 
 
 		public int ID {get; set;}
+		public Nullable<System.Int32> AuthorID { get; set; }
+		public Nullable<System.Int32> FansID { get; set; }
+		public Nullable<System.Int32> WriterID { get; set; }
 
-		[InverseProperty("TextBook")]
-		public Professor Author { get; set; }
+		[ForeignKey("AuthorID")]
+		public virtual Professor Author { get; set; }
 
+		[ForeignKey("FansID")]
+		public virtual ICollection<Professor> Fans { get; set; }
+
+		[ForeignKey("WriterID")]
 		public virtual ICollection<BookWriter> Writer { get; set; }
 	}
 }

@@ -30,5 +30,6 @@
         AggregationKind GetAggregationKind(string aggregationKindString);
         XElement GetXOwner(XElement xElement);
         XElement GetAssociationsEndOwningType(XElement xAssociationEnd);
+        IEnumerable<XElement> GetXProperties(XElement xType);
     }
 }
