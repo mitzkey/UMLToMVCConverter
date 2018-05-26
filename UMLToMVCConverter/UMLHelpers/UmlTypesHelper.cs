@@ -53,7 +53,7 @@
         {
             var sType = this.xmiWrapper.ObligatoryAttributeValueWithNamespace(type, "type");
 
-            return "uml:Class".Equals(sType);
+            return "uml:Class".Equals(sType) || "uml:AssociationClass".Equals(sType);
         }
 
         public bool IsStruct(XElement type)
