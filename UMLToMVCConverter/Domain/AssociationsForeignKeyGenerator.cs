@@ -49,6 +49,17 @@
                         this.foreignKeyGenerator.Generate(dependentMember, principalMember);
                     }
                 }
+
+                if (!dependentMember.Navigable && !principalMember.Navigable)
+                {
+                    var lowerMultiplicityMember = principalMember.Multiplicity == Multiplicity.ExactlyOne ||
+                                                  principalMember.Multiplicity == Multiplicity.ZeroOrOne
+                                                    ? principalMember
+                                                    : dependentMember;
+                    var oppositeMember = this.GetOppositeMember(lowerMultiplicityMember, association);
+                    this.navigationalPropertiesGenerator.Generate(lowerMultiplicityMember, oppositeMember);
+                    this.foreignKeyGenerator.Generate(lowerMultiplicityMember, oppositeMember);
+                }
             }
         }
 
@@ -62,13 +73,13 @@
             if (memberWithAggregationTypeDeclaration != null)
             {
                 dependentMember = memberWithAggregationTypeDeclaration;
-                return members.Single(x => !x.Equals(memberWithAggregationTypeDeclaration));
+                return this.GetOppositeMember(memberWithAggregationTypeDeclaration, association);
             }
 
             var memberWithMultiplicityOne = members.FirstOrDefault(x => x.Multiplicity == Multiplicity.ExactlyOne);
             if (memberWithMultiplicityOne != null)
             {
-                dependentMember = members.Single(x => !x.Equals(memberWithMultiplicityOne));
+                dependentMember = this.GetOppositeMember(memberWithMultiplicityOne, association);
                 return memberWithMultiplicityOne;
             }
 
@@ -76,13 +87,18 @@
                 members.FirstOrDefault(x => x.Multiplicity == Multiplicity.ZeroOrOne);
             if (memberWithMultiplicityZeroOrOne != null)
             {
-                dependentMember = members.Single(x => !x.Equals(memberWithMultiplicityZeroOrOne));
+                dependentMember = this.GetOppositeMember(memberWithMultiplicityZeroOrOne, association);
                 return memberWithMultiplicityZeroOrOne;
             }
 
             dependentMember = members.FirstOrDefault();
             var dependentMemberLocal = dependentMember;
-            return members.Single(x => !x.Equals(dependentMemberLocal));
+            return this.GetOppositeMember(dependentMemberLocal, association);
+        }
+
+        private AssociationEndMember GetOppositeMember(AssociationEndMember associationEndMember, Association association)
+        {
+            return association.Members.Single(x => !x.Equals(associationEndMember));
         }
 
     }
