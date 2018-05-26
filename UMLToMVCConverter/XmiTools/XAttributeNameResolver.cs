@@ -18,24 +18,37 @@
         {
             if (string.IsNullOrWhiteSpace(attribute.OptionalAttributeValue("name")))
             {
-                var associationId = attribute.OptionalAttributeValue("association");
-                if (!string.IsNullOrWhiteSpace(associationId))
-                {
-                    return this.GetNameForAggregation(attribute);
-                }
-
                 throw new NotImplementedException("Can't obtain attribute's name");
             }
 
-            return attribute.ObligatoryAttributeValue("name").FirstCharToUpper();
+            return attribute.ObligatoryAttributeValue("name").ToCamelCase();
         }
 
-        private string GetNameForAggregation(XElement attribute)
+        public string GetAssociationsEndName(XElement associationEndXElement)
         {
-            var ownedTypeId = attribute.ObligatoryAttributeValue("type");
-            var type = this.xmiWrapper.GetXElementById(ownedTypeId);
+            var name = associationEndXElement.OptionalAttributeValue("name");
 
-            return type.ObligatoryAttributeValue("name");
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                var ownedTypeId = associationEndXElement.ObligatoryAttributeValue("type");
+                var type = this.xmiWrapper.GetXElementById(ownedTypeId);
+                name = type.ObligatoryAttributeValue("name");
+
+                var associationXmiId = associationEndXElement.ObligatoryAttributeValue("association");
+                var xAssociation = this.xmiWrapper.GetXElementById(associationXmiId);
+                var associationName = xAssociation.OptionalAttributeValue("name");
+                if (!string.IsNullOrWhiteSpace(associationName))
+                {
+                    name = name + associationName.FirstCharToUpper();
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new NotImplementedException("Can't obtain association ends name");
+            }
+
+            return name.ToCamelCase();
         }
     }
 }

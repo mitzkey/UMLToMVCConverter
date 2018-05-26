@@ -6,7 +6,6 @@
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Factories.Interfaces;
     using UMLToMVCConverter.Domain.Models;
-    using UMLToMVCConverter.Domain.Repositories;
     using UMLToMVCConverter.Domain.Repositories.Interfaces;
     using UMLToMVCConverter.XmiTools;
     using UMLToMVCConverter.XmiTools.Interfaces;
@@ -41,7 +40,7 @@
             {
                 var xmiId = this.xmiWrapper.GetElementsId(associationEndXElement);
                 var multiplicity = this.xmiWrapper.GetMultiplicity(associationEndXElement);
-                var name = this.xAttributeNameResolver.GetName(associationEndXElement);
+                var name = this.xAttributeNameResolver.GetAssociationsEndName(associationEndXElement);
                 var aggregationKindString = associationEndXElement.OptionalAttributeValue("aggregation");
                 var aggregationKind = this.xmiWrapper.GetAggregationKind(aggregationKindString);
 

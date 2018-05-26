@@ -1,8 +1,10 @@
 ﻿namespace UMLToMVCConverter.Common
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     public static class StringExtensions
     {
@@ -51,6 +53,16 @@
         public static string[] AsArrayOfLines(this string input)
         {
             return input.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static string ToCamelCase(this string input)
+        {
+            var sb = new StringBuilder();
+            foreach (var word in Regex.Split(input, @"\s+"))
+            {
+                sb.Append(word.FirstCharToUpper());
+            }
+            return sb.ToString();
         }
     }
 }

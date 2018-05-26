@@ -5,5 +5,6 @@
     public interface IXAttributeNameResolver
     {
         string GetName(XElement attribute);
+        string GetAssociationsEndName(XElement associationEndXElement);
     }
 }
