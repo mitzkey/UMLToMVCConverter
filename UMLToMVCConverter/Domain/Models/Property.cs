@@ -2,6 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using UMLToMVCConverter.Domain.Builders;
+    using UMLToMVCConverter.Domain.Repositories;
+    using UMLToMVCConverter.Domain.Repositories.Interfaces;
 
     public class Property
     {

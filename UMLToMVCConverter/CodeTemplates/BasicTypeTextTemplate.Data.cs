@@ -1,6 +1,7 @@
 ﻿namespace UMLToMVCConverter.CodeTemplates
 {
     using Autofac;
+    using UMLToMVCConverter.CodeTemplates.Interfaces;
     using UMLToMVCConverter.Domain.Models;
 
     public partial class BasicTypeTextTemplate : IBasicTypeTextTemplate

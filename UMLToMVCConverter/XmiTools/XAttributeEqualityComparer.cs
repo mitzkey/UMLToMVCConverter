@@ -1,6 +1,7 @@
 ﻿namespace UMLToMVCConverter.XmiTools
 {
     using System.Xml.Linq;
+    using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class XAttributeEqualityComparer : IXAttributeEqualityComparer
     {

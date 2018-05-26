@@ -7,7 +7,11 @@
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain;
     using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Domain.Repositories;
+    using UMLToMVCConverter.Domain.Repositories.Interfaces;
+    using UMLToMVCConverter.UMLHelpers.Interfaces;
     using UMLToMVCConverter.XmiTools;
+    using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class UmlTypesHelper : IUmlTypesHelper
     {

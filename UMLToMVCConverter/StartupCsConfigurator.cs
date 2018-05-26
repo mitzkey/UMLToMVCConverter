@@ -4,6 +4,7 @@
     using System.Text;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Interfaces;
 
     public class StartupCsConfigurator : IStartupCsConfigurator
     {

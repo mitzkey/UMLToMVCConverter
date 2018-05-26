@@ -86,25 +86,25 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Association.cs" />
-    <Compile Include="Domain\AssociationEndMember.cs" />
-    <Compile Include="Domain\AssociationFactory.cs" />
-    <Compile Include="Domain\AssociationsForeignKeyGenerator.cs" />
-    <Compile Include="Domain\AssociationsGenerator.cs" />
-    <Compile Include="Domain\AssociationsRepository.cs" />
-    <Compile Include="Domain\IAssociationFactory.cs" />
-    <Compile Include="Domain\IAssociationsForeignKeyGenerator.cs" />
-    <Compile Include="Domain\IAssociationsGenerator.cs" />
-    <Compile Include="Domain\IAssociationsRepository.cs" />
+    <Compile Include="Domain\Models\Association.cs" />
+    <Compile Include="Domain\Models\AssociationEndMember.cs" />
+    <Compile Include="Domain\Factories\AssociationFactory.cs" />
+    <Compile Include="Domain\Generators\AssociationsForeignKeyGenerator.cs" />
+    <Compile Include="Domain\Generators\AssociationsGenerator.cs" />
+    <Compile Include="Domain\Repositories\AssociationsRepository.cs" />
+    <Compile Include="Domain\Factories\Interfaces\IAssociationFactory.cs" />
+    <Compile Include="Domain\Generators\Interfaces\IAssociationsForeignKeyGenerator.cs" />
+    <Compile Include="Domain\Generators\Interfaces\IAssociationsGenerator.cs" />
+    <Compile Include="Domain\Repositories\Interfaces\IAssociationsRepository.cs" />
     <Compile Include="Domain\Models\Attribute.cs" />
     <Compile Include="Domain\Models\Method.cs" />
     <Compile Include="Domain\Models\Aggregation.cs" />
-    <Compile Include="Domain\AggregationKind.cs" />
+    <Compile Include="Domain\Models\AggregationKind.cs" />
     <Compile Include="Application.cs" />
-    <Compile Include="Domain\AggregationsFactory.cs" />
-    <Compile Include="Domain\Models\PropertyBuilder.cs" />
-    <Compile Include="Domain\Models\TypeReferenceBuilder.cs" />
-    <Compile Include="Domain\RelationshipMultiplicity.cs" />
+    <Compile Include="Domain\Factories\AggregationsFactory.cs" />
+    <Compile Include="Domain\Builders\PropertyBuilder.cs" />
+    <Compile Include="Domain\Builders\TypeReferenceBuilder.cs" />
+    <Compile Include="Domain\Models\RelationshipMultiplicity.cs" />
     <Compile Include="UMLHelpers\CSharpVisibilityString.cs" />
     <Compile Include="XmiTools\XAttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
@@ -120,7 +120,7 @@
     <Compile Include="CodeTemplates\DatabaseSeedInitializerTextTemplate.Data.cs">
       <DependentUpon>DatabaseSeedInitializerTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\IProgramCsTextTemplate.cs" />
+    <Compile Include="CodeTemplates\Interfaces\IProgramCsTextTemplate.cs" />
     <Compile Include="CodeTemplates\ProgramCsTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -130,7 +130,7 @@
       <DependentUpon>ProgramCsTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Models\Enumeration.cs" />
-    <Compile Include="CodeTemplates\IDatabaseSeedInitializerTextTemplate.cs" />
+    <Compile Include="CodeTemplates\Interfaces\IDatabaseSeedInitializerTextTemplate.cs" />
     <Compile Include="Domain\Models\EFRelationship.cs" />
     <Compile Include="CodeTemplates\ControllerTextTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -156,8 +156,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbContextTextTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="CodeTemplates\IBasicTypeTextTemplate.cs" />
-    <Compile Include="CodeTemplates\IMigrationsManagerClassTextTemplate.cs" />
+    <Compile Include="CodeTemplates\Interfaces\IBasicTypeTextTemplate.cs" />
+    <Compile Include="CodeTemplates\Interfaces\IMigrationsManagerClassTextTemplate.cs" />
     <Compile Include="CodeTemplates\MigrationsManagerClassTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -178,26 +178,26 @@
       <DependentUpon>BasicTypeTextTemplate.tt</DependentUpon>
     </Compile>
     <Compile Include="Domain\Models\DataModel.cs" />
-    <Compile Include="Domain\DataModelFactory.cs" />
-    <Compile Include="Domain\EnumerationModelsFactory.cs" />
-    <Compile Include="Domain\ForeignKeysGenerator.cs" />
-    <Compile Include="Domain\IEnumerationModelsFactory.cs" />
-    <Compile Include="Domain\IForeignKeysGenerator.cs" />
-    <Compile Include="Domain\INavigationalPropertiesGenerator.cs" />
-    <Compile Include="Domain\IAggregationsFactory.cs" />
-    <Compile Include="Domain\IDataModelFactory.cs" />
-    <Compile Include="IMvcProjectFilesGenerator.cs" />
-    <Compile Include="Domain\IEFRelationshipModelFactory.cs" />
-    <Compile Include="Domain\IPropertyFactory.cs" />
-    <Compile Include="Domain\ITypesGenerator.cs" />
-    <Compile Include="Domain\ITypesRepository.cs" />
-    <Compile Include="Domain\TypesRepository.cs" />
+    <Compile Include="Domain\Factories\DataModelFactory.cs" />
+    <Compile Include="Domain\Factories\EnumerationModelsFactory.cs" />
+    <Compile Include="Domain\Generators\ForeignKeysGenerator.cs" />
+    <Compile Include="Domain\Factories\Interfaces\IEnumerationModelsFactory.cs" />
+    <Compile Include="Domain\Generators\Interfaces\IForeignKeysGenerator.cs" />
+    <Compile Include="Domain\Generators\Interfaces\INavigationalPropertiesGenerator.cs" />
+    <Compile Include="Domain\Factories\Interfaces\IAggregationsFactory.cs" />
+    <Compile Include="Domain\Factories\Interfaces\IDataModelFactory.cs" />
+    <Compile Include="Interfaces\IMvcProjectFilesGenerator.cs" />
+    <Compile Include="Domain\Factories\Interfaces\IEFRelationshipModelFactory.cs" />
+    <Compile Include="Domain\Factories\Interfaces\IPropertyFactory.cs" />
+    <Compile Include="Domain\Generators\Interfaces\ITypesGenerator.cs" />
+    <Compile Include="Domain\Repositories\Interfaces\ITypesRepository.cs" />
+    <Compile Include="Domain\Repositories\TypesRepository.cs" />
     <Compile Include="XmiTools\XElementType.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
-    <Compile Include="Domain\EFRelationshipModelFactory.cs" />
-    <Compile Include="Domain\NavigationalPropertiesGenerator.cs" />
-    <Compile Include="Domain\PropertyFactory.cs" />
-    <Compile Include="Domain\EFRelationshipMemberMultiplicity.cs" />
+    <Compile Include="Domain\Factories\EFRelationshipModelFactory.cs" />
+    <Compile Include="Domain\Generators\NavigationalPropertiesGenerator.cs" />
+    <Compile Include="Domain\Factories\PropertyFactory.cs" />
+    <Compile Include="Domain\Models\EFRelationshipMemberMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -210,20 +210,20 @@
     <Compile Include="Common\JObjectExtensions.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Common\XElementExtensions.cs" />
-    <Compile Include="XmiTools\IXAttributeNameResolver.cs" />
-    <Compile Include="CodeTemplates\IDbContextFactoryClassTextTemplate.cs" />
-    <Compile Include="CodeTemplates\IDbContextClassTextTemplate.cs" />
+    <Compile Include="XmiTools\Interfaces\IXAttributeNameResolver.cs" />
+    <Compile Include="CodeTemplates\Interfaces\IDbContextFactoryClassTextTemplate.cs" />
+    <Compile Include="CodeTemplates\Interfaces\IDbContextClassTextTemplate.cs" />
     <Compile Include="Common\ILogger.cs" />
-    <Compile Include="IMigrationServiceClient.cs" />
-    <Compile Include="CodeTemplates\IModelClassTextTemplate.cs" />
-    <Compile Include="IProjectPublisher.cs" />
-    <Compile Include="IScriptRunner.cs" />
-    <Compile Include="IStartupCsConfigurator.cs" />
-    <Compile Include="UMLHelpers\IUmlTypesHelper.cs" />
-    <Compile Include="XmiTools\IXAttributeEqualityComparer.cs" />
-    <Compile Include="XmiTools\IXmiWrapper.cs" />
+    <Compile Include="Interfaces\IMigrationServiceClient.cs" />
+    <Compile Include="CodeTemplates\Interfaces\IModelClassTextTemplate.cs" />
+    <Compile Include="Interfaces\IProjectPublisher.cs" />
+    <Compile Include="Interfaces\IScriptRunner.cs" />
+    <Compile Include="Interfaces\IStartupCsConfigurator.cs" />
+    <Compile Include="UMLHelpers\Interfaces\IUmlTypesHelper.cs" />
+    <Compile Include="XmiTools\Interfaces\IXAttributeEqualityComparer.cs" />
+    <Compile Include="XmiTools\Interfaces\IXmiWrapper.cs" />
     <Compile Include="Common\Logger.cs" />
-    <Compile Include="UMLHelpers\IUmlVisibilityMapper.cs" />
+    <Compile Include="UMLHelpers\Interfaces\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
     <Compile Include="Domain\Models\MvcProject.cs" />
     <Compile Include="Domain\Models\Property.cs" />
@@ -235,13 +235,13 @@
     <Compile Include="ProjectPublisher.cs" />
     <Compile Include="ScriptRunner.cs" />
     <Compile Include="StartupCsConfigurator.cs" />
-    <Compile Include="Domain\TypesGenerator.cs" />
+    <Compile Include="Domain\Generators\TypesGenerator.cs" />
     <Compile Include="UMLHelpers\UmlTypesHelper.cs" />
     <Compile Include="XmiTools\XmiWrapper.cs" />
     <Compile Include="XmiTools\XAttributeEqualityComparer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Multiplicity.cs" />
+    <Compile Include="Domain\Models\Multiplicity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

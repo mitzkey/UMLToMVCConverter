@@ -3,6 +3,7 @@
     using System.Diagnostics;
     using System.IO;
     using UMLToMVCConverter.Common;
+    using UMLToMVCConverter.Interfaces;
 
     public class ScriptRunner : IScriptRunner
     {

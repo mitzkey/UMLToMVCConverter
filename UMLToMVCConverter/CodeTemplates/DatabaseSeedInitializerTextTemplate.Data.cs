@@ -1,6 +1,7 @@
 ﻿namespace UMLToMVCConverter.CodeTemplates
 {
     using System.Collections.Generic;
+    using UMLToMVCConverter.CodeTemplates.Interfaces;
     using UMLToMVCConverter.Domain.Models;
 
     public partial class DatabaseSeedInitializerTextTemplate : IDatabaseSeedInitializerTextTemplate

@@ -2,6 +2,7 @@
 {
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Interfaces;
 
     public class ProjectPublisher : IProjectPublisher
     {

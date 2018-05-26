@@ -4,6 +4,7 @@
     using System.IO;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Interfaces;
 
     public class MigrationServiceClient : IMigrationServiceClient
     {

@@ -8,8 +8,10 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using UMLToMVCConverter.CodeTemplates;
+    using UMLToMVCConverter.CodeTemplates.Interfaces;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Interfaces;
 
     public class MvcProjectFilesGenerator : IMvcProjectFilesGenerator
     {

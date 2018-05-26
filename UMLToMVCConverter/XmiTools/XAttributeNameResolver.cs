@@ -3,6 +3,7 @@
     using System;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
+    using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class XAttributeNameResolver : IXAttributeNameResolver
     {

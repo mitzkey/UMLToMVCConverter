@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text;
+    using UMLToMVCConverter.Domain.Builders;
 
     public class TypeReference
     {

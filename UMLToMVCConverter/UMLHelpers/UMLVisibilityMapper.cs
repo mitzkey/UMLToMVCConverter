@@ -2,6 +2,7 @@
 {
     using System;
     using System.CodeDom;
+    using UMLToMVCConverter.UMLHelpers.Interfaces;
 
     public class UmlVisibilityMapper : IUmlVisibilityMapper
     {

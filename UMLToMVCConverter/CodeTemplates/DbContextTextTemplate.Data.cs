@@ -5,6 +5,7 @@ using System.Data.Entity.Design.PluralizationServices;
 namespace UMLToMVCConverter.CodeTemplates
 {
     using System.Linq;
+    using UMLToMVCConverter.CodeTemplates.Interfaces;
     using UMLToMVCConverter.Domain.Models;
 
     public partial class DbContextTextTemplate : IDbContextClassTextTemplate
