@@ -17,6 +17,7 @@ namespace WebApplication1.Models
 
 		public System.String Producer { get; set; }
 
+		[InverseProperty("SuperRadio")]
 		[ForeignKey("RadiosCarBrand,RadiosCarModel,RadiosCarVersion")]
 		public virtual Car RadiosCar { get; set; }
 	}

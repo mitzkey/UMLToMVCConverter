@@ -14,9 +14,11 @@ namespace WebApplication1.Models
 		public Nullable<System.Int32> WriterID { get; set; }
 		public Nullable<System.Int32> BookID { get; set; }
 
+		[InverseProperty("Book")]
 		[ForeignKey("WriterID")]
 		public virtual Writer Writer { get; set; }
 
+		[InverseProperty("Writer")]
 		[ForeignKey("BookID")]
 		public virtual Book Book { get; set; }
 	}

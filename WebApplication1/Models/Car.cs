@@ -10,10 +10,6 @@ namespace WebApplication1.Models
 	public class Car {
 
 
-		public Nullable<System.Int32> SteeringWheelID { get; set; }
-		public Nullable<System.Int32> SuperRadioID { get; set; }
-		public Nullable<System.Int32> TireID { get; set; }
-		public Nullable<System.Int32> SeatID { get; set; }
 
 		public System.String Brand { get; set; }
 
@@ -21,16 +17,16 @@ namespace WebApplication1.Models
 
 		public System.String Version { get; set; }
 
-		[ForeignKey("SteeringWheelID")]
+		[InverseProperty("Car")]
 		public virtual SteeringWheel SteeringWheel { get; set; }
 
-		[ForeignKey("SuperRadioID")]
+		[InverseProperty("RadiosCar")]
 		public virtual CarRadio SuperRadio { get; set; }
 
-		[ForeignKey("TireID")]
+		[InverseProperty("Car")]
 		public virtual ICollection<Tire> Tire { get; set; }
 
-		[ForeignKey("SeatID")]
+		[InverseProperty("Car")]
 		public virtual ICollection<Seat> Seat { get; set; }
 	}
 }

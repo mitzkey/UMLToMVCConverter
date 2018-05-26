@@ -48,15 +48,7 @@
 
             this.associationsGenerator.Generate(xUmlModel);
 
-            this.typesGenerator.GenerateManyToManyAssociationTypes();
-
-            // var aggregations = this.aggregationsFactory.Create(xUmlModel).ToList();
-
-            // this.nagivationalPropertiesGenerator.Generate(aggregations);
-
-            // this.foreignKeysGenerator.Generate(aggregations);
-
-            // var efRelationshipModels = this.efRelationshipModelFactory.Create(aggregations);
+            this.associationsGenerator.GenerateManyToManyAssociationTypes();
 
             var enumerationModels = this.enumerationModelsFactory.Create();
 

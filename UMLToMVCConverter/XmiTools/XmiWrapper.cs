@@ -165,13 +165,6 @@
         {
             var xOwner = xElement.Parent;
 
-            if (xElement.Name == "ownedEnd"
-                && (this.GetXElementType(xOwner) == XElementType.Association
-                    || this.GetXElementType(xOwner) == XElementType.AssociationClass))
-            {
-                xOwner = this.GetAssociationsEndOwningType(xElement);
-            }
-
             return xOwner;
         }
 

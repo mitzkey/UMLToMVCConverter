@@ -39,7 +39,20 @@
 
             var sourceMemberPropertyTypeRefernce = sourceMemberPropertyTypeReferenceBuilder.Build();
 
-            var sourceTypeNavigationalProperty = Property.Builder()
+            var propertyBuilder = Property.Builder();
+
+            if (sourceMember.Multiplicity == Multiplicity.ExactlyOne
+                || sourceMember.Multiplicity == Multiplicity.OneOrMore)
+            {
+                propertyBuilder.WithAttribute(new Attribute("Required", null));
+            }
+
+            if (destinationMember.Navigable)
+            {
+                propertyBuilder.WithAttribute(new Attribute("InverseProperty", destinationMember.Name));
+            }
+
+            var sourceTypeNavigationalProperty = propertyBuilder
                 .SetName(sourceMember.Name)
                 .SetTypeReference(sourceMemberPropertyTypeRefernce)
                 .HasSet(true)

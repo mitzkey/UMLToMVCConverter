@@ -25,16 +25,65 @@
                     throw new ArgumentException("Incorrect association multiplicity");
                 }
 
-                foreach (var associationEndMember in association.Members)
+
+                var principalMember = this.GetDistinguishedMembers(association, out var dependentMember);
+                var foreignKeyGenerated = false;
+                if (principalMember.Navigable)
                 {
-                    if (associationEndMember.Navigable)
+                    this.navigationalPropertiesGenerator.Generate(principalMember, dependentMember);
+                    if (principalMember.Multiplicity == Multiplicity.ExactlyOne
+                            || principalMember.Multiplicity == Multiplicity.ZeroOrOne)
                     {
-                        var oppositeMember = association.Members.Single(x => x != associationEndMember);
-                        this.navigationalPropertiesGenerator.Generate(oppositeMember, associationEndMember);
-                        this.foreignKeyGenerator.Generate(oppositeMember, associationEndMember);
+                        this.foreignKeyGenerator.Generate(principalMember, dependentMember);
+                        foreignKeyGenerated = true;
+                    }
+                }
+
+                if (dependentMember.Navigable)
+                {
+                    this.navigationalPropertiesGenerator.Generate(dependentMember, principalMember);
+                    if (!foreignKeyGenerated
+                        && (dependentMember.Multiplicity == Multiplicity.ExactlyOne
+                            || dependentMember.Multiplicity == Multiplicity.ZeroOrOne))
+                    {
+                        this.foreignKeyGenerator.Generate(dependentMember, principalMember);
                     }
                 }
             }
         }
+
+        private AssociationEndMember GetDistinguishedMembers(Association association, out AssociationEndMember dependentMember)
+        {
+            var members = association.Members;
+
+            var memberWithAggregationTypeDeclaration = members
+                .SingleOrDefault(x => x.AggregationKind != AggregationKind.None);
+
+            if (memberWithAggregationTypeDeclaration != null)
+            {
+                dependentMember = memberWithAggregationTypeDeclaration;
+                return members.Single(x => !x.Equals(memberWithAggregationTypeDeclaration));
+            }
+
+            var memberWithMultiplicityOne = members.FirstOrDefault(x => x.Multiplicity == Multiplicity.ExactlyOne);
+            if (memberWithMultiplicityOne != null)
+            {
+                dependentMember = members.Single(x => !x.Equals(memberWithMultiplicityOne));
+                return memberWithMultiplicityOne;
+            }
+
+            var memberWithMultiplicityZeroOrOne =
+                members.FirstOrDefault(x => x.Multiplicity == Multiplicity.ZeroOrOne);
+            if (memberWithMultiplicityZeroOrOne != null)
+            {
+                dependentMember = members.Single(x => !x.Equals(memberWithMultiplicityZeroOrOne));
+                return memberWithMultiplicityZeroOrOne;
+            }
+
+            dependentMember = members.FirstOrDefault();
+            var dependentMemberLocal = dependentMember;
+            return members.Single(x => !x.Equals(dependentMemberLocal));
+        }
+
     }
 }

@@ -22,6 +22,7 @@ namespace WebApplication1.Models
 
 		public System.String NamesFirstCharacter { get { throw new NotImplementedException(); } }
 
+		[InverseProperty("Worker")]
 		[ForeignKey("EnterpriseID")]
 		public virtual Enterprise Enterprise { get; set; }
 	}

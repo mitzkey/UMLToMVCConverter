@@ -11,10 +11,9 @@ namespace WebApplication1.Models
 
 
 		public int ID {get; set;}
-		public Nullable<System.Int32> TextBookID { get; set; }
 		public Nullable<System.Int32> FavouriteBookID { get; set; }
 
-		[ForeignKey("TextBookID")]
+		[InverseProperty("Author")]
 		public virtual ICollection<Book> TextBook { get; set; }
 
 		[ForeignKey("FavouriteBookID")]

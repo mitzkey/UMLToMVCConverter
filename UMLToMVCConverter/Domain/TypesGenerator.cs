@@ -50,44 +50,6 @@
             this.GenerateInheritanceRelations(xTypes);
         }
 
-        public void GenerateManyToManyAssociationTypes()
-        {
-            foreach (var association in this.associationsRepository
-                .GetAllAssociations()
-                .Where(x => x.Multiplicity == RelationshipMultiplicity.ManyToMany).ToList())
-            {
-                var associationTypeNameBuilder = new StringBuilder();
-                association.Members.ForEach(x => associationTypeNameBuilder.Append(x.Name));
-                var associationTypeName = associationTypeNameBuilder.ToString();
-                var type = new TypeModel(associationTypeName, true, CSharpVisibilityString.Public);
-                this.typesRepository.Add(type);
-
-                foreach (var member in association.Members)
-                {
-                    var oppositeMember = association.Members.Single(x => !x.Equals(member));
-                    var reducedMultiplicity = this.ReduceMultiplicity(member.Multiplicity);
-                    var associationTypeMember = new AssociationEndMember(null, oppositeMember.Name, reducedMultiplicity, oppositeMember.AggregationKind, type, oppositeMember.Navigable);
-                    var parentAssociationMemberTypesNewMember = new AssociationEndMember(null, member.Name, oppositeMember.Multiplicity, member.AggregationKind, member.Type, member.Navigable);
-                    var childAssociationMembers = new List<AssociationEndMember> { associationTypeMember, parentAssociationMemberTypesNewMember };
-                    var childAssociation = new Association(childAssociationMembers, null);
-                    this.associationsRepository.Add(childAssociation);
-                }
-            }
-        }
-
-        private Multiplicity ReduceMultiplicity(Multiplicity multiplicity)
-        {
-            if (multiplicity != Multiplicity.OneOrMore
-                && multiplicity != Multiplicity.ZeroOrMore)
-            {
-                throw new ArgumentException("Can't reduce provided multiplicity");
-            }
-
-            return multiplicity == Multiplicity.ZeroOrMore
-                ? Multiplicity.ZeroOrOne
-                : Multiplicity.ExactlyOne;
-        }
-
         private void DeclareTypes(IEnumerable<XElement> xTypes)
         {
             foreach (var type in xTypes)

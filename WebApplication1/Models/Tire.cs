@@ -17,6 +17,7 @@ namespace WebApplication1.Models
 
 		public System.String Brand { get; set; }
 
+		[InverseProperty("Tire")]
 		[ForeignKey("CarBrand,CarModel,CarVersion")]
 		public virtual Car Car { get; set; }
 	}

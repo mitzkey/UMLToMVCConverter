@@ -17,6 +17,8 @@ namespace WebApplication1.Models
 
 		public Nullable<System.Boolean> LeatherMade { get; set; }
 
+		[Required]
+		[InverseProperty("Seat")]
 		[ForeignKey("CarBrand,CarModel,CarVersion")]
 		public virtual Car Car { get; set; }
 	}

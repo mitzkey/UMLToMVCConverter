@@ -5,5 +5,6 @@
     public interface IAssociationsGenerator
     {
         void Generate(XElement umlModel);
+        void GenerateManyToManyAssociationTypes();
     }
 }
