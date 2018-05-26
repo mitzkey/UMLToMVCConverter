@@ -157,7 +157,7 @@
             var xOperations = this.xmiWrapper.GetXOperations(xType);
             foreach (var xOperation in xOperations)
             {
-                var name = xOperation.ObligatoryAttributeValue("name");
+                var name = xOperation.ObligatoryAttributeValue("name").ToCamelCase();
 
                 var xReturnParameter = this.xmiWrapper.GetXReturnParameter(xOperation);
 
