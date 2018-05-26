@@ -11,7 +11,7 @@ namespace <#= this.mvcProject.Name #>
     using System.Linq;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
-    using WebApplication1.Models;
+    using <#= this.mvcProject.Name #>.Models;
 
     public static class DatabaseSeedInitializer
     {

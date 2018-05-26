@@ -25,7 +25,7 @@ namespace <#= this.mvcProject.DefaultNamespace #>.Models
 
             builder.UseSqlServer(connectionString);
 
-            return new DefaultContext(builder.Options);
+            return new <#= this.mvcProject.DbContextName #>(builder.Options);
 
         }
     }

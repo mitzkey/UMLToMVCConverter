@@ -9,6 +9,11 @@
 // ------------------------------------------------------------------------------
 namespace UMLToMVCConverter.CodeTemplates
 {
+    using System.Linq;
+    using System.Text;
+    using System.Collections.Generic;
+    using System;
+    
     /// <summary>
     /// Class to produce the template output
     /// </summary>
@@ -131,14 +136,15 @@ namespace UMLToMVCConverter.CodeTemplates
 
         public void RunMigration()
         {
-            using (var db = DbContextActivator.CreateInstance(typeof(DefaultContext)))
-            {
-                db.Database.Migrate();
-            }
-        }
-    }
-}
-");
+            using (var db = DbContextActivator.CreateInstance(typeof(");
+            
+            #line 93 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\MigrationsManagerClassTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.mvcProject.DbContextName));
+            
+            #line default
+            #line hidden
+            this.Write(")))\r\n            {\r\n                db.Database.Migrate();\r\n            }\r\n      " +
+                    "  }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

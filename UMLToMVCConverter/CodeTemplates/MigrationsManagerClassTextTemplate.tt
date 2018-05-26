@@ -90,7 +90,7 @@ namespace <#= this.mvcProject.DefaultNamespace #>
 
         public void RunMigration()
         {
-            using (var db = DbContextActivator.CreateInstance(typeof(DefaultContext)))
+            using (var db = DbContextActivator.CreateInstance(typeof(<#= this.mvcProject.DbContextName #>)))
             {
                 db.Database.Migrate();
             }

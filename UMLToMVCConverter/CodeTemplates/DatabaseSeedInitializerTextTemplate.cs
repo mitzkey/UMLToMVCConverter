@@ -35,13 +35,16 @@ namespace UMLToMVCConverter.CodeTemplates
             
             #line default
             #line hidden
-            this.Write(@"
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.DependencyInjection;
-    using WebApplication1.Models;
+            this.Write("\r\n{\r\n    using System.Collections.Generic;\r\n    using System.Linq;\r\n    using Mic" +
+                    "rosoft.AspNetCore.Hosting;\r\n    using Microsoft.Extensions.DependencyInjection;\r" +
+                    "\n    using ");
+            
+            #line 14 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DatabaseSeedInitializerTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.mvcProject.Name));
+            
+            #line default
+            #line hidden
+            this.Write(@".Models;
 
     public static class DatabaseSeedInitializer
     {

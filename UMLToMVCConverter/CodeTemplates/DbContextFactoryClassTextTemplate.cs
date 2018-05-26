@@ -9,6 +9,11 @@
 // ------------------------------------------------------------------------------
 namespace UMLToMVCConverter.CodeTemplates
 {
+    using System.Linq;
+    using System.Text;
+    using System.Collections.Generic;
+    using System;
+    
     /// <summary>
     /// Class to produce the template output
     /// </summary>
@@ -68,7 +73,14 @@ namespace UMLToMVCConverter.CodeTemplates
             #line default
             #line hidden
             this.Write("\");\r\n\r\n            builder.UseSqlServer(connectionString);\r\n\r\n            return " +
-                    "new DefaultContext(builder.Options);\r\n\r\n        }\r\n    }\r\n}");
+                    "new ");
+            
+            #line 28 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextFactoryClassTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(this.mvcProject.DbContextName));
+            
+            #line default
+            #line hidden
+            this.Write("(builder.Options);\r\n\r\n        }\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
