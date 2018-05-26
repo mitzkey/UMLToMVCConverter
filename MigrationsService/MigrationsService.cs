@@ -18,7 +18,6 @@
             this.migrationsNamespace = migrationsNamespace;
             this.migrationsManagerType = mvcProjectAssembly.GetType($"{this.migrationsNamespace}.{MigrationsManagerTypeName}");
             this.migrationsManager = Activator.CreateInstance(this.migrationsManagerType);
-            
         }
 
         public string AddMigration(string mvcProjectFolderPath)

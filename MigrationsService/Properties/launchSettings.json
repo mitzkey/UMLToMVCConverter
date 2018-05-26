@@ -2,7 +2,7 @@
   "profiles": {
     "MigrationsService": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\mikolaj.bochajczuk\\Desktop\\priv\\WebApplication1\\WebApplication1\\WebApplication1.csproj"
+      "commandLineArgs": "add-migration \"C:\\Users\\mikolaj.bochajczuk\\Desktop\\priv\\Praca Inzynierska\\UMLToMVCConverter\\WebApplication2\" \"WebApplication2\" \"C:\\Users\\mikolaj.bochajczuk\\Desktop\\priv\\Praca Inzynierska\\Converter Workspace\\WebApplication2.dll\""
     }
   }
 }
