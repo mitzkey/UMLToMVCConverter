@@ -107,7 +107,7 @@ if((this.type.IsClass
             
             #line default
             #line hidden
-            this.Write("\r\n\t\tpublic int ID { get; set; }");
+            this.Write("\t\tpublic int ID { get; set; }\r\n");
             
             #line 33 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\BasicTypeTextTemplate.tt"
 

@@ -9,8 +9,8 @@ namespace WebApplication2.Models
 
 	public class Grafik {
 
-
 		public int ID { get; set; }
+
 
 		public Nullable<System.Int32> Rok { get; set; }
 

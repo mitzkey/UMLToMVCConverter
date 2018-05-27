@@ -9,8 +9,8 @@ namespace WebApplication2.Models
 
 	public class BrakujaceWyposazeniePrzystosowanieSali {
 
-
 		public int ID { get; set; }
+
 		public Nullable<System.Int32> BrakujaceWyposazenieID { get; set; }
 
 		[ForeignKey("BrakujaceWyposazenieID")]

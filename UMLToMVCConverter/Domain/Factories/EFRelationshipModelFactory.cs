@@ -1,45 +1,45 @@
 ﻿namespace UMLToMVCConverter.Domain.Factories
 {
     using System.Collections.Generic;
+    using System.Linq;
     using UMLToMVCConverter.Domain.Factories.Interfaces;
     using UMLToMVCConverter.Domain.Models;
 
     public class EFRelationshipModelFactory : IEFRelationshipModelFactory
     {
-        public IEnumerable<EFRelationship> Create(IEnumerable<Aggregation> aggregations)
+        public IEnumerable<EFRelationship> CreateRelationshipsConfiguratingOnDeleteBehaviour(IEnumerable<Association> associations)
         {
             var models = new List<EFRelationship>();
 
-            foreach (var aggregation in aggregations)
+            var associationsToConfigure = associations
+                .Where(a => a.Members.Any(m => m.Multiplicity == Multiplicity.ExactlyOne));
+
+            foreach (var association in associationsToConfigure)
             {
-                var deleteBehavior = aggregation.AggregationKind == AggregationKind.Composition
+                var deleteBehavior = association.AssociationKind == AssociationKind.Composition
                     ? "Cascade"
-                    : "SetNull";
+                    : "Restrict";
 
-                var foreignKeyPropertyNames = aggregation.DependentType.ForeignKeys.Keys;
+                var targetMember = association.Members.First(m => m.Multiplicity == Multiplicity.ExactlyOne);
+                var sourceMember = association.Members.Single(m => !m.Equals(targetMember));
 
-                var principalTypeMultiplicity = GetRelationshipMultiplicity(aggregation.PrincipalTypeMultiplicity);
-                var dependentTypeMultiplicity = GetRelationshipMultiplicity(aggregation.DependentTypeMultiplicity);
+                var sourceMemberMultiplicity = new EFRelationshipMemberMultiplicity(sourceMember.Multiplicity);
+                var targetMemberMultiplicity = new EFRelationshipMemberMultiplicity(targetMember.Multiplicity);
 
-                models.Add(new EFRelationship(foreignKeyPropertyNames)
+                models.Add(new EFRelationship
                 {
                     DeleteBehavior = deleteBehavior,
-                    PrincipalTypeMultiplicity = principalTypeMultiplicity,
-                    DependentTypeMultiplicity = dependentTypeMultiplicity,
-                    PrincipalTypeName = aggregation.PrincipalType.Name,
-                    DependentTypeName = aggregation.DependentType.Name
+                    SourceMemberMultiplicity = sourceMemberMultiplicity,
+                    TargetMemberMultiplicity = targetMemberMultiplicity,
+                    SourceTypeName = targetMember.Type.Name,
+                    TargetNavigationalPropertyName = targetMember.Name,
+                    SourceNavigationalPropertyName = sourceMember.Name,
+                    IsTargetMemberNavigable = targetMember.Navigable,
+                    IsSourceMemberNavigable = sourceMember.Navigable
                 });
             }
 
             return models;
-        }
-
-        private static EFRelationshipMemberMultiplicity GetRelationshipMultiplicity(Multiplicity multiplicity)
-        {
-            return new EFRelationshipMemberMultiplicity
-            {
-                Multiplicity = multiplicity
-            };
         }
     }
 }

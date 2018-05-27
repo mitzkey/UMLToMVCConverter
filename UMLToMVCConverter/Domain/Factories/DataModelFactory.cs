@@ -57,13 +57,17 @@
 
             var enumerationModels = this.enumerationModelsFactory.Create();
 
-            var associationsToGeneratePropertiesFor = this.associationsRepository.GetAllAssociations()
+            var allAssociations = this.associationsRepository.GetAllAssociations().ToList();
+            var associationsToGeneratePropertiesFor = allAssociations
                 .Where(x => x.Multiplicity != RelationshipMultiplicity.ManyToMany);
             this.associationsForeignKeyGenerator.Generate(associationsToGeneratePropertiesFor);
 
+            var efRelationships =
+                this.efRelationshipModelFactory.CreateRelationshipsConfiguratingOnDeleteBehaviour(allAssociations);
+
             return new DataModel(
                 this.typesRepository.GetAllTypes(),
-                new List<EFRelationship>(), 
+                efRelationships, 
                 enumerationModels);
         }
     }

@@ -9,8 +9,8 @@ namespace WebApplication2.Models
 
 	public class Wojewodztwo {
 
-
 		public int ID { get; set; }
+
 
 		public System.String Nazwa { get; set; }
 

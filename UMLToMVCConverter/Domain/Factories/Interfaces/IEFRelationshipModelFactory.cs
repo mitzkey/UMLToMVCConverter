@@ -5,6 +5,6 @@
 
     public interface IEFRelationshipModelFactory
     {
-        IEnumerable<EFRelationship> Create(IEnumerable<Aggregation> aggregations);
+        IEnumerable<EFRelationship> CreateRelationshipsConfiguratingOnDeleteBehaviour(IEnumerable<Association> associations);
     }
 }

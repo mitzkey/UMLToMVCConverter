@@ -9,8 +9,8 @@ namespace WebApplication2.Models
 
 	public class DzienTygodnia {
 
-		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public int ID { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]		public int ID { get; set; }
+
 
 		public System.String Name { get; set; }
 	}

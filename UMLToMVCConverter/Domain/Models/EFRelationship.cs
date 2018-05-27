@@ -1,39 +1,29 @@
 ﻿namespace UMLToMVCConverter.Domain.Models
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     public class EFRelationship
     {
-        private readonly IEnumerable<string> foreignKeyPropertyNames;
+        public string SourceTypeName { get; set; }
 
-        public EFRelationship(IEnumerable<string> foreignKeyPropertyNames)
-        {
-            this.foreignKeyPropertyNames = foreignKeyPropertyNames;
-        }
+        public string SourceNavigationalPropertyName { get; set; }
 
-        public string PrincipalTypeName { get; set; }
+        public string TargetNavigationalPropertyName { get; set; }
 
-        public string DependentTypeName { get; set; }
+        public EFRelationshipMemberMultiplicity SourceMemberMultiplicity { get; set; }
 
-        public EFRelationshipMemberMultiplicity PrincipalTypeMultiplicity { get; set; }
-
-        public string ForeignKeysStringEnumeration
-        {
-            get
-            {
-                var namesWithQuotes = this.foreignKeyPropertyNames.Select(x => "\"" + x + "\"").ToArray();
-                return string.Join(", ", namesWithQuotes);
-            }
-        }
+        public EFRelationshipMemberMultiplicity TargetMemberMultiplicity { get; set; }
 
         public string DeleteBehavior { get; set; }
 
-        public EFRelationshipMemberMultiplicity DependentTypeMultiplicity { get; set; }
+        public bool IsSourceMemberNavigable { get; set; }
 
-        public string HasForeignKeyMethodParametersString =>
-            this.DependentTypeMultiplicity.IsMultiple
-                ? this.ForeignKeysStringEnumeration
-                : $"\"{this.DependentTypeName}\", " + this.ForeignKeysStringEnumeration;
+        public bool IsTargetMemberNavigable { get; set; }
+
+        public string SourceNavigationalPropertyExpressionString => this.IsSourceMemberNavigable
+            ? $"t => t.{ this.SourceNavigationalPropertyName }"
+            : string.Empty;
+
+        public string TargetNavigationalPropertyExpressionString => this.IsTargetMemberNavigable
+            ? $"t => t.{ this.TargetNavigationalPropertyName }"
+            : string.Empty;
     }
 }

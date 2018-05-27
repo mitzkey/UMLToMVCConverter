@@ -29,8 +29,8 @@ if((this.type.IsClass
 	&& string.IsNullOrWhiteSpace(this.type.BaseClassName)
 	&& !this.type.HasKey) {
 	#>
-
-		public int ID { get; set; }<#
+		public int ID { get; set; }
+<#
 }
 
 foreach (var foreignKey in this.type.ForeignKeys) {

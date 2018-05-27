@@ -9,8 +9,8 @@ namespace WebApplication2.Models
 
 	public class Adres {
 
-
 		public int ID { get; set; }
+
 		public Nullable<System.Int32> MiejscowoscID { get; set; }
 
 		[Required]

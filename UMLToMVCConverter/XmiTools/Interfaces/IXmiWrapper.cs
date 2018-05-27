@@ -26,7 +26,7 @@
         IEnumerable<XElement> GetLiterals(XElement xType);
         XElementType GetXElementType(XElement xElement);
         XElement GetOppositeAssociationEnd(string associationId, string xElementId);
-        AggregationKind GetAggregationKind(string aggregationKindString);
+        AssociationKind GetAggregationKind(string aggregationKindString);
         XElement GetXOwner(XElement xElement);
         XElement GetAssociationsEndOwningType(XElement xAssociationEnd);
         IEnumerable<XElement> GetXProperties(XElement xType);

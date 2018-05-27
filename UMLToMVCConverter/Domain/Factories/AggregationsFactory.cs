@@ -59,7 +59,7 @@
                 aggregations.Add(
                     new Aggregation
                     {
-                        AggregationKind = aggregationKind,
+                        AssociationKind = aggregationKind,
                         PrincipalType = principalType,
                         PrincipalTypeMultiplicity = principalTypeMultiplicity,
                         PrincipalTypeAssociationXAttribute = principalTypeAssociationXAttribute,

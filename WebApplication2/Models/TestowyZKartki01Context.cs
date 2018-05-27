@@ -58,7 +58,80 @@ namespace WebApplication2.Models
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
 			modelBuilder.Entity<Termin>()
-				.HasKey(c => new { c.Dzien, c.GodzinaRozpoczecia });			modelBuilder.Entity<Wniosek>().Property(b => b.StatusID).HasDefaultValueSql("1");
+				.HasKey(c => new { c.Dzien, c.GodzinaRozpoczecia });
+
+
+			modelBuilder.Entity<CzlonekKlubu>()
+		        .HasOne(t => t.WniosekPrzyjetyNaPodstawie)
+		        .WithOne(t => t.CzlonekKlubuPrzyjetyNaPodstawie)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<Adres>()
+		        .HasOne(t => t.Miejscowosc)
+		        .WithMany()
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<Miejscowosc>()
+		        .HasOne(t => t.WojewodztwoMiejscowosci)
+		        .WithMany(t => t.MiejscowoscMiejscowosci)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<Termin>()
+		        .HasOne(t => t.Grafik)
+		        .WithMany(t => t.Terminy)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
+			modelBuilder.Entity<Kurs>()
+		        .HasOne(t => t.Grafik)
+		        .WithMany(t => t.Kursy)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
+			modelBuilder.Entity<Zajecia>()
+		        .HasOne(t => t.Termin)
+		        .WithMany(t => t.Zajecia)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<Zajecia>()
+		        .HasOne(t => t.Kurs)
+		        .WithMany(t => t.Zajecia)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
+			modelBuilder.Entity<Zajecia>()
+		        .HasOne(t => t.Sala)
+		        .WithMany(t => t.Zajecia)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<PrzystosowanieSali>()
+		        .HasOne(t => t.Poziom)
+		        .WithMany(t => t.PrzystosowanieSali)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<Wniosek>().Property(b => b.StatusID).HasDefaultValueSql("1");
 
 		}
 	}

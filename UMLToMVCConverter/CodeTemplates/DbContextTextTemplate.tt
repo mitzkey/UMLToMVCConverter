@@ -31,17 +31,17 @@ if (this.onModelCreatingBlock) {
 #>
 
 			modelBuilder.Entity<<#=complexKey.Key#>>()
-				.HasKey(c => new { <#=string.Join(", ", complexKey.Value.Select(s => "c." + s).ToArray())#> });<#
+				.HasKey(c => new { <#=string.Join(", ", complexKey.Value.Select(s => "c." + s).ToArray())#> });
+<#
 	}
 	foreach (var relationship in this.relationships) {
 #>
 
 
-			modelBuilder.Entity<<#=relationship.PrincipalTypeName#>>()
-		        .Has<#=relationship.DependentTypeMultiplicity.Name#>(typeof(<#=relationship.DependentTypeName#>))
-		        .With<#=relationship.PrincipalTypeMultiplicity.Name#>("<#=relationship.PrincipalTypeName#>")
-		        .HasForeignKey(<#=relationship.HasForeignKeyMethodParametersString#>)
-                .IsRequired(<#=relationship.PrincipalTypeMultiplicity.IsObligatoryString#>)
+			modelBuilder.Entity<<#=relationship.SourceTypeName#>>()
+		        .Has<#=relationship.TargetMemberMultiplicity.Name#>(<#=relationship.TargetNavigationalPropertyExpressionString#>)
+		        .With<#=relationship.SourceMemberMultiplicity.Name#>(<#=relationship.SourceNavigationalPropertyExpressionString#>)
+                .IsRequired(<#=relationship.TargetMemberMultiplicity.IsObligatoryString#>)
                 .OnDelete(DeleteBehavior.<#=relationship.DeleteBehavior#>);
 
 <#

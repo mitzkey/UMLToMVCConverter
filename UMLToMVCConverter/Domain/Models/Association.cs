@@ -13,6 +13,10 @@
 
         public bool IsGeneratedByConverter => this.XmiID == null;
 
+        public AssociationKind AssociationKind => this.Members.Any(m => m.AssociationKind != AssociationKind.None)
+            ? this.Members.Where(m => m.AssociationKind != AssociationKind.None).Select(m => m.AssociationKind).Single()
+            : AssociationKind.None;
+
         public Association(IEnumerable<AssociationEndMember> associationEndMembers, string xmiID)
         {
             this.XmiID = xmiID;

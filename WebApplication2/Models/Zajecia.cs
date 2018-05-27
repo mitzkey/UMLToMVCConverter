@@ -9,8 +9,8 @@ namespace WebApplication2.Models
 
 	public class Zajecia {
 
-
 		public int ID { get; set; }
+
 		public Nullable<System.DateTime> TerminDzien { get; set; }
 		public Nullable<System.DateTime> TerminGodzinaRozpoczecia { get; set; }
 		public System.String KursKod { get; set; }

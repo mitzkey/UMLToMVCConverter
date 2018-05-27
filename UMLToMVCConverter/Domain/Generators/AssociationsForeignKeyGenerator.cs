@@ -70,7 +70,7 @@
             var members = association.Members;
 
             var memberWithAggregationTypeDeclaration = members
-                .SingleOrDefault(x => x.AggregationKind != AggregationKind.None);
+                .SingleOrDefault(x => x.AssociationKind != AssociationKind.None);
 
             if (memberWithAggregationTypeDeclaration != null)
             {

@@ -145,19 +145,19 @@
             return associationEndsXElements.Single(x => !xElementId.Equals(this.GetElementsId(x)));
         }
 
-        public AggregationKind GetAggregationKind(string aggregationKindString)
+        public AssociationKind GetAggregationKind(string aggregationKindString)
         {
             if (string.IsNullOrWhiteSpace(aggregationKindString))
             {
-                return AggregationKind.None;
+                return AssociationKind.None;
             }
 
             switch (aggregationKindString)
             {
                 case "composite":
-                    return AggregationKind.Composition;
+                    return AssociationKind.Composition;
                 case "shared":
-                    return AggregationKind.Shared;
+                    return AssociationKind.Shared;
                 default:
                     throw new NotImplementedException($"No aggregation kind implemented for value: {aggregationKindString}");
             }

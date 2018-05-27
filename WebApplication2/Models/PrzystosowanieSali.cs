@@ -9,8 +9,8 @@ namespace WebApplication2.Models
 
 	public class PrzystosowanieSali {
 
-
 		public int ID { get; set; }
+
 		public Nullable<System.Int32> PoziomID { get; set; }
 
 		public Nullable<System.Int32> Pojemnosc { get; set; }

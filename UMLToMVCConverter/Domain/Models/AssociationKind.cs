@@ -1,6 +1,6 @@
 ﻿namespace UMLToMVCConverter.Domain.Models
 {
-    public enum AggregationKind
+    public enum AssociationKind
     {
         Composition,
         Shared,

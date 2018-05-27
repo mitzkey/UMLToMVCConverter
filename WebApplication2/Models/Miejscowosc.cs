@@ -9,8 +9,8 @@ namespace WebApplication2.Models
 
 	public class Miejscowosc {
 
-
 		public int ID { get; set; }
+
 		public Nullable<System.Int32> WojewodztwoMiejscowosciID { get; set; }
 
 		public System.String Nazwa { get; set; }

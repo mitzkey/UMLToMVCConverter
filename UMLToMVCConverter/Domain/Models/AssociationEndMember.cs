@@ -4,7 +4,7 @@
     {
         public Multiplicity Multiplicity { get; }
 
-        public AggregationKind AggregationKind { get; }
+        public AssociationKind AssociationKind { get; }
 
         public string Name { get; }
 
@@ -14,10 +14,10 @@
 
         public bool Navigable { get; }
 
-        public AssociationEndMember(string xmiId, string name, Multiplicity multiplicity, AggregationKind aggregationKind, TypeModel type, bool navigable)
+        public AssociationEndMember(string xmiId, string name, Multiplicity multiplicity, AssociationKind associationKind, TypeModel type, bool navigable)
         {
             this.Multiplicity = multiplicity;
-            this.AggregationKind = aggregationKind;
+            this.AssociationKind = associationKind;
             this.Type = type;
             this.Navigable = navigable;
             this.Name = name;

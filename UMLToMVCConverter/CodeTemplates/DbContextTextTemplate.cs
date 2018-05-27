@@ -113,9 +113,9 @@ if (this.onModelCreatingBlock) {
             
             #line default
             #line hidden
-            this.Write(" });");
+            this.Write(" });\r\n");
             
-            #line 34 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 35 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
 
 	}
 	foreach (var relationship in this.relationships) {
@@ -125,50 +125,43 @@ if (this.onModelCreatingBlock) {
             #line hidden
             this.Write("\r\n\r\n\t\t\tmodelBuilder.Entity<");
             
-            #line 40 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.PrincipalTypeName));
+            #line 41 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceTypeName));
             
             #line default
             #line hidden
             this.Write(">()\r\n\t\t        .Has");
             
-            #line 41 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DependentTypeMultiplicity.Name));
+            #line 42 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetMemberMultiplicity.Name));
             
             #line default
             #line hidden
-            this.Write("(typeof(");
-            
-            #line 41 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DependentTypeName));
-            
-            #line default
-            #line hidden
-            this.Write("))\r\n\t\t        .With");
+            this.Write("(");
             
             #line 42 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.PrincipalTypeMultiplicity.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetNavigationalPropertyExpressionString));
             
             #line default
             #line hidden
-            this.Write("(\"");
-            
-            #line 42 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.PrincipalTypeName));
-            
-            #line default
-            #line hidden
-            this.Write("\")\r\n\t\t        .HasForeignKey(");
+            this.Write(")\r\n\t\t        .With");
             
             #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.HasForeignKeyMethodParametersString));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceMemberMultiplicity.Name));
+            
+            #line default
+            #line hidden
+            this.Write("(");
+            
+            #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceNavigationalPropertyExpressionString));
             
             #line default
             #line hidden
             this.Write(")\r\n                .IsRequired(");
             
             #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\UMLToMVCConverter\CodeTemplates\DbContextTextTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.PrincipalTypeMultiplicity.IsObligatoryString));
+            this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetMemberMultiplicity.IsObligatoryString));
             
             #line default
             #line hidden

@@ -9,8 +9,8 @@ namespace WebApplication2.Models
 
 	public class CertyfikowaneKwalifikacjeInstruktor {
 
-
 		public int ID { get; set; }
+
 		public Nullable<System.Int32> CertyfikowaneKwalifikacjeID { get; set; }
 
 		[ForeignKey("CertyfikowaneKwalifikacjeID")]
