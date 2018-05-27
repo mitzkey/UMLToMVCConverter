@@ -6,11 +6,9 @@
     using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain.Factories;
     using UMLToMVCConverter.Domain.Factories.Interfaces;
     using UMLToMVCConverter.Domain.Generators.Interfaces;
     using UMLToMVCConverter.Domain.Models;
-    using UMLToMVCConverter.Domain.Repositories;
     using UMLToMVCConverter.Domain.Repositories.Interfaces;
     using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.UMLHelpers.Interfaces;

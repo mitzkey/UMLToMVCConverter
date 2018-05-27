@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using UMLToMVCConverter.Domain.Models;
-    using UMLToMVCConverter.Domain.Repositories;
     using UMLToMVCConverter.Domain.Repositories.Interfaces;
 
     public class PropertyBuilder

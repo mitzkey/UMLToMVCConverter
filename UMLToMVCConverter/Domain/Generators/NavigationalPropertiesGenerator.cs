@@ -1,21 +1,12 @@
 ﻿namespace UMLToMVCConverter.Domain.Generators
 {
     using System.Collections.Generic;
-    using UMLToMVCConverter.Domain.Factories;
-    using UMLToMVCConverter.Domain.Factories.Interfaces;
     using UMLToMVCConverter.Domain.Generators.Interfaces;
     using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.UMLHelpers;
 
     public class NavigationalPropertiesGenerator : INavigationalPropertiesGenerator
     {
-        private readonly IPropertyFactory propertyFactory;
-
-        public NavigationalPropertiesGenerator(IPropertyFactory propertyFactory)
-        {
-            this.propertyFactory = propertyFactory;
-        }
-
         public void Generate(AssociationEndMember sourceMember, AssociationEndMember destinationMember)
         {
             var sourceMemberPropertyTypeReferenceBuilder = TypeReference.Builder()

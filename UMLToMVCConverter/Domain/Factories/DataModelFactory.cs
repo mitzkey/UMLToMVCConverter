@@ -1,13 +1,10 @@
 ﻿namespace UMLToMVCConverter.Domain.Factories
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Domain.Factories.Interfaces;
-    using UMLToMVCConverter.Domain.Generators;
     using UMLToMVCConverter.Domain.Generators.Interfaces;
     using UMLToMVCConverter.Domain.Models;
-    using UMLToMVCConverter.Domain.Repositories;
     using UMLToMVCConverter.Domain.Repositories.Interfaces;
 
     public class DataModelFactory : IDataModelFactory

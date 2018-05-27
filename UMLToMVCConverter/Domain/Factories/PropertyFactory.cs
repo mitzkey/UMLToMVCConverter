@@ -6,7 +6,6 @@
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Factories.Interfaces;
     using UMLToMVCConverter.Domain.Models;
-    using UMLToMVCConverter.Domain.Repositories;
     using UMLToMVCConverter.Domain.Repositories.Interfaces;
     using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.UMLHelpers.Interfaces;

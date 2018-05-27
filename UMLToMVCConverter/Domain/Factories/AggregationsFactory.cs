@@ -6,9 +6,7 @@
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Domain.Factories.Interfaces;
     using UMLToMVCConverter.Domain.Models;
-    using UMLToMVCConverter.Domain.Repositories;
     using UMLToMVCConverter.Domain.Repositories.Interfaces;
-    using UMLToMVCConverter.XmiTools;
     using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class AggregationsFactory : IAggregationsFactory
