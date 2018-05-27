@@ -17,10 +17,6 @@ namespace WebApplication2.Models
 		public System.String Nazwa { get { throw new NotImplementedException(); } private set {} }
 
 		[Required]
-		[InverseProperty("Kwalifikacje")]
-		public virtual ICollection<KwalifikacjeUprawnieni> Uprawnieni { get; set; }
-
-		[Required]
 		[InverseProperty("DyscyplinaZPoziomem")]
 		[ForeignKey("DyscyplinaID")]
 		public virtual Dyscyplina Dyscyplina { get; set; }

@@ -14,13 +14,10 @@ namespace WebApplication2.Models
 
 		public virtual ICollection<DzienTygodnia> DniZajec { get { throw new NotImplementedException(); } private set {} }
 
-		public virtual ICollection<CertyfikowaneKwalifikacjeInstruktor> CertyfikowaneKwalifikacje { get; set; }
-
-		[InverseProperty("Uprawnieni")]
-		public virtual ICollection<KwalifikacjeUprawnieni> Kwalifikacje { get; set; }
-
 		[Required]
 		[InverseProperty("Instruktor")]
 		public virtual ICollection<SzczegolyKwalifikacji> SzczegolyKwalifikacji { get; set; }
+
+		public virtual ICollection<CertyfikowaneKwalifikacjeInstruktor> CertyfikowaneKwalifikacje { get; set; }
 	}
 }

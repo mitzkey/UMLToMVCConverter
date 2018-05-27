@@ -8,5 +8,6 @@
         IEnumerable<Association> GetAllAssociations();
 
         void Add(Association association);
+        void Remove(Association association);
     }
 }

@@ -41,9 +41,9 @@
 
             this.associationsGenerator.Generate(xUmlModel);
 
-            this.associationsGenerator.GenerateManyToManyAssociationTypes();
-
             this.associationsGenerator.GenerateForAssociationClasses();
+
+            this.associationsGenerator.GenerateManyToManyAssociationTypes();
 
             var enumerationModels = this.enumerationModelsFactory.Create();
 

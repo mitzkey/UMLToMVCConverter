@@ -164,25 +164,6 @@ namespace WebApplication2.Migrations
                     b.ToTable("Kurs");
                 });
 
-            modelBuilder.Entity("WebApplication2.Models.KwalifikacjeUprawnieni", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("KwalifikacjeID");
-
-                    b.Property<int?>("UprawnieniID")
-                        .IsRequired();
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("KwalifikacjeID");
-
-                    b.HasIndex("UprawnieniID");
-
-                    b.ToTable("KwalifikacjeUprawnieni");
-                });
-
             modelBuilder.Entity("WebApplication2.Models.Miejscowosc", b =>
                 {
                     b.Property<int>("ID")
@@ -217,25 +198,6 @@ namespace WebApplication2.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Osoba");
                 });
 
-            modelBuilder.Entity("WebApplication2.Models.PoziomyDyscypliny", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("DyscyplinyID")
-                        .IsRequired();
-
-                    b.Property<int?>("PoziomyID");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("DyscyplinyID");
-
-                    b.HasIndex("PoziomyID");
-
-                    b.ToTable("PoziomyDyscypliny");
-                });
-
             modelBuilder.Entity("WebApplication2.Models.PoziomZaawansowania", b =>
                 {
                     b.Property<int>("ID")
@@ -246,25 +208,6 @@ namespace WebApplication2.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("PoziomZaawansowania");
-                });
-
-            modelBuilder.Entity("WebApplication2.Models.PrzystosowaneSalePrzeznaczenie", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("PrzeznaczenieID");
-
-                    b.Property<int?>("PrzystosowaneSaleID")
-                        .IsRequired();
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("PrzeznaczenieID");
-
-                    b.HasIndex("PrzystosowaneSaleID");
-
-                    b.ToTable("PrzystosowaneSalePrzeznaczenie");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.PrzystosowanieSali", b =>
@@ -536,47 +479,11 @@ namespace WebApplication2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WebApplication2.Models.KwalifikacjeUprawnieni", b =>
-                {
-                    b.HasOne("WebApplication2.Models.DyscyplinaZPoziomem", "Kwalifikacje")
-                        .WithMany("Uprawnieni")
-                        .HasForeignKey("KwalifikacjeID");
-
-                    b.HasOne("WebApplication2.Models.Instruktor", "Uprawnieni")
-                        .WithMany("Kwalifikacje")
-                        .HasForeignKey("UprawnieniID")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("WebApplication2.Models.Miejscowosc", b =>
                 {
                     b.HasOne("WebApplication2.Models.Wojewodztwo", "WojewodztwoMiejscowosci")
                         .WithMany("MiejscowoscMiejscowosci")
                         .HasForeignKey("WojewodztwoMiejscowosciID")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("WebApplication2.Models.PoziomyDyscypliny", b =>
-                {
-                    b.HasOne("WebApplication2.Models.Dyscyplina", "Dyscypliny")
-                        .WithMany("Poziomy")
-                        .HasForeignKey("DyscyplinyID")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("WebApplication2.Models.PoziomZaawansowania", "Poziomy")
-                        .WithMany("Dyscypliny")
-                        .HasForeignKey("PoziomyID");
-                });
-
-            modelBuilder.Entity("WebApplication2.Models.PrzystosowaneSalePrzeznaczenie", b =>
-                {
-                    b.HasOne("WebApplication2.Models.Dyscyplina", "Przeznaczenie")
-                        .WithMany("PrzystosowaneSale")
-                        .HasForeignKey("PrzeznaczenieID");
-
-                    b.HasOne("WebApplication2.Models.Sala", "PrzystosowaneSale")
-                        .WithMany("Przeznaczenie")
-                        .HasForeignKey("PrzystosowaneSaleID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

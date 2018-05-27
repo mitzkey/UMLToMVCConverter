@@ -81,6 +81,8 @@
                     var childAssociation = new Association(childAssociationMembers, null, null);
                     this.associationsRepository.Add(childAssociation);
                 }
+
+                this.associationsRepository.Remove(association);
             }
         }
 

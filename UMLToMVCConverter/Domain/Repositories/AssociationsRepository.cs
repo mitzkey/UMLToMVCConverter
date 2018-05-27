@@ -33,5 +33,10 @@
 
            this.Associations.Add(association);
         }
+
+       public void Remove(Association association)
+       {
+           this.Associations.Remove(association);
+       }
    }
 }

@@ -24,8 +24,6 @@ namespace WebApplication2.Models
 		[ForeignKey("PoziomID")]
 		public virtual PoziomZaawansowania Poziom { get; set; }
 
-		public virtual ICollection<BrakujaceWyposazeniePrzystosowanieSali> BrakujaceWyposazenie { get; set; }
-
 		[Required]
 		[InverseProperty("PrzystosowanieSali")]
 		[ForeignKey("DyscyplinaID")]
@@ -35,5 +33,7 @@ namespace WebApplication2.Models
 		[InverseProperty("PrzystosowanieSali")]
 		[ForeignKey("SalaID")]
 		public virtual Sala Sala { get; set; }
+
+		public virtual ICollection<BrakujaceWyposazeniePrzystosowanieSali> BrakujaceWyposazenie { get; set; }
 	}
 }
