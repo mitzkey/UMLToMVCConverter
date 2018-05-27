@@ -33,6 +33,11 @@ namespace UMLToMVCConverter.CodeTemplates
         {
             this.relationships = relationshipModels;
 
+            if (this.relationships.Count() > 0)
+            {
+                this.onModelCreatingBlock = true;
+            }
+
             var standaloneEntityTypesList = standaloneEntityTypes.ToList();
 
             foreach (var type in standaloneEntityTypesList)
