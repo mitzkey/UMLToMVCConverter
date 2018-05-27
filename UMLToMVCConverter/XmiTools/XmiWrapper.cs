@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Models;
     using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class XmiWrapper : IXmiWrapper

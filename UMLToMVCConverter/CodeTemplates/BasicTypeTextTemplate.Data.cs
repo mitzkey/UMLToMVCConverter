@@ -2,7 +2,7 @@
 {
     using Autofac;
     using UMLToMVCConverter.CodeTemplates.Interfaces;
-    using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Models;
 
     public partial class BasicTypeTextTemplate : IBasicTypeTextTemplate
     {

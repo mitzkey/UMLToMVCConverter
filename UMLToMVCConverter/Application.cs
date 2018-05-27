@@ -5,26 +5,27 @@
     using UMLToMVCConverter.Domain;
     using UMLToMVCConverter.Domain.Factories;
     using UMLToMVCConverter.Domain.Factories.Interfaces;
+    using UMLToMVCConverter.Generators;
     using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.XmiTools;
     using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class Application
     {
-        private readonly IDataModelFactory dataModelFactory;
+        private readonly IDataModelGenerator dataModelGenerator;
         private readonly IMvcProjectFilesGenerator mvcProjectFilesGenerator;
         private readonly IMigrationServiceClient migrationServiceClient;
         private readonly IXmiWrapper xmiWrapper;
         private readonly IProjectPublisher projectPublisher;
 
         public Application(
-            IDataModelFactory dataModelFactory,
+            IDataModelGenerator dataModelGenerator,
             IMvcProjectFilesGenerator mvcProjectFilesGenerator,
             IMigrationServiceClient migrationServiceClient,
             IXmiWrapper xmiWrapper,
             IProjectPublisher projectPublisher)
         {
-            this.dataModelFactory = dataModelFactory;
+            this.dataModelGenerator = dataModelGenerator;
             this.mvcProjectFilesGenerator = mvcProjectFilesGenerator;
             this.migrationServiceClient = migrationServiceClient;
             this.xmiWrapper = xmiWrapper;
@@ -35,7 +36,7 @@
         {
             var xUmlModel = this.xmiWrapper.GetXUmlModels().Single();
 
-            var dataModel = this.dataModelFactory.Create(xUmlModel);
+            var dataModel = this.dataModelGenerator.Create(xUmlModel);
 
             this.mvcProjectFilesGenerator.GenerateFiles(dataModel);
 

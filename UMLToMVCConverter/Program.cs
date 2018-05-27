@@ -5,19 +5,21 @@
     using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.CodeTemplates.Interfaces;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain;
+    using UMLToMVCConverter.Deserializers;
+    using UMLToMVCConverter.Deserializers.Interfaces;
     using UMLToMVCConverter.Domain.Factories;
     using UMLToMVCConverter.Domain.Factories.Interfaces;
-    using UMLToMVCConverter.Domain.Generators;
-    using UMLToMVCConverter.Domain.Generators.Interfaces;
-    using UMLToMVCConverter.Domain.Models;
-    using UMLToMVCConverter.Domain.Repositories;
-    using UMLToMVCConverter.Domain.Repositories.Interfaces;
+    using UMLToMVCConverter.Generators;
+    using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Repositories;
+    using UMLToMVCConverter.Repositories.Interfaces;
     using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.UMLHelpers.Interfaces;
     using UMLToMVCConverter.XmiTools;
     using UMLToMVCConverter.XmiTools.Interfaces;
+    using IEFRelationshipModelGenerator = UMLToMVCConverter.Domain.Factories.Interfaces.IEFRelationshipModelGenerator;
 
     public static class Program
     {
@@ -63,35 +65,40 @@
             builder.RegisterType<Application>().AsSelf().SingleInstance();
             builder.RegisterType<ProjectPublisher>().As<IProjectPublisher>().SingleInstance();
             builder.RegisterType<StartupCsConfigurator>().As<IStartupCsConfigurator>().SingleInstance();
-            builder.RegisterType<UmlTypesHelper>().As<IUmlTypesHelper>().SingleInstance();
-            builder.RegisterType<XmiWrapper>().As<IXmiWrapper>().SingleInstance();
-            builder.RegisterType<UmlVisibilityMapper>().As<IUmlVisibilityMapper>().SingleInstance();
-            builder.RegisterType<XAttributeEqualityComparer>().As<IXAttributeEqualityComparer>().SingleInstance();
             builder.RegisterType<MigrationServiceClient>().As<IMigrationServiceClient>().SingleInstance();
             builder.RegisterType<Logger>().As<ILogger>().SingleInstance();
-            builder.RegisterType<MigrationsManagerClassTextTemplate>().As<IMigrationsManagerClassTextTemplate>().SingleInstance();
-            builder.RegisterType<DbContextFactoryClassTextTemplate>().As<IDbContextFactoryClassTextTemplate>().SingleInstance();
             builder.RegisterType<ScriptRunner>().As<IScriptRunner>().SingleInstance();
-            builder.RegisterType<DbContextTextTemplate>().As<IDbContextClassTextTemplate>().SingleInstance();
+
             builder.RegisterType<XAttributeNameResolver>().As<IXAttributeNameResolver>().SingleInstance();
-            builder.RegisterType<TypesGenerator>().As<ITypesGenerator>().SingleInstance();
-            builder.RegisterType<MvcProjectFilesGenerator>().As<IMvcProjectFilesGenerator>().SingleInstance();
-            builder.RegisterType<DataModelFactory>().As<IDataModelFactory>().SingleInstance();
-            builder.RegisterType<EFRelationshipModelFactory>().As<IEFRelationshipModelFactory>().SingleInstance();
+            builder.RegisterType<XAttributeEqualityComparer>().As<IXAttributeEqualityComparer>().SingleInstance();
+            builder.RegisterType<XmiWrapper>().As<IXmiWrapper>().SingleInstance();
+
+            builder.RegisterType<UmlTypesHelper>().As<IUmlTypesHelper>().SingleInstance();
+            builder.RegisterType<UmlVisibilityMapper>().As<IUmlVisibilityMapper>().SingleInstance();
+
+            builder.RegisterType<EnumerationModelsDeserializer>().As<IEnumerationModelsDeserializer>().SingleInstance();
+            builder.RegisterType<AssociationDeserializer>().As<IAssociationDeserializer>().SingleInstance();
+            builder.RegisterType<PropertyDeserializer>().As<IPropertyDeserializer>().SingleInstance();
+
+            builder.RegisterType<AssociationsRepository>().As<IAssociationsRepository>().SingleInstance();
+            builder.RegisterType<TypesRepository>().As<ITypesRepository>().SingleInstance();
+
+            builder.RegisterType<AssociationsGenerator>().As<IAssociationsGenerator>().SingleInstance();
+            builder.RegisterType<AssociationsForeignKeyGenerator>().As<IAssociationsForeignKeyGenerator>().SingleInstance();
             builder.RegisterType<ForeignKeysGenerator>().As<IForeignKeysGenerator>().SingleInstance();
             builder.RegisterType<NavigationalPropertiesGenerator>().As<INavigationalPropertiesGenerator>().SingleInstance();
-            builder.RegisterType<PropertyFactory>().As<IPropertyFactory>().SingleInstance();
-            builder.RegisterType<DatabaseSeedInitializerTextTemplate>().As<IDatabaseSeedInitializerTextTemplate>().SingleInstance();
-            builder.RegisterType<EnumerationModelsFactory>().As<IEnumerationModelsFactory>().SingleInstance();
-            builder.RegisterType<ProgramCsTextTemplate>().As<IProgramCsTextTemplate>().SingleInstance();
-            builder.RegisterType<TypesRepository>().As<ITypesRepository>().SingleInstance();
-            builder.RegisterType<AssociationFactory>().As<IAssociationFactory>().SingleInstance();
-            builder.RegisterType<AssociationsForeignKeyGenerator>().As<IAssociationsForeignKeyGenerator>().SingleInstance();
-            builder.RegisterType<AssociationsRepository>().As<IAssociationsRepository>().SingleInstance();
-            builder.RegisterType<AssociationsGenerator>().As<IAssociationsGenerator>().SingleInstance();
+            builder.RegisterType<TypesGenerator>().As<ITypesGenerator>().SingleInstance();
+            builder.RegisterType<MvcProjectFilesGenerator>().As<IMvcProjectFilesGenerator>().SingleInstance();
+            builder.RegisterType<DataModelGenerator>().As<IDataModelGenerator>().SingleInstance();
+            builder.RegisterType<IEFRelationshipModelGenerator>().As<Domain.Factories.Interfaces.IEFRelationshipModelGenerator>().SingleInstance();
 
             builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
             builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();
+            builder.RegisterType<MigrationsManagerClassTextTemplate>().As<IMigrationsManagerClassTextTemplate>().SingleInstance();
+            builder.RegisterType<DbContextFactoryClassTextTemplate>().As<IDbContextFactoryClassTextTemplate>().SingleInstance();
+            builder.RegisterType<ProgramCsTextTemplate>().As<IProgramCsTextTemplate>().SingleInstance();
+            builder.RegisterType<DatabaseSeedInitializerTextTemplate>().As<IDatabaseSeedInitializerTextTemplate>().SingleInstance();
+            builder.RegisterType<DbContextTextTemplate>().As<IDbContextClassTextTemplate>().SingleInstance();
 
             return builder.Build();
         }

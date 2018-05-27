@@ -1,6 +1,6 @@
 ﻿namespace UMLToMVCConverter.CodeTemplates.Interfaces
 {
-    using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Models;
 
     public interface IModelClassTextTemplate
     {

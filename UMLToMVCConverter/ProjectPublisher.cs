@@ -1,8 +1,8 @@
 ﻿namespace UMLToMVCConverter
 {
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Models;
 
     public class ProjectPublisher : IProjectPublisher
     {

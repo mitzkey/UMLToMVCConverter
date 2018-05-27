@@ -10,8 +10,8 @@
     using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.CodeTemplates.Interfaces;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.Interfaces;
+    using UMLToMVCConverter.Models;
 
     public class MvcProjectFilesGenerator : IMvcProjectFilesGenerator
     {

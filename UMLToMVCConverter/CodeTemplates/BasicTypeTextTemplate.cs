@@ -11,7 +11,6 @@ namespace UMLToMVCConverter.CodeTemplates
 {
     using System.Collections.Generic;
     using UMLToMVCConverter;
-    using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.CodeTemplates.Interfaces;
     using Autofac;

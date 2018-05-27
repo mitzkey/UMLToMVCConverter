@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using UMLToMVCConverter.CodeTemplates.Interfaces;
-    using UMLToMVCConverter.Domain.Models;
+    using UMLToMVCConverter.Models;
 
     public partial class DatabaseSeedInitializerTextTemplate : IDatabaseSeedInitializerTextTemplate
     {
