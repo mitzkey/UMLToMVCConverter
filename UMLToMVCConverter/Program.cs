@@ -77,7 +77,6 @@
             builder.RegisterType<TypesGenerator>().As<ITypesGenerator>().SingleInstance();
             builder.RegisterType<MvcProjectFilesGenerator>().As<IMvcProjectFilesGenerator>().SingleInstance();
             builder.RegisterType<DataModelFactory>().As<IDataModelFactory>().SingleInstance();
-            builder.RegisterType<AggregationsFactory>().As<IAggregationsFactory>().SingleInstance();
             builder.RegisterType<EFRelationshipModelFactory>().As<IEFRelationshipModelFactory>().SingleInstance();
             builder.RegisterType<ForeignKeysGenerator>().As<IForeignKeysGenerator>().SingleInstance();
             builder.RegisterType<NavigationalPropertiesGenerator>().As<INavigationalPropertiesGenerator>().SingleInstance();
