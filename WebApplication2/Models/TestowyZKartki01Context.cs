@@ -135,7 +135,7 @@ namespace WebApplication2.Models
 
 			modelBuilder.Entity<PrzystosowanieSali>()
 		        .HasOne(t => t.Dyscyplina)
-		        .WithMany(t => t.PrzystosowanieSali)
+		        .WithMany(t => t.PrzystosowaneSale)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -143,7 +143,7 @@ namespace WebApplication2.Models
 
 			modelBuilder.Entity<PrzystosowanieSali>()
 		        .HasOne(t => t.Sala)
-		        .WithMany(t => t.PrzystosowanieSali)
+		        .WithMany(t => t.Przeznaczenie)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -151,7 +151,7 @@ namespace WebApplication2.Models
 
 			modelBuilder.Entity<DyscyplinaZPoziomem>()
 		        .HasOne(t => t.Dyscyplina)
-		        .WithMany(t => t.DyscyplinaZPoziomem)
+		        .WithMany(t => t.Poziomy)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -159,7 +159,7 @@ namespace WebApplication2.Models
 
 			modelBuilder.Entity<DyscyplinaZPoziomem>()
 		        .HasOne(t => t.PoziomZaawansowania)
-		        .WithMany(t => t.DyscyplinaZPoziomem)
+		        .WithMany(t => t.Dyscypliny)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -167,7 +167,7 @@ namespace WebApplication2.Models
 
 			modelBuilder.Entity<SzczegolyKwalifikacji>()
 		        .HasOne(t => t.Instruktor)
-		        .WithMany(t => t.SzczegolyKwalifikacji)
+		        .WithMany(t => t.Kwalifikacje)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -175,7 +175,7 @@ namespace WebApplication2.Models
 
 			modelBuilder.Entity<SzczegolyKwalifikacji>()
 		        .HasOne(t => t.DyscyplinaZPoziomem)
-		        .WithMany(t => t.SzczegolyKwalifikacji)
+		        .WithMany(t => t.Uprawnieni)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 

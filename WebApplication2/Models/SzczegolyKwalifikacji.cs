@@ -21,12 +21,12 @@ namespace WebApplication2.Models
 		public Nullable<System.Double> StawkaZaZajecia { get; set; }
 
 		[Required]
-		[InverseProperty("SzczegolyKwalifikacji")]
+		[InverseProperty("Kwalifikacje")]
 		[ForeignKey("InstruktorID")]
 		public virtual Instruktor Instruktor { get; set; }
 
 		[Required]
-		[InverseProperty("SzczegolyKwalifikacji")]
+		[InverseProperty("Uprawnieni")]
 		[ForeignKey("DyscyplinaZPoziomemID")]
 		public virtual DyscyplinaZPoziomem DyscyplinaZPoziomem { get; set; }
 	}

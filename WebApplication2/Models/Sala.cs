@@ -21,6 +21,6 @@ namespace WebApplication2.Models
 
 		[Required]
 		[InverseProperty("Sala")]
-		public virtual ICollection<PrzystosowanieSali> PrzystosowanieSali { get; set; }
+		public virtual ICollection<PrzystosowanieSali> Przeznaczenie { get; set; }
 	}
 }

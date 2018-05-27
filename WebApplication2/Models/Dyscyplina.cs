@@ -15,11 +15,11 @@ namespace WebApplication2.Models
 		public System.String Nazwa { get; set; }
 
 		[InverseProperty("Dyscyplina")]
-		public virtual ICollection<PrzystosowanieSali> PrzystosowanieSali { get; set; }
+		public virtual ICollection<PrzystosowanieSali> PrzystosowaneSale { get; set; }
 
 		[Required]
 		[InverseProperty("Dyscyplina")]
-		public virtual ICollection<DyscyplinaZPoziomem> DyscyplinaZPoziomem { get; set; }
+		public virtual ICollection<DyscyplinaZPoziomem> Poziomy { get; set; }
 
 		public virtual ICollection<WymaganeWyposazenieDyscyplina> WymaganeWyposazenie { get; set; }
 

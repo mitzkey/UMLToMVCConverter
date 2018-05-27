@@ -17,16 +17,16 @@ namespace WebApplication2.Models
 		public System.String Nazwa { get { throw new NotImplementedException(); } private set {} }
 
 		[Required]
-		[InverseProperty("DyscyplinaZPoziomem")]
+		[InverseProperty("Poziomy")]
 		[ForeignKey("DyscyplinaID")]
 		public virtual Dyscyplina Dyscyplina { get; set; }
 
 		[Required]
-		[InverseProperty("DyscyplinaZPoziomem")]
+		[InverseProperty("Dyscypliny")]
 		[ForeignKey("PoziomZaawansowaniaID")]
 		public virtual PoziomZaawansowania PoziomZaawansowania { get; set; }
 
 		[InverseProperty("DyscyplinaZPoziomem")]
-		public virtual ICollection<SzczegolyKwalifikacji> SzczegolyKwalifikacji { get; set; }
+		public virtual ICollection<SzczegolyKwalifikacji> Uprawnieni { get; set; }
 	}
 }

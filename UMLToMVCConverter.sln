@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMLToMVCConverter", "UMLToMVCConverter\UMLToMVCConverter.csproj", "{0AB93E32-BD05-4586-A424-40DB1CAA912F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMLToEFConverter", "UMLToMVCConverter\UMLToEFConverter.csproj", "{0AB93E32-BD05-4586-A424-40DB1CAA912F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationsService", "MigrationsService\MigrationsService.csproj", "{6EE1108B-C5DE-4D31-826B-37E29F059194}"
 EndProject
@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationsServiceTests", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{CE008EBA-6E9A-4705-9C27-A03FF17673C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{DCBEDAC5-0497-40DE-ABCC-C161AAFB48B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{DCBEDAC5-0497-40DE-ABCC-C161AAFB48B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4333BC73-09F8-4591-A2DB-54C20E8F49F3}"
 	ProjectSection(SolutionItems) = preProject

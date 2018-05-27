@@ -18,6 +18,6 @@ namespace WebApplication2.Models
 		public virtual ICollection<PrzystosowanieSali> PrzystosowanieSali { get; set; }
 
 		[InverseProperty("PoziomZaawansowania")]
-		public virtual ICollection<DyscyplinaZPoziomem> DyscyplinaZPoziomem { get; set; }
+		public virtual ICollection<DyscyplinaZPoziomem> Dyscypliny { get; set; }
 	}
 }

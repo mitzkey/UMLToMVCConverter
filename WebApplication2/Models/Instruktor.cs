@@ -16,7 +16,7 @@ namespace WebApplication2.Models
 
 		[Required]
 		[InverseProperty("Instruktor")]
-		public virtual ICollection<SzczegolyKwalifikacji> SzczegolyKwalifikacji { get; set; }
+		public virtual ICollection<SzczegolyKwalifikacji> Kwalifikacje { get; set; }
 
 		public virtual ICollection<CertyfikowaneKwalifikacjeInstruktor> CertyfikowaneKwalifikacje { get; set; }
 	}

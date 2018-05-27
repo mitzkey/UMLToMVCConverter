@@ -25,12 +25,12 @@ namespace WebApplication2.Models
 		public virtual PoziomZaawansowania Poziom { get; set; }
 
 		[Required]
-		[InverseProperty("PrzystosowanieSali")]
+		[InverseProperty("PrzystosowaneSale")]
 		[ForeignKey("DyscyplinaID")]
 		public virtual Dyscyplina Dyscyplina { get; set; }
 
 		[Required]
-		[InverseProperty("PrzystosowanieSali")]
+		[InverseProperty("Przeznaczenie")]
 		[ForeignKey("SalaID")]
 		public virtual Sala Sala { get; set; }
 
