@@ -17,9 +17,13 @@
             ? this.Members.Where(m => m.AssociationKind != AssociationKind.None).Select(m => m.AssociationKind).Single()
             : AssociationKind.None;
 
-        public Association(IEnumerable<AssociationEndMember> associationEndMembers, string xmiID)
+        public bool HasAssociationClass => this.AssociationClass != null;
+        public TypeModel AssociationClass { get; }
+
+        public Association(IEnumerable<AssociationEndMember> associationEndMembers, string xmiID, TypeModel associationClass)
         {
             this.XmiID = xmiID;
+            this.AssociationClass = associationClass;
             this.Members = associationEndMembers.ToList();
         }
 

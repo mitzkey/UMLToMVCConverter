@@ -57,7 +57,28 @@
                     var associationTypeMember = new AssociationEndMember(null, oppositeMember.Name, reducedMultiplicity, oppositeMember.AssociationKind, type, oppositeMember.Navigable);
                     var parentAssociationMemberTypesNewMember = new AssociationEndMember(null, member.Name, oppositeMember.Multiplicity, member.AssociationKind, member.Type, member.Navigable);
                     var childAssociationMembers = new List<AssociationEndMember> { associationTypeMember, parentAssociationMemberTypesNewMember };
-                    var childAssociation = new Association(childAssociationMembers, null);
+                    var childAssociation = new Association(childAssociationMembers, null, null);
+                    this.associationsRepository.Add(childAssociation);
+                }
+            }
+        }
+
+        public void GenerateForAssociationClasses()
+        {
+            var associationsWithAssociationClasses = this.associationsRepository.GetAllAssociations()
+                .Where(a => a.HasAssociationClass).ToList();
+            foreach (var association in associationsWithAssociationClasses)
+            {
+                var associationClass = association.AssociationClass;
+                foreach (var associationEndMember in association.Members)
+                {
+                    var parentAssociationMemberNewMember = 
+                        new AssociationEndMember(null, associationEndMember.Type.Name, Multiplicity.ExactlyOne, AssociationKind.None, associationClass, true);
+                    var associationClassEndMember = 
+                        new AssociationEndMember(null, associationClass.Name, associationEndMember.Multiplicity, AssociationKind.None, associationEndMember.Type, true);
+                    var childAssociationMembers =
+                        new List<AssociationEndMember> {associationClassEndMember, parentAssociationMemberNewMember};
+                    var childAssociation = new Association(childAssociationMembers, null, null);
                     this.associationsRepository.Add(childAssociation);
                 }
             }

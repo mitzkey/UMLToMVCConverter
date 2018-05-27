@@ -6,5 +6,6 @@
     {
         void Generate(XElement umlModel);
         void GenerateManyToManyAssociationTypes();
+        void GenerateForAssociationClasses();
     }
 }

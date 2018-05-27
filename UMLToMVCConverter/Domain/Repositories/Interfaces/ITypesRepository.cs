@@ -12,5 +12,6 @@
         IEnumerable<TypeModel> GetAllTypes();
         void DeclareType(TypeModel typeDeclaration);
         TypeModel GetTypeDeclaration(string xTypeName);
+        bool TryGetTypeByXmiId(string xmiID, out TypeModel typeModel);
     }
 }

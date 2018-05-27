@@ -43,6 +43,8 @@
 
             this.associationsGenerator.GenerateManyToManyAssociationTypes();
 
+            this.associationsGenerator.GenerateForAssociationClasses();
+
             var enumerationModels = this.enumerationModelsFactory.Create();
 
             var allAssociations = this.associationsRepository.GetAllAssociations().ToList();

@@ -23,6 +23,13 @@ namespace WebApplication2.Models
 		[InverseProperty("Dyscypliny")]
 		public virtual ICollection<PoziomyDyscypliny> Poziomy { get; set; }
 
+		[InverseProperty("Dyscyplina")]
+		public virtual ICollection<PrzystosowanieSali> PrzystosowanieSali { get; set; }
+
+		[Required]
+		[InverseProperty("Dyscyplina")]
+		public virtual ICollection<DyscyplinaZPoziomem> DyscyplinaZPoziomem { get; set; }
+
 		public Sala Sale(Termin t) {
 			throw new NotImplementedException();
 		}

@@ -161,6 +161,54 @@ namespace WebApplication2.Models
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
+
+			modelBuilder.Entity<PrzystosowanieSali>()
+		        .HasOne(t => t.Dyscyplina)
+		        .WithMany(t => t.PrzystosowanieSali)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<PrzystosowanieSali>()
+		        .HasOne(t => t.Sala)
+		        .WithMany(t => t.PrzystosowanieSali)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<DyscyplinaZPoziomem>()
+		        .HasOne(t => t.Dyscyplina)
+		        .WithMany(t => t.DyscyplinaZPoziomem)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<DyscyplinaZPoziomem>()
+		        .HasOne(t => t.PoziomZaawansowania)
+		        .WithMany(t => t.DyscyplinaZPoziomem)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<SzczegolyKwalifikacji>()
+		        .HasOne(t => t.Instruktor)
+		        .WithMany(t => t.SzczegolyKwalifikacji)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<SzczegolyKwalifikacji>()
+		        .HasOne(t => t.DyscyplinaZPoziomem)
+		        .WithMany(t => t.SzczegolyKwalifikacji)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
 			modelBuilder.Entity<Wniosek>().Property(b => b.StatusID).HasDefaultValueSql("1");
 
 		}

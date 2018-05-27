@@ -51,5 +51,15 @@
         {
             return this.typeDeclarations.Single(t => t.Name.Equals(xTypeName));
         }
+
+        public bool TryGetTypeByXmiId(string xmiID, out TypeModel typeModel)
+        {
+            var type = this.types.SingleOrDefault(x => x.XmiID == xmiID);
+            var typeDeclaration = this.typeDeclarations.SingleOrDefault(x => x.XmiID == xmiID);
+
+            typeModel = type ?? typeDeclaration;
+
+            return typeModel != null;
+        }
     }
 }

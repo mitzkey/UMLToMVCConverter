@@ -28,9 +28,11 @@
             var associationEndsXElements = this.xmiWrapper.GetAssociationEndsXElements(xAssociation).ToList();
             var xmiID = this.xmiWrapper.GetElementsId(xAssociation);
 
+            this.typesRepository.TryGetTypeByXmiId(xmiID, out var associationClass);
+
             var associationMebers = this.CreateAssociationMembers(associationEndsXElements);
 
-            return new Association(associationMebers, xmiID);
+            return new Association(associationMebers, xmiID, associationClass);
         }
 
         private IEnumerable<AssociationEndMember> CreateAssociationMembers(List<XElement> associationEndsXElements)
