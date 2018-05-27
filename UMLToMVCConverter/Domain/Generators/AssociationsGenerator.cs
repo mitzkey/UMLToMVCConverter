@@ -75,7 +75,7 @@
                     var parentAssociationMemberNewMember = 
                         new AssociationEndMember(null, associationEndMember.Type.Name, Multiplicity.ExactlyOne, AssociationKind.None, associationClass, true);
                     var associationClassEndMember = 
-                        new AssociationEndMember(null, associationClass.Name, associationEndMember.Multiplicity, AssociationKind.None, associationEndMember.Type, true);
+                        new AssociationEndMember(null, associationEndMember.Name, associationEndMember.Multiplicity, AssociationKind.None, associationEndMember.Type, true);
                     var childAssociationMembers =
                         new List<AssociationEndMember> {associationClassEndMember, parentAssociationMemberNewMember};
                     var childAssociation = new Association(childAssociationMembers, null, null);
