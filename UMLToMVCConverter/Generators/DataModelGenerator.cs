@@ -10,7 +10,7 @@
     public class DataModelGenerator : IDataModelGenerator
     {
         private readonly ITypesGenerator typesGenerator;
-        private readonly Domain.Factories.Interfaces.IEFRelationshipModelGenerator iefRelationshipModelGenerator;
+        private readonly IEFRelationshipModelGenerator iefRelationshipModelGenerator;
         private readonly IEnumerationModelsDeserializer enumerationModelsDeserializer;
         private readonly ITypesRepository typesRepository;
         private readonly IAssociationsForeignKeyGenerator associationsForeignKeyGenerator;
@@ -19,7 +19,7 @@
 
         public DataModelGenerator(
             ITypesGenerator typesGenerator,
-            Domain.Factories.Interfaces.IEFRelationshipModelGenerator iefRelationshipModelGenerator,
+            IEFRelationshipModelGenerator iefRelationshipModelGenerator,
             IEnumerationModelsDeserializer enumerationModelsDeserializer,
             ITypesRepository typesRepository,
             IAssociationsForeignKeyGenerator associationsForeignKeyGenerator,

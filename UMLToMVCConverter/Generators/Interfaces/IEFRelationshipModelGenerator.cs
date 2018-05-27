@@ -1,4 +1,4 @@
-﻿namespace UMLToMVCConverter.Domain.Factories.Interfaces
+﻿namespace UMLToMVCConverter.Generators.Interfaces
 {
     using System.Collections.Generic;
     using UMLToMVCConverter.Models;

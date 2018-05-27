@@ -7,8 +7,6 @@
     using UMLToMVCConverter.Common;
     using UMLToMVCConverter.Deserializers;
     using UMLToMVCConverter.Deserializers.Interfaces;
-    using UMLToMVCConverter.Domain.Factories;
-    using UMLToMVCConverter.Domain.Factories.Interfaces;
     using UMLToMVCConverter.Generators;
     using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Interfaces;
@@ -19,7 +17,7 @@
     using UMLToMVCConverter.UMLHelpers.Interfaces;
     using UMLToMVCConverter.XmiTools;
     using UMLToMVCConverter.XmiTools.Interfaces;
-    using IEFRelationshipModelGenerator = UMLToMVCConverter.Domain.Factories.Interfaces.IEFRelationshipModelGenerator;
+    using IEFRelationshipModelGenerator = UMLToMVCConverter.Generators.Interfaces.IEFRelationshipModelGenerator;
 
     public static class Program
     {
@@ -90,7 +88,7 @@
             builder.RegisterType<TypesGenerator>().As<ITypesGenerator>().SingleInstance();
             builder.RegisterType<MvcProjectFilesGenerator>().As<IMvcProjectFilesGenerator>().SingleInstance();
             builder.RegisterType<DataModelGenerator>().As<IDataModelGenerator>().SingleInstance();
-            builder.RegisterType<IEFRelationshipModelGenerator>().As<Domain.Factories.Interfaces.IEFRelationshipModelGenerator>().SingleInstance();
+            builder.RegisterType<EFRelationshipModelGenerator>().As<IEFRelationshipModelGenerator>().SingleInstance();
 
             builder.RegisterType<BasicTypeTextTemplate>().As<IBasicTypeTextTemplate>().InstancePerDependency();
             builder.RegisterType<ModelClassTextTemplate>().As<IModelClassTextTemplate>().InstancePerDependency();

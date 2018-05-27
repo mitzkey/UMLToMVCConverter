@@ -5,7 +5,6 @@
     using System.Collections.ObjectModel;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain;
     using UMLToMVCConverter.Models;
     using UMLToMVCConverter.Repositories.Interfaces;
     using UMLToMVCConverter.UMLHelpers.Interfaces;

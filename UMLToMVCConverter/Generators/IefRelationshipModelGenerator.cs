@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Models;
 
-    public class IEFRelationshipModelGenerator : Domain.Factories.Interfaces.IEFRelationshipModelGenerator
+    public class EFRelationshipModelGenerator : IEFRelationshipModelGenerator
     {
         public IEnumerable<EFRelationship> CreateRelationshipsConfiguratingOnDeleteBehaviour(IEnumerable<Association> associations)
         {

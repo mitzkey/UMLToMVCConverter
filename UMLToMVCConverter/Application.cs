@@ -2,12 +2,8 @@
 {
     using System;
     using System.Linq;
-    using UMLToMVCConverter.Domain;
-    using UMLToMVCConverter.Domain.Factories;
-    using UMLToMVCConverter.Domain.Factories.Interfaces;
     using UMLToMVCConverter.Generators;
     using UMLToMVCConverter.Interfaces;
-    using UMLToMVCConverter.XmiTools;
     using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class Application
