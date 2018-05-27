@@ -10,7 +10,7 @@ namespace WebApplication2.Models
 	public class Sala {
 
 
-		public int ID {get; set;}
+		public int ID { get; set; }
 
 		public System.String Adres { get; set; }
 

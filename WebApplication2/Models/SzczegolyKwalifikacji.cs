@@ -10,6 +10,7 @@ namespace WebApplication2.Models
 	public class SzczegolyKwalifikacji {
 
 
+		public int ID { get; set; }
 
 		public Nullable<System.Int32> Priorytet { get; set; }
 

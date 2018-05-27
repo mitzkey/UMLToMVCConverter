@@ -10,7 +10,7 @@ namespace WebApplication2.Models
 	public class Wyposażenie {
 
 
-		public int ID {get; set;}
+		public int ID { get; set; }
 
 		public Nullable<System.Double> Koszt { get; set; }
 	}

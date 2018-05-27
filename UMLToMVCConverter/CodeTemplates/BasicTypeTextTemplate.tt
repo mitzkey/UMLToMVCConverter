@@ -3,6 +3,7 @@
 <#@ import namespace="UMLToMVCConverter"#>
 <#@ import namespace="UMLToMVCConverter.Domain.Models"#>
 <#@ import namespace="UMLToMVCConverter.Common"#>
+<#@ import namespace="UMLToMVCConverter.CodeTemplates.Interfaces"#>
 <#@ import namespace="Autofac"#>
 <#@ assembly name="System.Core"#>
 	public<#
@@ -29,7 +30,7 @@ if((this.type.IsClass
 	&& !this.type.HasKey) {
 	#>
 
-		public int ID {get; set;}<#
+		public int ID { get; set; }<#
 }
 
 foreach (var foreignKey in this.type.ForeignKeys) {
@@ -74,8 +75,15 @@ foreach (var property in this.type.Properties) {
 		else {
 			#>; <#
 		}
-		if (property.HasSet) {
-			#>set; <#
+		if (property.IsReadOnly) {
+			#>private <#
+		}
+		#>set<#
+		if (property.IsDerived) {
+			#> {} <#
+		}
+		else {
+			#>; <#
 		}
 		#>}<#
 		if (property.HasDefaultValueString) {

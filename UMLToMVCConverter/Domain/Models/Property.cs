@@ -16,7 +16,7 @@
             string name,
             TypeReference typeReference,
             ITypesRepository typesRepository,
-            bool hasSet,
+            bool isReadOnly,
             string visibility,
             bool isStatic,
             int? defaultValueKey,
@@ -29,7 +29,7 @@
             this.DefaultValueString = defaultValueString ?? string.Empty;
             this.Name = name;
             this.TypeReference = typeReference;
-            this.HasSet = hasSet;
+            this.IsReadOnly = isReadOnly;
             this.Visibility = visibility;
             this.IsStatic = isStatic;
             this.DefaultValueKey = defaultValueKey;
@@ -95,7 +95,7 @@
 
         public bool IsReferencingEnumType => this.IsReferencingType && this.ReferencingType.IsEnum;
 
-        public bool HasSet { get; set; }
+        public bool IsReadOnly { get; set; }
 
         public string Visibility { get; }
 

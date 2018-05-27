@@ -10,7 +10,8 @@ namespace WebApplication2.Models
 	public class DyscyplinaZPoziomem {
 
 
+		public int ID { get; set; }
 
-		public System.String Nazwa { get { throw new NotImplementedException(); } }
+		public System.String Nazwa { get { throw new NotImplementedException(); } private set {} }
 	}
 }

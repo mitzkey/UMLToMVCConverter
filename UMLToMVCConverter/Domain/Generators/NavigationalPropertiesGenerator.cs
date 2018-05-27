@@ -58,7 +58,6 @@
             var sourceTypeNavigationalProperty = propertyBuilder
                 .SetName(sourceMember.Name)
                 .SetTypeReference(sourceMemberPropertyTypeRefernce)
-                .HasSet(true)
                 .SetVisibility(CSharpVisibilityString.Public)
                 .IsVirtual(true)
                 .Build();

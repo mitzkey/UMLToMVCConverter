@@ -10,9 +10,9 @@ namespace WebApplication2.Models
 	public class Instruktor {
 
 
-		public int ID {get; set;}
+		public int ID { get; set; }
 
-		public virtual ICollection<DzienTygodnia> DniZajec { get { throw new NotImplementedException(); } }
+		public virtual ICollection<DzienTygodnia> DniZajec { get { throw new NotImplementedException(); } private set {} }
 
 		public virtual ICollection<CertyfikowaneKwalifikacjeInstruktor> CertyfikowaneKwalifikacje { get; set; }
 	}

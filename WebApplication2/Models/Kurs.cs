@@ -13,9 +13,9 @@ namespace WebApplication2.Models
 		public Nullable<System.Int32> GrafikID { get; set; }
 
 		[Key]
-		public System.String Kod { get; }
+		public System.String Kod { get; set; }
 
-		public Nullable<System.Double> KosztTygodniowy { get { throw new NotImplementedException(); } }
+		public Nullable<System.Double> KosztTygodniowy { get { throw new NotImplementedException(); } private set {} }
 
 		[Required]
 		[InverseProperty("Kursy")]

@@ -10,7 +10,7 @@ namespace WebApplication2.Models
 	public class WymaganeWyposazenieDyscyplina {
 
 
-		public int ID {get; set;}
+		public int ID { get; set; }
 		public Nullable<System.Int32> WymaganeWyposazenieID { get; set; }
 
 		[ForeignKey("WymaganeWyposazenieID")]

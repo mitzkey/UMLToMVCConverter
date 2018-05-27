@@ -54,15 +54,11 @@
 
             var isStatic = Convert.ToBoolean(xProperty.OptionalAttributeValue("isStatic"));
             propertyBuilder.IsStatic(isStatic);
-
-            var hasSet = true;
-            var xIsReadonly = Convert.ToBoolean(xProperty.OptionalAttributeValue("isReadOnly"));
             var isDerived = Convert.ToBoolean(xProperty.OptionalAttributeValue("isDerived"));
-            if (xIsReadonly || isDerived)
+            if (isDerived)
             {
-                hasSet = false;
+                propertyBuilder.IsReadOnly(true);
             }
-            propertyBuilder.HasSet(hasSet);
             propertyBuilder.IsDerived(isDerived);
 
             var cSharpTypeReference = this.umlTypesHelper.GetXElementCsharpType(xProperty);
@@ -145,7 +141,6 @@
                 .SetName(name)
                 .SetTypeReference(typeReference)
                 .SetTypesRepository(this.typesRepository)
-                .HasSet(true)
                 .SetVisibility(CSharpVisibilityString.Public)
                 .Build();
 

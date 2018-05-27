@@ -9,7 +9,7 @@
     {
         private string name;
         private TypeReference typeReference;
-        private bool hasSet;
+        private bool isReadOnly;
         private ITypesRepository typesRepository;
         private string visibility;
         private bool isStatic;
@@ -31,7 +31,7 @@
                 this.name,
                 this.typeReference,
                 this.typesRepository,
-                this.hasSet,
+                this.isReadOnly,
                 this.visibility,
                 this.isStatic,
                 this.defaultValueKey,
@@ -60,9 +60,9 @@
             return this;
         }
 
-        public PropertyBuilder HasSet(bool hasSet)
+        public PropertyBuilder IsReadOnly(bool isReadOnly)
         {
-            this.hasSet = hasSet;
+            this.isReadOnly = isReadOnly;
             return this;
         }
 

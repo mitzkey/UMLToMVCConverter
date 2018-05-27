@@ -10,7 +10,7 @@ namespace WebApplication2.Models
 	public class PoziomZaawansowania {
 
 
-		public int ID {get; set;}
+		public int ID { get; set; }
 
 		public System.String Nazwa { get; set; }
 

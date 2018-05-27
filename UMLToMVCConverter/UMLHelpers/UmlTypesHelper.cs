@@ -231,7 +231,6 @@
                 .SetName("Value")
                 .SetTypeReference(valueType)
                 .SetTypesRepository(this.typesRepository)
-                .HasSet(true)
                 .SetVisibility(CSharpVisibilityString.Public)
                 .Build();
 

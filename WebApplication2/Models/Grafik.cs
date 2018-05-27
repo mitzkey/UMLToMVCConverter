@@ -10,13 +10,13 @@ namespace WebApplication2.Models
 	public class Grafik {
 
 
-		public int ID {get; set;}
+		public int ID { get; set; }
 
 		public Nullable<System.Int32> Rok { get; set; }
 
 		public System.String Semestr { get; set; }
 
-		public Nullable<System.Boolean> Aktualny { get { throw new NotImplementedException(); } }
+		public Nullable<System.Boolean> Aktualny { get { throw new NotImplementedException(); } private set {} }
 
 		[InverseProperty("Grafik")]
 		public virtual ICollection<Termin> Terminy { get; set; }
