@@ -53,7 +53,7 @@
                 foreach (var member in association.Members)
                 {
                     var oppositeMember = association.Members.Single(x => !x.Equals(member));
-                    var reducedMultiplicity = this.ReduceMultiplicity(member.Multiplicity);
+                    var reducedMultiplicity = ReduceMultiplicity(member.Multiplicity);
                     var associationTypeMember = new AssociationEndMember(null, oppositeMember.Name, reducedMultiplicity, oppositeMember.AssociationKind, type, oppositeMember.Navigable);
                     var parentAssociationMemberTypesNewMember = new AssociationEndMember(null, member.Name, oppositeMember.Multiplicity, member.AssociationKind, member.Type, member.Navigable);
                     var childAssociationMembers = new List<AssociationEndMember> { associationTypeMember, parentAssociationMemberTypesNewMember };
@@ -63,7 +63,7 @@
             }
         }
 
-        private Multiplicity ReduceMultiplicity(Multiplicity multiplicity)
+        private static Multiplicity ReduceMultiplicity(Multiplicity multiplicity)
         {
             if (multiplicity != Multiplicity.OneOrMore
                 && multiplicity != Multiplicity.ZeroOrMore)

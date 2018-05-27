@@ -10,10 +10,7 @@
     public class DataModelFactory : IDataModelFactory
     {
         private readonly ITypesGenerator typesGenerator;
-        private readonly IAggregationsFactory aggregationsFactory;
-        private readonly IForeignKeysGenerator foreignKeysGenerator;
         private readonly IEFRelationshipModelFactory efRelationshipModelFactory;
-        private readonly INavigationalPropertiesGenerator nagivationalPropertiesGenerator;
         private readonly IEnumerationModelsFactory enumerationModelsFactory;
         private readonly ITypesRepository typesRepository;
         private readonly IAssociationsForeignKeyGenerator associationsForeignKeyGenerator;
@@ -22,10 +19,7 @@
 
         public DataModelFactory(
             ITypesGenerator typesGenerator,
-            IAggregationsFactory aggregationsFactory,
-            IForeignKeysGenerator foreignKeysGenerator,
             IEFRelationshipModelFactory efRelationshipModelFactory,
-            INavigationalPropertiesGenerator nagivationalPropertiesGenerator,
             IEnumerationModelsFactory enumerationModelsFactory,
             ITypesRepository typesRepository,
             IAssociationsForeignKeyGenerator associationsForeignKeyGenerator,
@@ -33,10 +27,7 @@
             IAssociationsGenerator associationsGenerator)
         {
             this.typesGenerator = typesGenerator;
-            this.aggregationsFactory = aggregationsFactory;
-            this.foreignKeysGenerator = foreignKeysGenerator;
             this.efRelationshipModelFactory = efRelationshipModelFactory;
-            this.nagivationalPropertiesGenerator = nagivationalPropertiesGenerator;
             this.enumerationModelsFactory = enumerationModelsFactory;
             this.typesRepository = typesRepository;
             this.associationsForeignKeyGenerator = associationsForeignKeyGenerator;
