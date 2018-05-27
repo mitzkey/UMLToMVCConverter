@@ -49,11 +49,17 @@ namespace WebApplication2.Models
 
 		public DbSet<SzczegolyKwalifikacji> SzczegolyKwalifikacji { get; set; }
 
+		public DbSet<PrzystosowaneSalePrzeznaczenie> PrzystosowaneSalePrzeznaczenie { get; set; }
+
 		public DbSet<BrakujaceWyposazeniePrzystosowanieSali> BrakujaceWyposazeniePrzystosowanieSali { get; set; }
 
 		public DbSet<WymaganeWyposazenieDyscyplina> WymaganeWyposazenieDyscyplina { get; set; }
 
+		public DbSet<PoziomyDyscypliny> PoziomyDyscypliny { get; set; }
+
 		public DbSet<CertyfikowaneKwalifikacjeInstruktor> CertyfikowaneKwalifikacjeInstruktor { get; set; }
+
+		public DbSet<KwalifikacjeUprawnieni> KwalifikacjeUprawnieni { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
@@ -128,6 +134,30 @@ namespace WebApplication2.Models
 			modelBuilder.Entity<PrzystosowanieSali>()
 		        .HasOne(t => t.Poziom)
 		        .WithMany(t => t.PrzystosowanieSali)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<PrzystosowaneSalePrzeznaczenie>()
+		        .HasOne(t => t.PrzystosowaneSale)
+		        .WithMany(t => t.Przeznaczenie)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<PoziomyDyscypliny>()
+		        .HasOne(t => t.Dyscypliny)
+		        .WithMany(t => t.Poziomy)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<KwalifikacjeUprawnieni>()
+		        .HasOne(t => t.Uprawnieni)
+		        .WithMany(t => t.Kwalifikacje)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 

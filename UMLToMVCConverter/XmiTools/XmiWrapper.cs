@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Domain;
     using UMLToMVCConverter.Domain.Models;
     using UMLToMVCConverter.XmiTools.Interfaces;
 
@@ -61,8 +60,9 @@
         public IEnumerable<XElement> GetXAssociations(XElement umlModel)
         {
             return umlModel.Descendants()
-                .Where(i => i.Attributes().
-                                Contains(new XAttribute(this.xmiNamespace + "type", "uml:Association"), this.attributeEqualityComparer));
+                .Where(i =>
+                    i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:Association"), this.attributeEqualityComparer)
+                    || i.Attributes().Contains(new XAttribute(this.xmiNamespace + "type", "uml:AssociationClass"), this.attributeEqualityComparer));
         }
 
         public IEnumerable<XElement> GetAssociationEndsXElements(XElement xAssociation)

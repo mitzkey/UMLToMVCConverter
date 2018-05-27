@@ -16,5 +16,9 @@ namespace WebApplication2.Models
 
 		[InverseProperty("Poziom")]
 		public virtual ICollection<PrzystosowanieSali> PrzystosowanieSali { get; set; }
+
+		[Required]
+		[InverseProperty("Poziomy")]
+		public virtual ICollection<PoziomyDyscypliny> Dyscypliny { get; set; }
 	}
 }
