@@ -22,14 +22,23 @@
             var destinationType = destinationMember.Type;
             var sourceType = sourceMember.Type;
 
+            bool required = sourceMember.Multiplicity == Multiplicity.ExactlyOne
+                || sourceMember.Multiplicity == Multiplicity.OneOrMore;
+
             if (destinationType.PrimaryKeyAttributes.Count > 0)
             {
                 var foreignKeyNames = new List<string>();
                 foreach (var destinationTypePrimaryKeyAttribute in destinationType.PrimaryKeyAttributes)
                 {
                     var foreignKeyName = sourceMember.Name + destinationTypePrimaryKeyAttribute.Name;
-                    var foreignKeyProperty = destinationTypePrimaryKeyAttribute;
-                    sourceType.ForeignKeys.Add(foreignKeyName, foreignKeyProperty);
+                    var foreignKeyProperty = this.propertyDeserializer.CreateBasicProperty(foreignKeyName, destinationTypePrimaryKeyAttribute.TypeReference.Type, destinationTypePrimaryKeyAttribute.TypeReference.Generic?.Type);
+
+                    if (required)
+                    {
+                        foreignKeyProperty.Attributes.Add(new Attribute("Required", null));
+                    }
+
+                    sourceType.Properties.Add(foreignKeyProperty);
                     foreignKeyNames.Add(foreignKeyName);
                 }
 
@@ -43,7 +52,12 @@
 
                 var foreignKeyProperty = this.propertyDeserializer.CreateBasicProperty(foreignKeyName, typeof(Nullable), typeof(int));
 
-                sourceType.ForeignKeys.Add(foreignKeyName, foreignKeyProperty);
+                if (required)
+                {
+                    foreignKeyProperty.Attributes.Add(new Attribute("Required", null));
+                }
+
+                sourceType.Properties.Add(foreignKeyProperty);
 
                 var navigationalProperty = sourceType.Properties.Single(x => x.Name == sourceMember.Name);
                 var attribute = new Attribute("ForeignKey", $"{ foreignKeyName }");
