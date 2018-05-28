@@ -5,11 +5,11 @@
     using System.Collections.ObjectModel;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
+    using UMLToMVCConverter.Common.XmiTools;
+    using UMLToMVCConverter.Common.XmiTools.Interfaces;
     using UMLToMVCConverter.Models;
-    using UMLToMVCConverter.Repositories.Interfaces;
+    using UMLToMVCConverter.Models.Repositories.Interfaces;
     using UMLToMVCConverter.UMLHelpers.Interfaces;
-    using UMLToMVCConverter.XmiTools;
-    using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class UmlTypesHelper : IUmlTypesHelper
     {

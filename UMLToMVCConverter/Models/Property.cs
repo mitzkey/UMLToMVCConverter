@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using UMLToMVCConverter.Builders;
-    using UMLToMVCConverter.Repositories.Interfaces;
+    using UMLToMVCConverter.Models.Repositories.Interfaces;
 
     public class Property
     {

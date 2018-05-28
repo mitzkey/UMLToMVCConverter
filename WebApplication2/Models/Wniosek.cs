@@ -16,6 +16,7 @@ namespace WebApplication2.Models
 		public Nullable<System.DateTime> DataRozpatrzenia { get; set; }
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public System.String Pesel { get; set; }
 
 		public StatusWniosku Status { get; set; }		

@@ -12,6 +12,7 @@ namespace WebApplication2.Models
 		public int ID { get; set; }
 
 
+		[NotMapped]
 		public virtual ICollection<DzienTygodnia> DniZajec { get { throw new NotImplementedException(); } private set {} }
 
 		[InverseProperty("Instruktor")]

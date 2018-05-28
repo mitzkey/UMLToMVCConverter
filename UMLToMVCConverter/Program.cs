@@ -5,18 +5,18 @@
     using UMLToMVCConverter.CodeTemplates;
     using UMLToMVCConverter.CodeTemplates.Interfaces;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Deserializers;
-    using UMLToMVCConverter.Deserializers.Interfaces;
+    using UMLToMVCConverter.Common.XmiTools;
+    using UMLToMVCConverter.Common.XmiTools.Interfaces;
     using UMLToMVCConverter.Generators;
+    using UMLToMVCConverter.Generators.Deserializers;
+    using UMLToMVCConverter.Generators.Deserializers.Interfaces;
     using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Interfaces;
     using UMLToMVCConverter.Models;
-    using UMLToMVCConverter.Repositories;
-    using UMLToMVCConverter.Repositories.Interfaces;
+    using UMLToMVCConverter.Models.Repositories;
+    using UMLToMVCConverter.Models.Repositories.Interfaces;
     using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.UMLHelpers.Interfaces;
-    using UMLToMVCConverter.XmiTools;
-    using UMLToMVCConverter.XmiTools.Interfaces;
     using IEFRelationshipModelGenerator = UMLToMVCConverter.Generators.Interfaces.IEFRelationshipModelGenerator;
 
     public static class Program

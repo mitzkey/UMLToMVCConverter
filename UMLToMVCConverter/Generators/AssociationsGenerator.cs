@@ -5,12 +5,12 @@
     using System.Linq;
     using System.Text;
     using System.Xml.Linq;
-    using UMLToMVCConverter.Deserializers.Interfaces;
+    using UMLToMVCConverter.Common.XmiTools.Interfaces;
+    using UMLToMVCConverter.Generators.Deserializers.Interfaces;
     using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Models;
-    using UMLToMVCConverter.Repositories.Interfaces;
+    using UMLToMVCConverter.Models.Repositories.Interfaces;
     using UMLToMVCConverter.UMLHelpers;
-    using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class AssociationsGenerator : IAssociationsGenerator
     {

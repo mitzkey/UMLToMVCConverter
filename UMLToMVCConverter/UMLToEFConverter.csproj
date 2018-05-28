@@ -88,14 +88,14 @@
   <ItemGroup>
     <Compile Include="Models\Association.cs" />
     <Compile Include="Models\AssociationEndMember.cs" />
-    <Compile Include="Deserializers\AssociationDeserializer.cs" />
+    <Compile Include="Generators\Deserializers\AssociationDeserializer.cs" />
     <Compile Include="Generators\AssociationsForeignKeyGenerator.cs" />
     <Compile Include="Generators\AssociationsGenerator.cs" />
-    <Compile Include="Repositories\AssociationsRepository.cs" />
-    <Compile Include="Deserializers\Interfaces\IAssociationDeserializer.cs" />
+    <Compile Include="Models\Repositories\AssociationsRepository.cs" />
+    <Compile Include="Generators\Deserializers\Interfaces\IAssociationDeserializer.cs" />
     <Compile Include="Generators\Interfaces\IAssociationsForeignKeyGenerator.cs" />
     <Compile Include="Generators\Interfaces\IAssociationsGenerator.cs" />
-    <Compile Include="Repositories\Interfaces\IAssociationsRepository.cs" />
+    <Compile Include="Models\Repositories\Interfaces\IAssociationsRepository.cs" />
     <Compile Include="Models\Attribute.cs" />
     <Compile Include="Models\Method.cs" />
     <Compile Include="Models\Aggregation.cs" />
@@ -105,7 +105,7 @@
     <Compile Include="Builders\TypeReferenceBuilder.cs" />
     <Compile Include="Models\RelationshipMultiplicity.cs" />
     <Compile Include="UMLHelpers\CSharpVisibilityString.cs" />
-    <Compile Include="XmiTools\XAttributeNameResolver.cs" />
+    <Compile Include="Common\XmiTools\XAttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\BasicTypeTextTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -178,23 +178,23 @@
     </Compile>
     <Compile Include="Models\DataModel.cs" />
     <Compile Include="Generators\DataModelGenerator.cs" />
-    <Compile Include="Deserializers\EnumerationModelsDeserializer.cs" />
+    <Compile Include="Generators\Deserializers\EnumerationModelsDeserializer.cs" />
     <Compile Include="Generators\ForeignKeysGenerator.cs" />
-    <Compile Include="Deserializers\Interfaces\IEnumerationModelsDeserializer.cs" />
+    <Compile Include="Generators\Deserializers\Interfaces\IEnumerationModelsDeserializer.cs" />
     <Compile Include="Generators\Interfaces\IForeignKeysGenerator.cs" />
     <Compile Include="Generators\Interfaces\INavigationalPropertiesGenerator.cs" />
     <Compile Include="Generators\IDataModelGenerator.cs" />
     <Compile Include="Interfaces\IMvcProjectFilesGenerator.cs" />
     <Compile Include="Generators\Interfaces\IEFRelationshipModelGenerator.cs" />
-    <Compile Include="Deserializers\Interfaces\IPropertyDeserializer.cs" />
+    <Compile Include="Generators\Deserializers\Interfaces\IPropertyDeserializer.cs" />
     <Compile Include="Generators\Interfaces\ITypesGenerator.cs" />
-    <Compile Include="Repositories\Interfaces\ITypesRepository.cs" />
-    <Compile Include="Repositories\TypesRepository.cs" />
-    <Compile Include="XmiTools\XElementType.cs" />
+    <Compile Include="Models\Repositories\Interfaces\ITypesRepository.cs" />
+    <Compile Include="Models\Repositories\TypesRepository.cs" />
+    <Compile Include="Common\XmiTools\XElementType.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
     <Compile Include="Generators\IefRelationshipModelGenerator.cs" />
     <Compile Include="Generators\NavigationalPropertiesGenerator.cs" />
-    <Compile Include="Deserializers\PropertyDeserializer.cs" />
+    <Compile Include="Generators\Deserializers\PropertyDeserializer.cs" />
     <Compile Include="Models\EFRelationshipMemberMultiplicity.cs" />
     <Compile Include="CodeTemplates\ViewIndexTextTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -208,7 +208,7 @@
     <Compile Include="Common\JObjectExtensions.cs" />
     <Compile Include="Common\StringExtensions.cs" />
     <Compile Include="Common\XElementExtensions.cs" />
-    <Compile Include="XmiTools\Interfaces\IXAttributeNameResolver.cs" />
+    <Compile Include="Common\XmiTools\Interfaces\IXAttributeNameResolver.cs" />
     <Compile Include="CodeTemplates\Interfaces\IDbContextFactoryClassTextTemplate.cs" />
     <Compile Include="CodeTemplates\Interfaces\IDbContextClassTextTemplate.cs" />
     <Compile Include="Common\ILogger.cs" />
@@ -218,8 +218,8 @@
     <Compile Include="Interfaces\IScriptRunner.cs" />
     <Compile Include="Interfaces\IStartupCsConfigurator.cs" />
     <Compile Include="UMLHelpers\Interfaces\IUmlTypesHelper.cs" />
-    <Compile Include="XmiTools\Interfaces\IXAttributeEqualityComparer.cs" />
-    <Compile Include="XmiTools\Interfaces\IXmiWrapper.cs" />
+    <Compile Include="Common\XmiTools\Interfaces\IXAttributeEqualityComparer.cs" />
+    <Compile Include="Common\XmiTools\Interfaces\IXmiWrapper.cs" />
     <Compile Include="Common\Logger.cs" />
     <Compile Include="UMLHelpers\Interfaces\IUmlVisibilityMapper.cs" />
     <Compile Include="MigrationServiceClient.cs" />
@@ -235,8 +235,8 @@
     <Compile Include="StartupCsConfigurator.cs" />
     <Compile Include="Generators\TypesGenerator.cs" />
     <Compile Include="UMLHelpers\UmlTypesHelper.cs" />
-    <Compile Include="XmiTools\XmiWrapper.cs" />
-    <Compile Include="XmiTools\XAttributeEqualityComparer.cs" />
+    <Compile Include="Common\XmiTools\XmiWrapper.cs" />
+    <Compile Include="Common\XmiTools\XAttributeEqualityComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Multiplicity.cs" />
@@ -277,6 +277,7 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ViewIndexTextTemplate.cs</LastGenOutput>
     </None>
+    <None Include="EverythingDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -310,7 +311,9 @@
       <LastGenOutput>ProgramCsTextTemplate.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="XmiTools\Interfaces\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

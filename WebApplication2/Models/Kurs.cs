@@ -12,9 +12,11 @@ namespace WebApplication2.Models
 
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public System.String Kod { get; set; }
 
-		public Nullable<System.Double> KosztTygodniowy { get { throw new NotImplementedException(); } private set {} }
+		[NotMapped]
+		public Nullable<System.Double> KosztTygodniowy { get { return 100; } private set {} }
 
 		[InverseProperty("Kursy")]
 		[ForeignKey("GrafikID")]

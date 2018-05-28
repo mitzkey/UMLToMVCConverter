@@ -2,9 +2,9 @@
 {
     using System;
     using System.Linq;
+    using UMLToMVCConverter.Common.XmiTools.Interfaces;
     using UMLToMVCConverter.Generators;
     using UMLToMVCConverter.Interfaces;
-    using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class Application
     {

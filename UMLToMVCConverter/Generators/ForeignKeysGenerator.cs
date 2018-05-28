@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using UMLToMVCConverter.Deserializers.Interfaces;
+    using UMLToMVCConverter.Generators.Deserializers.Interfaces;
     using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Models;
     using Attribute = UMLToMVCConverter.Models.Attribute;

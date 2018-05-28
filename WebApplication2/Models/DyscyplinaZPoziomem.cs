@@ -12,6 +12,7 @@ namespace WebApplication2.Models
 		public int ID { get; set; }
 
 
+		[NotMapped]
 		public System.String Nazwa { get { throw new NotImplementedException(); } private set {} }
 
 		[InverseProperty("Poziomy")]

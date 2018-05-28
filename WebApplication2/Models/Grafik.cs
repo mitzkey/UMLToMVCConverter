@@ -16,7 +16,8 @@ namespace WebApplication2.Models
 
 		public System.String Semestr { get; set; }
 
-		public Nullable<System.Boolean> Aktualny { get { throw new NotImplementedException(); } private set {} }
+		[NotMapped]
+		public Nullable<System.Boolean> Aktualny { get { return true; } private set {} }
 
 		[InverseProperty("Grafik")]
 		public virtual ICollection<Termin> Terminy { get; set; }

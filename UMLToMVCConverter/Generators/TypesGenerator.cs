@@ -6,14 +6,14 @@
     using System.Linq;
     using System.Xml.Linq;
     using UMLToMVCConverter.Common;
-    using UMLToMVCConverter.Deserializers.Interfaces;
+    using UMLToMVCConverter.Common.XmiTools;
+    using UMLToMVCConverter.Common.XmiTools.Interfaces;
+    using UMLToMVCConverter.Generators.Deserializers.Interfaces;
     using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Models;
-    using UMLToMVCConverter.Repositories.Interfaces;
+    using UMLToMVCConverter.Models.Repositories.Interfaces;
     using UMLToMVCConverter.UMLHelpers;
     using UMLToMVCConverter.UMLHelpers.Interfaces;
-    using UMLToMVCConverter.XmiTools;
-    using UMLToMVCConverter.XmiTools.Interfaces;
 
     public class TypesGenerator : ITypesGenerator
     {

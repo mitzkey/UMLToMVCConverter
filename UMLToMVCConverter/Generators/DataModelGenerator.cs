@@ -2,10 +2,10 @@
 {
     using System.Linq;
     using System.Xml.Linq;
-    using UMLToMVCConverter.Deserializers.Interfaces;
+    using UMLToMVCConverter.Generators.Deserializers.Interfaces;
     using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Models;
-    using UMLToMVCConverter.Repositories.Interfaces;
+    using UMLToMVCConverter.Models.Repositories.Interfaces;
 
     public class DataModelGenerator : IDataModelGenerator
     {

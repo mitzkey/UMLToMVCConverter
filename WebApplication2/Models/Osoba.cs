@@ -12,6 +12,7 @@ namespace WebApplication2.Models
 
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public System.String Pesel { get; set; }
 	}
 }

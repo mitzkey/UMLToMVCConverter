@@ -1,0 +1,49 @@
+﻿@model WebApplication2.Models.Zajecia
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Zajecia</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="TerminDzien" class="control-label"></label>
+                <select asp-for="TerminDzien" class="form-control" asp-items="ViewBag.TerminDzien"></select>
+                <span asp-validation-for="TerminDzien" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TerminGodzinaRozpoczecia" class="control-label"></label>
+                <select asp-for="TerminGodzinaRozpoczecia" class="form-control" asp-items="ViewBag.TerminGodzinaRozpoczecia"></select>
+                <span asp-validation-for="TerminGodzinaRozpoczecia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KursKod" class="control-label"></label>
+                <select asp-for="KursKod" class="form-control" asp-items="ViewBag.KursKod"></select>
+                <span asp-validation-for="KursKod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalaID" class="control-label"></label>
+                <select asp-for="SalaID" class="form-control" asp-items="ViewBag.SalaID"></select>
+                <span asp-validation-for="SalaID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
