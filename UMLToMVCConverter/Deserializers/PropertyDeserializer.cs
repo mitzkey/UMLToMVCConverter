@@ -51,6 +51,7 @@
             if (isDerived)
             {
                 propertyBuilder.IsReadOnly(true);
+                propertyBuilder.WithAttribute(new Attribute("NotMapped", null));
             }
             propertyBuilder.IsDerived(isDerived);
 
@@ -87,7 +88,12 @@
             propertyBuilder.SetDefaultValueString(defaultValueString);
 
             var isID = Convert.ToBoolean(xProperty.OptionalAttributeValue("isID"));
-            propertyBuilder.IsID(isID);
+            if (isID)
+            {
+                propertyBuilder.IsID(isID);
+                propertyBuilder.WithAttribute(
+                    new Attribute("DatabaseGenerated", "DatabaseGeneratedOption.None", false));
+            }
 
             var multiplicity = this.xmiWrapper.GetMultiplicity(xProperty);
             if (multiplicity == Multiplicity.ExactlyOne && !cSharpTypeReference.IsPrimitive)
