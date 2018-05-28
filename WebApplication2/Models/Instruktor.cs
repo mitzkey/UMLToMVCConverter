@@ -14,7 +14,6 @@ namespace WebApplication2.Models
 
 		public virtual ICollection<DzienTygodnia> DniZajec { get { throw new NotImplementedException(); } private set {} }
 
-		[Required]
 		[InverseProperty("Instruktor")]
 		public virtual ICollection<SzczegolyKwalifikacji> Kwalifikacje { get; set; }
 

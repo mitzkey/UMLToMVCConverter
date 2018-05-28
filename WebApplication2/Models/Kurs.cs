@@ -10,17 +10,18 @@ namespace WebApplication2.Models
 	public class Kurs {
 
 
-		public Nullable<System.Int32> GrafikID { get; set; }
 
 		[Key]
 		public System.String Kod { get; set; }
 
 		public Nullable<System.Double> KosztTygodniowy { get { throw new NotImplementedException(); } private set {} }
 
-		[Required]
 		[InverseProperty("Kursy")]
 		[ForeignKey("GrafikID")]
 		public virtual Grafik Grafik { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> GrafikID { get; set; }
 
 		[InverseProperty("Kurs")]
 		public virtual ICollection<Zajecia> Zajecia { get; set; }

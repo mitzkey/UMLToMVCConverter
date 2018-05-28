@@ -10,16 +10,17 @@ namespace WebApplication2.Models
 	public class Termin {
 
 
-		public Nullable<System.Int32> GrafikID { get; set; }
 
 		public Nullable<System.DateTime> Dzien { get; set; }
 
 		public Nullable<System.DateTime> GodzinaRozpoczecia { get; set; }
 
-		[Required]
 		[InverseProperty("Terminy")]
 		[ForeignKey("GrafikID")]
 		public virtual Grafik Grafik { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> GrafikID { get; set; }
 
 		[InverseProperty("Termin")]
 		public virtual ICollection<Zajecia> Zajecia { get; set; }

@@ -11,15 +11,16 @@ namespace WebApplication2.Models
 
 		public int ID { get; set; }
 
-		public Nullable<System.Int32> WojewodztwoMiejscowosciID { get; set; }
 
 		public System.String Nazwa { get; set; }
 
 		public Nullable<System.Boolean> Aktualna { get; set; }
 
-		[Required]
 		[InverseProperty("MiejscowoscMiejscowosci")]
 		[ForeignKey("WojewodztwoMiejscowosciID")]
 		public virtual Wojewodztwo WojewodztwoMiejscowosci { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> WojewodztwoMiejscowosciID { get; set; }
 	}
 }

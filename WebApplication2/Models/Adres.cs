@@ -11,10 +11,11 @@ namespace WebApplication2.Models
 
 		public int ID { get; set; }
 
-		public Nullable<System.Int32> MiejscowoscID { get; set; }
 
-		[Required]
 		[ForeignKey("MiejscowoscID")]
 		public virtual Miejscowosc Miejscowosc { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> MiejscowoscID { get; set; }
 	}
 }

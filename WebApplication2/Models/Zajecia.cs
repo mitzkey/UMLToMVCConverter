@@ -11,24 +11,29 @@ namespace WebApplication2.Models
 
 		public int ID { get; set; }
 
-		public Nullable<System.DateTime> TerminDzien { get; set; }
-		public Nullable<System.DateTime> TerminGodzinaRozpoczecia { get; set; }
-		public System.String KursKod { get; set; }
-		public Nullable<System.Int32> SalaID { get; set; }
 
-		[Required]
 		[InverseProperty("Zajecia")]
 		[ForeignKey("TerminDzien,TerminGodzinaRozpoczecia")]
 		public virtual Termin Termin { get; set; }
 
 		[Required]
+		public Nullable<System.DateTime> TerminDzien { get; set; }
+
+		[Required]
+		public Nullable<System.DateTime> TerminGodzinaRozpoczecia { get; set; }
+
 		[InverseProperty("Zajecia")]
 		[ForeignKey("KursKod")]
 		public virtual Kurs Kurs { get; set; }
 
 		[Required]
+		public System.String KursKod { get; set; }
+
 		[InverseProperty("Zajecia")]
 		[ForeignKey("SalaID")]
 		public virtual Sala Sala { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> SalaID { get; set; }
 	}
 }

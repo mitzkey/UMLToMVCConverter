@@ -19,7 +19,6 @@ namespace WebApplication2.Models
 		[InverseProperty("Sala")]
 		public virtual ICollection<Zajecia> Zajecia { get; set; }
 
-		[Required]
 		[InverseProperty("Sala")]
 		public virtual ICollection<PrzystosowanieSali> Przeznaczenie { get; set; }
 	}

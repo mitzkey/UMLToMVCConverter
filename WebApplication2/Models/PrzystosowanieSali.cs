@@ -11,28 +11,31 @@ namespace WebApplication2.Models
 
 		public int ID { get; set; }
 
-		public Nullable<System.Int32> PoziomID { get; set; }
-		public Nullable<System.Int32> DyscyplinaID { get; set; }
-		public Nullable<System.Int32> SalaID { get; set; }
 
 		public Nullable<System.Int32> Pojemnosc { get; set; }
 
 		public Nullable<System.Double> StawkaZaZajecia { get; set; }
 
-		[Required]
 		[InverseProperty("PrzystosowanieSali")]
 		[ForeignKey("PoziomID")]
 		public virtual PoziomZaawansowania Poziom { get; set; }
 
 		[Required]
+		public Nullable<System.Int32> PoziomID { get; set; }
+
 		[InverseProperty("PrzystosowaneSale")]
 		[ForeignKey("DyscyplinaID")]
 		public virtual Dyscyplina Dyscyplina { get; set; }
 
 		[Required]
+		public Nullable<System.Int32> DyscyplinaID { get; set; }
+
 		[InverseProperty("Przeznaczenie")]
 		[ForeignKey("SalaID")]
 		public virtual Sala Sala { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> SalaID { get; set; }
 
 		public virtual ICollection<BrakujaceWyposazeniePrzystosowanieSali> BrakujaceWyposazenie { get; set; }
 	}

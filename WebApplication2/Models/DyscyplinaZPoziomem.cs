@@ -11,20 +11,22 @@ namespace WebApplication2.Models
 
 		public int ID { get; set; }
 
-		public Nullable<System.Int32> DyscyplinaID { get; set; }
-		public Nullable<System.Int32> PoziomZaawansowaniaID { get; set; }
 
 		public System.String Nazwa { get { throw new NotImplementedException(); } private set {} }
 
-		[Required]
 		[InverseProperty("Poziomy")]
 		[ForeignKey("DyscyplinaID")]
 		public virtual Dyscyplina Dyscyplina { get; set; }
 
 		[Required]
+		public Nullable<System.Int32> DyscyplinaID { get; set; }
+
 		[InverseProperty("Dyscypliny")]
 		[ForeignKey("PoziomZaawansowaniaID")]
 		public virtual PoziomZaawansowania PoziomZaawansowania { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> PoziomZaawansowaniaID { get; set; }
 
 		[InverseProperty("DyscyplinaZPoziomem")]
 		public virtual ICollection<SzczegolyKwalifikacji> Uprawnieni { get; set; }

@@ -11,8 +11,6 @@ namespace WebApplication2.Models
 
 		public int ID { get; set; }
 
-		public Nullable<System.Int32> InstruktorID { get; set; }
-		public Nullable<System.Int32> DyscyplinaZPoziomemID { get; set; }
 
 		public Nullable<System.Int32> Priorytet { get; set; }
 
@@ -20,14 +18,18 @@ namespace WebApplication2.Models
 
 		public Nullable<System.Double> StawkaZaZajecia { get; set; }
 
-		[Required]
 		[InverseProperty("Kwalifikacje")]
 		[ForeignKey("InstruktorID")]
 		public virtual Instruktor Instruktor { get; set; }
 
 		[Required]
+		public Nullable<System.Int32> InstruktorID { get; set; }
+
 		[InverseProperty("Uprawnieni")]
 		[ForeignKey("DyscyplinaZPoziomemID")]
 		public virtual DyscyplinaZPoziomem DyscyplinaZPoziomem { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> DyscyplinaZPoziomemID { get; set; }
 	}
 }

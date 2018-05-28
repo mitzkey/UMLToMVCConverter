@@ -10,11 +10,12 @@ namespace WebApplication2.Models
 	public class CzlonekKlubu : Osoba {
 
 
-		public System.String WniosekPrzyjetyNaPodstawiePesel { get; set; }
 
-		[Required]
 		[InverseProperty("CzlonekKlubuPrzyjetyNaPodstawie")]
 		[ForeignKey("WniosekPrzyjetyNaPodstawiePesel")]
 		public virtual Wniosek WniosekPrzyjetyNaPodstawie { get; set; }
+
+		[Required]
+		public System.String WniosekPrzyjetyNaPodstawiePesel { get; set; }
 	}
 }

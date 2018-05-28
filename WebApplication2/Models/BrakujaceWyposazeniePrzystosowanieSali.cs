@@ -11,9 +11,10 @@ namespace WebApplication2.Models
 
 		public int ID { get; set; }
 
-		public Nullable<System.Int32> BrakujaceWyposazenieID { get; set; }
 
 		[ForeignKey("BrakujaceWyposazenieID")]
 		public virtual Wyposażenie BrakujaceWyposazenie { get; set; }
+
+		public Nullable<System.Int32> BrakujaceWyposazenieID { get; set; }
 	}
 }

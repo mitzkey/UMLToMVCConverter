@@ -10,8 +10,6 @@ namespace WebApplication2.Models
 	public class Wniosek {
 
 
-		public Nullable<System.Int32> AdresZameldowaniaID { get; set; }
-		public Nullable<System.Int32> AdresDoKorespondencjiID { get; set; }
 
 		public Nullable<System.DateTime> DataZlozenia { get; set; }
 
@@ -32,8 +30,12 @@ namespace WebApplication2.Models
 		[ForeignKey("AdresZameldowaniaID")]
 		public virtual Adres AdresZameldowania { get; set; }
 
+		public Nullable<System.Int32> AdresZameldowaniaID { get; set; }
+
 		[ForeignKey("AdresDoKorespondencjiID")]
 		public virtual Adres AdresDoKorespondencji { get; set; }
+
+		public Nullable<System.Int32> AdresDoKorespondencjiID { get; set; }
 
 		public Nullable<System.Boolean> Weryfikacja(System.String p,Wniosek w) {
 			throw new NotImplementedException();
