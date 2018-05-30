@@ -74,7 +74,7 @@
             builder.RegisterType<UmlTypesHelper>().As<IUmlTypesHelper>().SingleInstance();
             builder.RegisterType<UmlVisibilityMapper>().As<IUmlVisibilityMapper>().SingleInstance();
 
-            builder.RegisterType<EnumerationModelsDeserializer>().As<IEnumerationModelsDeserializer>().SingleInstance();
+            builder.RegisterType<EnumerationModelsGenerator>().As<IEnumerationModelsDeserializer>().SingleInstance();
             builder.RegisterType<AssociationDeserializer>().As<IAssociationDeserializer>().SingleInstance();
             builder.RegisterType<PropertyDeserializer>().As<IPropertyDeserializer>().SingleInstance();
 

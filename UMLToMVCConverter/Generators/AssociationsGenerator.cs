@@ -19,7 +19,11 @@
         private readonly IXmiWrapper xmiWrapper;
         private readonly ITypesRepository typesRepository;
 
-        public AssociationsGenerator(IAssociationsRepository associationsRepository, IAssociationDeserializer associationDeserializer, IXmiWrapper xmiWrapper, ITypesRepository typesRepository)
+        public AssociationsGenerator(
+            IAssociationsRepository associationsRepository,
+            IAssociationDeserializer associationDeserializer,
+            IXmiWrapper xmiWrapper,
+            ITypesRepository typesRepository)
         {
             this.associationsRepository = associationsRepository;
             this.associationDeserializer = associationDeserializer;

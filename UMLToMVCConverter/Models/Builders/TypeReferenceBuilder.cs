@@ -1,7 +1,6 @@
-﻿namespace UMLToMVCConverter.Builders
+﻿namespace UMLToMVCConverter.Models.Builders
 {
     using System;
-    using UMLToMVCConverter.Models;
 
     public class TypeReferenceBuilder
     {

@@ -192,7 +192,7 @@
     <Compile Include="Models\Repositories\TypesRepository.cs" />
     <Compile Include="Common\XmiTools\XElementType.cs" />
     <Compile Include="MvcProjectFilesGenerator.cs" />
-    <Compile Include="Generators\IefRelationshipModelGenerator.cs" />
+    <Compile Include="Generators\EFRelationshipModelGenerator.cs" />
     <Compile Include="Generators\NavigationalPropertiesGenerator.cs" />
     <Compile Include="Generators\Deserializers\PropertyDeserializer.cs" />
     <Compile Include="Models\EFRelationshipMemberMultiplicity.cs" />

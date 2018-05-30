@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using UMLToMVCConverter.Builders;
+    using UMLToMVCConverter.Models.Builders;
     using UMLToMVCConverter.Models.Repositories.Interfaces;
 
     public class Property

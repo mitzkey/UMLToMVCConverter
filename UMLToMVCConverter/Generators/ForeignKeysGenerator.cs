@@ -6,7 +6,7 @@
     using UMLToMVCConverter.Generators.Deserializers.Interfaces;
     using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Models;
-    using Attribute = UMLToMVCConverter.Models.Attribute;
+    using Attribute = Models.Attribute;
 
     public class ForeignKeysGenerator : IForeignKeysGenerator
     {

@@ -5,11 +5,11 @@
     using UMLToMVCConverter.Models;
     using UMLToMVCConverter.Models.Repositories.Interfaces;
 
-    public class EnumerationModelsDeserializer : IEnumerationModelsDeserializer
+    public class EnumerationModelsGenerator : IEnumerationModelsDeserializer
     {
         private readonly ITypesRepository typesRepository;
 
-        public EnumerationModelsDeserializer(ITypesRepository typesRepository)
+        public EnumerationModelsGenerator(ITypesRepository typesRepository)
         {
             this.typesRepository = typesRepository;
         }

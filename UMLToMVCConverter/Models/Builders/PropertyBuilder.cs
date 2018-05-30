@@ -1,7 +1,6 @@
-﻿namespace UMLToMVCConverter.Builders
+﻿namespace UMLToMVCConverter.Models.Builders
 {
     using System.Collections.Generic;
-    using UMLToMVCConverter.Models;
     using UMLToMVCConverter.Models.Repositories.Interfaces;
 
     public class PropertyBuilder
