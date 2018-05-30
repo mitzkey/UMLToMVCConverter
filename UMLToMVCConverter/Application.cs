@@ -4,6 +4,7 @@
     using System.Linq;
     using UMLToMVCConverter.Common.XmiTools.Interfaces;
     using UMLToMVCConverter.Generators;
+    using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Interfaces;
 
     public class Application

@@ -1,4 +1,4 @@
-﻿namespace UMLToMVCConverter.Generators
+﻿namespace UMLToMVCConverter.Generators.Interfaces
 {
     using System.Xml.Linq;
     using UMLToMVCConverter.Models;

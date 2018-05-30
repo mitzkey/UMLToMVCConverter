@@ -2,7 +2,7 @@
 {
     public class AssociationEndMember
     {
-        public Multiplicity Multiplicity { get; }
+        public Multiplicity Multiplicity { get; set;  }
 
         public AssociationKind AssociationKind { get; }
 

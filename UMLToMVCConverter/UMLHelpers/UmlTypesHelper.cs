@@ -228,7 +228,6 @@
             var valueProperty = Property.Builder()
                 .SetName("Value")
                 .SetTypeReference(valueType)
-                .SetTypesRepository(this.typesRepository)
                 .SetVisibility(CSharpVisibilityString.Public)
                 .Build();
 

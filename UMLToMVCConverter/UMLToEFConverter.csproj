@@ -86,6 +86,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generators\EnumerationModelsGenerator.cs" />
     <Compile Include="Models\Association.cs" />
     <Compile Include="Models\AssociationEndMember.cs" />
     <Compile Include="Generators\Deserializers\AssociationDeserializer.cs" />
@@ -98,11 +99,10 @@
     <Compile Include="Models\Repositories\Interfaces\IAssociationsRepository.cs" />
     <Compile Include="Models\Attribute.cs" />
     <Compile Include="Models\Method.cs" />
-    <Compile Include="Models\Aggregation.cs" />
     <Compile Include="Models\AssociationKind.cs" />
     <Compile Include="Application.cs" />
-    <Compile Include="Builders\PropertyBuilder.cs" />
-    <Compile Include="Builders\TypeReferenceBuilder.cs" />
+    <Compile Include="Models\Builders\PropertyBuilder.cs" />
+    <Compile Include="Models\Builders\TypeReferenceBuilder.cs" />
     <Compile Include="Models\RelationshipMultiplicity.cs" />
     <Compile Include="UMLHelpers\CSharpVisibilityString.cs" />
     <Compile Include="Common\XmiTools\XAttributeNameResolver.cs" />
@@ -178,12 +178,11 @@
     </Compile>
     <Compile Include="Models\DataModel.cs" />
     <Compile Include="Generators\DataModelGenerator.cs" />
-    <Compile Include="Generators\Deserializers\EnumerationModelsDeserializer.cs" />
     <Compile Include="Generators\ForeignKeysGenerator.cs" />
-    <Compile Include="Generators\Deserializers\Interfaces\IEnumerationModelsDeserializer.cs" />
+    <Compile Include="Generators\Interfaces\IEnumerationModelsGenerator.cs" />
     <Compile Include="Generators\Interfaces\IForeignKeysGenerator.cs" />
     <Compile Include="Generators\Interfaces\INavigationalPropertiesGenerator.cs" />
-    <Compile Include="Generators\IDataModelGenerator.cs" />
+    <Compile Include="Generators\Interfaces\IDataModelGenerator.cs" />
     <Compile Include="Interfaces\IMvcProjectFilesGenerator.cs" />
     <Compile Include="Generators\Interfaces\IEFRelationshipModelGenerator.cs" />
     <Compile Include="Generators\Deserializers\Interfaces\IPropertyDeserializer.cs" />

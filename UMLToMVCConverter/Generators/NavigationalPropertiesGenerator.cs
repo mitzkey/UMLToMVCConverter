@@ -3,10 +3,18 @@
     using System.Collections.Generic;
     using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Models;
+    using UMLToMVCConverter.Models.Repositories.Interfaces;
     using UMLToMVCConverter.UMLHelpers;
 
     public class NavigationalPropertiesGenerator : INavigationalPropertiesGenerator
     {
+        private readonly ITypesRepository typesRepository;
+
+        public NavigationalPropertiesGenerator(ITypesRepository typesRepository)
+        {
+            this.typesRepository = typesRepository;
+        }
+
         public void Generate(AssociationEndMember sourceMember, AssociationEndMember destinationMember)
         {
             var sourceMemberPropertyTypeReferenceBuilder = TypeReference.Builder()
@@ -38,6 +46,15 @@
             if (destinationMember.Navigable)
             {
                 propertyBuilder.WithAttribute(new Attribute("InverseProperty", destinationMember.Name));
+            }
+
+            if (sourceMemberPropertyTypeRefernce.IsReferencingXmiDeclaredType)
+            {
+                var referencingType = this.typesRepository.GetTypeByXmiId(sourceMemberPropertyTypeRefernce.ReferenceTypeXmiID);
+                if (referencingType.IsEnum)
+                {
+                    propertyBuilder.IsReferencingEnumType(true);
+                }
             }
 
             var sourceTypeNavigationalProperty = propertyBuilder

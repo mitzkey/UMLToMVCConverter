@@ -1,9 +1,9 @@
-﻿namespace UMLToMVCConverter.Generators.Deserializers.Interfaces
+﻿namespace UMLToMVCConverter.Generators.Interfaces
 {
     using System.Collections.Generic;
     using UMLToMVCConverter.Models;
 
-    public interface IEnumerationModelsDeserializer
+    public interface IEnumerationModelsGenerator
     {
         IEnumerable<Enumeration> Create();
     }

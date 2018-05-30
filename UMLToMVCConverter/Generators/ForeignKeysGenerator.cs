@@ -17,7 +17,9 @@
             this.propertyDeserializer = propertyDeserializer;
         }
 
-        public void Generate(AssociationEndMember sourceMember, AssociationEndMember destinationMember)
+        public void Generate(
+            AssociationEndMember sourceMember,
+            AssociationEndMember destinationMember)
         {
             var destinationType = destinationMember.Type;
             var sourceType = sourceMember.Type;
@@ -28,10 +30,16 @@
             if (destinationType.PrimaryKeyAttributes.Count > 0)
             {
                 var foreignKeyNames = new List<string>();
-                foreach (var destinationTypePrimaryKeyAttribute in destinationType.PrimaryKeyAttributes)
+                foreach (var destinationTypePrimaryKeyAttribute 
+                    in destinationType.PrimaryKeyAttributes)
                 {
-                    var foreignKeyName = sourceMember.Name + destinationTypePrimaryKeyAttribute.Name;
-                    var foreignKeyProperty = this.propertyDeserializer.CreateBasicProperty(foreignKeyName, destinationTypePrimaryKeyAttribute.TypeReference.Type, destinationTypePrimaryKeyAttribute.TypeReference.Generic?.Type);
+                    var foreignKeyName = 
+                        sourceMember.Name + destinationTypePrimaryKeyAttribute.Name;
+                    var foreignKeyProperty = this.propertyDeserializer
+                        .CreateBasicProperty(
+                        foreignKeyName,
+                        destinationTypePrimaryKeyAttribute.TypeReference.Type,
+                        destinationTypePrimaryKeyAttribute.TypeReference.Generic?.Type);
 
                     if (required)
                     {
@@ -42,15 +50,18 @@
                     foreignKeyNames.Add(foreignKeyName);
                 }
 
-                var navigationalProperty = sourceType.Properties.Single(x => x.Name == sourceMember.Name);
-                var attribute = new Attribute("ForeignKey", $"{ string.Join(",", foreignKeyNames) }");
+                var navigationalProperty = 
+                    sourceType.Properties.Single(x => x.Name == sourceMember.Name);
+                var attribute = 
+                    new Attribute("ForeignKey", $"{ string.Join(",", foreignKeyNames) }");
                 navigationalProperty.Attributes.Add(attribute);
             }
             else
             {
                 var foreignKeyName = sourceMember.Name + "ID";
 
-                var foreignKeyProperty = this.propertyDeserializer.CreateBasicProperty(foreignKeyName, typeof(Nullable), typeof(int));
+                var foreignKeyProperty = this.propertyDeserializer
+                    .CreateBasicProperty(foreignKeyName, typeof(Nullable), typeof(int));
 
                 if (required)
                 {
@@ -59,7 +70,8 @@
 
                 sourceType.Properties.Add(foreignKeyProperty);
 
-                var navigationalProperty = sourceType.Properties.Single(x => x.Name == sourceMember.Name);
+                var navigationalProperty = sourceType.Properties
+                    .Single(x => x.Name == sourceMember.Name);
                 var attribute = new Attribute("ForeignKey", $"{ foreignKeyName }");
                 navigationalProperty.Attributes.Add(attribute);
             }

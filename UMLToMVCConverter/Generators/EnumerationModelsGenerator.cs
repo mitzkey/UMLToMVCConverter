@@ -1,11 +1,11 @@
-﻿namespace UMLToMVCConverter.Generators.Deserializers
+﻿namespace UMLToMVCConverter.Generators
 {
     using System.Collections.Generic;
-    using UMLToMVCConverter.Generators.Deserializers.Interfaces;
+    using UMLToMVCConverter.Generators.Interfaces;
     using UMLToMVCConverter.Models;
     using UMLToMVCConverter.Models.Repositories.Interfaces;
 
-    public class EnumerationModelsGenerator : IEnumerationModelsDeserializer
+    public class EnumerationModelsGenerator : IEnumerationModelsGenerator
     {
         private readonly ITypesRepository typesRepository;
 

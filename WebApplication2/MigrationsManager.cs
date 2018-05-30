@@ -52,7 +52,7 @@ namespace WebApplication2
                 var scaffolder = designTimeServices.GetRequiredService<MigrationsScaffolder>();
 
                 var migration = scaffolder.ScaffoldMigration(
-                    "UMLToMVCConverterMigration_" + Guid.NewGuid(),
+                    "UMLToEFConverterMigration_" + Guid.NewGuid(),
                     migrationsNamespace);
 
                 var migrationFolder = Path.Combine(mvcProjectFolderPath, "Migrations");

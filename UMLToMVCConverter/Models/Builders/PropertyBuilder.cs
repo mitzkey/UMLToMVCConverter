@@ -17,6 +17,7 @@
         private bool isID;
         private readonly List<Attribute> attributes;
         private bool isVirtual;
+        private bool isReferencingEnumType;
 
         public PropertyBuilder()
         {
@@ -28,7 +29,6 @@
             return new Property(
                 this.name,
                 this.typeReference,
-                this.typesRepository,
                 this.isReadOnly,
                 this.visibility,
                 this.isStatic,
@@ -37,7 +37,8 @@
                 this.isDerived,
                 this.isID,
                 this.attributes,
-                this.isVirtual);
+                this.isVirtual,
+                this.isReferencingEnumType);
         }
 
         public PropertyBuilder SetName(string name)
@@ -49,12 +50,6 @@
         public PropertyBuilder SetTypeReference(TypeReference typeReference)
         {
             this.typeReference = typeReference;
-            return this;
-        }
-
-        public PropertyBuilder SetTypesRepository(ITypesRepository typesRepository)
-        {
-            this.typesRepository = typesRepository;
             return this;
         }
 
@@ -109,6 +104,12 @@
         public PropertyBuilder IsVirtual(bool isVirtual)
         {
             this.isVirtual = isVirtual;
+            return this;
+        }
+
+        public PropertyBuilder IsReferencingEnumType(bool isReferencingEnumType)
+        {
+            this.isReferencingEnumType = isReferencingEnumType;
             return this;
         }
     }

@@ -11,7 +11,7 @@
     {
         private readonly ITypesGenerator typesGenerator;
         private readonly IEFRelationshipModelGenerator iefRelationshipModelGenerator;
-        private readonly IEnumerationModelsDeserializer enumerationModelsDeserializer;
+        private readonly IEnumerationModelsGenerator enumerationModelsGenerator;
         private readonly ITypesRepository typesRepository;
         private readonly IAssociationsForeignKeyGenerator associationsForeignKeyGenerator;
         private readonly IAssociationsRepository associationsRepository;
@@ -20,7 +20,7 @@
         public DataModelGenerator(
             ITypesGenerator typesGenerator,
             IEFRelationshipModelGenerator iefRelationshipModelGenerator,
-            IEnumerationModelsDeserializer enumerationModelsDeserializer,
+            IEnumerationModelsGenerator enumerationModelsGenerator,
             ITypesRepository typesRepository,
             IAssociationsForeignKeyGenerator associationsForeignKeyGenerator,
             IAssociationsRepository associationsRepository,
@@ -28,7 +28,7 @@
         {
             this.typesGenerator = typesGenerator;
             this.iefRelationshipModelGenerator = iefRelationshipModelGenerator;
-            this.enumerationModelsDeserializer = enumerationModelsDeserializer;
+            this.enumerationModelsGenerator = enumerationModelsGenerator;
             this.typesRepository = typesRepository;
             this.associationsForeignKeyGenerator = associationsForeignKeyGenerator;
             this.associationsRepository = associationsRepository;
@@ -45,7 +45,7 @@
 
             this.associationsGenerator.GenerateManyToManyAssociationTypes();
 
-            var enumerationModels = this.enumerationModelsDeserializer.Create();
+            var enumerationModels = this.enumerationModelsGenerator.Create();
 
             var allAssociations = this.associationsRepository.GetAllAssociations().ToList();
             var associationsToGeneratePropertiesFor = allAssociations

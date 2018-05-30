@@ -22,11 +22,11 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-// UMLToMVCConverter auto-generated code BEGIN
+// UMLToEFConverter auto-generated code BEGIN
 			services.AddDbContext<DefaultContext>(
 				options =>
 					options.UseSqlServer(this.Configuration.GetConnectionString("DefaultContext")));
-// UMLToMVCConverter auto-generated code END
+// UMLToEFConverter auto-generated code END
             services.AddMvc();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

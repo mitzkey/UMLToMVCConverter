@@ -35,7 +35,6 @@
             Insist.IsNotNull(xProperty, nameof(xProperty));
 
             var propertyBuilder = Property.Builder();
-            propertyBuilder.SetTypesRepository(this.typesRepository);
 
             var propertyName = this.xAttributeNameResolver.GetName(xProperty);
             propertyBuilder.SetName(propertyName);
@@ -102,6 +101,15 @@
                 propertyBuilder.WithAttribute(attribute);
             }
 
+            if (cSharpTypeReference.IsReferencingXmiDeclaredType)
+            {
+                var referencingType = typesRepository.GetTypeByXmiId(cSharpTypeReference.ReferenceTypeXmiID);
+                if (referencingType.IsEnum)
+                {
+                    propertyBuilder.IsReferencingEnumType(true);
+                }
+            }
+
             var property = propertyBuilder.Build();
 
             if (isID)
@@ -139,7 +147,6 @@
             var property = propertyBuilder
                 .SetName(name)
                 .SetTypeReference(typeReference)
-                .SetTypesRepository(this.typesRepository)
                 .SetVisibility(CSharpVisibilityString.Public)
                 .Build();
 

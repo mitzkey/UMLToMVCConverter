@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using UMLToMVCConverter.Models.Builders;
-    using UMLToMVCConverter.Models.Repositories.Interfaces;
 
     public class Property
     {
@@ -14,7 +13,6 @@
         public Property(
             string name,
             TypeReference typeReference,
-            ITypesRepository typesRepository,
             bool isReadOnly,
             string visibility,
             bool isStatic,
@@ -23,7 +21,8 @@
             bool isDerived,
             bool isID,
             List<Attribute> attributes,
-            bool isVirtual)
+            bool isVirtual,
+            bool isReferencingEnumType)
         {
             this.DefaultValueString = defaultValueString ?? string.Empty;
             this.Name = name;
@@ -35,14 +34,11 @@
             this.IsDerived = isDerived;
             this.IsID = isID;
             this.IsVirtual = isVirtual;
+            this.IsReferencingEnumType = isReferencingEnumType;
             this.Attributes = attributes ?? new List<Attribute>();
-            if (typeReference.IsReferencingXmiDeclaredType)
-            {
-                this.ReferencingType = typesRepository.GetTypeByXmiId(typeReference.ReferenceTypeXmiID);
-            }
         }
 
-        public string Name { get; }
+        public string Name { get; set;  }
 
         public TypeReference TypeReference { get; }
 
@@ -90,9 +86,7 @@
 
         public int? DefaultValueKey { get; set; }
 
-        public bool IsReferencingType => this.ReferencingType != null;
-
-        public bool IsReferencingEnumType => this.IsReferencingType && this.ReferencingType.IsEnum;
+        public bool IsReferencingEnumType { get;}
 
         public bool IsReadOnly { get; set; }
 
