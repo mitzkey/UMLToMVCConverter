@@ -214,14 +214,12 @@
 
                     Insist.IsNotNull(baseType, nameof(baseType));
 
-                    var typeReference = new CodeTypeReference(baseType.Name);
-
                     var childTypeName = type.ObligatoryAttributeValue("name");
                     var childType = this.typesRepository.GetTypeByName(childTypeName);
 
                     Insist.IsNotNull(childType, nameof(childType));
 
-                    childType.BaseTypes.Add(typeReference);
+                    childType.BaseType = baseType;
                 }
             }
         }

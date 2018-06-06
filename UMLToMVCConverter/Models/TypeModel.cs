@@ -1,6 +1,5 @@
 ﻿namespace UMLToMVCConverter.Models
 {
-    using System.CodeDom;
     using System.Collections.Generic;
 
     public class TypeModel
@@ -35,11 +34,9 @@
 
         public List<TypeModel> NestedClasses { get; set; }
 
-        public List<CodeTypeReference> BaseTypes { get; private set; }
+        public string BaseClassName => this.BaseType?.Name;
 
-        public string BaseClassName => this.BaseTypes.Count > 0
-            ? this.BaseTypes[0].BaseType
-            : null;
+        public TypeModel BaseType { get; set; }
 
 
         public TypeModel(string name, bool isClass, string visibility)
@@ -63,7 +60,6 @@
             this.ForeignKeys = new Dictionary<string, Property>();
             this.PrimaryKeyAttributes = new List<Property>();
             this.Literals = new Dictionary<int, string>();
-            this.BaseTypes = new List<CodeTypeReference>();
             this.NestedClasses = new List<TypeModel>();
         }
     }
