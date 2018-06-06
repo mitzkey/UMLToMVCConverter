@@ -16,7 +16,7 @@ namespace WebApplication2.Models
 		public System.String Kod { get; set; }
 
 		[NotMapped]
-		public Nullable<System.Double> KosztTygodniowy { get { return 100; } private set {} }
+		public Nullable<System.Double> KosztTygodniowy { get { throw new NotImplementedException(); } private set {} }
 
 		[InverseProperty("Kursy")]
 		[ForeignKey("GrafikID")]
