@@ -1,12 +1,20 @@
 ﻿namespace UMLToMVCConverter.Models
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class TypeModel
     {
+        private List<Property> primaryKeyAttributes;
         public string Name { get; }
 
-        public List<Property> PrimaryKeyAttributes { get; set; }
+        public List<Property> PrimaryKeyAttributes
+        {
+            get { return this.BaseType == null
+                    ? this.primaryKeyAttributes
+                    : this.primaryKeyAttributes.Concat(this.BaseType?.PrimaryKeyAttributes).ToList(); }
+            set { this.primaryKeyAttributes = value; }
+        }
 
         public bool HasComplexKey => this.PrimaryKeyAttributes.Count > 1;
 
@@ -37,7 +45,6 @@
         public string BaseClassName => this.BaseType?.Name;
 
         public TypeModel BaseType { get; set; }
-
 
         public TypeModel(string name, bool isClass, string visibility)
         {
