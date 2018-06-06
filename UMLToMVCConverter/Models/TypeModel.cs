@@ -6,6 +6,7 @@
     public class TypeModel
     {
         private List<Property> primaryKeyAttributes;
+
         public string Name { get; }
 
         public List<Property> PrimaryKeyAttributes
