@@ -1,7 +1,7 @@
-// UMLToMVCConverter auto-generated code BEGIN
+// UMLToEFConverter auto-generated code BEGIN
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
-// UMLToMVCConverter auto-generated code END
+// UMLToEFConverter auto-generated code END
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +22,11 @@ namespace WebApplication2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-// UMLToMVCConverter auto-generated code BEGIN
+// UMLToEFConverter auto-generated code BEGIN
 			services.AddDbContext<TestowyZKartki01Context>(
 				options =>
 					options.UseSqlServer(this.Configuration.GetConnectionString("TestowyZKartki01Context")));
-// UMLToMVCConverter auto-generated code END
+// UMLToEFConverter auto-generated code END
             services.AddMvc();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
