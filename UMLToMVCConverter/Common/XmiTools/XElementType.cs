@@ -9,6 +9,7 @@
         DataType,
         LiteralInteger,
         Association,
-        AssociationClass
+        AssociationClass,
+        LiteralBoolean
     }
 }

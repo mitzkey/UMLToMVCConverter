@@ -132,6 +132,8 @@
                     return XElementType.Association;
                 case "uml:AssociationClass":
                     return XElementType.AssociationClass;
+                case "uml:LiteralBoolean":
+                    return XElementType.LiteralBoolean;
                 default:
                     throw new NotImplementedException($"Uknown xElement type: {typeString}");
             }

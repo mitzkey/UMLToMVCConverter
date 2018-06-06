@@ -163,6 +163,8 @@
                     return xDefaultValue.ObligatoryAttributeValue("value");
                 case XElementType.LiteralInteger:
                     return xDefaultValue.ObligatoryAttributeValue("value");
+                case XElementType.LiteralBoolean:
+                    return xDefaultValue.ObligatoryAttributeValue("value");
                 case XElementType.InstanceValue:
                     var instance = this.xmiWrapper.GetXElementById(xDefaultValue.ObligatoryAttributeValue("instance"));
                     var instanceValue = instance.ObligatoryAttributeValue("name");
