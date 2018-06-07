@@ -4,5 +4,7 @@
 
 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\Diagramy\Testowy02.xml" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\WebApplication3" "Server=(localdb)\mssqllocaldb;Database=Testowy02;Trusted_Connection=True;MultipleActiveResultSets=true" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\Converter Workspace" "Testowy02"
 
+"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\Diagramy\Testowy03.xml" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\WebApplication4" "Server=(localdb)\mssqllocaldb;Database=Testowy03;Trusted_Connection=True;MultipleActiveResultSets=true" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\Converter Workspace" "Testowy03"
+
 MigrationsService:
 add-migration "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToMVCConverter\WebApplication2" "WebApplication2" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\Converter Workspace\WebApplication2.dll"
