@@ -162,9 +162,11 @@
                 case XElementType.LiteralString:
                     return xDefaultValue.ObligatoryAttributeValue("value");
                 case XElementType.LiteralInteger:
-                    return xDefaultValue.ObligatoryAttributeValue("value");
+                    return xDefaultValue.OptionalAttributeValue("value") ?? "0";
                 case XElementType.LiteralBoolean:
-                    return xDefaultValue.ObligatoryAttributeValue("value");
+                    return xDefaultValue.OptionalAttributeValue("value") ?? "false";
+                case XElementType.LiteralUnlimitedNatural:
+                    return xDefaultValue.OptionalAttributeValue("value") ?? "0";
                 case XElementType.InstanceValue:
                     var instance = this.xmiWrapper.GetXElementById(xDefaultValue.ObligatoryAttributeValue("instance"));
                     var instanceValue = instance.ObligatoryAttributeValue("name");

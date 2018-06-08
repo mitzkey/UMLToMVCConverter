@@ -23,6 +23,7 @@
                 { "void", typeof(void) },
                 { "int", typeof(int) },
                 { "real", typeof(double) },
+                { "unlimitednatural", typeof(long) },
                 { "boolean", typeof(bool) }
             });
 

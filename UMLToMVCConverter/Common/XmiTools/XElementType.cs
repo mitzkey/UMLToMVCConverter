@@ -10,6 +10,7 @@
         LiteralInteger,
         Association,
         AssociationClass,
-        LiteralBoolean
+        LiteralBoolean,
+        LiteralUnlimitedNatural
     }
 }

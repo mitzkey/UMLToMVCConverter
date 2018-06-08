@@ -69,7 +69,8 @@
                     { typeof(string), "\"" + this.defaultValueString + "\"" },
                     { typeof(int), this.defaultValueString },
                     { typeof(double), this.defaultValueString + "d" },
-                    { typeof(bool), this.defaultValueString.ToLower() }
+                    { typeof(bool), this.defaultValueString.ToLower() },
+                    { typeof(System.Int64), this.defaultValueString }
                 };
             }
         }
