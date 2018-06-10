@@ -67,7 +67,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UMLToMVCConverter\UMLToEFConverter.csproj">
+    <ProjectReference Include="..\UMLToEFConverter\UMLToEFConverter.csproj">
       <Project>{0ab93e32-bd05-4586-a424-40db1caa912f}</Project>
       <Name>UMLToEFConverter</Name>
     </ProjectReference>

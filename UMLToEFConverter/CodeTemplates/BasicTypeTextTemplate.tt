@@ -1,0 +1,129 @@
+﻿<#@ template language="C#"#>
+<#@ import namespace="System.Collections.Generic"#>
+<#@ import namespace="UMLToEFConverter"#>
+<#@ import namespace="UMLToEFConverter.Domain.Models"#>
+<#@ import namespace="UMLToEFConverter.Common"#>
+<#@ import namespace="UMLToEFConverter.CodeTemplates.Interfaces"#>
+<#@ import namespace="Autofac"#>
+<#@ assembly name="System.Core"#>
+	public<#
+
+if(this.type.IsAbstract) {
+	#> abstract<#
+}
+
+#> class <#=this.type.Name#> <#
+
+if(this.type.BaseClassName != null) {
+	#>: <#= this.type.BaseClassName#> <#
+}
+
+#>{
+
+<#
+if(this.type.IsEnum) {
+#>		[DatabaseGenerated(DatabaseGeneratedOption.None)]<#
+}
+if((this.type.IsClass 
+	|| this.type.IsEnum)
+	&& string.IsNullOrWhiteSpace(this.type.BaseClassName)
+	&& !this.type.HasKey) {
+	#>
+		public int ID { get; set; }
+<#
+}
+
+foreach (var foreignKey in this.type.ForeignKeys) {
+	var foreignKeyType = foreignKey.Value.TypeReference;
+	#>
+
+		public <#= foreignKeyType.Name + " " + foreignKey.Key #> { get; set; }<#
+}
+
+foreach (var nestedClass in this.type.NestedClasses) {
+	var tmpl = this.componentContext.Resolve<IBasicTypeTextTemplate>();
+	string innerClassCode = tmpl.TransformText(nestedClass);
+	#><#=innerClassCode.AddNewLines(2).NewSection().NewSection()#><#
+}
+
+foreach (var property in this.type.Properties) {
+		string generics = "";
+		var propertyType = property.TypeReference;
+		#>
+
+
+		<#
+		if (!this.type.HasComplexKey && property.IsID) {
+			#>[Key]
+		<#						
+		}
+		foreach (var attribute in property.Attributes) {
+			#>[<#=attribute.ToString()#>]
+		<#						
+		}
+		#>public <#
+		if (property.IsStatic) {
+			#>static <#
+		}
+        if (propertyType.IsCollection || property.IsVirtual) {
+			#>virtual <#
+		}
+		#><#= propertyType.Name + " " + property.Name #> { get<#
+		if (property.IsDerived) {
+			#> { throw new NotImplementedException(); } <#
+		}
+		else {
+			#>; <#
+		}
+		if (property.IsReadOnly) {
+			#>private <#
+		}
+		#>set<#
+		if (property.IsDerived) {
+			#> {} <#
+		}
+		else {
+			#>; <#
+		}
+		#>}<#
+		if (property.HasDefaultValueString) {
+			#> = <#=property.DefaultValueString#>;<#
+		}
+		if (property.IsReferencingEnumType) {
+			#>
+		
+
+		[ForeignKey("<#=propertyType.Name#>")]
+        public int <#=property.Name#>ID { get; set; }
+		<#
+		}
+}
+
+foreach (var method in this.type.Methods) {
+	string returnTypeName = "void";
+	if (method.ReturnType.Name != "System.Void") {
+		returnTypeName = method.ReturnType.Name;
+	}
+	#>
+
+
+		<#=method.Visibility#><#
+	if (method.IsStatic) {
+		#> static<#
+	}
+	#> <#=returnTypeName#> <#=method.Name#>(<#
+	bool addComma = false;
+	foreach (var parameter in method.Parameters) {
+		if (addComma) {
+		#>,<#
+		}
+		addComma = true;
+		#><#= parameter.ExtTypeName + " " + parameter.Name#><#
+	}
+		#>) {
+			throw new NotImplementedException();
+		}<#
+}
+#>
+
+	}

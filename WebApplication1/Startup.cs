@@ -1,7 +1,7 @@
-// UMLToMVCConverter auto-generated code BEGIN
+// UMLToEFConverter auto-generated code BEGIN
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
-// UMLToMVCConverter auto-generated code END
+// UMLToEFConverter auto-generated code END
 using System;
 using System.Collections.Generic;
 using System.Linq;

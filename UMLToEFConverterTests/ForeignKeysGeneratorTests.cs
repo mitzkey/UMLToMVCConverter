@@ -5,9 +5,9 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using UMLToMVCConverter.Generators;
-    using UMLToMVCConverter.Generators.Deserializers.Interfaces;
-    using UMLToMVCConverter.Models;
+    using UMLToEFConverter.Generators;
+    using UMLToEFConverter.Generators.Deserializers.Interfaces;
+    using UMLToEFConverter.Models;
 
     public class ForeignKeysGeneratorTests
     {

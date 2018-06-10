@@ -11,8 +11,8 @@ using WebApplication1.Models;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20180526045648_UMLToMVCConverterMigration_5887a736-896f-45f0-92c2-6607e9b10f93")]
-    partial class UMLToMVCConverterMigration_5887a736896f45f092c26607e9b10f93
+    [Migration("20180526045648_UMLToEFConverterMigration_5887a736-896f-45f0-92c2-6607e9b10f93")]
+    partial class UMLToEFConverterMigration_5887a736896f45f092c26607e9b10f93
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

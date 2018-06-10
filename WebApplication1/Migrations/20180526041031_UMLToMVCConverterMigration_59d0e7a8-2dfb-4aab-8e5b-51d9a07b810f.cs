@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace WebApplication1.Migrations
 {
-    public partial class UMLToMVCConverterMigration_59d0e7a82dfb4aab8e5b51d9a07b810f : Migration
+    public partial class UMLToEFConverterMigration_59d0e7a82dfb4aab8e5b51d9a07b810f : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
