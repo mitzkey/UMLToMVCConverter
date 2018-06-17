@@ -9,8 +9,8 @@ namespace WebApplication1.Models
 
 	public class Writer {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
 
 		[InverseProperty("Writer")]
 		public virtual ICollection<BookWriter> Book { get; set; }

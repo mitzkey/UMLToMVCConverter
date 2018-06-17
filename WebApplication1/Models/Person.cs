@@ -9,14 +9,15 @@ namespace WebApplication1.Models
 
 	public abstract class Person {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
 
-		public Nullable<System.DateTime> DateOfBirth { get; set; }
+		public System.DateTime DateOfBirth { get; set; }
 
+		[Required]
 		public System.String Name { get; set; }
 
-		public void DoSomething(Nullable<System.Int32> x,Nullable<System.Int32> y) {
+		public void DoSomething(System.Int32 x,System.Int32 y) {
 			throw new NotImplementedException();
 		}
 	}

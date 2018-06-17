@@ -9,11 +9,13 @@ namespace WebApplication1.Models
 
 	public class LineSegment {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
 
-		public Point X { get; set; }
+		[Required]
+		public Point A { get; set; }
 
-		public Point Y { get; set; }
+		[Required]
+		public Point B { get; set; }
 	}
 }

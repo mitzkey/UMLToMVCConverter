@@ -9,16 +9,23 @@ namespace WebApplication1.Models
 
 	public class CarRadio {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
-		public System.String RadiosCarBrand { get; set; }
-		public System.String RadiosCarModel { get; set; }
-		public System.String RadiosCarVersion { get; set; }
 
+		[Required]
 		public System.String Producer { get; set; }
 
 		[InverseProperty("SuperRadio")]
 		[ForeignKey("RadiosCarBrand,RadiosCarModel,RadiosCarVersion")]
 		public virtual Car RadiosCar { get; set; }
+
+		[Required]
+		public System.String RadiosCarBrand { get; set; }
+
+		[Required]
+		public System.String RadiosCarModel { get; set; }
+
+		[Required]
+		public System.String RadiosCarVersion { get; set; }
 	}
 }

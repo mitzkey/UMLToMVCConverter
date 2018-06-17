@@ -250,7 +250,7 @@
                 return Multiplicity.ZeroOrMore;
             }
 
-            if (string.IsNullOrWhiteSpace(multiplicityLowerBound) || Convert.ToInt32(multiplicityLowerBound) == 0)
+            if (multiplicityLowerBound != null && Convert.ToInt32(multiplicityLowerBound) == 0)
             {
                 return Multiplicity.ZeroOrOne;
             }

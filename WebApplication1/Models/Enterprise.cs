@@ -9,9 +9,10 @@ namespace WebApplication1.Models
 
 	public class Enterprise {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
 
+		[Required]
 		public System.String Name { get; set; }
 
 		[Required]

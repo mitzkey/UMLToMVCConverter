@@ -11,14 +11,17 @@ namespace WebApplication1.Models
 
 
 
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		[Required]
 		public System.String Brand { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		[Required]
 		public System.String Model { get; set; }
 
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		[Required]
 		public System.String Version { get; set; }
-
-		[InverseProperty("Car")]
-		public virtual SteeringWheel SteeringWheel { get; set; }
 
 		[InverseProperty("RadiosCar")]
 		public virtual CarRadio SuperRadio { get; set; }

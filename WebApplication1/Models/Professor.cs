@@ -9,14 +9,16 @@ namespace WebApplication1.Models
 
 	public class Professor {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
-		public Nullable<System.Int32> FavouriteBookID { get; set; }
 
 		[InverseProperty("Author")]
 		public virtual ICollection<Book> TextBook { get; set; }
 
 		[ForeignKey("FavouriteBookID")]
 		public virtual Book FavouriteBook { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> FavouriteBookID { get; set; }
 	}
 }

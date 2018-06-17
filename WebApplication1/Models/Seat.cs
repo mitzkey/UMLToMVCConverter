@@ -9,17 +9,22 @@ namespace WebApplication1.Models
 
 	public class Seat {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
-		public System.String CarBrand { get; set; }
-		public System.String CarModel { get; set; }
-		public System.String CarVersion { get; set; }
 
-		public Nullable<System.Boolean> LeatherMade { get; set; }
+		public System.Boolean LeatherMade { get; set; }
 
-		[Required]
 		[InverseProperty("Seat")]
 		[ForeignKey("CarBrand,CarModel,CarVersion")]
 		public virtual Car Car { get; set; }
+
+		[Required]
+		public System.String CarBrand { get; set; }
+
+		[Required]
+		public System.String CarModel { get; set; }
+
+		[Required]
+		public System.String CarVersion { get; set; }
 	}
 }

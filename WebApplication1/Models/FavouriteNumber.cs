@@ -9,8 +9,8 @@ namespace WebApplication1.Models
 
 	public class FavouriteNumber {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
 
 		public System.Int32 Value { get; set; }
 	}

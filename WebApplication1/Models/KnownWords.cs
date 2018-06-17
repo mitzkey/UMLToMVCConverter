@@ -9,8 +9,8 @@ namespace WebApplication1.Models
 
 	public class KnownWords {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
 
 		public System.String Value { get; set; }
 	}

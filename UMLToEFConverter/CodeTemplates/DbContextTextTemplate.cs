@@ -12,6 +12,7 @@ namespace UMLToEFConverter.CodeTemplates
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
+    using UMLToEFConverter.Models;
     using System;
     
     /// <summary>
@@ -30,35 +31,35 @@ namespace UMLToEFConverter.CodeTemplates
         {
             this.Write("namespace ");
             
-            #line 7 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 8 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.mvcProject.Name));
             
             #line default
             #line hidden
             this.Write(".Models\r\n{\r\n\tusing Microsoft.EntityFrameworkCore;\r\n\r\n\tpublic class ");
             
-            #line 11 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 12 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.mvcProject.DbContextName));
             
             #line default
             #line hidden
             this.Write(" : DbContext\r\n\t{\r\n\t\tpublic ");
             
-            #line 13 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 14 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.mvcProject.DbContextName));
             
             #line default
             #line hidden
             this.Write("(DbContextOptions<");
             
-            #line 13 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 14 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(this.mvcProject.DbContextName));
             
             #line default
             #line hidden
             this.Write("> options)\r\n\t\t\t: base(options)\r\n\t\t{\r\n\t\t}");
             
-            #line 16 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 17 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
 
 
 foreach(Tuple<string, string> nameAndPlural in typesNamesAndPlurals) {
@@ -68,21 +69,21 @@ foreach(Tuple<string, string> nameAndPlural in typesNamesAndPlurals) {
             #line hidden
             this.Write("\r\n\r\n\t\tpublic DbSet<");
             
-            #line 22 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 23 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameAndPlural.Item1));
             
             #line default
             #line hidden
             this.Write("> ");
             
-            #line 22 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 23 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameAndPlural.Item2));
             
             #line default
             #line hidden
-            this.Write(" { get; set; }");
+            this.Write("Set { get; set; }");
             
-            #line 22 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 23 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
  
 }
  
@@ -93,7 +94,7 @@ if (this.onModelCreatingBlock) {
             #line hidden
             this.Write("\r\n\r\n\t\tprotected override void OnModelCreating(ModelBuilder modelBuilder) {\r\n");
             
-            #line 30 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 31 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
 	foreach (var complexKey in this.complexKeys) {
 
             
@@ -101,21 +102,21 @@ if (this.onModelCreatingBlock) {
             #line hidden
             this.Write("\r\n\t\t\tmodelBuilder.Entity<");
             
-            #line 33 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 34 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(complexKey.Key));
             
             #line default
             #line hidden
             this.Write(">()\r\n\t\t\t\t.HasKey(c => new { ");
             
-            #line 34 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 35 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(", ", complexKey.Value.Select(s => "c." + s).ToArray())));
             
             #line default
             #line hidden
             this.Write(" });\r\n");
             
-            #line 35 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 36 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
 
 	}
 	foreach (var relationship in this.relationships) {
@@ -125,56 +126,56 @@ if (this.onModelCreatingBlock) {
             #line hidden
             this.Write("\r\n\r\n\t\t\tmodelBuilder.Entity<");
             
-            #line 41 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 42 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceTypeName));
             
             #line default
             #line hidden
             this.Write(">()\r\n\t\t        .Has");
             
-            #line 42 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetMemberMultiplicity.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 42 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetNavigationalPropertyExpressionString));
             
             #line default
             #line hidden
             this.Write(")\r\n\t\t        .With");
             
-            #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceMemberMultiplicity.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 43 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relationship.SourceNavigationalPropertyExpressionString));
             
             #line default
             #line hidden
             this.Write(")\r\n                .IsRequired(");
             
-            #line 44 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 45 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relationship.TargetMemberMultiplicity.IsObligatoryString));
             
             #line default
             #line hidden
             this.Write(")\r\n                .OnDelete(DeleteBehavior.");
             
-            #line 45 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 46 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(relationship.DeleteBehavior));
             
             #line default
             #line hidden
             this.Write(");\r\n\r\n");
             
-            #line 47 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 48 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
 
 	}
 	foreach (var command in this.customModelBuilderCommands)
@@ -185,14 +186,14 @@ if (this.onModelCreatingBlock) {
             #line hidden
             this.Write("\t\t\t");
             
-            #line 52 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 53 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(command));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 53 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
+            #line 54 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DbContextTextTemplate.tt"
                      
 	}
 }

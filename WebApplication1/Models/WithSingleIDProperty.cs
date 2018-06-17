@@ -12,10 +12,13 @@ namespace WebApplication1.Models
 
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		[Required]
 		public System.String MyIdentifier { get; set; }
 
-		public Nullable<System.Int32> Another { get; set; }
+		public System.Int32 Another { get; set; }
 
+		[Required]
 		public StatusWniosku Status { get; set; }		
 
 		[ForeignKey("StatusWniosku")]

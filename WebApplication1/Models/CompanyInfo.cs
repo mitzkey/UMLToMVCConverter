@@ -9,12 +9,13 @@ namespace WebApplication1.Models
 
 	public class CompanyInfo {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
 
-		public static System.String CompanyName { get; } = "ACME";
+		[Required]
+		public static System.String CompanyName { get; set; } = "ACME";
 
-		public static Nullable<System.Boolean> ExampleStaticMethod(System.String inputString) {
+		public static System.Boolean ExampleStaticMethod(System.String inputString) {
 			throw new NotImplementedException();
 		}
 	}

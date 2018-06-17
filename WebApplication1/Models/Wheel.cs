@@ -9,7 +9,7 @@ namespace WebApplication1.Models
 
 	public class Wheel {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
 	}
 }

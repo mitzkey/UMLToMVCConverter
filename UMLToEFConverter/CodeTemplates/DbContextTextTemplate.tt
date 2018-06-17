@@ -3,6 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="UMLToEFConverter.Models" #>
 <#@ output extension=".cs" #>
 namespace <#= this.mvcProject.Name #>.Models
 {
@@ -19,7 +20,7 @@ foreach(Tuple<string, string> nameAndPlural in typesNamesAndPlurals) {
 	#>
 
 
-		public DbSet<<#= nameAndPlural.Item1 #>> <#= nameAndPlural.Item2 #> { get; set; }<# 
+		public DbSet<<#= nameAndPlural.Item1 #>> <#= nameAndPlural.Item2 #>Set { get; set; }<# 
 }
  
 if (this.onModelCreatingBlock) {

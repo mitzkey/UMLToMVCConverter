@@ -13,12 +13,13 @@ namespace WebApplication1.Models
 		
 			public class Nested {
 		
+				public int ID { get; set; }
 		
-				public int ID {get; set;}
 			}
 
 		public virtual ICollection<KnownWords> KnownWords { get; set; }
 
+		[Required]
 		public System.String Name { get; set; }
 
 		public static Worker MakeWorker() {

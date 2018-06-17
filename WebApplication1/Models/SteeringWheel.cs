@@ -9,17 +9,9 @@ namespace WebApplication1.Models
 
 	public class SteeringWheel {
 
+		public int ID { get; set; }
 
-		public int ID {get; set;}
-		public System.String CarBrand { get; set; }
-		public System.String CarModel { get; set; }
-		public System.String CarVersion { get; set; }
 
-		public Nullable<System.Double> Perimeter { get; set; }
-
-		[Required]
-		[InverseProperty("SteeringWheel")]
-		[ForeignKey("CarBrand,CarModel,CarVersion")]
-		public virtual Car Car { get; set; }
+		public System.Double Perimeter { get; set; }
 	}
 }
