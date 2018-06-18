@@ -6,5 +6,7 @@
 
 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\Diagramy\Testowy03.xml" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\WebApplication4" "Server=(localdb)\mssqllocaldb;Database=Testowy03;Trusted_Connection=True;MultipleActiveResultSets=true" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\Converter Workspace" "Testowy03"
 
+"C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\Diagramy\Testowy03.xml" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\WebApplication5" "Server=(localdb)\mssqllocaldb;Database=Test04;Trusted_Connection=True;MultipleActiveResultSets=true" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\Converter Workspace" "Test04"
+
 MigrationsService:
 add-migration "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\WebApplication2" "WebApplication2" "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\Converter Workspace\WebApplication2.dll"
