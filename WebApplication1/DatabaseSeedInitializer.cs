@@ -19,7 +19,7 @@ namespace WebApplication1
                 Task.Run(async () =>
                 {
                     var context = serviceProvider.GetService<DefaultContext>();
-                    if (!context.StatusWniosku.Any())
+                    if (!context.StatusWnioskuSet.Any())
                     {
                         var literals = new List<StatusWniosku>
                         {

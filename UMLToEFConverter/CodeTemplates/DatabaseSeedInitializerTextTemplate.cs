@@ -78,7 +78,8 @@ foreach (var enumeration in this.enumerations) {
             
             #line default
             #line hidden
-            this.Write(".Any())\r\n                    {\r\n                        var literals = new List<");
+            this.Write("Set.Any())\r\n                    {\r\n                        var literals = new Lis" +
+                    "t<");
             
             #line 30 "C:\Users\mikolaj.bochajczuk\Desktop\priv\Praca Inzynierska\UMLToEFConverter\UMLToEFConverter\CodeTemplates\DatabaseSeedInitializerTextTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(enumeration.Name));

@@ -25,7 +25,7 @@ namespace <#= this.mvcProject.Name #>
                 {
                     var context = serviceProvider.GetService<<#=this.mvcProject.DbContextName#>>();
 <#foreach (var enumeration in this.enumerations) {
-#>                    if (!context.<#=enumeration.Name#>.Any())
+#>                    if (!context.<#=enumeration.Name#>Set.Any())
                     {
                         var literals = new List<<#=enumeration.Name#>>
                         {
