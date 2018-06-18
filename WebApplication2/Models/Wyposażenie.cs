@@ -12,6 +12,6 @@ namespace WebApplication2.Models
 		public int ID { get; set; }
 
 
-		public Nullable<System.Double> Koszt { get; set; }
+		public System.Double Koszt { get; set; }
 	}
 }

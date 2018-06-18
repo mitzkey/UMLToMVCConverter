@@ -12,8 +12,10 @@ namespace WebApplication2.Models
 		public int ID { get; set; }
 
 
+		[Required]
 		public System.String Adres { get; set; }
 
+		[Required]
 		public System.String Nazwa { get; set; }
 
 		[InverseProperty("Sala")]

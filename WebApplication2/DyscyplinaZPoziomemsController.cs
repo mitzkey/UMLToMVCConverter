@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: DyscyplinaZPoziomems
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.DyscyplinaZPoziomem.Include(d => d.Dyscyplina).Include(d => d.PoziomZaawansowania);
+            var testowyZKartki01Context = _context.DyscyplinaZPoziomemSet.Include(d => d.Dyscyplina).Include(d => d.PoziomZaawansowania);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var dyscyplinaZPoziomem = await _context.DyscyplinaZPoziomem
+            var dyscyplinaZPoziomem = await _context.DyscyplinaZPoziomemSet
                 .Include(d => d.Dyscyplina)
                 .Include(d => d.PoziomZaawansowania)
                 .SingleOrDefaultAsync(m => m.ID == id);
@@ -48,8 +48,8 @@ namespace WebApplication2
         // GET: DyscyplinaZPoziomems/Create
         public IActionResult Create()
         {
-            ViewData["DyscyplinaID"] = new SelectList(_context.Dyscyplina, "ID", "ID");
-            ViewData["PoziomZaawansowaniaID"] = new SelectList(_context.PoziomZaawansowania, "ID", "ID");
+            ViewData["DyscyplinaID"] = new SelectList(_context.DyscyplinaSet, "ID", "ID");
+            ViewData["PoziomZaawansowaniaID"] = new SelectList(_context.PoziomZaawansowaniaSet, "ID", "ID");
             return View();
         }
 
@@ -66,8 +66,8 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DyscyplinaID"] = new SelectList(_context.Dyscyplina, "ID", "ID", dyscyplinaZPoziomem.DyscyplinaID);
-            ViewData["PoziomZaawansowaniaID"] = new SelectList(_context.PoziomZaawansowania, "ID", "ID", dyscyplinaZPoziomem.PoziomZaawansowaniaID);
+            ViewData["DyscyplinaID"] = new SelectList(_context.DyscyplinaSet, "ID", "ID", dyscyplinaZPoziomem.DyscyplinaID);
+            ViewData["PoziomZaawansowaniaID"] = new SelectList(_context.PoziomZaawansowaniaSet, "ID", "ID", dyscyplinaZPoziomem.PoziomZaawansowaniaID);
             return View(dyscyplinaZPoziomem);
         }
 
@@ -79,13 +79,13 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var dyscyplinaZPoziomem = await _context.DyscyplinaZPoziomem.SingleOrDefaultAsync(m => m.ID == id);
+            var dyscyplinaZPoziomem = await _context.DyscyplinaZPoziomemSet.SingleOrDefaultAsync(m => m.ID == id);
             if (dyscyplinaZPoziomem == null)
             {
                 return NotFound();
             }
-            ViewData["DyscyplinaID"] = new SelectList(_context.Dyscyplina, "ID", "ID", dyscyplinaZPoziomem.DyscyplinaID);
-            ViewData["PoziomZaawansowaniaID"] = new SelectList(_context.PoziomZaawansowania, "ID", "ID", dyscyplinaZPoziomem.PoziomZaawansowaniaID);
+            ViewData["DyscyplinaID"] = new SelectList(_context.DyscyplinaSet, "ID", "ID", dyscyplinaZPoziomem.DyscyplinaID);
+            ViewData["PoziomZaawansowaniaID"] = new SelectList(_context.PoziomZaawansowaniaSet, "ID", "ID", dyscyplinaZPoziomem.PoziomZaawansowaniaID);
             return View(dyscyplinaZPoziomem);
         }
 
@@ -121,8 +121,8 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DyscyplinaID"] = new SelectList(_context.Dyscyplina, "ID", "ID", dyscyplinaZPoziomem.DyscyplinaID);
-            ViewData["PoziomZaawansowaniaID"] = new SelectList(_context.PoziomZaawansowania, "ID", "ID", dyscyplinaZPoziomem.PoziomZaawansowaniaID);
+            ViewData["DyscyplinaID"] = new SelectList(_context.DyscyplinaSet, "ID", "ID", dyscyplinaZPoziomem.DyscyplinaID);
+            ViewData["PoziomZaawansowaniaID"] = new SelectList(_context.PoziomZaawansowaniaSet, "ID", "ID", dyscyplinaZPoziomem.PoziomZaawansowaniaID);
             return View(dyscyplinaZPoziomem);
         }
 
@@ -134,7 +134,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var dyscyplinaZPoziomem = await _context.DyscyplinaZPoziomem
+            var dyscyplinaZPoziomem = await _context.DyscyplinaZPoziomemSet
                 .Include(d => d.Dyscyplina)
                 .Include(d => d.PoziomZaawansowania)
                 .SingleOrDefaultAsync(m => m.ID == id);
@@ -151,15 +151,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dyscyplinaZPoziomem = await _context.DyscyplinaZPoziomem.SingleOrDefaultAsync(m => m.ID == id);
-            _context.DyscyplinaZPoziomem.Remove(dyscyplinaZPoziomem);
+            var dyscyplinaZPoziomem = await _context.DyscyplinaZPoziomemSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.DyscyplinaZPoziomemSet.Remove(dyscyplinaZPoziomem);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DyscyplinaZPoziomemExists(int id)
         {
-            return _context.DyscyplinaZPoziomem.Any(e => e.ID == id);
+            return _context.DyscyplinaZPoziomemSet.Any(e => e.ID == id);
         }
     }
 }

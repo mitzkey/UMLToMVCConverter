@@ -5,27 +5,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WebApplication2.Models;
+using WebApplication1.Models;
 
-namespace WebApplication2
+namespace WebApplication1
 {
-    public class AdresController : Controller
+    public class WorkersController : Controller
     {
-        private readonly TestowyZKartki01Context _context;
+        private readonly DefaultContext _context;
 
-        public AdresController(TestowyZKartki01Context context)
+        public WorkersController(DefaultContext context)
         {
             _context = context;
         }
 
-        // GET: Adres
+        // GET: Workers
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.AdresSet.Include(a => a.Miejscowosc);
-            return View(await testowyZKartki01Context.ToListAsync());
+            var defaultContext = _context.WorkerSet.Include(w => w.Enterprise);
+            return View(await defaultContext.ToListAsync());
         }
 
-        // GET: Adres/Details/5
+        // GET: Workers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +33,42 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var adres = await _context.AdresSet
-                .Include(a => a.Miejscowosc)
+            var worker = await _context.WorkerSet
+                .Include(w => w.Enterprise)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (adres == null)
+            if (worker == null)
             {
                 return NotFound();
             }
 
-            return View(adres);
+            return View(worker);
         }
 
-        // GET: Adres/Create
+        // GET: Workers/Create
         public IActionResult Create()
         {
-            ViewData["MiejscowoscID"] = new SelectList(_context.MiejscowoscSet, "ID", "ID");
+            ViewData["EnterpriseID"] = new SelectList(_context.EnterpriseSet, "ID", "Name");
             return View();
         }
 
-        // POST: Adres/Create
+        // POST: Workers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,MiejscowoscID")] Adres adres)
+        public async Task<IActionResult> Create([Bind("Company,Wage,EnterpriseID,ID,DateOfBirth,Name")] Worker worker)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(adres);
+                _context.Add(worker);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MiejscowoscID"] = new SelectList(_context.MiejscowoscSet, "ID", "ID", adres.MiejscowoscID);
-            return View(adres);
+            ViewData["EnterpriseID"] = new SelectList(_context.EnterpriseSet, "ID", "Name", worker.EnterpriseID);
+            return View(worker);
         }
 
-        // GET: Adres/Edit/5
+        // GET: Workers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +76,23 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var adres = await _context.AdresSet.SingleOrDefaultAsync(m => m.ID == id);
-            if (adres == null)
+            var worker = await _context.WorkerSet.SingleOrDefaultAsync(m => m.ID == id);
+            if (worker == null)
             {
                 return NotFound();
             }
-            ViewData["MiejscowoscID"] = new SelectList(_context.MiejscowoscSet, "ID", "ID", adres.MiejscowoscID);
-            return View(adres);
+            ViewData["EnterpriseID"] = new SelectList(_context.EnterpriseSet, "ID", "Name", worker.EnterpriseID);
+            return View(worker);
         }
 
-        // POST: Adres/Edit/5
+        // POST: Workers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,MiejscowoscID")] Adres adres)
+        public async Task<IActionResult> Edit(int id, [Bind("Company,Wage,EnterpriseID,ID,DateOfBirth,Name")] Worker worker)
         {
-            if (id != adres.ID)
+            if (id != worker.ID)
             {
                 return NotFound();
             }
@@ -101,12 +101,12 @@ namespace WebApplication2
             {
                 try
                 {
-                    _context.Update(adres);
+                    _context.Update(worker);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdresExists(adres.ID))
+                    if (!WorkerExists(worker.ID))
                     {
                         return NotFound();
                     }
@@ -117,11 +117,11 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MiejscowoscID"] = new SelectList(_context.MiejscowoscSet, "ID", "ID", adres.MiejscowoscID);
-            return View(adres);
+            ViewData["EnterpriseID"] = new SelectList(_context.EnterpriseSet, "ID", "Name", worker.EnterpriseID);
+            return View(worker);
         }
 
-        // GET: Adres/Delete/5
+        // GET: Workers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +129,31 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var adres = await _context.AdresSet
-                .Include(a => a.Miejscowosc)
+            var worker = await _context.WorkerSet
+                .Include(w => w.Enterprise)
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (adres == null)
+            if (worker == null)
             {
                 return NotFound();
             }
 
-            return View(adres);
+            return View(worker);
         }
 
-        // POST: Adres/Delete/5
+        // POST: Workers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var adres = await _context.AdresSet.SingleOrDefaultAsync(m => m.ID == id);
-            _context.AdresSet.Remove(adres);
+            var worker = await _context.WorkerSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.WorkerSet.Remove(worker);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdresExists(int id)
+        private bool WorkerExists(int id)
         {
-            return _context.AdresSet.Any(e => e.ID == id);
+            return _context.WorkerSet.Any(e => e.ID == id);
         }
     }
 }

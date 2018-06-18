@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: SzczegolyKwalifikacjis
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.SzczegolyKwalifikacji.Include(s => s.DyscyplinaZPoziomem).Include(s => s.Instruktor);
+            var testowyZKartki01Context = _context.SzczegolyKwalifikacjiSet.Include(s => s.DyscyplinaZPoziomem).Include(s => s.Instruktor);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var szczegolyKwalifikacji = await _context.SzczegolyKwalifikacji
+            var szczegolyKwalifikacji = await _context.SzczegolyKwalifikacjiSet
                 .Include(s => s.DyscyplinaZPoziomem)
                 .Include(s => s.Instruktor)
                 .SingleOrDefaultAsync(m => m.ID == id);
@@ -48,8 +48,8 @@ namespace WebApplication2
         // GET: SzczegolyKwalifikacjis/Create
         public IActionResult Create()
         {
-            ViewData["DyscyplinaZPoziomemID"] = new SelectList(_context.DyscyplinaZPoziomem, "ID", "ID");
-            ViewData["InstruktorID"] = new SelectList(_context.Instruktor, "ID", "ID");
+            ViewData["DyscyplinaZPoziomemID"] = new SelectList(_context.DyscyplinaZPoziomemSet, "ID", "ID");
+            ViewData["InstruktorID"] = new SelectList(_context.InstruktorSet, "ID", "ID");
             return View();
         }
 
@@ -66,8 +66,8 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DyscyplinaZPoziomemID"] = new SelectList(_context.DyscyplinaZPoziomem, "ID", "ID", szczegolyKwalifikacji.DyscyplinaZPoziomemID);
-            ViewData["InstruktorID"] = new SelectList(_context.Instruktor, "ID", "ID", szczegolyKwalifikacji.InstruktorID);
+            ViewData["DyscyplinaZPoziomemID"] = new SelectList(_context.DyscyplinaZPoziomemSet, "ID", "ID", szczegolyKwalifikacji.DyscyplinaZPoziomemID);
+            ViewData["InstruktorID"] = new SelectList(_context.InstruktorSet, "ID", "ID", szczegolyKwalifikacji.InstruktorID);
             return View(szczegolyKwalifikacji);
         }
 
@@ -79,13 +79,13 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var szczegolyKwalifikacji = await _context.SzczegolyKwalifikacji.SingleOrDefaultAsync(m => m.ID == id);
+            var szczegolyKwalifikacji = await _context.SzczegolyKwalifikacjiSet.SingleOrDefaultAsync(m => m.ID == id);
             if (szczegolyKwalifikacji == null)
             {
                 return NotFound();
             }
-            ViewData["DyscyplinaZPoziomemID"] = new SelectList(_context.DyscyplinaZPoziomem, "ID", "ID", szczegolyKwalifikacji.DyscyplinaZPoziomemID);
-            ViewData["InstruktorID"] = new SelectList(_context.Instruktor, "ID", "ID", szczegolyKwalifikacji.InstruktorID);
+            ViewData["DyscyplinaZPoziomemID"] = new SelectList(_context.DyscyplinaZPoziomemSet, "ID", "ID", szczegolyKwalifikacji.DyscyplinaZPoziomemID);
+            ViewData["InstruktorID"] = new SelectList(_context.InstruktorSet, "ID", "ID", szczegolyKwalifikacji.InstruktorID);
             return View(szczegolyKwalifikacji);
         }
 
@@ -121,8 +121,8 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DyscyplinaZPoziomemID"] = new SelectList(_context.DyscyplinaZPoziomem, "ID", "ID", szczegolyKwalifikacji.DyscyplinaZPoziomemID);
-            ViewData["InstruktorID"] = new SelectList(_context.Instruktor, "ID", "ID", szczegolyKwalifikacji.InstruktorID);
+            ViewData["DyscyplinaZPoziomemID"] = new SelectList(_context.DyscyplinaZPoziomemSet, "ID", "ID", szczegolyKwalifikacji.DyscyplinaZPoziomemID);
+            ViewData["InstruktorID"] = new SelectList(_context.InstruktorSet, "ID", "ID", szczegolyKwalifikacji.InstruktorID);
             return View(szczegolyKwalifikacji);
         }
 
@@ -134,7 +134,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var szczegolyKwalifikacji = await _context.SzczegolyKwalifikacji
+            var szczegolyKwalifikacji = await _context.SzczegolyKwalifikacjiSet
                 .Include(s => s.DyscyplinaZPoziomem)
                 .Include(s => s.Instruktor)
                 .SingleOrDefaultAsync(m => m.ID == id);
@@ -151,15 +151,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var szczegolyKwalifikacji = await _context.SzczegolyKwalifikacji.SingleOrDefaultAsync(m => m.ID == id);
-            _context.SzczegolyKwalifikacji.Remove(szczegolyKwalifikacji);
+            var szczegolyKwalifikacji = await _context.SzczegolyKwalifikacjiSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.SzczegolyKwalifikacjiSet.Remove(szczegolyKwalifikacji);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SzczegolyKwalifikacjiExists(int id)
         {
-            return _context.SzczegolyKwalifikacji.Any(e => e.ID == id);
+            return _context.SzczegolyKwalifikacjiSet.Any(e => e.ID == id);
         }
     }
 }

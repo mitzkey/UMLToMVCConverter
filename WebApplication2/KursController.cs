@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Kurs
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.Kurs.Include(k => k.Grafik);
+            var testowyZKartki01Context = _context.KursSet.Include(k => k.Grafik);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var kurs = await _context.Kurs
+            var kurs = await _context.KursSet
                 .Include(k => k.Grafik)
                 .SingleOrDefaultAsync(m => m.Kod == id);
             if (kurs == null)
@@ -47,7 +47,7 @@ namespace WebApplication2
         // GET: Kurs/Create
         public IActionResult Create()
         {
-            ViewData["GrafikID"] = new SelectList(_context.Grafik, "ID", "ID");
+            ViewData["GrafikID"] = new SelectList(_context.GrafikSet, "ID", "ID");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GrafikID"] = new SelectList(_context.Grafik, "ID", "ID", kurs.GrafikID);
+            ViewData["GrafikID"] = new SelectList(_context.GrafikSet, "ID", "ID", kurs.GrafikID);
             return View(kurs);
         }
 
@@ -76,12 +76,12 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var kurs = await _context.Kurs.SingleOrDefaultAsync(m => m.Kod == id);
+            var kurs = await _context.KursSet.SingleOrDefaultAsync(m => m.Kod == id);
             if (kurs == null)
             {
                 return NotFound();
             }
-            ViewData["GrafikID"] = new SelectList(_context.Grafik, "ID", "ID", kurs.GrafikID);
+            ViewData["GrafikID"] = new SelectList(_context.GrafikSet, "ID", "ID", kurs.GrafikID);
             return View(kurs);
         }
 
@@ -117,7 +117,7 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GrafikID"] = new SelectList(_context.Grafik, "ID", "ID", kurs.GrafikID);
+            ViewData["GrafikID"] = new SelectList(_context.GrafikSet, "ID", "ID", kurs.GrafikID);
             return View(kurs);
         }
 
@@ -129,7 +129,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var kurs = await _context.Kurs
+            var kurs = await _context.KursSet
                 .Include(k => k.Grafik)
                 .SingleOrDefaultAsync(m => m.Kod == id);
             if (kurs == null)
@@ -145,15 +145,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var kurs = await _context.Kurs.SingleOrDefaultAsync(m => m.Kod == id);
-            _context.Kurs.Remove(kurs);
+            var kurs = await _context.KursSet.SingleOrDefaultAsync(m => m.Kod == id);
+            _context.KursSet.Remove(kurs);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool KursExists(string id)
         {
-            return _context.Kurs.Any(e => e.Kod == id);
+            return _context.KursSet.Any(e => e.Kod == id);
         }
     }
 }

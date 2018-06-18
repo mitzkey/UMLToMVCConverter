@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Instruktors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Instruktor.ToListAsync());
+            return View(await _context.InstruktorSet.ToListAsync());
         }
 
         // GET: Instruktors/Details/5
@@ -32,7 +32,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var instruktor = await _context.Instruktor
+            var instruktor = await _context.InstruktorSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (instruktor == null)
             {
@@ -72,7 +72,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var instruktor = await _context.Instruktor.SingleOrDefaultAsync(m => m.ID == id);
+            var instruktor = await _context.InstruktorSet.SingleOrDefaultAsync(m => m.ID == id);
             if (instruktor == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var instruktor = await _context.Instruktor
+            var instruktor = await _context.InstruktorSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (instruktor == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var instruktor = await _context.Instruktor.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Instruktor.Remove(instruktor);
+            var instruktor = await _context.InstruktorSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.InstruktorSet.Remove(instruktor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool InstruktorExists(int id)
         {
-            return _context.Instruktor.Any(e => e.ID == id);
+            return _context.InstruktorSet.Any(e => e.ID == id);
         }
     }
 }

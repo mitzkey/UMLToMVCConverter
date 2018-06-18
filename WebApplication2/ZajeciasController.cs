@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Zajecias
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.Zajecia.Include(z => z.Kurs).Include(z => z.Sala).Include(z => z.Termin);
+            var testowyZKartki01Context = _context.ZajeciaSet.Include(z => z.Kurs).Include(z => z.Sala).Include(z => z.Termin);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var zajecia = await _context.Zajecia
+            var zajecia = await _context.ZajeciaSet
                 .Include(z => z.Kurs)
                 .Include(z => z.Sala)
                 .Include(z => z.Termin)
@@ -49,9 +49,9 @@ namespace WebApplication2
         // GET: Zajecias/Create
         public IActionResult Create()
         {
-            ViewData["KursKod"] = new SelectList(_context.Kurs, "Kod", "Kod");
-            ViewData["SalaID"] = new SelectList(_context.Sala, "ID", "ID");
-            ViewData["TerminDzien"] = new SelectList(_context.Termin, "Dzien", "Dzien");
+            ViewData["KursKod"] = new SelectList(_context.KursSet, "Kod", "Kod");
+            ViewData["SalaID"] = new SelectList(_context.SalaSet, "ID", "ID");
+            ViewData["TerminDzien"] = new SelectList(_context.TerminSet, "Dzien", "Dzien");
             return View();
         }
 
@@ -68,9 +68,9 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KursKod"] = new SelectList(_context.Kurs, "Kod", "Kod", zajecia.KursKod);
-            ViewData["SalaID"] = new SelectList(_context.Sala, "ID", "ID", zajecia.SalaID);
-            ViewData["TerminDzien"] = new SelectList(_context.Termin, "Dzien", "Dzien", zajecia.TerminDzien);
+            ViewData["KursKod"] = new SelectList(_context.KursSet, "Kod", "Kod", zajecia.KursKod);
+            ViewData["SalaID"] = new SelectList(_context.SalaSet, "ID", "ID", zajecia.SalaID);
+            ViewData["TerminDzien"] = new SelectList(_context.TerminSet, "Dzien", "Dzien", zajecia.TerminDzien);
             return View(zajecia);
         }
 
@@ -82,14 +82,14 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var zajecia = await _context.Zajecia.SingleOrDefaultAsync(m => m.ID == id);
+            var zajecia = await _context.ZajeciaSet.SingleOrDefaultAsync(m => m.ID == id);
             if (zajecia == null)
             {
                 return NotFound();
             }
-            ViewData["KursKod"] = new SelectList(_context.Kurs, "Kod", "Kod", zajecia.KursKod);
-            ViewData["SalaID"] = new SelectList(_context.Sala, "ID", "ID", zajecia.SalaID);
-            ViewData["TerminDzien"] = new SelectList(_context.Termin, "Dzien", "Dzien", zajecia.TerminDzien);
+            ViewData["KursKod"] = new SelectList(_context.KursSet, "Kod", "Kod", zajecia.KursKod);
+            ViewData["SalaID"] = new SelectList(_context.SalaSet, "ID", "ID", zajecia.SalaID);
+            ViewData["TerminDzien"] = new SelectList(_context.TerminSet, "Dzien", "Dzien", zajecia.TerminDzien);
             return View(zajecia);
         }
 
@@ -125,9 +125,9 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KursKod"] = new SelectList(_context.Kurs, "Kod", "Kod", zajecia.KursKod);
-            ViewData["SalaID"] = new SelectList(_context.Sala, "ID", "ID", zajecia.SalaID);
-            ViewData["TerminDzien"] = new SelectList(_context.Termin, "Dzien", "Dzien", zajecia.TerminDzien);
+            ViewData["KursKod"] = new SelectList(_context.KursSet, "Kod", "Kod", zajecia.KursKod);
+            ViewData["SalaID"] = new SelectList(_context.SalaSet, "ID", "ID", zajecia.SalaID);
+            ViewData["TerminDzien"] = new SelectList(_context.TerminSet, "Dzien", "Dzien", zajecia.TerminDzien);
             return View(zajecia);
         }
 
@@ -139,7 +139,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var zajecia = await _context.Zajecia
+            var zajecia = await _context.ZajeciaSet
                 .Include(z => z.Kurs)
                 .Include(z => z.Sala)
                 .Include(z => z.Termin)
@@ -157,15 +157,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var zajecia = await _context.Zajecia.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Zajecia.Remove(zajecia);
+            var zajecia = await _context.ZajeciaSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.ZajeciaSet.Remove(zajecia);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ZajeciaExists(int id)
         {
-            return _context.Zajecia.Any(e => e.ID == id);
+            return _context.ZajeciaSet.Any(e => e.ID == id);
         }
     }
 }

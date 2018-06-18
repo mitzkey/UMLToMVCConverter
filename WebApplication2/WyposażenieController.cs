@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Wyposażenie
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Wyposażenie.ToListAsync());
+            return View(await _context.WyposażenieSet.ToListAsync());
         }
 
         // GET: Wyposażenie/Details/5
@@ -32,7 +32,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wyposażenie = await _context.Wyposażenie
+            var wyposażenie = await _context.WyposażenieSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (wyposażenie == null)
             {
@@ -72,7 +72,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wyposażenie = await _context.Wyposażenie.SingleOrDefaultAsync(m => m.ID == id);
+            var wyposażenie = await _context.WyposażenieSet.SingleOrDefaultAsync(m => m.ID == id);
             if (wyposażenie == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wyposażenie = await _context.Wyposażenie
+            var wyposażenie = await _context.WyposażenieSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (wyposażenie == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var wyposażenie = await _context.Wyposażenie.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Wyposażenie.Remove(wyposażenie);
+            var wyposażenie = await _context.WyposażenieSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.WyposażenieSet.Remove(wyposażenie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool WyposażenieExists(int id)
         {
-            return _context.Wyposażenie.Any(e => e.ID == id);
+            return _context.WyposażenieSet.Any(e => e.ID == id);
         }
     }
 }

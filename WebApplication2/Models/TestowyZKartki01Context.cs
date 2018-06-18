@@ -9,51 +9,51 @@ namespace WebApplication2.Models
 		{
 		}
 
-		public DbSet<StatusWniosku> StatusWniosku { get; set; }
+		public DbSet<StatusWniosku> StatusWnioskuSet { get; set; }
 
-		public DbSet<DzienTygodnia> DzienTygodnia { get; set; }
+		public DbSet<DzienTygodnia> DzienTygodniaSet { get; set; }
 
-		public DbSet<Wniosek> Wniosek { get; set; }
+		public DbSet<Wniosek> WniosekSet { get; set; }
 
-		public DbSet<CzlonekKlubu> CzlonekKlubu { get; set; }
+		public DbSet<CzlonekKlubu> CzlonekKlubuSet { get; set; }
 
-		public DbSet<Osoba> Osoba { get; set; }
+		public DbSet<Osoba> OsobaSet { get; set; }
 
-		public DbSet<Adres> Adres { get; set; }
+		public DbSet<Adres> AdresSet { get; set; }
 
-		public DbSet<Miejscowosc> Miejscowosc { get; set; }
+		public DbSet<Miejscowosc> MiejscowoscSet { get; set; }
 
-		public DbSet<Wojewodztwo> Wojewodztwo { get; set; }
+		public DbSet<Wojewodztwo> WojewodztwoSet { get; set; }
 
-		public DbSet<Grafik> Grafik { get; set; }
+		public DbSet<Grafik> GrafikSet { get; set; }
 
-		public DbSet<Termin> Termin { get; set; }
+		public DbSet<Termin> TerminSet { get; set; }
 
-		public DbSet<Kurs> Kurs { get; set; }
+		public DbSet<Kurs> KursSet { get; set; }
 
-		public DbSet<Zajecia> Zajecia { get; set; }
+		public DbSet<Zajecia> ZajeciaSet { get; set; }
 
-		public DbSet<Sala> Sala { get; set; }
+		public DbSet<Sala> SalaSet { get; set; }
 
-		public DbSet<PoziomZaawansowania> PoziomZaawansowania { get; set; }
+		public DbSet<PoziomZaawansowania> PoziomZaawansowaniaSet { get; set; }
 
-		public DbSet<Dyscyplina> Dyscyplina { get; set; }
+		public DbSet<Dyscyplina> DyscyplinaSet { get; set; }
 
-		public DbSet<Instruktor> Instruktor { get; set; }
+		public DbSet<Instruktor> InstruktorSet { get; set; }
 
-		public DbSet<Wyposażenie> Wyposażenie { get; set; }
+		public DbSet<Wyposażenie> WyposażenieSet { get; set; }
 
-		public DbSet<PrzystosowanieSali> PrzystosowanieSali { get; set; }
+		public DbSet<PrzystosowanieSali> PrzystosowanieSaliSet { get; set; }
 
-		public DbSet<DyscyplinaZPoziomem> DyscyplinaZPoziomem { get; set; }
+		public DbSet<DyscyplinaZPoziomem> DyscyplinaZPoziomemSet { get; set; }
 
-		public DbSet<SzczegolyKwalifikacji> SzczegolyKwalifikacji { get; set; }
+		public DbSet<SzczegolyKwalifikacji> SzczegolyKwalifikacjiSet { get; set; }
 
-		public DbSet<BrakujaceWyposazeniePrzystosowanieSali> BrakujaceWyposazeniePrzystosowanieSali { get; set; }
+		public DbSet<BrakujaceWyposazeniePrzystosowanieSali> BrakujaceWyposazeniePrzystosowanieSaliSet { get; set; }
 
-		public DbSet<WymaganeWyposazenieDyscyplina> WymaganeWyposazenieDyscyplina { get; set; }
+		public DbSet<WymaganeWyposazenieDyscyplina> WymaganeWyposazenieDyscyplinaSet { get; set; }
 
-		public DbSet<CertyfikowaneKwalifikacjeInstruktor> CertyfikowaneKwalifikacjeInstruktor { get; set; }
+		public DbSet<CertyfikowaneKwalifikacjeInstruktor> CertyfikowaneKwalifikacjeInstruktorSet { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
@@ -64,6 +64,22 @@ namespace WebApplication2.Models
 			modelBuilder.Entity<CzlonekKlubu>()
 		        .HasOne(t => t.WniosekPrzyjetyNaPodstawie)
 		        .WithOne(t => t.CzlonekKlubuPrzyjetyNaPodstawie)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<Wniosek>()
+		        .HasOne(t => t.AdresZameldowania)
+		        .WithOne()
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<Wniosek>()
+		        .HasOne(t => t.AdresDoKorespondencji)
+		        .WithOne()
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 

@@ -12,9 +12,9 @@ namespace WebApplication2.Models
 		public int ID { get; set; }
 
 
-		public Nullable<System.Int32> Pojemnosc { get; set; }
+		public System.Int32 Pojemnosc { get; set; }
 
-		public Nullable<System.Double> StawkaZaZajecia { get; set; }
+		public System.Double StawkaZaZajecia { get; set; }
 
 		[InverseProperty("PrzystosowanieSali")]
 		[ForeignKey("PoziomID")]

@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: BrakujaceWyposazeniePrzystosowanieSalis
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.BrakujaceWyposazeniePrzystosowanieSali.Include(b => b.BrakujaceWyposazenie);
+            var testowyZKartki01Context = _context.BrakujaceWyposazeniePrzystosowanieSaliSet.Include(b => b.BrakujaceWyposazenie);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var brakujaceWyposazeniePrzystosowanieSali = await _context.BrakujaceWyposazeniePrzystosowanieSali
+            var brakujaceWyposazeniePrzystosowanieSali = await _context.BrakujaceWyposazeniePrzystosowanieSaliSet
                 .Include(b => b.BrakujaceWyposazenie)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (brakujaceWyposazeniePrzystosowanieSali == null)
@@ -47,7 +47,7 @@ namespace WebApplication2
         // GET: BrakujaceWyposazeniePrzystosowanieSalis/Create
         public IActionResult Create()
         {
-            ViewData["BrakujaceWyposazenieID"] = new SelectList(_context.Wyposażenie, "ID", "ID");
+            ViewData["BrakujaceWyposazenieID"] = new SelectList(_context.WyposażenieSet, "ID", "ID");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrakujaceWyposazenieID"] = new SelectList(_context.Wyposażenie, "ID", "ID", brakujaceWyposazeniePrzystosowanieSali.BrakujaceWyposazenieID);
+            ViewData["BrakujaceWyposazenieID"] = new SelectList(_context.WyposażenieSet, "ID", "ID", brakujaceWyposazeniePrzystosowanieSali.BrakujaceWyposazenieID);
             return View(brakujaceWyposazeniePrzystosowanieSali);
         }
 
@@ -76,12 +76,12 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var brakujaceWyposazeniePrzystosowanieSali = await _context.BrakujaceWyposazeniePrzystosowanieSali.SingleOrDefaultAsync(m => m.ID == id);
+            var brakujaceWyposazeniePrzystosowanieSali = await _context.BrakujaceWyposazeniePrzystosowanieSaliSet.SingleOrDefaultAsync(m => m.ID == id);
             if (brakujaceWyposazeniePrzystosowanieSali == null)
             {
                 return NotFound();
             }
-            ViewData["BrakujaceWyposazenieID"] = new SelectList(_context.Wyposażenie, "ID", "ID", brakujaceWyposazeniePrzystosowanieSali.BrakujaceWyposazenieID);
+            ViewData["BrakujaceWyposazenieID"] = new SelectList(_context.WyposażenieSet, "ID", "ID", brakujaceWyposazeniePrzystosowanieSali.BrakujaceWyposazenieID);
             return View(brakujaceWyposazeniePrzystosowanieSali);
         }
 
@@ -117,7 +117,7 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrakujaceWyposazenieID"] = new SelectList(_context.Wyposażenie, "ID", "ID", brakujaceWyposazeniePrzystosowanieSali.BrakujaceWyposazenieID);
+            ViewData["BrakujaceWyposazenieID"] = new SelectList(_context.WyposażenieSet, "ID", "ID", brakujaceWyposazeniePrzystosowanieSali.BrakujaceWyposazenieID);
             return View(brakujaceWyposazeniePrzystosowanieSali);
         }
 
@@ -129,7 +129,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var brakujaceWyposazeniePrzystosowanieSali = await _context.BrakujaceWyposazeniePrzystosowanieSali
+            var brakujaceWyposazeniePrzystosowanieSali = await _context.BrakujaceWyposazeniePrzystosowanieSaliSet
                 .Include(b => b.BrakujaceWyposazenie)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (brakujaceWyposazeniePrzystosowanieSali == null)
@@ -145,15 +145,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var brakujaceWyposazeniePrzystosowanieSali = await _context.BrakujaceWyposazeniePrzystosowanieSali.SingleOrDefaultAsync(m => m.ID == id);
-            _context.BrakujaceWyposazeniePrzystosowanieSali.Remove(brakujaceWyposazeniePrzystosowanieSali);
+            var brakujaceWyposazeniePrzystosowanieSali = await _context.BrakujaceWyposazeniePrzystosowanieSaliSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.BrakujaceWyposazeniePrzystosowanieSaliSet.Remove(brakujaceWyposazeniePrzystosowanieSali);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BrakujaceWyposazeniePrzystosowanieSaliExists(int id)
         {
-            return _context.BrakujaceWyposazeniePrzystosowanieSali.Any(e => e.ID == id);
+            return _context.BrakujaceWyposazeniePrzystosowanieSaliSet.Any(e => e.ID == id);
         }
     }
 }

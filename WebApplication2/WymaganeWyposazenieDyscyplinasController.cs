@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: WymaganeWyposazenieDyscyplinas
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.WymaganeWyposazenieDyscyplina.Include(w => w.WymaganeWyposazenie);
+            var testowyZKartki01Context = _context.WymaganeWyposazenieDyscyplinaSet.Include(w => w.WymaganeWyposazenie);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wymaganeWyposazenieDyscyplina = await _context.WymaganeWyposazenieDyscyplina
+            var wymaganeWyposazenieDyscyplina = await _context.WymaganeWyposazenieDyscyplinaSet
                 .Include(w => w.WymaganeWyposazenie)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (wymaganeWyposazenieDyscyplina == null)
@@ -47,7 +47,7 @@ namespace WebApplication2
         // GET: WymaganeWyposazenieDyscyplinas/Create
         public IActionResult Create()
         {
-            ViewData["WymaganeWyposazenieID"] = new SelectList(_context.Wyposażenie, "ID", "ID");
+            ViewData["WymaganeWyposazenieID"] = new SelectList(_context.WyposażenieSet, "ID", "ID");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WymaganeWyposazenieID"] = new SelectList(_context.Wyposażenie, "ID", "ID", wymaganeWyposazenieDyscyplina.WymaganeWyposazenieID);
+            ViewData["WymaganeWyposazenieID"] = new SelectList(_context.WyposażenieSet, "ID", "ID", wymaganeWyposazenieDyscyplina.WymaganeWyposazenieID);
             return View(wymaganeWyposazenieDyscyplina);
         }
 
@@ -76,12 +76,12 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wymaganeWyposazenieDyscyplina = await _context.WymaganeWyposazenieDyscyplina.SingleOrDefaultAsync(m => m.ID == id);
+            var wymaganeWyposazenieDyscyplina = await _context.WymaganeWyposazenieDyscyplinaSet.SingleOrDefaultAsync(m => m.ID == id);
             if (wymaganeWyposazenieDyscyplina == null)
             {
                 return NotFound();
             }
-            ViewData["WymaganeWyposazenieID"] = new SelectList(_context.Wyposażenie, "ID", "ID", wymaganeWyposazenieDyscyplina.WymaganeWyposazenieID);
+            ViewData["WymaganeWyposazenieID"] = new SelectList(_context.WyposażenieSet, "ID", "ID", wymaganeWyposazenieDyscyplina.WymaganeWyposazenieID);
             return View(wymaganeWyposazenieDyscyplina);
         }
 
@@ -117,7 +117,7 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WymaganeWyposazenieID"] = new SelectList(_context.Wyposażenie, "ID", "ID", wymaganeWyposazenieDyscyplina.WymaganeWyposazenieID);
+            ViewData["WymaganeWyposazenieID"] = new SelectList(_context.WyposażenieSet, "ID", "ID", wymaganeWyposazenieDyscyplina.WymaganeWyposazenieID);
             return View(wymaganeWyposazenieDyscyplina);
         }
 
@@ -129,7 +129,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wymaganeWyposazenieDyscyplina = await _context.WymaganeWyposazenieDyscyplina
+            var wymaganeWyposazenieDyscyplina = await _context.WymaganeWyposazenieDyscyplinaSet
                 .Include(w => w.WymaganeWyposazenie)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (wymaganeWyposazenieDyscyplina == null)
@@ -145,15 +145,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var wymaganeWyposazenieDyscyplina = await _context.WymaganeWyposazenieDyscyplina.SingleOrDefaultAsync(m => m.ID == id);
-            _context.WymaganeWyposazenieDyscyplina.Remove(wymaganeWyposazenieDyscyplina);
+            var wymaganeWyposazenieDyscyplina = await _context.WymaganeWyposazenieDyscyplinaSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.WymaganeWyposazenieDyscyplinaSet.Remove(wymaganeWyposazenieDyscyplina);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool WymaganeWyposazenieDyscyplinaExists(int id)
         {
-            return _context.WymaganeWyposazenieDyscyplina.Any(e => e.ID == id);
+            return _context.WymaganeWyposazenieDyscyplinaSet.Any(e => e.ID == id);
         }
     }
 }

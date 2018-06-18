@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: CzlonekKlubus
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.CzlonekKlubu.Include(c => c.WniosekPrzyjetyNaPodstawie);
+            var testowyZKartki01Context = _context.CzlonekKlubuSet.Include(c => c.WniosekPrzyjetyNaPodstawie);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var czlonekKlubu = await _context.CzlonekKlubu
+            var czlonekKlubu = await _context.CzlonekKlubuSet
                 .Include(c => c.WniosekPrzyjetyNaPodstawie)
                 .SingleOrDefaultAsync(m => m.Pesel == id);
             if (czlonekKlubu == null)
@@ -47,7 +47,7 @@ namespace WebApplication2
         // GET: CzlonekKlubus/Create
         public IActionResult Create()
         {
-            ViewData["WniosekPrzyjetyNaPodstawiePesel"] = new SelectList(_context.Wniosek, "Pesel", "Pesel");
+            ViewData["WniosekPrzyjetyNaPodstawiePesel"] = new SelectList(_context.WniosekSet, "Pesel", "Pesel");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WniosekPrzyjetyNaPodstawiePesel"] = new SelectList(_context.Wniosek, "Pesel", "Pesel", czlonekKlubu.WniosekPrzyjetyNaPodstawiePesel);
+            ViewData["WniosekPrzyjetyNaPodstawiePesel"] = new SelectList(_context.WniosekSet, "Pesel", "Pesel", czlonekKlubu.WniosekPrzyjetyNaPodstawiePesel);
             return View(czlonekKlubu);
         }
 
@@ -76,12 +76,12 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var czlonekKlubu = await _context.CzlonekKlubu.SingleOrDefaultAsync(m => m.Pesel == id);
+            var czlonekKlubu = await _context.CzlonekKlubuSet.SingleOrDefaultAsync(m => m.Pesel == id);
             if (czlonekKlubu == null)
             {
                 return NotFound();
             }
-            ViewData["WniosekPrzyjetyNaPodstawiePesel"] = new SelectList(_context.Wniosek, "Pesel", "Pesel", czlonekKlubu.WniosekPrzyjetyNaPodstawiePesel);
+            ViewData["WniosekPrzyjetyNaPodstawiePesel"] = new SelectList(_context.WniosekSet, "Pesel", "Pesel", czlonekKlubu.WniosekPrzyjetyNaPodstawiePesel);
             return View(czlonekKlubu);
         }
 
@@ -117,7 +117,7 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WniosekPrzyjetyNaPodstawiePesel"] = new SelectList(_context.Wniosek, "Pesel", "Pesel", czlonekKlubu.WniosekPrzyjetyNaPodstawiePesel);
+            ViewData["WniosekPrzyjetyNaPodstawiePesel"] = new SelectList(_context.WniosekSet, "Pesel", "Pesel", czlonekKlubu.WniosekPrzyjetyNaPodstawiePesel);
             return View(czlonekKlubu);
         }
 
@@ -129,7 +129,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var czlonekKlubu = await _context.CzlonekKlubu
+            var czlonekKlubu = await _context.CzlonekKlubuSet
                 .Include(c => c.WniosekPrzyjetyNaPodstawie)
                 .SingleOrDefaultAsync(m => m.Pesel == id);
             if (czlonekKlubu == null)
@@ -145,15 +145,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var czlonekKlubu = await _context.CzlonekKlubu.SingleOrDefaultAsync(m => m.Pesel == id);
-            _context.CzlonekKlubu.Remove(czlonekKlubu);
+            var czlonekKlubu = await _context.CzlonekKlubuSet.SingleOrDefaultAsync(m => m.Pesel == id);
+            _context.CzlonekKlubuSet.Remove(czlonekKlubu);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CzlonekKlubuExists(string id)
         {
-            return _context.CzlonekKlubu.Any(e => e.Pesel == id);
+            return _context.CzlonekKlubuSet.Any(e => e.Pesel == id);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: CertyfikowaneKwalifikacjeInstruktors
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.CertyfikowaneKwalifikacjeInstruktor.Include(c => c.CertyfikowaneKwalifikacje);
+            var testowyZKartki01Context = _context.CertyfikowaneKwalifikacjeInstruktorSet.Include(c => c.CertyfikowaneKwalifikacje);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var certyfikowaneKwalifikacjeInstruktor = await _context.CertyfikowaneKwalifikacjeInstruktor
+            var certyfikowaneKwalifikacjeInstruktor = await _context.CertyfikowaneKwalifikacjeInstruktorSet
                 .Include(c => c.CertyfikowaneKwalifikacje)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (certyfikowaneKwalifikacjeInstruktor == null)
@@ -47,7 +47,7 @@ namespace WebApplication2
         // GET: CertyfikowaneKwalifikacjeInstruktors/Create
         public IActionResult Create()
         {
-            ViewData["CertyfikowaneKwalifikacjeID"] = new SelectList(_context.DyscyplinaZPoziomem, "ID", "ID");
+            ViewData["CertyfikowaneKwalifikacjeID"] = new SelectList(_context.DyscyplinaZPoziomemSet, "ID", "ID");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CertyfikowaneKwalifikacjeID"] = new SelectList(_context.DyscyplinaZPoziomem, "ID", "ID", certyfikowaneKwalifikacjeInstruktor.CertyfikowaneKwalifikacjeID);
+            ViewData["CertyfikowaneKwalifikacjeID"] = new SelectList(_context.DyscyplinaZPoziomemSet, "ID", "ID", certyfikowaneKwalifikacjeInstruktor.CertyfikowaneKwalifikacjeID);
             return View(certyfikowaneKwalifikacjeInstruktor);
         }
 
@@ -76,12 +76,12 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var certyfikowaneKwalifikacjeInstruktor = await _context.CertyfikowaneKwalifikacjeInstruktor.SingleOrDefaultAsync(m => m.ID == id);
+            var certyfikowaneKwalifikacjeInstruktor = await _context.CertyfikowaneKwalifikacjeInstruktorSet.SingleOrDefaultAsync(m => m.ID == id);
             if (certyfikowaneKwalifikacjeInstruktor == null)
             {
                 return NotFound();
             }
-            ViewData["CertyfikowaneKwalifikacjeID"] = new SelectList(_context.DyscyplinaZPoziomem, "ID", "ID", certyfikowaneKwalifikacjeInstruktor.CertyfikowaneKwalifikacjeID);
+            ViewData["CertyfikowaneKwalifikacjeID"] = new SelectList(_context.DyscyplinaZPoziomemSet, "ID", "ID", certyfikowaneKwalifikacjeInstruktor.CertyfikowaneKwalifikacjeID);
             return View(certyfikowaneKwalifikacjeInstruktor);
         }
 
@@ -117,7 +117,7 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CertyfikowaneKwalifikacjeID"] = new SelectList(_context.DyscyplinaZPoziomem, "ID", "ID", certyfikowaneKwalifikacjeInstruktor.CertyfikowaneKwalifikacjeID);
+            ViewData["CertyfikowaneKwalifikacjeID"] = new SelectList(_context.DyscyplinaZPoziomemSet, "ID", "ID", certyfikowaneKwalifikacjeInstruktor.CertyfikowaneKwalifikacjeID);
             return View(certyfikowaneKwalifikacjeInstruktor);
         }
 
@@ -129,7 +129,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var certyfikowaneKwalifikacjeInstruktor = await _context.CertyfikowaneKwalifikacjeInstruktor
+            var certyfikowaneKwalifikacjeInstruktor = await _context.CertyfikowaneKwalifikacjeInstruktorSet
                 .Include(c => c.CertyfikowaneKwalifikacje)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (certyfikowaneKwalifikacjeInstruktor == null)
@@ -145,15 +145,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var certyfikowaneKwalifikacjeInstruktor = await _context.CertyfikowaneKwalifikacjeInstruktor.SingleOrDefaultAsync(m => m.ID == id);
-            _context.CertyfikowaneKwalifikacjeInstruktor.Remove(certyfikowaneKwalifikacjeInstruktor);
+            var certyfikowaneKwalifikacjeInstruktor = await _context.CertyfikowaneKwalifikacjeInstruktorSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.CertyfikowaneKwalifikacjeInstruktorSet.Remove(certyfikowaneKwalifikacjeInstruktor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CertyfikowaneKwalifikacjeInstruktorExists(int id)
         {
-            return _context.CertyfikowaneKwalifikacjeInstruktor.Any(e => e.ID == id);
+            return _context.CertyfikowaneKwalifikacjeInstruktorSet.Any(e => e.ID == id);
         }
     }
 }

@@ -17,10 +17,10 @@ namespace WebApplication2.Models
 		public virtual Termin Termin { get; set; }
 
 		[Required]
-		public Nullable<System.DateTime> TerminDzien { get; set; }
+		public System.DateTime TerminDzien { get; set; }
 
 		[Required]
-		public Nullable<System.DateTime> TerminGodzinaRozpoczecia { get; set; }
+		public System.DateTime TerminGodzinaRozpoczecia { get; set; }
 
 		[InverseProperty("Zajecia")]
 		[ForeignKey("KursKod")]

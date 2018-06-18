@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: DzienTygodnias
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DzienTygodnia.ToListAsync());
+            return View(await _context.DzienTygodniaSet.ToListAsync());
         }
 
         // GET: DzienTygodnias/Details/5
@@ -32,7 +32,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var dzienTygodnia = await _context.DzienTygodnia
+            var dzienTygodnia = await _context.DzienTygodniaSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (dzienTygodnia == null)
             {
@@ -72,7 +72,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var dzienTygodnia = await _context.DzienTygodnia.SingleOrDefaultAsync(m => m.ID == id);
+            var dzienTygodnia = await _context.DzienTygodniaSet.SingleOrDefaultAsync(m => m.ID == id);
             if (dzienTygodnia == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var dzienTygodnia = await _context.DzienTygodnia
+            var dzienTygodnia = await _context.DzienTygodniaSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (dzienTygodnia == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dzienTygodnia = await _context.DzienTygodnia.SingleOrDefaultAsync(m => m.ID == id);
-            _context.DzienTygodnia.Remove(dzienTygodnia);
+            var dzienTygodnia = await _context.DzienTygodniaSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.DzienTygodniaSet.Remove(dzienTygodnia);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DzienTygodniaExists(int id)
         {
-            return _context.DzienTygodnia.Any(e => e.ID == id);
+            return _context.DzienTygodniaSet.Any(e => e.ID == id);
         }
     }
 }

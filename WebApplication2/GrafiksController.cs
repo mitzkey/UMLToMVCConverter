@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Grafiks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Grafik.ToListAsync());
+            return View(await _context.GrafikSet.ToListAsync());
         }
 
         // GET: Grafiks/Details/5
@@ -32,7 +32,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var grafik = await _context.Grafik
+            var grafik = await _context.GrafikSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (grafik == null)
             {
@@ -72,7 +72,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var grafik = await _context.Grafik.SingleOrDefaultAsync(m => m.ID == id);
+            var grafik = await _context.GrafikSet.SingleOrDefaultAsync(m => m.ID == id);
             if (grafik == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var grafik = await _context.Grafik
+            var grafik = await _context.GrafikSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (grafik == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var grafik = await _context.Grafik.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Grafik.Remove(grafik);
+            var grafik = await _context.GrafikSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.GrafikSet.Remove(grafik);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool GrafikExists(int id)
         {
-            return _context.Grafik.Any(e => e.ID == id);
+            return _context.GrafikSet.Any(e => e.ID == id);
         }
     }
 }

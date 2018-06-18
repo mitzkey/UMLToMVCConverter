@@ -12,10 +12,10 @@ namespace WebApplication2.Models
 
 
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public Nullable<System.DateTime> Dzien { get; set; }
+		public System.DateTime Dzien { get; set; }
 
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public Nullable<System.DateTime> GodzinaRozpoczecia { get; set; }
+		public System.DateTime GodzinaRozpoczecia { get; set; }
 
 		[InverseProperty("Terminy")]
 		[ForeignKey("GrafikID")]

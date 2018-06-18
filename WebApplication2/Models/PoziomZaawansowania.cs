@@ -12,6 +12,7 @@ namespace WebApplication2.Models
 		public int ID { get; set; }
 
 
+		[Required]
 		public System.String Nazwa { get; set; }
 
 		[InverseProperty("Poziom")]

@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Salas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Sala.ToListAsync());
+            return View(await _context.SalaSet.ToListAsync());
         }
 
         // GET: Salas/Details/5
@@ -32,7 +32,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var sala = await _context.Sala
+            var sala = await _context.SalaSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (sala == null)
             {
@@ -72,7 +72,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var sala = await _context.Sala.SingleOrDefaultAsync(m => m.ID == id);
+            var sala = await _context.SalaSet.SingleOrDefaultAsync(m => m.ID == id);
             if (sala == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var sala = await _context.Sala
+            var sala = await _context.SalaSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (sala == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sala = await _context.Sala.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Sala.Remove(sala);
+            var sala = await _context.SalaSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.SalaSet.Remove(sala);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SalaExists(int id)
         {
-            return _context.Sala.Any(e => e.ID == id);
+            return _context.SalaSet.Any(e => e.ID == id);
         }
     }
 }

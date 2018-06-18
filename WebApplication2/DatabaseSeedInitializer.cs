@@ -19,7 +19,7 @@ namespace WebApplication2
                 Task.Run(async () =>
                 {
                     var context = serviceProvider.GetService<TestowyZKartki01Context>();
-                    if (!context.StatusWniosku.Any())
+                    if (!context.StatusWnioskuSet.Any())
                     {
                         var literals = new List<StatusWniosku>
                         {
@@ -31,7 +31,7 @@ namespace WebApplication2
                         context.AddRange(literals);
                         context.SaveChanges();
                     }
-                    if (!context.DzienTygodnia.Any())
+                    if (!context.DzienTygodniaSet.Any())
                     {
                         var literals = new List<DzienTygodnia>
                         {

@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Miejscowoscs
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.Miejscowosc.Include(m => m.WojewodztwoMiejscowosci);
+            var testowyZKartki01Context = _context.MiejscowoscSet.Include(m => m.WojewodztwoMiejscowosci);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var miejscowosc = await _context.Miejscowosc
+            var miejscowosc = await _context.MiejscowoscSet
                 .Include(m => m.WojewodztwoMiejscowosci)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (miejscowosc == null)
@@ -47,7 +47,7 @@ namespace WebApplication2
         // GET: Miejscowoscs/Create
         public IActionResult Create()
         {
-            ViewData["WojewodztwoMiejscowosciID"] = new SelectList(_context.Wojewodztwo, "ID", "ID");
+            ViewData["WojewodztwoMiejscowosciID"] = new SelectList(_context.WojewodztwoSet, "ID", "ID");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WojewodztwoMiejscowosciID"] = new SelectList(_context.Wojewodztwo, "ID", "ID", miejscowosc.WojewodztwoMiejscowosciID);
+            ViewData["WojewodztwoMiejscowosciID"] = new SelectList(_context.WojewodztwoSet, "ID", "ID", miejscowosc.WojewodztwoMiejscowosciID);
             return View(miejscowosc);
         }
 
@@ -76,12 +76,12 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var miejscowosc = await _context.Miejscowosc.SingleOrDefaultAsync(m => m.ID == id);
+            var miejscowosc = await _context.MiejscowoscSet.SingleOrDefaultAsync(m => m.ID == id);
             if (miejscowosc == null)
             {
                 return NotFound();
             }
-            ViewData["WojewodztwoMiejscowosciID"] = new SelectList(_context.Wojewodztwo, "ID", "ID", miejscowosc.WojewodztwoMiejscowosciID);
+            ViewData["WojewodztwoMiejscowosciID"] = new SelectList(_context.WojewodztwoSet, "ID", "ID", miejscowosc.WojewodztwoMiejscowosciID);
             return View(miejscowosc);
         }
 
@@ -117,7 +117,7 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["WojewodztwoMiejscowosciID"] = new SelectList(_context.Wojewodztwo, "ID", "ID", miejscowosc.WojewodztwoMiejscowosciID);
+            ViewData["WojewodztwoMiejscowosciID"] = new SelectList(_context.WojewodztwoSet, "ID", "ID", miejscowosc.WojewodztwoMiejscowosciID);
             return View(miejscowosc);
         }
 
@@ -129,7 +129,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var miejscowosc = await _context.Miejscowosc
+            var miejscowosc = await _context.MiejscowoscSet
                 .Include(m => m.WojewodztwoMiejscowosci)
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (miejscowosc == null)
@@ -145,15 +145,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var miejscowosc = await _context.Miejscowosc.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Miejscowosc.Remove(miejscowosc);
+            var miejscowosc = await _context.MiejscowoscSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.MiejscowoscSet.Remove(miejscowosc);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MiejscowoscExists(int id)
         {
-            return _context.Miejscowosc.Any(e => e.ID == id);
+            return _context.MiejscowoscSet.Any(e => e.ID == id);
         }
     }
 }

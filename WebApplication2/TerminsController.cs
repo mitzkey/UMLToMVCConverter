@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Termins
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.Termin.Include(t => t.Grafik);
+            var testowyZKartki01Context = _context.TerminSet.Include(t => t.Grafik);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var termin = await _context.Termin
+            var termin = await _context.TerminSet
                 .Include(t => t.Grafik)
                 .SingleOrDefaultAsync(m => m.Dzien == id);
             if (termin == null)
@@ -47,7 +47,7 @@ namespace WebApplication2
         // GET: Termins/Create
         public IActionResult Create()
         {
-            ViewData["GrafikID"] = new SelectList(_context.Grafik, "ID", "ID");
+            ViewData["GrafikID"] = new SelectList(_context.GrafikSet, "ID", "ID");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GrafikID"] = new SelectList(_context.Grafik, "ID", "ID", termin.GrafikID);
+            ViewData["GrafikID"] = new SelectList(_context.GrafikSet, "ID", "ID", termin.GrafikID);
             return View(termin);
         }
 
@@ -76,12 +76,12 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var termin = await _context.Termin.SingleOrDefaultAsync(m => m.Dzien == id);
+            var termin = await _context.TerminSet.SingleOrDefaultAsync(m => m.Dzien == id);
             if (termin == null)
             {
                 return NotFound();
             }
-            ViewData["GrafikID"] = new SelectList(_context.Grafik, "ID", "ID", termin.GrafikID);
+            ViewData["GrafikID"] = new SelectList(_context.GrafikSet, "ID", "ID", termin.GrafikID);
             return View(termin);
         }
 
@@ -117,7 +117,7 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GrafikID"] = new SelectList(_context.Grafik, "ID", "ID", termin.GrafikID);
+            ViewData["GrafikID"] = new SelectList(_context.GrafikSet, "ID", "ID", termin.GrafikID);
             return View(termin);
         }
 
@@ -129,7 +129,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var termin = await _context.Termin
+            var termin = await _context.TerminSet
                 .Include(t => t.Grafik)
                 .SingleOrDefaultAsync(m => m.Dzien == id);
             if (termin == null)
@@ -145,15 +145,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(DateTime? id)
         {
-            var termin = await _context.Termin.SingleOrDefaultAsync(m => m.Dzien == id);
-            _context.Termin.Remove(termin);
+            var termin = await _context.TerminSet.SingleOrDefaultAsync(m => m.Dzien == id);
+            _context.TerminSet.Remove(termin);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TerminExists(DateTime? id)
         {
-            return _context.Termin.Any(e => e.Dzien == id);
+            return _context.TerminSet.Any(e => e.Dzien == id);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: PoziomZaawansowanias
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PoziomZaawansowania.ToListAsync());
+            return View(await _context.PoziomZaawansowaniaSet.ToListAsync());
         }
 
         // GET: PoziomZaawansowanias/Details/5
@@ -32,7 +32,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var poziomZaawansowania = await _context.PoziomZaawansowania
+            var poziomZaawansowania = await _context.PoziomZaawansowaniaSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (poziomZaawansowania == null)
             {
@@ -72,7 +72,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var poziomZaawansowania = await _context.PoziomZaawansowania.SingleOrDefaultAsync(m => m.ID == id);
+            var poziomZaawansowania = await _context.PoziomZaawansowaniaSet.SingleOrDefaultAsync(m => m.ID == id);
             if (poziomZaawansowania == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var poziomZaawansowania = await _context.PoziomZaawansowania
+            var poziomZaawansowania = await _context.PoziomZaawansowaniaSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (poziomZaawansowania == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var poziomZaawansowania = await _context.PoziomZaawansowania.SingleOrDefaultAsync(m => m.ID == id);
-            _context.PoziomZaawansowania.Remove(poziomZaawansowania);
+            var poziomZaawansowania = await _context.PoziomZaawansowaniaSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.PoziomZaawansowaniaSet.Remove(poziomZaawansowania);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PoziomZaawansowaniaExists(int id)
         {
-            return _context.PoziomZaawansowania.Any(e => e.ID == id);
+            return _context.PoziomZaawansowaniaSet.Any(e => e.ID == id);
         }
     }
 }

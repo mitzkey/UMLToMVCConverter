@@ -12,12 +12,13 @@ namespace WebApplication2.Models
 		public int ID { get; set; }
 
 
-		public Nullable<System.Int32> Rok { get; set; }
+		public System.Int32 Rok { get; set; }
 
+		[Required]
 		public System.String Semestr { get; set; }
 
 		[NotMapped]
-		public Nullable<System.Boolean> Aktualny { get { throw new NotImplementedException(); } private set {} }
+		public System.Boolean Aktualny { get { throw new NotImplementedException(); } private set {} }
 
 		[InverseProperty("Grafik")]
 		public virtual ICollection<Termin> Terminy { get; set; }

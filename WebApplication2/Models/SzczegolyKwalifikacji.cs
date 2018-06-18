@@ -12,11 +12,11 @@ namespace WebApplication2.Models
 		public int ID { get; set; }
 
 
-		public Nullable<System.Int32> Priorytet { get; set; }
+		public System.Int32 Priorytet { get; set; }
 
-		public Nullable<System.Boolean> Certyfikat { get; set; }
+		public System.Boolean Certyfikat { get; set; }
 
-		public Nullable<System.Double> StawkaZaZajecia { get; set; }
+		public System.Double StawkaZaZajecia { get; set; }
 
 		[InverseProperty("Kwalifikacje")]
 		[ForeignKey("InstruktorID")]

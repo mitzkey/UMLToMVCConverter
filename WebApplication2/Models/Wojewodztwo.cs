@@ -12,9 +12,10 @@ namespace WebApplication2.Models
 		public int ID { get; set; }
 
 
+		[Required]
 		public System.String Nazwa { get; set; }
 
-		public Nullable<System.Boolean> Aktualna { get; set; }
+		public System.Boolean Aktualna { get; set; }
 
 		[InverseProperty("WojewodztwoMiejscowosci")]
 		public virtual ICollection<Miejscowosc> MiejscowoscMiejscowosci { get; set; }

@@ -11,14 +11,16 @@ namespace WebApplication2.Models
 
 
 
-		public Nullable<System.DateTime> DataZlozenia { get; set; }
+		public System.DateTime DataZlozenia { get; set; }
 
-		public Nullable<System.DateTime> DataRozpatrzenia { get; set; }
+		public System.DateTime DataRozpatrzenia { get; set; }
 
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		[Required]
 		public System.String Pesel { get; set; }
 
+		[Required]
 		public StatusWniosku Status { get; set; }		
 
 		[ForeignKey("StatusWniosku")]
@@ -31,14 +33,16 @@ namespace WebApplication2.Models
 		[ForeignKey("AdresZameldowaniaID")]
 		public virtual Adres AdresZameldowania { get; set; }
 
+		[Required]
 		public Nullable<System.Int32> AdresZameldowaniaID { get; set; }
 
 		[ForeignKey("AdresDoKorespondencjiID")]
 		public virtual Adres AdresDoKorespondencji { get; set; }
 
+		[Required]
 		public Nullable<System.Int32> AdresDoKorespondencjiID { get; set; }
 
-		public Nullable<System.Boolean> Weryfikacja(System.String p,Wniosek w) {
+		public System.Boolean Weryfikacja(System.String p,Wniosek w) {
 			throw new NotImplementedException();
 		}
 	}

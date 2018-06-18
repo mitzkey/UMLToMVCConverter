@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: PrzystosowanieSalis
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.PrzystosowanieSali.Include(p => p.Dyscyplina).Include(p => p.Poziom).Include(p => p.Sala);
+            var testowyZKartki01Context = _context.PrzystosowanieSaliSet.Include(p => p.Dyscyplina).Include(p => p.Poziom).Include(p => p.Sala);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var przystosowanieSali = await _context.PrzystosowanieSali
+            var przystosowanieSali = await _context.PrzystosowanieSaliSet
                 .Include(p => p.Dyscyplina)
                 .Include(p => p.Poziom)
                 .Include(p => p.Sala)
@@ -49,9 +49,9 @@ namespace WebApplication2
         // GET: PrzystosowanieSalis/Create
         public IActionResult Create()
         {
-            ViewData["DyscyplinaID"] = new SelectList(_context.Dyscyplina, "ID", "ID");
-            ViewData["PoziomID"] = new SelectList(_context.PoziomZaawansowania, "ID", "ID");
-            ViewData["SalaID"] = new SelectList(_context.Sala, "ID", "ID");
+            ViewData["DyscyplinaID"] = new SelectList(_context.DyscyplinaSet, "ID", "ID");
+            ViewData["PoziomID"] = new SelectList(_context.PoziomZaawansowaniaSet, "ID", "ID");
+            ViewData["SalaID"] = new SelectList(_context.SalaSet, "ID", "ID");
             return View();
         }
 
@@ -68,9 +68,9 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DyscyplinaID"] = new SelectList(_context.Dyscyplina, "ID", "ID", przystosowanieSali.DyscyplinaID);
-            ViewData["PoziomID"] = new SelectList(_context.PoziomZaawansowania, "ID", "ID", przystosowanieSali.PoziomID);
-            ViewData["SalaID"] = new SelectList(_context.Sala, "ID", "ID", przystosowanieSali.SalaID);
+            ViewData["DyscyplinaID"] = new SelectList(_context.DyscyplinaSet, "ID", "ID", przystosowanieSali.DyscyplinaID);
+            ViewData["PoziomID"] = new SelectList(_context.PoziomZaawansowaniaSet, "ID", "ID", przystosowanieSali.PoziomID);
+            ViewData["SalaID"] = new SelectList(_context.SalaSet, "ID", "ID", przystosowanieSali.SalaID);
             return View(przystosowanieSali);
         }
 
@@ -82,14 +82,14 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var przystosowanieSali = await _context.PrzystosowanieSali.SingleOrDefaultAsync(m => m.ID == id);
+            var przystosowanieSali = await _context.PrzystosowanieSaliSet.SingleOrDefaultAsync(m => m.ID == id);
             if (przystosowanieSali == null)
             {
                 return NotFound();
             }
-            ViewData["DyscyplinaID"] = new SelectList(_context.Dyscyplina, "ID", "ID", przystosowanieSali.DyscyplinaID);
-            ViewData["PoziomID"] = new SelectList(_context.PoziomZaawansowania, "ID", "ID", przystosowanieSali.PoziomID);
-            ViewData["SalaID"] = new SelectList(_context.Sala, "ID", "ID", przystosowanieSali.SalaID);
+            ViewData["DyscyplinaID"] = new SelectList(_context.DyscyplinaSet, "ID", "ID", przystosowanieSali.DyscyplinaID);
+            ViewData["PoziomID"] = new SelectList(_context.PoziomZaawansowaniaSet, "ID", "ID", przystosowanieSali.PoziomID);
+            ViewData["SalaID"] = new SelectList(_context.SalaSet, "ID", "ID", przystosowanieSali.SalaID);
             return View(przystosowanieSali);
         }
 
@@ -125,9 +125,9 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DyscyplinaID"] = new SelectList(_context.Dyscyplina, "ID", "ID", przystosowanieSali.DyscyplinaID);
-            ViewData["PoziomID"] = new SelectList(_context.PoziomZaawansowania, "ID", "ID", przystosowanieSali.PoziomID);
-            ViewData["SalaID"] = new SelectList(_context.Sala, "ID", "ID", przystosowanieSali.SalaID);
+            ViewData["DyscyplinaID"] = new SelectList(_context.DyscyplinaSet, "ID", "ID", przystosowanieSali.DyscyplinaID);
+            ViewData["PoziomID"] = new SelectList(_context.PoziomZaawansowaniaSet, "ID", "ID", przystosowanieSali.PoziomID);
+            ViewData["SalaID"] = new SelectList(_context.SalaSet, "ID", "ID", przystosowanieSali.SalaID);
             return View(przystosowanieSali);
         }
 
@@ -139,7 +139,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var przystosowanieSali = await _context.PrzystosowanieSali
+            var przystosowanieSali = await _context.PrzystosowanieSaliSet
                 .Include(p => p.Dyscyplina)
                 .Include(p => p.Poziom)
                 .Include(p => p.Sala)
@@ -157,15 +157,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var przystosowanieSali = await _context.PrzystosowanieSali.SingleOrDefaultAsync(m => m.ID == id);
-            _context.PrzystosowanieSali.Remove(przystosowanieSali);
+            var przystosowanieSali = await _context.PrzystosowanieSaliSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.PrzystosowanieSaliSet.Remove(przystosowanieSali);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PrzystosowanieSaliExists(int id)
         {
-            return _context.PrzystosowanieSali.Any(e => e.ID == id);
+            return _context.PrzystosowanieSaliSet.Any(e => e.ID == id);
         }
     }
 }

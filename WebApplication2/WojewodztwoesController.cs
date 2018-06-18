@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Wojewodztwoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Wojewodztwo.ToListAsync());
+            return View(await _context.WojewodztwoSet.ToListAsync());
         }
 
         // GET: Wojewodztwoes/Details/5
@@ -32,7 +32,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wojewodztwo = await _context.Wojewodztwo
+            var wojewodztwo = await _context.WojewodztwoSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (wojewodztwo == null)
             {
@@ -72,7 +72,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wojewodztwo = await _context.Wojewodztwo.SingleOrDefaultAsync(m => m.ID == id);
+            var wojewodztwo = await _context.WojewodztwoSet.SingleOrDefaultAsync(m => m.ID == id);
             if (wojewodztwo == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wojewodztwo = await _context.Wojewodztwo
+            var wojewodztwo = await _context.WojewodztwoSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (wojewodztwo == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var wojewodztwo = await _context.Wojewodztwo.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Wojewodztwo.Remove(wojewodztwo);
+            var wojewodztwo = await _context.WojewodztwoSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.WojewodztwoSet.Remove(wojewodztwo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool WojewodztwoExists(int id)
         {
-            return _context.Wojewodztwo.Any(e => e.ID == id);
+            return _context.WojewodztwoSet.Any(e => e.ID == id);
         }
     }
 }

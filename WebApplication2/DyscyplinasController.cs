@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Dyscyplinas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Dyscyplina.ToListAsync());
+            return View(await _context.DyscyplinaSet.ToListAsync());
         }
 
         // GET: Dyscyplinas/Details/5
@@ -32,7 +32,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var dyscyplina = await _context.Dyscyplina
+            var dyscyplina = await _context.DyscyplinaSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (dyscyplina == null)
             {
@@ -72,7 +72,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var dyscyplina = await _context.Dyscyplina.SingleOrDefaultAsync(m => m.ID == id);
+            var dyscyplina = await _context.DyscyplinaSet.SingleOrDefaultAsync(m => m.ID == id);
             if (dyscyplina == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var dyscyplina = await _context.Dyscyplina
+            var dyscyplina = await _context.DyscyplinaSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (dyscyplina == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dyscyplina = await _context.Dyscyplina.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Dyscyplina.Remove(dyscyplina);
+            var dyscyplina = await _context.DyscyplinaSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.DyscyplinaSet.Remove(dyscyplina);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DyscyplinaExists(int id)
         {
-            return _context.Dyscyplina.Any(e => e.ID == id);
+            return _context.DyscyplinaSet.Any(e => e.ID == id);
         }
     }
 }

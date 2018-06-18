@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: Wnioseks
         public async Task<IActionResult> Index()
         {
-            var testowyZKartki01Context = _context.Wniosek.Include(w => w.AdresDoKorespondencji).Include(w => w.AdresZameldowania).Include(w => w.Status);
+            var testowyZKartki01Context = _context.WniosekSet.Include(w => w.AdresDoKorespondencji).Include(w => w.AdresZameldowania).Include(w => w.Status);
             return View(await testowyZKartki01Context.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wniosek = await _context.Wniosek
+            var wniosek = await _context.WniosekSet
                 .Include(w => w.AdresDoKorespondencji)
                 .Include(w => w.AdresZameldowania)
                 .Include(w => w.Status)
@@ -49,9 +49,9 @@ namespace WebApplication2
         // GET: Wnioseks/Create
         public IActionResult Create()
         {
-            ViewData["AdresDoKorespondencjiID"] = new SelectList(_context.Adres, "ID", "ID");
-            ViewData["AdresZameldowaniaID"] = new SelectList(_context.Adres, "ID", "ID");
-            ViewData["StatusID"] = new SelectList(_context.StatusWniosku, "ID", "ID");
+            ViewData["AdresDoKorespondencjiID"] = new SelectList(_context.AdresSet, "ID", "ID");
+            ViewData["AdresZameldowaniaID"] = new SelectList(_context.AdresSet, "ID", "ID");
+            ViewData["StatusID"] = new SelectList(_context.StatusWnioskuSet, "ID", "ID");
             return View();
         }
 
@@ -68,9 +68,9 @@ namespace WebApplication2
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdresDoKorespondencjiID"] = new SelectList(_context.Adres, "ID", "ID", wniosek.AdresDoKorespondencjiID);
-            ViewData["AdresZameldowaniaID"] = new SelectList(_context.Adres, "ID", "ID", wniosek.AdresZameldowaniaID);
-            ViewData["StatusID"] = new SelectList(_context.StatusWniosku, "ID", "ID", wniosek.StatusID);
+            ViewData["AdresDoKorespondencjiID"] = new SelectList(_context.AdresSet, "ID", "ID", wniosek.AdresDoKorespondencjiID);
+            ViewData["AdresZameldowaniaID"] = new SelectList(_context.AdresSet, "ID", "ID", wniosek.AdresZameldowaniaID);
+            ViewData["StatusID"] = new SelectList(_context.StatusWnioskuSet, "ID", "ID", wniosek.StatusID);
             return View(wniosek);
         }
 
@@ -82,14 +82,14 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wniosek = await _context.Wniosek.SingleOrDefaultAsync(m => m.Pesel == id);
+            var wniosek = await _context.WniosekSet.SingleOrDefaultAsync(m => m.Pesel == id);
             if (wniosek == null)
             {
                 return NotFound();
             }
-            ViewData["AdresDoKorespondencjiID"] = new SelectList(_context.Adres, "ID", "ID", wniosek.AdresDoKorespondencjiID);
-            ViewData["AdresZameldowaniaID"] = new SelectList(_context.Adres, "ID", "ID", wniosek.AdresZameldowaniaID);
-            ViewData["StatusID"] = new SelectList(_context.StatusWniosku, "ID", "ID", wniosek.StatusID);
+            ViewData["AdresDoKorespondencjiID"] = new SelectList(_context.AdresSet, "ID", "ID", wniosek.AdresDoKorespondencjiID);
+            ViewData["AdresZameldowaniaID"] = new SelectList(_context.AdresSet, "ID", "ID", wniosek.AdresZameldowaniaID);
+            ViewData["StatusID"] = new SelectList(_context.StatusWnioskuSet, "ID", "ID", wniosek.StatusID);
             return View(wniosek);
         }
 
@@ -125,9 +125,9 @@ namespace WebApplication2
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdresDoKorespondencjiID"] = new SelectList(_context.Adres, "ID", "ID", wniosek.AdresDoKorespondencjiID);
-            ViewData["AdresZameldowaniaID"] = new SelectList(_context.Adres, "ID", "ID", wniosek.AdresZameldowaniaID);
-            ViewData["StatusID"] = new SelectList(_context.StatusWniosku, "ID", "ID", wniosek.StatusID);
+            ViewData["AdresDoKorespondencjiID"] = new SelectList(_context.AdresSet, "ID", "ID", wniosek.AdresDoKorespondencjiID);
+            ViewData["AdresZameldowaniaID"] = new SelectList(_context.AdresSet, "ID", "ID", wniosek.AdresZameldowaniaID);
+            ViewData["StatusID"] = new SelectList(_context.StatusWnioskuSet, "ID", "ID", wniosek.StatusID);
             return View(wniosek);
         }
 
@@ -139,7 +139,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var wniosek = await _context.Wniosek
+            var wniosek = await _context.WniosekSet
                 .Include(w => w.AdresDoKorespondencji)
                 .Include(w => w.AdresZameldowania)
                 .Include(w => w.Status)
@@ -157,15 +157,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var wniosek = await _context.Wniosek.SingleOrDefaultAsync(m => m.Pesel == id);
-            _context.Wniosek.Remove(wniosek);
+            var wniosek = await _context.WniosekSet.SingleOrDefaultAsync(m => m.Pesel == id);
+            _context.WniosekSet.Remove(wniosek);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool WniosekExists(string id)
         {
-            return _context.Wniosek.Any(e => e.Pesel == id);
+            return _context.WniosekSet.Any(e => e.Pesel == id);
         }
     }
 }

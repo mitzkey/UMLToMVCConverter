@@ -21,7 +21,7 @@ namespace WebApplication2
         // GET: StatusWnioskus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.StatusWniosku.ToListAsync());
+            return View(await _context.StatusWnioskuSet.ToListAsync());
         }
 
         // GET: StatusWnioskus/Details/5
@@ -32,7 +32,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var statusWniosku = await _context.StatusWniosku
+            var statusWniosku = await _context.StatusWnioskuSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (statusWniosku == null)
             {
@@ -72,7 +72,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var statusWniosku = await _context.StatusWniosku.SingleOrDefaultAsync(m => m.ID == id);
+            var statusWniosku = await _context.StatusWnioskuSet.SingleOrDefaultAsync(m => m.ID == id);
             if (statusWniosku == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebApplication2
                 return NotFound();
             }
 
-            var statusWniosku = await _context.StatusWniosku
+            var statusWniosku = await _context.StatusWnioskuSet
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (statusWniosku == null)
             {
@@ -138,15 +138,15 @@ namespace WebApplication2
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var statusWniosku = await _context.StatusWniosku.SingleOrDefaultAsync(m => m.ID == id);
-            _context.StatusWniosku.Remove(statusWniosku);
+            var statusWniosku = await _context.StatusWnioskuSet.SingleOrDefaultAsync(m => m.ID == id);
+            _context.StatusWnioskuSet.Remove(statusWniosku);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StatusWnioskuExists(int id)
         {
-            return _context.StatusWniosku.Any(e => e.ID == id);
+            return _context.StatusWnioskuSet.Any(e => e.ID == id);
         }
     }
 }
