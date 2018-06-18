@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace WebApplication3.Migrations
 {
-    public partial class UMLToEFConverterMigration_8544dab95a8943d9b93ab709b71644fb : Migration
+    public partial class UMLToEFConverterMigration_b3522e696df24fb085b5bfcf4581e5aa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DaneAdresowe",
+                name: "DaneAdresoweSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -20,31 +20,31 @@ namespace WebApplication3.Migrations
                     Miejscowosc = table.Column<string>(nullable: false),
                     Numer = table.Column<string>(nullable: false),
                     Telefon = table.Column<string>(nullable: false),
-                    Ulica = table.Column<string>(nullable: true)
+                    Ulica = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DaneAdresowe", x => x.ID);
+                    table.PrimaryKey("PK_DaneAdresoweSet", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ekspert",
+                name: "EkspertSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: false),
                     Imie = table.Column<string>(nullable: false),
                     Nazwisko = table.Column<string>(nullable: false),
                     Plec = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ekspert", x => x.ID);
+                    table.PrimaryKey("PK_EkspertSet", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StatusEdycji",
+                name: "StatusEdycjiSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false),
@@ -52,11 +52,11 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StatusEdycji", x => x.ID);
+                    table.PrimaryKey("PK_StatusEdycjiSet", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StatusPropozycji",
+                name: "StatusPropozycjiSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false),
@@ -64,11 +64,11 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StatusPropozycji", x => x.ID);
+                    table.PrimaryKey("PK_StatusPropozycjiSet", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StatusRecenzji",
+                name: "StatusRecenzjiSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false),
@@ -76,11 +76,11 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StatusRecenzji", x => x.ID);
+                    table.PrimaryKey("PK_StatusRecenzjiSet", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StatusZgloszenia",
+                name: "StatusZgloszeniaSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false),
@@ -88,11 +88,11 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StatusZgloszenia", x => x.ID);
+                    table.PrimaryKey("PK_StatusZgloszeniaSet", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "TypJednostkiOrganizacyjnej",
+                name: "TypJednostkiOrganizacyjnejSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false),
@@ -101,11 +101,11 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TypJednostkiOrganizacyjnej", x => x.ID);
+                    table.PrimaryKey("PK_TypJednostkiOrganizacyjnejSet", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Autor",
+                name: "AutorSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -115,21 +115,21 @@ namespace WebApplication3.Migrations
                     Imie = table.Column<string>(nullable: false),
                     Korespondent = table.Column<bool>(nullable: false),
                     Nazwisko = table.Column<string>(nullable: false),
-                    Pesel = table.Column<string>(nullable: true)
+                    Pesel = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Autor", x => x.ID);
+                    table.PrimaryKey("PK_AutorSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Autor_DaneAdresowe_DaneAdresoweID",
+                        name: "FK_AutorSet_DaneAdresoweSet_DaneAdresoweID",
                         column: x => x.DaneAdresoweID,
-                        principalTable: "DaneAdresowe",
+                        principalTable: "DaneAdresoweSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ObszarBadan",
+                name: "ObszarBadanSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -139,17 +139,17 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ObszarBadan", x => x.ID);
+                    table.PrimaryKey("PK_ObszarBadanSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_ObszarBadan_Ekspert_EkspertID",
+                        name: "FK_ObszarBadanSet_EkspertSet_EkspertID",
                         column: x => x.EkspertID,
-                        principalTable: "Ekspert",
+                        principalTable: "EkspertSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recenzent",
+                name: "RecenzentSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -158,17 +158,17 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recenzent", x => x.ID);
+                    table.PrimaryKey("PK_RecenzentSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Recenzent_Ekspert_EkspertID",
+                        name: "FK_RecenzentSet_EkspertSet_EkspertID",
                         column: x => x.EkspertID,
-                        principalTable: "Ekspert",
+                        principalTable: "EkspertSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Telefon",
+                name: "TelefonSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -178,39 +178,39 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Telefon", x => x.ID);
+                    table.PrimaryKey("PK_TelefonSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Telefon_Ekspert_EkspertID",
+                        name: "FK_TelefonSet_EkspertSet_EkspertID",
                         column: x => x.EkspertID,
-                        principalTable: "Ekspert",
+                        principalTable: "EkspertSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "EdycjaKonkursu",
+                name: "EdycjaKonkursuSet",
                 columns: table => new
                 {
                     Numer = table.Column<int>(nullable: false),
-                    PlanowanaDataOpracowaniaRecenzji = table.Column<DateTime>(nullable: true),
-                    PlanowanaDataRozstrzygnieciaKonkursu = table.Column<DateTime>(nullable: true),
+                    PlanowanaDataOpracowaniaRecenzji = table.Column<DateTime>(nullable: false),
+                    PlanowanaDataRozstrzygnieciaKonkursu = table.Column<DateTime>(nullable: false),
                     Rok = table.Column<int>(nullable: false),
                     StatusID = table.Column<int>(nullable: false, defaultValueSql: "1"),
                     WymaganeMinimum = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EdycjaKonkursu", x => x.Numer);
+                    table.PrimaryKey("PK_EdycjaKonkursuSet", x => x.Numer);
                     table.ForeignKey(
-                        name: "FK_EdycjaKonkursu_StatusEdycji_StatusID",
+                        name: "FK_EdycjaKonkursuSet_StatusEdycjiSet_StatusID",
                         column: x => x.StatusID,
-                        principalTable: "StatusEdycji",
+                        principalTable: "StatusEdycjiSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "JednostkaOrganizacyjna",
+                name: "JednostkaOrganizacyjnaSet",
                 columns: table => new
                 {
                     NadrzednaNazwaKwalifikowana = table.Column<string>(nullable: true),
@@ -222,29 +222,29 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JednostkaOrganizacyjna", x => x.NazwaKwalifikowana);
+                    table.PrimaryKey("PK_JednostkaOrganizacyjnaSet", x => x.NazwaKwalifikowana);
                     table.ForeignKey(
-                        name: "FK_JednostkaOrganizacyjna_JednostkaOrganizacyjna_NadrzednaNazwaKwalifikowana",
+                        name: "FK_JednostkaOrganizacyjnaSet_JednostkaOrganizacyjnaSet_NadrzednaNazwaKwalifikowana",
                         column: x => x.NadrzednaNazwaKwalifikowana,
-                        principalTable: "JednostkaOrganizacyjna",
+                        principalTable: "JednostkaOrganizacyjnaSet",
                         principalColumn: "NazwaKwalifikowana",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_JednostkaOrganizacyjna_DaneAdresowe_DaneAdresoweID",
+                        name: "FK_JednostkaOrganizacyjnaSet_DaneAdresoweSet_DaneAdresoweID",
                         column: x => x.DaneAdresoweID,
-                        principalTable: "DaneAdresowe",
+                        principalTable: "DaneAdresoweSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_JednostkaOrganizacyjna_TypJednostkiOrganizacyjnej_TypID",
+                        name: "FK_JednostkaOrganizacyjnaSet_TypJednostkiOrganizacyjnejSet_TypID",
                         column: x => x.TypID,
-                        principalTable: "TypJednostkiOrganizacyjnej",
+                        principalTable: "TypJednostkiOrganizacyjnejSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Nagroda",
+                name: "NagrodaSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -255,17 +255,17 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Nagroda", x => x.ID);
+                    table.PrimaryKey("PK_NagrodaSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Nagroda_EdycjaKonkursu_EdycjaKonkursuPrzydzielanaWRamachNumer",
+                        name: "FK_NagrodaSet_EdycjaKonkursuSet_EdycjaKonkursuPrzydzielanaWRamachNumer",
                         column: x => x.EdycjaKonkursuPrzydzielanaWRamachNumer,
-                        principalTable: "EdycjaKonkursu",
+                        principalTable: "EdycjaKonkursuSet",
                         principalColumn: "Numer",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Skrot",
+                name: "SkrotSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -275,17 +275,17 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Skrot", x => x.ID);
+                    table.PrimaryKey("PK_SkrotSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Skrot_JednostkaOrganizacyjna_JednostkaOrganizacyjnaNazwaKwalifikowana",
+                        name: "FK_SkrotSet_JednostkaOrganizacyjnaSet_JednostkaOrganizacyjnaNazwaKwalifikowana",
                         column: x => x.JednostkaOrganizacyjnaNazwaKwalifikowana,
-                        principalTable: "JednostkaOrganizacyjna",
+                        principalTable: "JednostkaOrganizacyjnaSet",
                         principalColumn: "NazwaKwalifikowana",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StatusZatrudnienia",
+                name: "StatusZatrudnieniaSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -296,36 +296,36 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StatusZatrudnienia", x => x.ID);
+                    table.PrimaryKey("PK_StatusZatrudnieniaSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_StatusZatrudnienia_Ekspert_EkspertID",
+                        name: "FK_StatusZatrudnieniaSet_EkspertSet_EkspertID",
                         column: x => x.EkspertID,
-                        principalTable: "Ekspert",
+                        principalTable: "EkspertSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StatusZatrudnienia_JednostkaOrganizacyjna_JednostkaOrganizacyjnaNazwaKwalifikowana",
+                        name: "FK_StatusZatrudnieniaSet_JednostkaOrganizacyjnaSet_JednostkaOrganizacyjnaNazwaKwalifikowana",
                         column: x => x.JednostkaOrganizacyjnaNazwaKwalifikowana,
-                        principalTable: "JednostkaOrganizacyjna",
+                        principalTable: "JednostkaOrganizacyjnaSet",
                         principalColumn: "NazwaKwalifikowana",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ZgloszeniePracy",
+                name: "ZgloszeniePracySet",
                 columns: table => new
                 {
                     Numer = table.Column<int>(nullable: false),
                     DataObrony = table.Column<DateTime>(nullable: false),
-                    DataPrzekazaniaInformacjiOOdrzuceniu = table.Column<DateTime>(nullable: true),
+                    DataPrzekazaniaInformacjiOOdrzuceniu = table.Column<DateTime>(nullable: false),
                     DataZgloszenia = table.Column<DateTime>(nullable: false),
                     EdycjaNumer = table.Column<int>(nullable: false),
                     ElementyUzyteczneDlaNaukiPraktyki = table.Column<string>(nullable: false),
                     KierunekDalszychPrac = table.Column<string>(nullable: false),
-                    NagrodaID = table.Column<int>(nullable: true),
+                    NagrodaID = table.Column<int>(nullable: false),
                     NajwiekszeOsiagnieciaWlasneWPracy = table.Column<string>(nullable: false),
                     ObszarBadan = table.Column<string>(nullable: false),
-                    PowodOdrzucenia = table.Column<string>(nullable: true),
+                    PowodOdrzucenia = table.Column<string>(nullable: false),
                     PromotorID = table.Column<int>(nullable: false),
                     SredniaOcenaKomisji = table.Column<double>(nullable: false),
                     SredniaOcenaRecenzentow = table.Column<double>(nullable: false),
@@ -335,41 +335,41 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ZgloszeniePracy", x => x.Numer);
+                    table.PrimaryKey("PK_ZgloszeniePracySet", x => x.Numer);
                     table.ForeignKey(
-                        name: "FK_ZgloszeniePracy_EdycjaKonkursu_EdycjaNumer",
+                        name: "FK_ZgloszeniePracySet_EdycjaKonkursuSet_EdycjaNumer",
                         column: x => x.EdycjaNumer,
-                        principalTable: "EdycjaKonkursu",
+                        principalTable: "EdycjaKonkursuSet",
                         principalColumn: "Numer",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ZgloszeniePracy_Nagroda_NagrodaID",
+                        name: "FK_ZgloszeniePracySet_NagrodaSet_NagrodaID",
                         column: x => x.NagrodaID,
-                        principalTable: "Nagroda",
+                        principalTable: "NagrodaSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ZgloszeniePracy_Ekspert_PromotorID",
+                        name: "FK_ZgloszeniePracySet_EkspertSet_PromotorID",
                         column: x => x.PromotorID,
-                        principalTable: "Ekspert",
+                        principalTable: "EkspertSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ZgloszeniePracy_StatusZgloszenia_StatusID",
+                        name: "FK_ZgloszeniePracySet_StatusZgloszeniaSet_StatusID",
                         column: x => x.StatusID,
-                        principalTable: "StatusZgloszenia",
+                        principalTable: "StatusZgloszeniaSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ZgloszeniePracy_JednostkaOrganizacyjna_UczelniaNazwaKwalifikowana",
+                        name: "FK_ZgloszeniePracySet_JednostkaOrganizacyjnaSet_UczelniaNazwaKwalifikowana",
                         column: x => x.UczelniaNazwaKwalifikowana,
-                        principalTable: "JednostkaOrganizacyjna",
+                        principalTable: "JednostkaOrganizacyjnaSet",
                         principalColumn: "NazwaKwalifikowana",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AutorzyPraca",
+                name: "AutorzyPracaSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -379,65 +379,65 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AutorzyPraca", x => x.ID);
+                    table.PrimaryKey("PK_AutorzyPracaSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_AutorzyPraca_Autor_AutorzyID",
+                        name: "FK_AutorzyPracaSet_AutorSet_AutorzyID",
                         column: x => x.AutorzyID,
-                        principalTable: "Autor",
+                        principalTable: "AutorSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AutorzyPraca_ZgloszeniePracy_PracaNumer",
+                        name: "FK_AutorzyPracaSet_ZgloszeniePracySet_PracaNumer",
                         column: x => x.PracaNumer,
-                        principalTable: "ZgloszeniePracy",
+                        principalTable: "ZgloszeniePracySet",
                         principalColumn: "Numer",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Propozycja",
+                name: "PropozycjaSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DataPrzeslaniaProsby = table.Column<DateTime>(nullable: true),
+                    DataPrzeslaniaProsby = table.Column<DateTime>(nullable: false),
                     EkspertID = table.Column<int>(nullable: false),
                     StatusID = table.Column<int>(nullable: false, defaultValueSql: "1"),
                     ZgloszeniePracyNumer = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Propozycja", x => x.ID);
+                    table.PrimaryKey("PK_PropozycjaSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Propozycja_Ekspert_EkspertID",
+                        name: "FK_PropozycjaSet_EkspertSet_EkspertID",
                         column: x => x.EkspertID,
-                        principalTable: "Ekspert",
+                        principalTable: "EkspertSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Propozycja_StatusPropozycji_StatusID",
+                        name: "FK_PropozycjaSet_StatusPropozycjiSet_StatusID",
                         column: x => x.StatusID,
-                        principalTable: "StatusPropozycji",
+                        principalTable: "StatusPropozycjiSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Propozycja_ZgloszeniePracy_ZgloszeniePracyNumer",
+                        name: "FK_PropozycjaSet_ZgloszeniePracySet_ZgloszeniePracyNumer",
                         column: x => x.ZgloszeniePracyNumer,
-                        principalTable: "ZgloszeniePracy",
+                        principalTable: "ZgloszeniePracySet",
                         principalColumn: "Numer",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recenzja",
+                name: "RecenzjaSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DataPrzeslaniaPonaglenia = table.Column<DateTime>(nullable: true),
-                    DataZatwierdzenia = table.Column<DateTime>(nullable: true),
-                    DodatkoweUwagi = table.Column<string>(nullable: true),
-                    Ocena = table.Column<int>(nullable: true),
+                    DataPrzeslaniaPonaglenia = table.Column<DateTime>(nullable: false),
+                    DataZatwierdzenia = table.Column<DateTime>(nullable: false),
+                    DodatkoweUwagi = table.Column<string>(nullable: false),
+                    Ocena = table.Column<int>(nullable: false),
                     PlanowanaDataOpracowania = table.Column<DateTime>(nullable: false),
                     RecenzentID = table.Column<int>(nullable: false),
                     StatusID = table.Column<int>(nullable: false),
@@ -445,23 +445,23 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recenzja", x => x.ID);
+                    table.PrimaryKey("PK_RecenzjaSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Recenzja_Recenzent_RecenzentID",
+                        name: "FK_RecenzjaSet_RecenzentSet_RecenzentID",
                         column: x => x.RecenzentID,
-                        principalTable: "Recenzent",
+                        principalTable: "RecenzentSet",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Recenzja_ZgloszeniePracy_ZgloszeniePracyNumer",
+                        name: "FK_RecenzjaSet_ZgloszeniePracySet_ZgloszeniePracyNumer",
                         column: x => x.ZgloszeniePracyNumer,
-                        principalTable: "ZgloszeniePracy",
+                        principalTable: "ZgloszeniePracySet",
                         principalColumn: "Numer",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "SlowaKluczowe",
+                name: "SlowaKluczoweSet",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -471,208 +471,208 @@ namespace WebApplication3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SlowaKluczowe", x => x.ID);
+                    table.PrimaryKey("PK_SlowaKluczoweSet", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_SlowaKluczowe_ZgloszeniePracy_ZgloszeniePracyNumer",
+                        name: "FK_SlowaKluczoweSet_ZgloszeniePracySet_ZgloszeniePracyNumer",
                         column: x => x.ZgloszeniePracyNumer,
-                        principalTable: "ZgloszeniePracy",
+                        principalTable: "ZgloszeniePracySet",
                         principalColumn: "Numer",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Autor_DaneAdresoweID",
-                table: "Autor",
+                name: "IX_AutorSet_DaneAdresoweID",
+                table: "AutorSet",
                 column: "DaneAdresoweID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AutorzyPraca_AutorzyID",
-                table: "AutorzyPraca",
+                name: "IX_AutorzyPracaSet_AutorzyID",
+                table: "AutorzyPracaSet",
                 column: "AutorzyID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AutorzyPraca_PracaNumer",
-                table: "AutorzyPraca",
+                name: "IX_AutorzyPracaSet_PracaNumer",
+                table: "AutorzyPracaSet",
                 column: "PracaNumer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EdycjaKonkursu_StatusID",
-                table: "EdycjaKonkursu",
+                name: "IX_EdycjaKonkursuSet_StatusID",
+                table: "EdycjaKonkursuSet",
                 column: "StatusID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JednostkaOrganizacyjna_NadrzednaNazwaKwalifikowana",
-                table: "JednostkaOrganizacyjna",
+                name: "IX_JednostkaOrganizacyjnaSet_NadrzednaNazwaKwalifikowana",
+                table: "JednostkaOrganizacyjnaSet",
                 column: "NadrzednaNazwaKwalifikowana");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JednostkaOrganizacyjna_DaneAdresoweID",
-                table: "JednostkaOrganizacyjna",
+                name: "IX_JednostkaOrganizacyjnaSet_DaneAdresoweID",
+                table: "JednostkaOrganizacyjnaSet",
                 column: "DaneAdresoweID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_JednostkaOrganizacyjna_TypID",
-                table: "JednostkaOrganizacyjna",
+                name: "IX_JednostkaOrganizacyjnaSet_TypID",
+                table: "JednostkaOrganizacyjnaSet",
                 column: "TypID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Nagroda_EdycjaKonkursuPrzydzielanaWRamachNumer",
-                table: "Nagroda",
+                name: "IX_NagrodaSet_EdycjaKonkursuPrzydzielanaWRamachNumer",
+                table: "NagrodaSet",
                 column: "EdycjaKonkursuPrzydzielanaWRamachNumer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ObszarBadan_EkspertID",
-                table: "ObszarBadan",
+                name: "IX_ObszarBadanSet_EkspertID",
+                table: "ObszarBadanSet",
                 column: "EkspertID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Propozycja_EkspertID",
-                table: "Propozycja",
+                name: "IX_PropozycjaSet_EkspertID",
+                table: "PropozycjaSet",
                 column: "EkspertID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Propozycja_StatusID",
-                table: "Propozycja",
+                name: "IX_PropozycjaSet_StatusID",
+                table: "PropozycjaSet",
                 column: "StatusID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Propozycja_ZgloszeniePracyNumer",
-                table: "Propozycja",
+                name: "IX_PropozycjaSet_ZgloszeniePracyNumer",
+                table: "PropozycjaSet",
                 column: "ZgloszeniePracyNumer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recenzent_EkspertID",
-                table: "Recenzent",
+                name: "IX_RecenzentSet_EkspertID",
+                table: "RecenzentSet",
                 column: "EkspertID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recenzja_RecenzentID",
-                table: "Recenzja",
+                name: "IX_RecenzjaSet_RecenzentID",
+                table: "RecenzjaSet",
                 column: "RecenzentID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recenzja_ZgloszeniePracyNumer",
-                table: "Recenzja",
+                name: "IX_RecenzjaSet_ZgloszeniePracyNumer",
+                table: "RecenzjaSet",
                 column: "ZgloszeniePracyNumer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Skrot_JednostkaOrganizacyjnaNazwaKwalifikowana",
-                table: "Skrot",
+                name: "IX_SkrotSet_JednostkaOrganizacyjnaNazwaKwalifikowana",
+                table: "SkrotSet",
                 column: "JednostkaOrganizacyjnaNazwaKwalifikowana");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SlowaKluczowe_ZgloszeniePracyNumer",
-                table: "SlowaKluczowe",
+                name: "IX_SlowaKluczoweSet_ZgloszeniePracyNumer",
+                table: "SlowaKluczoweSet",
                 column: "ZgloszeniePracyNumer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StatusZatrudnienia_EkspertID",
-                table: "StatusZatrudnienia",
+                name: "IX_StatusZatrudnieniaSet_EkspertID",
+                table: "StatusZatrudnieniaSet",
                 column: "EkspertID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StatusZatrudnienia_JednostkaOrganizacyjnaNazwaKwalifikowana",
-                table: "StatusZatrudnienia",
+                name: "IX_StatusZatrudnieniaSet_JednostkaOrganizacyjnaNazwaKwalifikowana",
+                table: "StatusZatrudnieniaSet",
                 column: "JednostkaOrganizacyjnaNazwaKwalifikowana");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Telefon_EkspertID",
-                table: "Telefon",
+                name: "IX_TelefonSet_EkspertID",
+                table: "TelefonSet",
                 column: "EkspertID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ZgloszeniePracy_EdycjaNumer",
-                table: "ZgloszeniePracy",
+                name: "IX_ZgloszeniePracySet_EdycjaNumer",
+                table: "ZgloszeniePracySet",
                 column: "EdycjaNumer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ZgloszeniePracy_NagrodaID",
-                table: "ZgloszeniePracy",
+                name: "IX_ZgloszeniePracySet_NagrodaID",
+                table: "ZgloszeniePracySet",
                 column: "NagrodaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ZgloszeniePracy_PromotorID",
-                table: "ZgloszeniePracy",
+                name: "IX_ZgloszeniePracySet_PromotorID",
+                table: "ZgloszeniePracySet",
                 column: "PromotorID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ZgloszeniePracy_StatusID",
-                table: "ZgloszeniePracy",
+                name: "IX_ZgloszeniePracySet_StatusID",
+                table: "ZgloszeniePracySet",
                 column: "StatusID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ZgloszeniePracy_UczelniaNazwaKwalifikowana",
-                table: "ZgloszeniePracy",
+                name: "IX_ZgloszeniePracySet_UczelniaNazwaKwalifikowana",
+                table: "ZgloszeniePracySet",
                 column: "UczelniaNazwaKwalifikowana");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AutorzyPraca");
+                name: "AutorzyPracaSet");
 
             migrationBuilder.DropTable(
-                name: "ObszarBadan");
+                name: "ObszarBadanSet");
 
             migrationBuilder.DropTable(
-                name: "Propozycja");
+                name: "PropozycjaSet");
 
             migrationBuilder.DropTable(
-                name: "Recenzja");
+                name: "RecenzjaSet");
 
             migrationBuilder.DropTable(
-                name: "Skrot");
+                name: "SkrotSet");
 
             migrationBuilder.DropTable(
-                name: "SlowaKluczowe");
+                name: "SlowaKluczoweSet");
 
             migrationBuilder.DropTable(
-                name: "StatusRecenzji");
+                name: "StatusRecenzjiSet");
 
             migrationBuilder.DropTable(
-                name: "StatusZatrudnienia");
+                name: "StatusZatrudnieniaSet");
 
             migrationBuilder.DropTable(
-                name: "Telefon");
+                name: "TelefonSet");
 
             migrationBuilder.DropTable(
-                name: "Autor");
+                name: "AutorSet");
 
             migrationBuilder.DropTable(
-                name: "StatusPropozycji");
+                name: "StatusPropozycjiSet");
 
             migrationBuilder.DropTable(
-                name: "Recenzent");
+                name: "RecenzentSet");
 
             migrationBuilder.DropTable(
-                name: "ZgloszeniePracy");
+                name: "ZgloszeniePracySet");
 
             migrationBuilder.DropTable(
-                name: "Nagroda");
+                name: "NagrodaSet");
 
             migrationBuilder.DropTable(
-                name: "Ekspert");
+                name: "EkspertSet");
 
             migrationBuilder.DropTable(
-                name: "StatusZgloszenia");
+                name: "StatusZgloszeniaSet");
 
             migrationBuilder.DropTable(
-                name: "JednostkaOrganizacyjna");
+                name: "JednostkaOrganizacyjnaSet");
 
             migrationBuilder.DropTable(
-                name: "EdycjaKonkursu");
+                name: "EdycjaKonkursuSet");
 
             migrationBuilder.DropTable(
-                name: "DaneAdresowe");
+                name: "DaneAdresoweSet");
 
             migrationBuilder.DropTable(
-                name: "TypJednostkiOrganizacyjnej");
+                name: "TypJednostkiOrganizacyjnejSet");
 
             migrationBuilder.DropTable(
-                name: "StatusEdycji");
+                name: "StatusEdycjiSet");
         }
     }
 }

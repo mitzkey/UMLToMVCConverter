@@ -43,9 +43,10 @@ namespace WebApplication3.Models
 		[Required]
 		public System.String KierunekDalszychPrac { get; set; }
 
+		[Required]
 		public System.String PowodOdrzucenia { get; set; }
 
-		public Nullable<System.DateTime> DataPrzekazaniaInformacjiOOdrzuceniu { get; set; }
+		public System.DateTime DataPrzekazaniaInformacjiOOdrzuceniu { get; set; }
 
 		[NotMapped]
 		public System.Boolean Krytyczna { get { throw new NotImplementedException(); } private set {} }
@@ -79,6 +80,7 @@ namespace WebApplication3.Models
 		[ForeignKey("NagrodaID")]
 		public virtual Nagroda Nagroda { get; set; }
 
+		[Required]
 		public Nullable<System.Int32> NagrodaID { get; set; }
 
 		[InverseProperty("ZgloszeniePracy")]

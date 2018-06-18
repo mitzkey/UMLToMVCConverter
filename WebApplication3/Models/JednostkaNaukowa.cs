@@ -25,6 +25,7 @@ namespace WebApplication3.Models
 		[ForeignKey("NadrzednaNazwaKwalifikowana")]
 		public virtual JednostkaNaukowa Nadrzedna { get; set; }
 
+		[Required]
 		public System.String NadrzednaNazwaKwalifikowana { get; set; }
 
 		[InverseProperty("Nadrzedna")]

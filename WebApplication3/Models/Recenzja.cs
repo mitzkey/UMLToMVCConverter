@@ -22,13 +22,14 @@ namespace WebApplication3.Models
         public int StatusID { get; set; }
 		
 
-		public Nullable<System.Int32> Ocena { get; set; }
+		public System.Int32 Ocena { get; set; }
 
+		[Required]
 		public System.String DodatkoweUwagi { get; set; }
 
-		public Nullable<System.DateTime> DataPrzeslaniaPonaglenia { get; set; }
+		public System.DateTime DataPrzeslaniaPonaglenia { get; set; }
 
-		public Nullable<System.DateTime> DataZatwierdzenia { get; set; }
+		public System.DateTime DataZatwierdzenia { get; set; }
 
 		[NotMapped]
 		public System.Boolean Opozniona { get { throw new NotImplementedException(); } private set {} }

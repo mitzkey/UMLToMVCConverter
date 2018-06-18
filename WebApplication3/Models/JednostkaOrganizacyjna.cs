@@ -22,7 +22,7 @@ namespace WebApplication3.Models
 		public System.String NazwaKwalifikowana { get; set; }
 
 		[NotMapped]
-		public Nullable<System.Boolean> AktualnejEdycji { get { throw new NotImplementedException(); } private set {} }
+		public System.Boolean AktualnejEdycji { get { throw new NotImplementedException(); } private set {} }
 
 		[Required]
 		public TypJednostkiOrganizacyjnej Typ { get; set; }		

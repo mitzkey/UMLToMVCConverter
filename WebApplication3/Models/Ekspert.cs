@@ -18,6 +18,7 @@ namespace WebApplication3.Models
 		[Required]
 		public System.String Nazwisko { get; set; }
 
+		[Required]
 		public System.String Email { get; set; }
 
 		public virtual ICollection<ObszarBadan> ObszarBadan { get; set; }
@@ -28,10 +29,10 @@ namespace WebApplication3.Models
 		public System.String Plec { get; set; }
 
 		[NotMapped]
-		public Nullable<System.Boolean> AktualnejEdycji { get { throw new NotImplementedException(); } private set {} }
+		public System.Boolean AktualnejEdycji { get { throw new NotImplementedException(); } private set {} }
 
 		[NotMapped]
-		public Nullable<System.Boolean> PracownikNaukowy { get { throw new NotImplementedException(); } private set {} }
+		public System.Boolean PracownikNaukowy { get { throw new NotImplementedException(); } private set {} }
 
 		[InverseProperty("Promotor")]
 		public virtual ICollection<ZgloszeniePracy> NadzorowanePrace { get; set; }

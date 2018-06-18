@@ -24,9 +24,9 @@ namespace WebApplication3.Models
         public int StatusID { get; set; }
 		
 
-		public Nullable<System.DateTime> PlanowanaDataOpracowaniaRecenzji { get; set; }
+		public System.DateTime PlanowanaDataOpracowaniaRecenzji { get; set; }
 
-		public Nullable<System.DateTime> PlanowanaDataRozstrzygnieciaKonkursu { get; set; }
+		public System.DateTime PlanowanaDataRozstrzygnieciaKonkursu { get; set; }
 
 		public System.Int32 WymaganeMinimum { get; set; } = 2;
 

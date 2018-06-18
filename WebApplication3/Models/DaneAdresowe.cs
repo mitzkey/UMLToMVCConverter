@@ -18,6 +18,7 @@ namespace WebApplication3.Models
 		[Required]
 		public System.String Telefon { get; set; }
 
+		[Required]
 		public System.String Ulica { get; set; }
 
 		[Required]

@@ -39,14 +39,15 @@ namespace WebApplication3.Migrations
                     b.Property<string>("Nazwisko")
                         .IsRequired();
 
-                    b.Property<string>("Pesel");
+                    b.Property<string>("Pesel")
+                        .IsRequired();
 
                     b.HasKey("ID");
 
                     b.HasIndex("DaneAdresoweID")
                         .IsUnique();
 
-                    b.ToTable("Autor");
+                    b.ToTable("AutorSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.AutorzyPraca", b =>
@@ -64,7 +65,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("PracaNumer");
 
-                    b.ToTable("AutorzyPraca");
+                    b.ToTable("AutorzyPracaSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.DaneAdresowe", b =>
@@ -87,20 +88,21 @@ namespace WebApplication3.Migrations
                     b.Property<string>("Telefon")
                         .IsRequired();
 
-                    b.Property<string>("Ulica");
+                    b.Property<string>("Ulica")
+                        .IsRequired();
 
                     b.HasKey("ID");
 
-                    b.ToTable("DaneAdresowe");
+                    b.ToTable("DaneAdresoweSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.EdycjaKonkursu", b =>
                 {
                     b.Property<int>("Numer");
 
-                    b.Property<DateTime?>("PlanowanaDataOpracowaniaRecenzji");
+                    b.Property<DateTime>("PlanowanaDataOpracowaniaRecenzji");
 
-                    b.Property<DateTime?>("PlanowanaDataRozstrzygnieciaKonkursu");
+                    b.Property<DateTime>("PlanowanaDataRozstrzygnieciaKonkursu");
 
                     b.Property<int>("Rok");
 
@@ -114,7 +116,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("StatusID");
 
-                    b.ToTable("EdycjaKonkursu");
+                    b.ToTable("EdycjaKonkursuSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Ekspert", b =>
@@ -122,7 +124,8 @@ namespace WebApplication3.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<string>("Imie")
                         .IsRequired();
@@ -135,7 +138,7 @@ namespace WebApplication3.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Ekspert");
+                    b.ToTable("EkspertSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.JednostkaOrganizacyjna", b =>
@@ -160,7 +163,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("TypID");
 
-                    b.ToTable("JednostkaOrganizacyjna");
+                    b.ToTable("JednostkaOrganizacyjnaSet");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("JednostkaOrganizacyjna");
                 });
@@ -181,7 +184,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("EdycjaKonkursuPrzydzielanaWRamachNumer");
 
-                    b.ToTable("Nagroda");
+                    b.ToTable("NagrodaSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.ObszarBadan", b =>
@@ -197,7 +200,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("EkspertID");
 
-                    b.ToTable("ObszarBadan");
+                    b.ToTable("ObszarBadanSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Propozycja", b =>
@@ -205,7 +208,7 @@ namespace WebApplication3.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime?>("DataPrzeslaniaProsby");
+                    b.Property<DateTime>("DataPrzeslaniaProsby");
 
                     b.Property<int?>("EkspertID")
                         .IsRequired();
@@ -224,7 +227,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("ZgloszeniePracyNumer");
 
-                    b.ToTable("Propozycja");
+                    b.ToTable("PropozycjaSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Recenzent", b =>
@@ -240,7 +243,7 @@ namespace WebApplication3.Migrations
                     b.HasIndex("EkspertID")
                         .IsUnique();
 
-                    b.ToTable("Recenzent");
+                    b.ToTable("RecenzentSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Recenzja", b =>
@@ -248,13 +251,14 @@ namespace WebApplication3.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime?>("DataPrzeslaniaPonaglenia");
+                    b.Property<DateTime>("DataPrzeslaniaPonaglenia");
 
-                    b.Property<DateTime?>("DataZatwierdzenia");
+                    b.Property<DateTime>("DataZatwierdzenia");
 
-                    b.Property<string>("DodatkoweUwagi");
+                    b.Property<string>("DodatkoweUwagi")
+                        .IsRequired();
 
-                    b.Property<int?>("Ocena");
+                    b.Property<int>("Ocena");
 
                     b.Property<DateTime>("PlanowanaDataOpracowania");
 
@@ -271,7 +275,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("ZgloszeniePracyNumer");
 
-                    b.ToTable("Recenzja");
+                    b.ToTable("RecenzjaSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Skrot", b =>
@@ -287,7 +291,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("JednostkaOrganizacyjnaNazwaKwalifikowana");
 
-                    b.ToTable("Skrot");
+                    b.ToTable("SkrotSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.SlowaKluczowe", b =>
@@ -303,7 +307,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("ZgloszeniePracyNumer");
 
-                    b.ToTable("SlowaKluczowe");
+                    b.ToTable("SlowaKluczoweSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.StatusEdycji", b =>
@@ -314,7 +318,7 @@ namespace WebApplication3.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("StatusEdycji");
+                    b.ToTable("StatusEdycjiSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.StatusPropozycji", b =>
@@ -325,7 +329,7 @@ namespace WebApplication3.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("StatusPropozycji");
+                    b.ToTable("StatusPropozycjiSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.StatusRecenzji", b =>
@@ -336,7 +340,7 @@ namespace WebApplication3.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("StatusRecenzji");
+                    b.ToTable("StatusRecenzjiSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.StatusZatrudnienia", b =>
@@ -358,7 +362,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("JednostkaOrganizacyjnaNazwaKwalifikowana");
 
-                    b.ToTable("StatusZatrudnienia");
+                    b.ToTable("StatusZatrudnieniaSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.StatusZgloszenia", b =>
@@ -369,7 +373,7 @@ namespace WebApplication3.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("StatusZgloszenia");
+                    b.ToTable("StatusZgloszeniaSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.Telefon", b =>
@@ -385,7 +389,7 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("EkspertID");
 
-                    b.ToTable("Telefon");
+                    b.ToTable("TelefonSet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.TypJednostkiOrganizacyjnej", b =>
@@ -399,7 +403,7 @@ namespace WebApplication3.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TypJednostkiOrganizacyjnej");
+                    b.ToTable("TypJednostkiOrganizacyjnejSet");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("TypJednostkiOrganizacyjnej");
                 });
@@ -410,7 +414,7 @@ namespace WebApplication3.Migrations
 
                     b.Property<DateTime>("DataObrony");
 
-                    b.Property<DateTime?>("DataPrzekazaniaInformacjiOOdrzuceniu");
+                    b.Property<DateTime>("DataPrzekazaniaInformacjiOOdrzuceniu");
 
                     b.Property<DateTime>("DataZgloszenia");
 
@@ -422,7 +426,8 @@ namespace WebApplication3.Migrations
                     b.Property<string>("KierunekDalszychPrac")
                         .IsRequired();
 
-                    b.Property<int?>("NagrodaID");
+                    b.Property<int?>("NagrodaID")
+                        .IsRequired();
 
                     b.Property<string>("NajwiekszeOsiagnieciaWlasneWPracy")
                         .IsRequired();
@@ -430,7 +435,8 @@ namespace WebApplication3.Migrations
                     b.Property<string>("ObszarBadan")
                         .IsRequired();
 
-                    b.Property<string>("PowodOdrzucenia");
+                    b.Property<string>("PowodOdrzucenia")
+                        .IsRequired();
 
                     b.Property<int?>("PromotorID")
                         .IsRequired();
@@ -461,14 +467,15 @@ namespace WebApplication3.Migrations
 
                     b.HasIndex("UczelniaNazwaKwalifikowana");
 
-                    b.ToTable("ZgloszeniePracy");
+                    b.ToTable("ZgloszeniePracySet");
                 });
 
             modelBuilder.Entity("WebApplication3.Models.JednostkaNaukowa", b =>
                 {
                     b.HasBaseType("WebApplication3.Models.JednostkaOrganizacyjna");
 
-                    b.Property<string>("NadrzednaNazwaKwalifikowana");
+                    b.Property<string>("NadrzednaNazwaKwalifikowana")
+                        .IsRequired();
 
                     b.HasIndex("NadrzednaNazwaKwalifikowana");
 
@@ -625,7 +632,8 @@ namespace WebApplication3.Migrations
 
                     b.HasOne("WebApplication3.Models.Nagroda", "Nagroda")
                         .WithMany("Prace")
-                        .HasForeignKey("NagrodaID");
+                        .HasForeignKey("NagrodaID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WebApplication3.Models.Ekspert", "Promotor")
                         .WithMany("NadzorowanePrace")
@@ -647,7 +655,8 @@ namespace WebApplication3.Migrations
                 {
                     b.HasOne("WebApplication3.Models.JednostkaNaukowa", "Nadrzedna")
                         .WithMany("JednostkaNaukowaPodjednostki")
-                        .HasForeignKey("NadrzednaNazwaKwalifikowana");
+                        .HasForeignKey("NadrzednaNazwaKwalifikowana")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

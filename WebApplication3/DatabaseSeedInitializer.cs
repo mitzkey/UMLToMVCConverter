@@ -19,7 +19,7 @@ namespace WebApplication3
                 Task.Run(async () =>
                 {
                     var context = serviceProvider.GetService<Testowy02Context>();
-                    if (!context.StatusEdycji.Any())
+                    if (!context.StatusEdycjiSet.Any())
                     {
                         var literals = new List<StatusEdycji>
                         {
@@ -30,7 +30,7 @@ namespace WebApplication3
                         context.AddRange(literals);
                         context.SaveChanges();
                     }
-                    if (!context.StatusZgloszenia.Any())
+                    if (!context.StatusZgloszeniaSet.Any())
                     {
                         var literals = new List<StatusZgloszenia>
                         {
@@ -41,7 +41,7 @@ namespace WebApplication3
                         context.AddRange(literals);
                         context.SaveChanges();
                     }
-                    if (!context.TypJednostki.Any())
+                    if (!context.TypJednostkiSet.Any())
                     {
                         var literals = new List<TypJednostki>
                         {
@@ -54,7 +54,7 @@ namespace WebApplication3
                         context.AddRange(literals);
                         context.SaveChanges();
                     }
-                    if (!context.TypJednostkiOrganizacyjnej.Any())
+                    if (!context.TypJednostkiOrganizacyjnejSet.Any())
                     {
                         var literals = new List<TypJednostkiOrganizacyjnej>
                         {
@@ -63,7 +63,7 @@ namespace WebApplication3
                         context.AddRange(literals);
                         context.SaveChanges();
                     }
-                    if (!context.StatusRecenzji.Any())
+                    if (!context.StatusRecenzjiSet.Any())
                     {
                         var literals = new List<StatusRecenzji>
                         {
@@ -73,7 +73,7 @@ namespace WebApplication3
                         context.AddRange(literals);
                         context.SaveChanges();
                     }
-                    if (!context.StatusPropozycji.Any())
+                    if (!context.StatusPropozycjiSet.Any())
                     {
                         var literals = new List<StatusPropozycji>
                         {

@@ -9,51 +9,51 @@ namespace WebApplication3.Models
 		{
 		}
 
-		public DbSet<StatusEdycji> StatusEdycji { get; set; }
+		public DbSet<StatusEdycji> StatusEdycjiSet { get; set; }
 
-		public DbSet<StatusZgloszenia> StatusZgloszenia { get; set; }
+		public DbSet<StatusZgloszenia> StatusZgloszeniaSet { get; set; }
 
-		public DbSet<TypJednostki> TypJednostki { get; set; }
+		public DbSet<TypJednostki> TypJednostkiSet { get; set; }
 
-		public DbSet<TypJednostkiOrganizacyjnej> TypJednostkiOrganizacyjnej { get; set; }
+		public DbSet<TypJednostkiOrganizacyjnej> TypJednostkiOrganizacyjnejSet { get; set; }
 
-		public DbSet<StatusRecenzji> StatusRecenzji { get; set; }
+		public DbSet<StatusRecenzji> StatusRecenzjiSet { get; set; }
 
-		public DbSet<StatusPropozycji> StatusPropozycji { get; set; }
+		public DbSet<StatusPropozycji> StatusPropozycjiSet { get; set; }
 
-		public DbSet<EdycjaKonkursu> EdycjaKonkursu { get; set; }
+		public DbSet<EdycjaKonkursu> EdycjaKonkursuSet { get; set; }
 
-		public DbSet<ZgloszeniePracy> ZgloszeniePracy { get; set; }
+		public DbSet<ZgloszeniePracy> ZgloszeniePracySet { get; set; }
 
-		public DbSet<SlowaKluczowe> SlowaKluczowe { get; set; }
+		public DbSet<SlowaKluczowe> SlowaKluczoweSet { get; set; }
 
-		public DbSet<Autor> Autor { get; set; }
+		public DbSet<Autor> AutorSet { get; set; }
 
-		public DbSet<Nagroda> Nagroda { get; set; }
+		public DbSet<Nagroda> NagrodaSet { get; set; }
 
-		public DbSet<JednostkaNaukowa> JednostkaNaukowa { get; set; }
+		public DbSet<JednostkaNaukowa> JednostkaNaukowaSet { get; set; }
 
-		public DbSet<Recenzent> Recenzent { get; set; }
+		public DbSet<Recenzent> RecenzentSet { get; set; }
 
-		public DbSet<Ekspert> Ekspert { get; set; }
+		public DbSet<Ekspert> EkspertSet { get; set; }
 
-		public DbSet<ObszarBadan> ObszarBadan { get; set; }
+		public DbSet<ObszarBadan> ObszarBadanSet { get; set; }
 
-		public DbSet<Telefon> Telefon { get; set; }
+		public DbSet<Telefon> TelefonSet { get; set; }
 
-		public DbSet<JednostkaOrganizacyjna> JednostkaOrganizacyjna { get; set; }
+		public DbSet<JednostkaOrganizacyjna> JednostkaOrganizacyjnaSet { get; set; }
 
-		public DbSet<Skrot> Skrot { get; set; }
+		public DbSet<Skrot> SkrotSet { get; set; }
 
-		public DbSet<DaneAdresowe> DaneAdresowe { get; set; }
+		public DbSet<DaneAdresowe> DaneAdresoweSet { get; set; }
 
-		public DbSet<Propozycja> Propozycja { get; set; }
+		public DbSet<Propozycja> PropozycjaSet { get; set; }
 
-		public DbSet<StatusZatrudnienia> StatusZatrudnienia { get; set; }
+		public DbSet<StatusZatrudnienia> StatusZatrudnieniaSet { get; set; }
 
-		public DbSet<Recenzja> Recenzja { get; set; }
+		public DbSet<Recenzja> RecenzjaSet { get; set; }
 
-		public DbSet<AutorzyPraca> AutorzyPraca { get; set; }
+		public DbSet<AutorzyPraca> AutorzyPracaSet { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
@@ -69,6 +69,14 @@ namespace WebApplication3.Models
 			modelBuilder.Entity<ZgloszeniePracy>()
 		        .HasOne(t => t.Uczelnia)
 		        .WithMany(t => t.Praca)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<JednostkaNaukowa>()
+		        .HasOne(t => t.Nadrzedna)
+		        .WithMany(t => t.JednostkaNaukowaPodjednostki)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -109,6 +117,14 @@ namespace WebApplication3.Models
 			modelBuilder.Entity<Nagroda>()
 		        .HasOne(t => t.EdycjaKonkursuPrzydzielanaWRamach)
 		        .WithMany(t => t.Nagrody)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+			modelBuilder.Entity<ZgloszeniePracy>()
+		        .HasOne(t => t.Nagroda)
+		        .WithMany(t => t.Prace)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 

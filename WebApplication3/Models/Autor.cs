@@ -22,6 +22,7 @@ namespace WebApplication3.Models
 
 		public System.Boolean Korespondent { get; set; } = true;
 
+		[Required]
 		public System.String Pesel { get; set; }
 
 		[ForeignKey("DaneAdresoweID")]

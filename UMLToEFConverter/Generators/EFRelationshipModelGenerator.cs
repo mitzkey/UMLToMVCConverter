@@ -16,9 +16,14 @@
 
             foreach (var association in associationsToConfigure)
             {
-                var deleteBehavior = association.AssociationKind == AssociationKind.Composition
-                    ? "Cascade"
-                    : "Restrict";
+                var deleteBehavior = "Restrict";
+                if (association.AssociationKind == AssociationKind.Composition)
+                {
+                    if (association.Members.First().Type != association.Members.Last().Type)
+                    {
+                        deleteBehavior = "Cascade";
+                    }
+                }
 
                 var targetMember = association.Members.First(m => m.Multiplicity == Multiplicity.ExactlyOne);
                 var sourceMember = association.Members.Single(m => !m.Equals(targetMember));

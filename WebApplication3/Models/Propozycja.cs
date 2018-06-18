@@ -19,7 +19,7 @@ namespace WebApplication3.Models
         public int StatusID { get; set; }
 		
 
-		public Nullable<System.DateTime> DataPrzeslaniaProsby { get; set; }
+		public System.DateTime DataPrzeslaniaProsby { get; set; }
 
 		[InverseProperty("ProponowanePrace")]
 		[ForeignKey("EkspertID")]
