@@ -11,12 +11,13 @@ namespace WebApplication4.Models
 
 
 
-		public Nullable<System.Boolean> ZModeluPK { get; set; } = true;
+		public System.Boolean ZModeluPK { get; set; } = true;
 
 		[InverseProperty("EmocjaPodstawowa")]
 		[ForeignKey("EksperymentLokalnyIdentyfikator")]
 		public virtual EksperymentLokalny EksperymentLokalny { get; set; }
 
+		[Required]
 		public System.String EksperymentLokalnyIdentyfikator { get; set; }
 	}
 }

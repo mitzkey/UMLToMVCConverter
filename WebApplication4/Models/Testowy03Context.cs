@@ -9,47 +9,55 @@ namespace WebApplication4.Models
 		{
 		}
 
-		public DbSet<Tryb> Tryb { get; set; }
+		public DbSet<Tryb> TrybSet { get; set; }
 
-		public DbSet<Widok> Widok { get; set; }
+		public DbSet<Widok> WidokSet { get; set; }
 
-		public DbSet<Slownik> Slownik { get; set; }
+		public DbSet<Slownik> SlownikSet { get; set; }
 
-		public DbSet<Eksperyment> Eksperyment { get; set; }
+		public DbSet<Eksperyment> EksperymentSet { get; set; }
 
-		public DbSet<Emocja> Emocja { get; set; }
+		public DbSet<Emocja> EmocjaSet { get; set; }
 
-		public DbSet<Ankieta> Ankieta { get; set; }
+		public DbSet<Ankieta> AnkietaSet { get; set; }
 
-		public DbSet<EmocjaPodstawowa> EmocjaPodstawowa { get; set; }
+		public DbSet<EmocjaPodstawowa> EmocjaPodstawowaSet { get; set; }
 
-		public DbSet<EksperymentLokalny> EksperymentLokalny { get; set; }
+		public DbSet<EksperymentLokalny> EksperymentLokalnySet { get; set; }
 
-		public DbSet<PrzedmiotBadania> PrzedmiotBadania { get; set; }
+		public DbSet<PrzedmiotBadania> PrzedmiotBadaniaSet { get; set; }
 
-		public DbSet<Wymiar> Wymiar { get; set; }
+		public DbSet<Wymiar> WymiarSet { get; set; }
 
-		public DbSet<Skala> Skala { get; set; }
+		public DbSet<Skala> SkalaSet { get; set; }
 
-		public DbSet<Pozycja> Pozycja { get; set; }
+		public DbSet<Pozycja> PozycjaSet { get; set; }
 
-		public DbSet<JednostkaLeksykalna> JednostkaLeksykalna { get; set; }
+		public DbSet<JednostkaLeksykalna> JednostkaLeksykalnaSet { get; set; }
 
-		public DbSet<PrzykladUzyc> PrzykladUzyc { get; set; }
+		public DbSet<PrzykladUzyc> PrzykladUzycSet { get; set; }
 
-		public DbSet<JednostkaWSlowniku> JednostkaWSlowniku { get; set; }
+		public DbSet<JednostkaWSlowniku> JednostkaWSlownikuSet { get; set; }
 
-		public DbSet<Odpowiedz> Odpowiedz { get; set; }
+		public DbSet<Odpowiedz> OdpowiedzSet { get; set; }
 
-		public DbSet<WymiarWBadaniu> WymiarWBadaniu { get; set; }
+		public DbSet<WymiarWBadaniu> WymiarWBadaniuSet { get; set; }
 
-		public DbSet<Ocena> Ocena { get; set; }
+		public DbSet<Ocena> OcenaSet { get; set; }
 
-		public DbSet<BadaneEmocjeEksperyment> BadaneEmocjeEksperyment { get; set; }
+		public DbSet<BadaneEmocjeEksperyment> BadaneEmocjeEksperymentSet { get; set; }
 
-		public DbSet<ZestawTreningowySlownik> ZestawTreningowySlownik { get; set; }
+		public DbSet<ZestawTreningowySlownik> ZestawTreningowySlownikSet { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
+
+			modelBuilder.Entity<EmocjaPodstawowa>()
+		        .HasOne(t => t.EksperymentLokalny)
+		        .WithMany(t => t.EmocjaPodstawowa)
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
 
 			modelBuilder.Entity<Eksperyment>()
@@ -108,9 +116,9 @@ namespace WebApplication4.Models
 
 
 
-			modelBuilder.Entity<JednostkaWSlowniku>()
-		        .HasOne(t => t.Slownik)
-		        .WithOne(t => t.Jednostki)
+			modelBuilder.Entity<Slownik>()
+		        .HasOne(t => t.Jednostki)
+		        .WithOne(t => t.Slownik)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -148,17 +156,17 @@ namespace WebApplication4.Models
 
 
 
-			modelBuilder.Entity<Ocena>()
-		        .HasOne(t => t.Odpowiedz)
-		        .WithOne(t => t.PrzedmiotBadaniaOcena)
+			modelBuilder.Entity<Odpowiedz>()
+		        .HasOne(t => t.PrzedmiotBadaniaOcena)
+		        .WithOne(t => t.Odpowiedz)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 
 
 
-			modelBuilder.Entity<Ocena>()
-		        .HasOne(t => t.PrzedmiotBadania)
-		        .WithOne(t => t.OdpowiedzOcena)
+			modelBuilder.Entity<PrzedmiotBadania>()
+		        .HasOne(t => t.OdpowiedzOcena)
+		        .WithOne(t => t.PrzedmiotBadania)
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.Restrict);
 

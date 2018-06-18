@@ -12,9 +12,10 @@ using WebApplication4.Models;
 namespace WebApplication4.Migrations
 {
     [DbContext(typeof(Testowy03Context))]
-    partial class Testowy03ContextModelSnapshot : ModelSnapshot
+    [Migration("20180618075511_UMLToEFConverterMigration_ff0f35df-4fae-4588-855f-1a9d573035c8")]
+    partial class UMLToEFConverterMigration_ff0f35df4fae4588855f1a9d573035c8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

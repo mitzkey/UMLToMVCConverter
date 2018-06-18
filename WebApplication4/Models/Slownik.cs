@@ -22,7 +22,11 @@ namespace WebApplication4.Models
 		public virtual ICollection<Eksperyment> Eksperymenty { get; set; }
 
 		[InverseProperty("Slownik")]
+		[ForeignKey("JednostkiID")]
 		public virtual JednostkaWSlowniku Jednostki { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> JednostkiID { get; set; }
 
 		public virtual ICollection<ZestawTreningowySlownik> ZestawTreningowy { get; set; }
 	}

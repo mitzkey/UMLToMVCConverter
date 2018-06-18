@@ -19,13 +19,13 @@ namespace WebApplication4.Models
 		[Required]
 		public System.String Identyfikator { get; set; }
 
-		public Nullable<System.DateTime> DataRozpoczecia { get; set; }
+		public System.DateTime DataRozpoczecia { get; set; }
 
-		public Nullable<System.DateTime> DataZakonczenia { get; set; }
+		public System.DateTime DataZakonczenia { get; set; }
 
 		public System.Int64 LiczbaJednostekWZestawie { get; set; }
 
-		public Nullable<System.Int32> MaksymalnyCzasPojedynczejOdpowiedzi { get; set; }
+		public System.Int32 MaksymalnyCzasPojedynczejOdpowiedzi { get; set; }
 
 		public System.Int32 MaksymalnyCzasBadania { get; set; }
 
@@ -44,7 +44,7 @@ namespace WebApplication4.Models
 		
 
 		[NotMapped]
-		public Nullable<System.Boolean> Zrealizowany { get { throw new NotImplementedException(); } private set {} }
+		public System.Boolean Zrealizowany { get { throw new NotImplementedException(); } private set {} }
 
 		public System.Int64 WymaganePokrycie { get; set; }
 

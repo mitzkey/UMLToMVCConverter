@@ -15,11 +15,17 @@ namespace WebApplication4.Models
 		[Required]
 		public System.String Nazwa { get; set; }
 
+		[Required]
 		public System.String Opis { get; set; }
 
+		[Required]
 		public Obraz Ikona { get; set; }
 
 		[InverseProperty("PrzedmiotBadania")]
+		[ForeignKey("OdpowiedzOcenaID")]
 		public virtual Ocena OdpowiedzOcena { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> OdpowiedzOcenaID { get; set; }
 	}
 }

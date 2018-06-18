@@ -33,6 +33,10 @@ namespace WebApplication4.Models
 		public System.Int64 AnkietaNumer { get; set; }
 
 		[InverseProperty("Odpowiedz")]
+		[ForeignKey("PrzedmiotBadaniaOcenaID")]
 		public virtual Ocena PrzedmiotBadaniaOcena { get; set; }
+
+		[Required]
+		public Nullable<System.Int32> PrzedmiotBadaniaOcenaID { get; set; }
 	}
 }

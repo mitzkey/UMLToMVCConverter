@@ -22,10 +22,6 @@ namespace WebApplication4.Models
 		public System.Int32 JednostkaLeksykalnaIdentyfikatorWordNet { get; set; }
 
 		[InverseProperty("Jednostki")]
-		[ForeignKey("SlownikNazwa")]
 		public virtual Slownik Slownik { get; set; }
-
-		[Required]
-		public System.String SlownikNazwa { get; set; }
 	}
 }

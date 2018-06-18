@@ -17,7 +17,7 @@ namespace WebApplication4.Models
 
 		public System.DateTime TerminRozpoczecia { get; set; }
 
-		public Nullable<System.DateTime> TerminZakonczenia { get; set; }
+		public System.DateTime TerminZakonczenia { get; set; }
 
 		public System.Boolean PrzekroczonyCzasBadania { get; set; } = false;
 

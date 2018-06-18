@@ -19,7 +19,7 @@ namespace WebApplication4
                 Task.Run(async () =>
                 {
                     var context = serviceProvider.GetService<Testowy03Context>();
-                    if (!context.Tryb.Any())
+                    if (!context.TrybSet.Any())
                     {
                         var literals = new List<Tryb>
                         {
@@ -29,7 +29,7 @@ namespace WebApplication4
                         context.AddRange(literals);
                         context.SaveChanges();
                     }
-                    if (!context.Widok.Any())
+                    if (!context.WidokSet.Any())
                     {
                         var literals = new List<Widok>
                         {
